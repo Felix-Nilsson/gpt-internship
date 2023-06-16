@@ -1,10 +1,12 @@
 from shiny import App, reactive, render, ui
 
 app_ui = ui.page_fluid(
+    {"id":"main-content"},
+    ui.panel_title("VGR Chatbot"),
     ui.layout_sidebar(
         ui.panel_sidebar(
             ui.input_text_area("text", "Enter your question"),
-            ui.input_action_button("toggle", "Toggle value")
+            ui.input_action_button("toggle", "Send")
         ),
         ui.panel_main(
             ui.output_text_verbatim("txt")

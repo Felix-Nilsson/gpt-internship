@@ -18,4 +18,5 @@ def make_embeddings(texts):
     d = {'text':texts, 'embedding':embeddings}
     return pd.DataFrame(data=d)
 
-print(make_embeddings(read_records()))
+def make_records():
+    return make_embeddings(read_records())

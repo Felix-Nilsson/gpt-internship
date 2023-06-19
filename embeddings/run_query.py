@@ -34,5 +34,6 @@ def strings_ranked_by_relatedness(
 
 
 
-df = make_records()
-print(strings_ranked_by_relatedness("Which of my patients have smelly feet",df))
+def return_best_record(query,):
+    df = make_records()
+    return strings_ranked_by_relatedness(query,df)

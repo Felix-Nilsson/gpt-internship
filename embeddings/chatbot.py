@@ -18,8 +18,11 @@ conversation = [{'role':'system', 'content':
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 def get_completion(prompt, model="gpt-3.5-turbo",): # Andrew mentioned that the prompt/ completion paradigm is preferable for this class
-    conversation.append({'role':'user','content':prompt})
-    messages = conversation
+    temp = conversation.copy()
+    temp.append({'role':'user','content':prompt})
+
+    #conversation.append({'role':'user','content':prompt})
+    messages = temp #conversation
 
     response = openai.ChatCompletion.create(
         model=model,
@@ -27,14 +30,22 @@ def get_completion(prompt, model="gpt-3.5-turbo",): # Andrew mentioned that the 
         temperature=0, # this is the degree of randomness of the model's output
     )
     #print(response)
-    conversation.append({'role':'assistant','content':response})
-    print(conversation)
+    prompt = prompt.split("```")[0]
+    #print(prompt)
+    conversation.append({'role':'user','content':prompt})
+    conversation.append({'role':'assistant','content':response.choices[0].message["content"]})
+    #print(conversation)
     return response.choices[0].message["content"]
 
 def get_chat_response(query):
     #sample_input = "Hej, jag vill veta när min patient Johnny Carlson fick diabetes."
 
-    journal = return_best_record(query)[0][0]
+    journal = return_best_record(query)
+    #print(journal[0])
+
+    #todo: join with cooler delimiter
+    journal = " ".join(journal[0])
+    
 
     prompt = f"""
     {query}
@@ -45,6 +56,3 @@ def get_chat_response(query):
     response = get_completion(prompt)
 
     return response
-
-
-#get_chat_response("Vilken patient är rädd för cyklar?")

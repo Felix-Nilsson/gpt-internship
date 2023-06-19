@@ -16,7 +16,7 @@ def strings_ranked_by_relatedness(
     query: str,
     df: pd.DataFrame,
     relatedness_fn=lambda x, y: 1 - spatial.distance.cosine(x, y),
-    top_n: int = 1
+    top_n: int = 5
 ) -> tuple[list[str], list[float]]:
     """Returns a list of strings and relatednesses, sorted from most related to least."""
     query_embedding_response = openai.Embedding.create(
@@ -36,4 +36,4 @@ def strings_ranked_by_relatedness(
 
 def return_best_record(query,):
     df = make_records()
-    return strings_ranked_by_relatedness(query,df)
+    return strings_ranked_by_relatedness(query,df,top_n=1)

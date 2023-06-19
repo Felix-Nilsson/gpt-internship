@@ -11,7 +11,12 @@ from run_query import return_best_record
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 def get_completion(prompt, model="gpt-3.5-turbo"): # Andrew mentioned that the prompt/ completion paradigm is preferable for this class
-    messages = [{'role':'system', 'content':'Du är en assistent för sjukvårdspersonal som hjälper dem med deras förberedelser inför möte med en patient. Använd patientens information för att svara på frågorna. Om patientens information är på engelska, översätt den till svenska och använd det för att svara. Om du inte kan svara på en fråga utifrån den information som finns, svara att du inte vet.'},
+    messages = [{'role':'system', 'content':
+                    'Du är en assistent för sjukvårdspersonal som hjälper dem med deras förberedelser \
+                    inför möte med en patient. Använd patientens information för att svara på frågorna. \
+                    Om patientens information är på engelska, översätt den till svenska och använd det \
+                    för att svara. Om du inte kan svara på en fråga utifrån den information som \
+                    finns, svara att du inte vet. Svara alltid på svenska.'},
         {"role": "user", "content": prompt}]
     response = openai.ChatCompletion.create(
         model=model,
@@ -21,17 +26,18 @@ def get_completion(prompt, model="gpt-3.5-turbo"): # Andrew mentioned that the p
     #print(response)
     return response.choices[0].message["content"]
 
+def get_chat_response(query):
+    #sample_input = "Hej, jag vill veta när min patient Johnny Carlson fick diabetes."
 
-sample_input = "Hej, jag vill veta när min patient Jane Doe undergick röntgenundersökning."
+    journal = return_best_record(query)[0][0]
 
-journal = return_best_record(sample_input)[0][0]
+    prompt = f"""
+    {query}
+    ``` 
+    Patientens information: ```{journal}```
+    """
 
-prompt = f"""
-{sample_input}
-``` 
-Patientens information: ```{journal}```
-"""
+    response = get_completion(prompt)
 
-response = get_completion(prompt)
+    return response
 
-print(response)

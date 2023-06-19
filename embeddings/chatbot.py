@@ -6,12 +6,13 @@ from run_query import return_best_record
 #with open('journal.txt', 'r') as file:
 #    journal = file.read().replace('\n', '')
 
+#Om du inte kan svara på en fråga utifrån den information som \ finns, svara att du inte vet.
+
 conversation = [{'role':'system', 'content':
                     'Du är en assistent för sjukvårdspersonal som hjälper dem med deras förberedelser \
                     inför möte med en patient. Använd patientens information för att svara på frågorna. \
                     Om patientens information är på engelska, översätt den till svenska och använd det \
-                    för att svara. Om du inte kan svara på en fråga utifrån den information som \
-                    finns, svara att du inte vet. Svara alltid på svenska.'},
+                    för att svara. Svara alltid på svenska. Svara alltid med två meningar.'},
         ]
 
 # Load your API key from an environment variable or secret management service
@@ -27,7 +28,7 @@ def get_completion(prompt, model="gpt-3.5-turbo",): # Andrew mentioned that the 
     response = openai.ChatCompletion.create(
         model=model,
         messages=messages,
-        temperature=0, # this is the degree of randomness of the model's output
+        temperature=0.3, # this is the degree of randomness of the model's output
     )
     #print(response)
     prompt = prompt.split("```")[0]

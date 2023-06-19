@@ -18,7 +18,7 @@ with st.sidebar:
 add_vertical_space(5)
 
 if 'generated' not in st.session_state:
-    st.session_state['generated'] = ["Välkommen till Assisten!"]
+    st.session_state['generated'] = ["Välkommen till Assistenten!"]
 
 if 'past' not in st.session_state:
     st.session_state['past'] = ["Hejsan!"]

@@ -12,9 +12,12 @@ def pdf_to_plaintext(filename):
     return text
 
 def read_records():
+    texts = []
     for i in range(3):
         adr = f'mockdata/patientrecords/patientrecord_{i}.pdf'
         text = pdf_to_plaintext(adr)
-        print(text + "\n")
+        texts.append(text)
+    return texts
+        
 
 read_records()

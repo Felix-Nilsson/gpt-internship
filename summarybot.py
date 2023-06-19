@@ -1,17 +1,9 @@
 import os
 import openai
+import tiktoken
 
 # Load your API key from an environment variable or secret management service
 openai.api_key = os.getenv("OPENAI_API_KEY")
-
-def get_completion(prompt, model="gpt-3.5-turbo"): # Andrew mentioned that the prompt/ completion paradigm is preferable for this class
-    messages = [{"role": "user", "content": prompt}]
-    response = openai.ChatCompletion.create(
-        model=model,
-        messages=messages,
-        temperature=0, # this is the degree of randomness of the model's output
-    )
-    return response.choices[0].message["content"]
 
 text_to_summarize = """
 Medical Record
@@ -75,10 +67,31 @@ Dr. Jane Miller, MD
 Date: June 16, 2023
 """
 
+def get_completion(prompt, model="gpt-3.5-turbo"): # Andrew mentioned that the prompt/ completion paradigm is preferable for this class
+    messages = [{"role": "user", "content": prompt}]
+    response = openai.ChatCompletion.create(
+        model=model,
+        messages=messages,
+        temperature=0, # this is the degree of randomness of the model's output
+    )
+    return response.choices[0].message["content"]
+
+def get_embedding(text):
+    tmp = openai.Embedding.create(
+    input=text,
+    model="text-embedding-ada-002"
+)
+    return tmp['data'][0]['embedding']
+
+def num_tokens_from_string(string: str, encoding_name: str) -> int:
+    """Returns the number of tokens in a text string."""
+    encoding = tiktoken.get_encoding(encoding_name)
+    num_tokens = len(encoding.encode(string))
+    return num_tokens
+
 prompt = f"""
-Your task is to generate a summary of ...
-Summarize the journal delimited with ``` 
-Journal: ```{text_to_summarize}```
+Your task is to generate a summary of a medical record from a embedded file delimited with ``` 
+Embedded file: ```{test}```
 """
 
 response = get_completion(prompt)

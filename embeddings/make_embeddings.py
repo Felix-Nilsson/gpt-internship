@@ -20,3 +20,8 @@ def make_embeddings(texts):
 
 def make_records():
     return make_embeddings(read_records())
+
+def save_records():
+    df = make_embeddings(read_records())
+    df.to_csv("mockdata/patientrecords/embedded_data/embedded_records.csv")
+

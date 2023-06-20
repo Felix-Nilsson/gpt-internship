@@ -19,10 +19,16 @@ def make_embeddings(texts):
     return pd.DataFrame(data=d)
 
 def make_records():
-    return make_embeddings(read_records())
+    path = "Project1_docassist/patientrecords/embedded_data.pkl"
+    if os.path.exists(path):
+        print("make_embeddings.py: Read from file")
+        df = pd.read_pickle(path)
+    else:
+        print("make_embeddings.py: No file, making new data")
+        df = make_embeddings(read_records())
+        df.to_pickle("Project1_docassist/patientrecords/embedded_data.pkl")
+    
+    return df
+    #return make_embeddings(read_records())
 
-def save_records():
-    df = make_embeddings(read_records())
-    df.to_csv("mockdata/patientrecords/embedded_data/embedded_records.csv", index = False)
-
-#save_records()
+    

@@ -13,7 +13,7 @@ def pdf_to_plaintext(filename):
 
 def read_records():
     texts = []
-    for i in range(3):
+    for i in range(4):
         adr = f'Project1_docassist/patientrecords/patientrecord_{i}.pdf'
         text = pdf_to_plaintext(adr)
         texts.append(text)

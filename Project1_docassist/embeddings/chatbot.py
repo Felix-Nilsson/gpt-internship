@@ -11,14 +11,17 @@ If you cannot provide an answer based on the information provided, be clear that
 Do not make anything up.
 Always answer in swedish.
 Your answers should be no longer than 2 sentences.
+If you did not receive any background information, ask for more informaion.
+The background information is delimited by ```.
 '''
 
-conversation = [{'role':'system', 'content':
-                    'Du är en assistent för sjukvårdspersonal som hjälper dem med deras förberedelser \
-                    inför möte med en patient. Använd patientens information för att svara på frågorna. \
-                    Om patientens information är på engelska, översätt den till svenska och använd det \
-                    för att svara. Svara alltid på svenska. Svara alltid med två meningar. Ifall du inte\
-                    fick en journal, be om mer information. Informationen är avgränsad av ```'},
+swedish_context = '''Du är en assistent för sjukvårdspersonal som hjälper dem med deras förberedelser 
+                    inför möte med en patient. Använd patientens information för att svara på frågorna.
+                    Om patientens information är på engelska, översätt den till svenska och använd det 
+                    för att svara. Svara alltid på svenska. Svara alltid med två meningar. Ifall du inte
+                    fick en journal, be om mer information. Informationen är avgränsad av ```'''
+
+conversation = [{'role':'system', 'content': english_context},
         ]
 
 # Load your API key from an environment variable or secret management service
@@ -46,9 +49,9 @@ def get_completion(prompt, model="gpt-3.5-turbo",): # Andrew mentioned that the 
 
 def get_chat_response(query):
     #sample_input = "Hej, jag vill veta när min patient Johnny Carlson fick diabetes."
-
     journal = return_best_record(query)
-    if len([elem for elem in journal[1] if elem > 0.75]) == 0:
+
+    if len([elem for elem in journal[1] if elem > 0.7]) == 0:
         journal = ""
     else:
     #todo: join with cooler delimiter

@@ -4,6 +4,15 @@ from embeddings.run_query import return_best_record
 
 #Om du inte kan svara på en fråga utifrån den information som \ finns, svara att du inte vet.
 
+english_context = '''
+You are a medical assistant
+Mainly use the information provided to answer.
+If you cannot provide an answer based on the information provided, be clear that you are using information from the internet.
+Do not make anything up.
+Always answer in swedish.
+Your answers should be no longer than 2 sentences.
+'''
+
 conversation = [{'role':'system', 'content':
                     'Du är en assistent för sjukvårdspersonal som hjälper dem med deras förberedelser \
                     inför möte med en patient. Använd patientens information för att svara på frågorna. \

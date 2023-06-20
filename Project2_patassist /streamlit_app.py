@@ -4,10 +4,10 @@ from streamlit_extras.colored_header import colored_header
 from streamlit_extras.add_vertical_space import add_vertical_space
 from embeddings.chatbot import get_chat_response
 
-st.set_page_config(page_title="L-Assist")
+st.set_page_config(page_title="P-Assist")
 
 with st.sidebar:
-    st.title("L-Assist")
+    st.title("P-Assist")
     st.markdown('''
     ## About
     Ett första försök att bygga en chatt-bot för läkare

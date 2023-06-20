@@ -8,7 +8,8 @@ conversation = [{'role':'system', 'content':
                     'Du är en assistent för sjukvårdspersonal som hjälper dem med deras förberedelser \
                     inför möte med en patient. Använd patientens information för att svara på frågorna. \
                     Om patientens information är på engelska, översätt den till svenska och använd det \
-                    för att svara. Svara alltid på svenska. Svara alltid med två meningar.'},
+                    för att svara. Svara alltid på svenska. Svara alltid med två meningar. Ifall du inte\
+                    fick en journal, be om mer information. Informationen är avgränsad av ```'},
         ]
 
 # Load your API key from an environment variable or secret management service
@@ -38,16 +39,16 @@ def get_chat_response(query):
     #sample_input = "Hej, jag vill veta när min patient Johnny Carlson fick diabetes."
 
     journal = return_best_record(query)
-    #print(journal[0])
-
+    if len([elem for elem in journal[1] if elem > 0.75]) == 0:
+        journal = ""
+    else:
     #todo: join with cooler delimiter
-    journal = " ".join(journal[0])
+        journal = " ".join(journal[0])
     
 
     prompt = f"""
     {query}
-    ``` 
-    Patientens information: ```{journal}```
+    ```{journal}```
     """
 
     response = get_completion(prompt)

@@ -18,6 +18,7 @@ def make_embeddings(texts):
     d = {'text':texts, 'embedding':embeddings}
     return pd.DataFrame(data=d)
 
+#todo: make it react to new content and create new embeddings if so
 def make_records():
     path = "Project1_docassist/patientrecords/embedded_data.pkl"
     if os.path.exists(path):
@@ -26,7 +27,7 @@ def make_records():
     else:
         print("make_embeddings.py: No file, making new data")
         df = make_embeddings(read_records())
-        df.to_pickle("Project1_docassist/patientrecords/embedded_data.pkl")
+        df.to_pickle(path)
     
     return df
     #return make_embeddings(read_records())

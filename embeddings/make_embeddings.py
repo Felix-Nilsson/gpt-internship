@@ -25,4 +25,4 @@ def save_records():
     df = make_embeddings(read_records())
     df.to_csv("mockdata/patientrecords/embedded_data/embedded_records.csv", index = False)
 
-save_records()
+#save_records()

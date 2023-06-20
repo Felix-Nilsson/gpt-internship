@@ -2,10 +2,6 @@ import os
 import openai
 from embeddings.run_query import return_best_record
 
-#journal = open("journal.txt","r")
-#with open('journal.txt', 'r') as file:
-#    journal = file.read().replace('\n', '')
-
 #Om du inte kan svara på en fråga utifrån den information som \ finns, svara att du inte vet.
 
 conversation = [{'role':'system', 'content':

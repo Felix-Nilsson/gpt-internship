@@ -4,24 +4,27 @@ from embeddings.run_query import return_best_record
 
 #Om du inte kan svara på en fråga utifrån den information som \ finns, svara att du inte vet.
 
-english_context = '''
-You are a medical assistant
-Mainly use the information provided to answer.
-If you cannot provide an answer based on the information provided, be clear that you are using information from the internet.
-Do not make anything up.
-Always answer in swedish.
-Your answers should be no longer than 2 sentences.
-If you did not receive any background information, ask for more informaion.
-The background information is delimited by ```.
+
+med_advice_classification_context = '''
+You are a classification bot.
+You provide a single letter answers to wether a question asks for medical advice.
+You answer the letter Y if the question is asking for medical advice and the letter N if it is not.
 '''
 
-swedish_context = '''Du är en assistent för sjukvårdspersonal som hjälper dem med deras förberedelser 
-                    inför möte med en patient. Använd patientens information för att svara på frågorna.
-                    Om patientens information är på engelska, översätt den till svenska och använd det 
-                    för att svara. Svara alltid på svenska. Svara alltid med två meningar. Ifall du inte
-                    fick en journal, be om mer information. Informationen är avgränsad av ```'''
+swedish_context = '''
+Du är en AI-assistent för läkare.
+Du svarar bara på frågor om medicinsk information och terminologi. 
+Du svarar bara med fakta, du kan inte ge medicinsk rådgivning.
+Du ignorerar patientinformationen avgränsad med #### om läkaren inte specifikt ber om den.
+Du utgår alltid ifrån att läkaren vet bäst.
+Du svarar kortfattat och tydligt.
+Du svarar alltid på svenska.
+'''
 
-conversation = [{'role':'system', 'content': english_context},
+
+conversation = [{'role':'system', 'content': swedish_context},
+                {'role':'user', 'content': "Hej"},
+                {'role':'assistant', 'content': "Hej, vad kan jag hjälpa dig med?"}
         ]
 
 # Load your API key from an environment variable or secret management service
@@ -31,7 +34,6 @@ def get_completion(prompt, model="gpt-3.5-turbo",): # Andrew mentioned that the 
     temp = conversation.copy()
     temp.append({'role':'user','content':prompt})
 
-    #conversation.append({'role':'user','content':prompt})
     messages = temp #conversation
 
     response = openai.ChatCompletion.create(
@@ -42,8 +44,14 @@ def get_completion(prompt, model="gpt-3.5-turbo",): # Andrew mentioned that the 
     #print(response)
     prompt = prompt.split("```")[0]
     #print(prompt)
+    #conversation.insert(-1, {'role':'user','content':prompt})
+    #conversation.insert(-1, {'role':'assistant','content':response.choices[0].message["content"]})
     conversation.append({'role':'user','content':prompt})
     conversation.append({'role':'assistant','content':response.choices[0].message["content"]})
+
+    #print(conversation[-2])
+    #print(conversation[-1])
+
     #print(conversation)
     return response.choices[0].message["content"]
 
@@ -59,8 +67,10 @@ def get_chat_response(query):
     
 
     prompt = f"""
-    {query}
-    ```{journal}```
+    Fråga: {query}
+    ```
+
+    Patientinformation: ####{journal}####
     """
 
     response = get_completion(prompt)

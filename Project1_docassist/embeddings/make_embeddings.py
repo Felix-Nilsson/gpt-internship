@@ -1,6 +1,6 @@
 import os
 import openai
-from embeddings.pdfparser import read_records
+from Project1_docassist.embeddings.parser import read_records
 import pandas as pd
 
 # Load your API key from an environment variable or secret management service

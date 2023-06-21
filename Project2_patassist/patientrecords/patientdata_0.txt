@@ -1,0 +1,141 @@
+# Patientdata
+patient = [
+    {
+        "patient_id": 987321,
+        "födelsedatum": "1978-06-10",
+        "avlidendatum": "-",
+        "kön": "K",
+        "vital_status": 1,
+    },
+]
+
+# Registrerad aktiviteter/vistelser
+activity = [
+    {
+        "patient_id": 987321,
+        "aktivitet_id": 22334456,
+        "förvaltning": "SU",
+        "verksamhet": "Ortopedi",
+        "plats": "Avdelning 202 Kirurgi Norra",
+        "vårdgivarekategori": "LÄK",
+        "aktivitettyp": "slutenvårdvistelse",
+        "kontakttyp": "J",
+        "startdatum": "2023-06-18",
+        "slutdatum": "2023-06-25",
+        "från_plats": "AKUTEN",
+        "till_plats": "HEM",
+    },
+]
+
+# Registerade diagnoser, sökorsaker
+observation = [
+    {
+        "patient_id": 987321,
+        "aktivitet_id": 12345679,
+        "begrepp": "diagnos",
+        "kod": "S723 Fraktur på nedre benskaftet, ospecificerad",
+        "värde": "primär",
+        "startdatum": "2023-06-18",
+        "slutdatum": "2023-06-25",
+    },
+    {
+        "patient_id": 987321,
+        "aktivitet_id": 87654322,
+        "begrepp": "orsak",
+        "kod": "SMÄRTA",
+        "värde": "-",
+        "startdatum": "2023-06-18",
+        "slutdatum": "2023-06-25",
+    },
+]
+
+# Läkemedelsrecept
+prescription = [
+    {
+        "patient_id": 987321,
+        "akvititet_id": 952,
+        "läkemedel": "Oxikodon",
+        "substans": "Oxikodon",
+        "kategori": "Analgetika, opioider",
+        "atc_kod": "N02AA05",
+        "beredningsform": "Tablett",
+        "dosering": "5 mg var 6:e timme vid behov för smärta",
+        "styrka": "5",
+        "styrka_enhet": "mg",
+        "vårdgivare": "Lars Svensson",
+        "vårdgivarekategori": "LÄK",
+        "vårdgivaretel": "08-987321",
+        "verksamhet": "Ortopedavdelning",
+        "förmån": "Y",
+        "förskrivningsdatum": "2023-06-20",
+        "giltigt_till_och_med": "2024-06-20",
+        "senast_uttag": "-",
+        "tidigast_uttag_inom_förmån": "2023-06-20",
+        "förskriven_mängd": 60,
+        "senast_uttagen_mängd": 0,
+        "återstående_mängd": 60,
+        "uttag_antal": 1,
+        "uttag_kvar": 1,
+    },
+]
+
+# Journalanteckningar
+journal = [
+    {
+        "patient_id": 987321,
+        "aktivitet_id": 59494,
+        "aktivitettyp": "slutanteckning, läkare",
+        "vårdgivare": "Lars Svensson",
+        "vårdgivarekategori": "LÄK",
+        "vårdgivaretel": "08-987321",
+        "förvaltning": "SU",
+        "verksamhet": "Ortopedavdelning",
+        "plats": "Avdelning 202 Kirurgi Norra",
+        "startdatum": "2023-06-18",
+        "slutdatum": "2023-06-25",
+        "huvuddiagnos": "S723 Fraktur på nedre benskaftet, ospecificerad",
+        "anamnes": "Patienten rapporterar smärta och svullnad i höger ben efter en fallolycka.",
+        "socialt": "Arbetar som lärare och är gift med två barn.",
+        "tidigare_sjukdomar": "-",
+        "nuvarande_sjukdomar": "-",
+        "aktuellt": "Patienten inkom med smärta och svullnad i höger ben efter en fallolycka. Klinisk undersökning och röntgen bekräftade fraktur på nedre benskaftet. Smärtkontroll och immobilisering genom gipsbehandling påbörjades.",
+        "sammanfattning": "Patienten har diagnostiserats med en fraktur på nedre benskaftet efter en fallolycka. Behandlingen inkluderar smärtkontroll och immobilisering genom gipsbehandling.",
+        "bedömning": "Fraktur på nedre benskaftet",
+        "planering": "Fortsatt smärtkontroll och immobilisering genom gipsbehandling. Uppföljning av frakturen planeras om två veckor.",
+        "från_plats": "HEM",
+        "till_plats": "HEM",
+    },
+    {
+        "patient_id": 987321,
+        "aktivitet_id": 59495,
+        "aktivitettyp": "vård- och läkemedelsberättelse",
+        "vårdgivare": "Lars Svensson",
+        "vårdgivarekategori": "LÄK",
+        "vårdgivaretel": "08-987321",
+        "förvaltning": "SU",
+        "verksamhet": "Ortopedavdelning",
+        "plats": "Avdelning 202 Kirurgi Norra",
+        "startdatum": "2023-06-18",
+        "slutdatum": "2023-06-25",
+        "orsak": "Du sökte vård på grund av smärta och svullnad i höger ben efter en fallolycka.",
+        "läkemedelsberättelse": "Du behandlades på avdelningen med smärtstillande läkemedel (Oxikodon) för att kontrollera smärtan.",
+        "planering": "Du kommer fortsätta smärtkontroll och immobilisering genom gipsbehandling. En uppföljning av frakturen är planerad om två veckor.",
+    },
+]
+
+# Vårdplanering
+plan = [
+    {
+        "patient_id": 987321,
+        "aktivitet_id": "987",
+        "aktivitet_källa": "vårdplan",
+        "inskrivenihemsjukvård": "N",
+        "ärendestartdatum": "2023-06-18",
+        "ärendeslutdatum": "2023-06-25",
+        "inskrivningsdatum": "2023-06-18",
+        "förstaplanutskrivningsdatum": "2023-06-25",
+        "sistautskrivningsklardatum": "2023-06-25",
+        "utskrivningsdatum": "2023-06-25",
+        "fastvårdkontaktutsedd": "N",
+    },
+]

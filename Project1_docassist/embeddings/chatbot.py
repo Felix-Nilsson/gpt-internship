@@ -27,6 +27,7 @@ Mainly use the information provided to answer.
 If you cannot provide an answer based on the information provided, be clear that you are using information from the internet.
 Do not make anything up.
 Always answer in swedish.
+Even if the information is in english, you answer in swedish.
 Your answers should be no longer than 2 sentences.
 If you did not receive any background information, ask for more informaion.
 The background information is delimited by ```.
@@ -35,6 +36,8 @@ The background information is delimited by ```.
 
 conversation = [{'role':'system', 'content': english_context},
                 {'role':'user', 'content': "Hej"},
+                {'role':'assistant', 'content': "Hej, vad kan jag hjälpa dig med?"},
+                {'role':'user', 'content': "Hello"},
                 {'role':'assistant', 'content': "Hej, vad kan jag hjälpa dig med?"}
         ]
 

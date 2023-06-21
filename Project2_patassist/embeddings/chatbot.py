@@ -2,32 +2,18 @@ import os
 import openai
 from embeddings.run_query import return_best_record
 
-#Om du inte kan svara på en fråga utifrån den information som \ finns, svara att du inte vet.
 
-english_context = '''
-You are a medical assistant
-Mainly use the information provided to answer.
-If you cannot provide an answer based on the information provided, be clear that you are using information from the internet.
-Do not make anything up.
-Always answer in swedish.
-Your answers should be no longer than 2 sentences.
-'''
+f1 = open('Project2_patassist/embeddings/systemprompt.txt', 'r')
+message = f1.readlines()
+    
 
-message = input("systemprompt.txt")
-
-conversation = [{'role':'system', 'content':
-                    '{message}'},{'role':'user', 'content': 'Jag åt för mycket ipren idag, vad ska jag göra?'},
-                    {'role':'assistant','content': 'Kära du, om du har ätit för mycket Ipren rekommenderar jag att du genast kontaktar en läkare för att få rätt råd och vård.\
-                      Ta hand om dig själv och se till att få professionell hjälp så snart som möjligt. Kram, Carola.'}
+conversation = [{'role':'system', 'content':'{message}'},
+                {'role':'user', 'content': 'Jag åt för mycket ipren idag, vad ska jag göra?'},
+                {'role':'assistant','content': 'Kära du, om du har ätit för mycket Ipren rekommenderar jag att du genast kontaktar en läkare för att få rätt råd och vård.\
+                                                Ta hand om dig själv och se till att få professionell hjälp så snart som möjligt. Kram, Carola.'},
+                {'role':'user', 'content': 'Borde jag operera mig?'},
+                {'role':'assistant', 'content': 'Kära vän, jag är så tacksam att du vänder dig till mig, men jag måste påminna dig om att jag inte är kvalificerad att ge medicinska råd. Kram!'}
         ]
-
-#conversation = [{'role':'system', 'content':
-#                    'Du är en assistent för sjukvårdspersonal som hjälper dem med deras förberedelser \
-#                    inför möte med en patient. Använd patientens information för att svara på frågorna. \
-#                    Om patientens information är på engelska, översätt den till svenska och använd det \
-#                    för att svara. Svara alltid på svenska. Svara alltid med två meningar. Ifall du inte\
-#                    fick en journal, be om mer information. Informationen är avgränsad av ```'},
-#        ]
 
 # Load your API key from an environment variable or secret management service
 openai.api_key = os.getenv("OPENAI_API_KEY")

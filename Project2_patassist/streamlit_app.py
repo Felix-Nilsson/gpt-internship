@@ -10,7 +10,7 @@ with st.sidebar:
     st.title("P-Assist")
     st.markdown('''
     ## About
-    Ett första försök att bygga en chatt-bot för läkare
+    Ett första försök att bygga en chatt-bot för patienter
     
     💡 Note: Bara dummy-data används, fortfarande i ett tidigt stadie
     ''')
@@ -18,7 +18,7 @@ with st.sidebar:
 add_vertical_space(5)
 
 if 'generated' not in st.session_state:
-    st.session_state['generated'] = ["Välkommen till Assistenten!"]
+    st.session_state['generated'] = ["Välkommen till Assistenten! Hur kan jag hjälpa dig?"]
 
 if 'past' not in st.session_state:
     st.session_state['past'] = ["Hejsan!"]

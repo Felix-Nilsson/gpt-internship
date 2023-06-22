@@ -34,17 +34,11 @@ The background information is delimited by ```.
 '''
 
 
-conversation = [{'role':'system', 'content': english_context},
-                {'role':'user', 'content': "Hej"},
-                {'role':'assistant', 'content': "Hej, vad kan jag hjälpa dig med?"},
-                {'role':'user', 'content': "Hello"},
-                {'role':'assistant', 'content': "Hej, vad kan jag hjälpa dig med?"}
-        ]
 
 # Load your API key from an environment variable or secret management service
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
-def get_completion(prompt, model="gpt-3.5-turbo",): # Andrew mentioned that the prompt/ completion paradigm is preferable for this class
+def get_completion(conversation, prompt, model="gpt-3.5-turbo",): # Andrew mentioned that the prompt/ completion paradigm is preferable for this class
     temp = conversation.copy()
     temp.append({'role':'user','content':prompt})
 
@@ -56,20 +50,17 @@ def get_completion(prompt, model="gpt-3.5-turbo",): # Andrew mentioned that the 
         temperature=0, # this is the degree of randomness of the model's output
     )
     #print(response)
-    prompt = prompt.split("```")[0]
+     #prompt = prompt.split("```")[0]
     #print(prompt)
-    #conversation.insert(-1, {'role':'user','content':prompt})
-    #conversation.insert(-1, {'role':'assistant','content':response.choices[0].message["content"]})
+    
     conversation.append({'role':'user','content':prompt})
     conversation.append({'role':'assistant','content':response.choices[0].message["content"]})
 
-    #print(conversation[-2])
-    #print(conversation[-1])
-
-    #print(conversation)
+    print(conversation[0])
     return response.choices[0].message["content"]
 
 def get_chat_response(query):
+
     #sample_input = "Hej, jag vill veta när min patient Johnny Carlson fick diabetes."
     journal = return_best_record(query)
 
@@ -79,14 +70,21 @@ def get_chat_response(query):
     #todo: join with cooler delimiter
         journal = " ".join(journal[0])
     
+    json_context = f'''
+        Based on the provided ##Message##, return a JSON object with the following content: 
+        response (with a response to ##Message##, in swedish),
+        med_advice (with a one letter classification whether ##Message## asks for medical advice, Y or N),
+        pat_info (with a one letter classification whether ##Message## asks for information about a specific patient or multiple patients).
+
+        If ##Message## asks for information about a specific patient or multiple patients, use ####Patient information#### for your answer.
+        Patient information: ####{journal}####
+        '''
+    conversation = [{'role':'system', 'content': json_context}]
 
     prompt = f"""
-    Fråga: {query}
-    ```
-
-    Patientinformation: ####{journal}####
+    Message: ##{query}##
     """
 
-    response = get_completion(prompt)
+    response = get_completion(conversation, prompt)
 
     return response

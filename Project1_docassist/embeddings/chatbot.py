@@ -78,8 +78,9 @@ def get_chat_response(query):
 
     json_context = f'''
     Based on the provided ##Message##, return a JSON object with the following content: response, med_advice, pat_info.
-        
-    "response": a short and concise response to ##Message## in swedish.
+
+    "response": (a short and concise response to ##Message## in swedish.
+    No longer than 2 sentences.)
     "med_advice": one letter classification whether ##Message## asks for medical advice. Y (yes) or N (no).
     "pat_info": one letter classification whether ##Message## asks for information about any of the patients in the ####Patient information####.
 

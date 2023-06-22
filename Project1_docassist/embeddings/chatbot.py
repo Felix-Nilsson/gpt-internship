@@ -32,7 +32,7 @@ Your answers should be no longer than 2 sentences.
 If you did not receive any background information, ask for more informaion.
 The background information is delimited by ```.
 '''
-
+conversation = [{'role':'system', 'content': ""}]
 
 
 # Load your API key from an environment variable or secret management service
@@ -56,7 +56,11 @@ def get_completion(conversation, prompt, model="gpt-3.5-turbo",): # Andrew menti
     conversation.append({'role':'user','content':prompt})
     conversation.append({'role':'assistant','content':response.choices[0].message["content"]})
 
-    print(conversation[0])
+    for dict in conversation:
+        print("\n" + "/\/\/\/\/\/\/\\  " + dict['role'] + "  /\/\/\/\/\/\/\\")
+        print(dict['content'].split("####")[0])
+
+    #print(conversation[0]['content'].split("####")[0])
     return response.choices[0].message["content"]
 
 def get_chat_response(query):
@@ -70,16 +74,20 @@ def get_chat_response(query):
     #todo: join with cooler delimiter
         journal = " ".join(journal[0])
     
-    json_context = f'''
-        Based on the provided ##Message##, return a JSON object with the following content: 
-        response (with a response to ##Message##, in swedish),
-        med_advice (with a one letter classification whether ##Message## asks for medical advice, Y or N),
-        pat_info (with a one letter classification whether ##Message## asks for information about a specific patient or multiple patients).
+    #Based on ethical and legal considerations, as an AI language model, I cannot provide medical advice or dosing recommendations. It is important to consult a licensed healthcare professional who can evaluate the patient's medical history, current medications, and other relevant factors before making any treatment decisions.
 
-        If ##Message## asks for information about a specific patient or multiple patients, use ####Patient information#### for your answer.
-        Patient information: ####{journal}####
-        '''
-    conversation = [{'role':'system', 'content': json_context}]
+    json_context = f'''
+    Based on the provided ##Message##, return a JSON object with the following content: response, med_advice, pat_info.
+        
+    "response": a short and concise response to ##Message## in swedish.
+    "med_advice": one letter classification whether ##Message## asks for medical advice. Y (yes) or N (no).
+    "pat_info": one letter classification whether ##Message## asks for information about any of the patients in the ####Patient information####.
+
+    If ##Message## asks for information about a specific patient or multiple patients, use ####Patient information#### for your answer.
+    Patient information: ####{journal}####
+    '''
+    #Update the context with relevant information for every question
+    conversation[0] = {'role':'system', 'content': json_context}
 
     prompt = f"""
     Message: ##{query}##

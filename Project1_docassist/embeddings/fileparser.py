@@ -39,8 +39,8 @@ def read_json(filename):
 
 
 #print(read_json('Project1_docassist/patientrecords/patientdata_0.json'))
-
+"""
 with open("Project1_docassist/patientrecords/patientdata_0.json", "r") as f:
     parsed = json.load(f)
     print("Printed patientdata_0.json from fileparser.py")
-    print(json.dumps(parsed, indent=4))
+    print(json.dumps(parsed, indent=4))"""

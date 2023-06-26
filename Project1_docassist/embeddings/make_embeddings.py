@@ -1,6 +1,6 @@
 import os
 import openai
-from embeddings.fileparser import read_records,read_json_records
+from embeddings.fileparser import read_json,read_ics
 import pandas as pd
 
 # Load your API key from an environment variable or secret management service
@@ -20,16 +20,18 @@ def make_embeddings(texts):
 
 #todo: make it react to new content and create new embeddings if so
 def make_records():
-    path = "Project1_docassist/patientrecords/embedded_data.pkl"
+    path = "patientrecords/123456/embeddings.pkl"
     if os.path.exists(path):
-        #print("make_embeddings.py: Read from file")
         df = pd.read_pickle(path)
-    else:
-        #print("make_embeddings.py: No file, making new data")
-        df = make_embeddings(read_json_records())
+    else:   
+        df = pd.concat([
+            make_embeddings([read_json(123456)]),
+            make_embeddings([read_ics(123456)])
+        ]
+        ) 
         df.to_pickle(path)
     
     return df
     #return make_embeddings(read_records())
 
-print(make_embeddings(read_json_records()))
+print(make_records())

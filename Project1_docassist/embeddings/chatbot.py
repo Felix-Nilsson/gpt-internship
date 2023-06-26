@@ -34,11 +34,13 @@ def get_chat_response(query):
 
     patient_data = return_best_record(query)
 
+    """
     if len([elem for elem in patient_data[1] if elem > 0.7]) == 0:
         patient_data = ""
     else:
-    #todo: join with cooler delimiter
-        patient_data = " ".join(patient_data[0])
+    #todo: join with cooler delimiter"""
+    
+    patient_data = " ".join(patient_data[0])
 
     #context has to be defined here now since the patient_data is added into it rather than the prompt
     context_with_data = f'''

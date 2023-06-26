@@ -1,13 +1,29 @@
 credentials:
   usernames:
-    jsmith:
-      email: jsmith@gmail.com
-      name: John Smith
+    p123123:
+      email: 123123@gmail.com
+      name: '123123' 
       password: $2b$12$AfmoTVBMoCNOWsLfLWoqbuwyAwCx7Rj9FJqo7kn.c8rvhc01TrZ2.
-    rbriggs:
-      email: rbriggs@gmail.com
-      name: Rebecca Briggs
-      password: $2b$12$sGwABPvW5UnSIxXk6yQ/AugfMo3jFkb4ZyOJnkUpcxGrI1g68qsPq
+    p123456:
+      email: 123456@gmail.com
+      name: '123456' 
+      password: $2b$12$AfmoTVBMoCNOWsLfLWoqbuwyAwCx7Rj9FJqo7kn.c8rvhc01TrZ2.
+    p654321:
+      email: 654321@gmail.com
+      name: '654321' 
+      password: $2b$12$AfmoTVBMoCNOWsLfLWoqbuwyAwCx7Rj9FJqo7kn.c8rvhc01TrZ2.
+    p654322:
+      email: 654322@gmail.com
+      name: '654322' 
+      password: $2b$12$AfmoTVBMoCNOWsLfLWoqbuwyAwCx7Rj9FJqo7kn.c8rvhc01TrZ2.
+    p789012:
+      email: 789012@gmail.com
+      name: '789012' 
+      password: $2b$12$AfmoTVBMoCNOWsLfLWoqbuwyAwCx7Rj9FJqo7kn.c8rvhc01TrZ2.
+    p987321:
+      email: 987321@gmail.com
+      name: '987321' 
+      password: $2b$12$AfmoTVBMoCNOWsLfLWoqbuwyAwCx7Rj9FJqo7kn.c8rvhc01TrZ2.
 cookie:
   expiry_days: 30
   key: some_signature_key # Must be string

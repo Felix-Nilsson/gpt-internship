@@ -11,7 +11,7 @@ from yaml.loader import SafeLoader
 
 st.set_page_config(page_title="P-Assist")
 
-with open('Project2_patassist/patientrecords/config.yaml', 'r') as file:
+with open('patientrecords/config.yaml', 'r') as file:
     config = yaml.load(file, Loader=SafeLoader)
 
 authenticator = stauth.Authenticate(
@@ -24,6 +24,7 @@ authenticator = stauth.Authenticate(
 
 name, authentication_status, username = authenticator.login('Login', 'main')
 
+id = username[1:]
 
 
 if st.session_state["authentication_status"]:
@@ -57,13 +58,13 @@ if st.session_state["authentication_status"]:
     with user_container:
         user_input = get_text()
 
-    def generate_response(prompt):
-        response = get_chat_response(prompt)
+    def generate_response(prompt, id):
+        response = get_chat_response(prompt, id)
         return response
 
     with bot_container:
         if user_input:
-            response = generate_response(user_input)
+            response = generate_response(user_input, id)
             st.session_state.past.append(user_input)
             st.session_state.generated.append(response)
         

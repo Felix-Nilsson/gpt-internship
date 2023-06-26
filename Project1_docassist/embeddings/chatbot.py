@@ -21,11 +21,14 @@ def get_completion(conversation, prompt, model="gpt-3.5-turbo",): # Andrew menti
     conversation.append({'role':'assistant','content':response.choices[0].message["content"]})
 
     #Print a overview of the conversation, could maybe be used to save a log
-    #for dict in conversation:
-        #print("=========  " + dict['role'] + "  =========")
-        #print(dict['content'].split("####")[0])
+    for dict in conversation:
+        print("\n=========  " + dict['role'] + "  =========")
+        print(dict['content'].split("___")[0])
 
-    return response.choices[0].message["content"]
+    finished_response = f"""{response.choices[0].message["content"]} 
+        \n*OBS: som läkare bär du alltid själv ansvaret mot patienten*"""
+
+    return finished_response
 
 def get_chat_response(query):
 
@@ -37,27 +40,22 @@ def get_chat_response(query):
     #todo: join with cooler delimiter
         patient_data = " ".join(patient_data[0])
 
-
     #context has to be defined here now since the patient_data is added into it rather than the prompt
     context_with_data = f'''
     Du är en AI-assistent för läkare på ett sjukhus.
-    Du svarar alltid kort och koncist, inte mer än 2 meningar.
-    Du svarar alltid med rekommendationer om vad läkaren borde göra.
-
+    Du svarar alltid kort och koncist, inte längre än 2 meningar.
+    
+    
+    
     Ifall meddelandet ber om information om en specifik patient, använd informationen avgränsad av tre understreck.
 
     ___{patient_data}___
-
-    Avsluta alla svar med följande text, ord för ord:
-    "*OBS: som läkare bär du alltid själv ansvaret mot patienten*"
     '''
 
     #Update the context with relevant information for every question
     conversation[0] = {'role':'system', 'content': context_with_data}
 
-    prompt = f"""
-    ---{query}---
-    """
+    prompt = f"""{query}"""
 
     response = get_completion(conversation, prompt)
 

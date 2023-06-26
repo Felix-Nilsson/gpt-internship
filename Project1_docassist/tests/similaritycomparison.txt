@@ -1,0 +1,30 @@
+JSON:
+    "Berätta om patient 987321"
+    "Patient 987321 är en kvinna född..."
+        (0.8154796437486351, 0.8099125038679198)
+
+
+    "Berätta om patient 123123"
+    "Patient 123123 är en kvinna född..."
+        (0.8082895036471616, 0.8045368540039053)
+
+    "Berätta om patient 654321"
+    "Patient 654321 har diagnostiserats..."
+        (0.8063655950636457, 0.8054904744398135)
+
+            AVG: (0.8100449141531474,0.8066466107705462)
+
+PDF:
+    "Berätta om Peter Johnson"
+    "Peter Johnson är en man.."
+        (0.7861071092322932, 0.7652500544527264)
+
+    "Berätta om Jane Doe"
+    "Jane Doe är en kvinna..."
+        (0.7818797715524523, 0.7397144346147729)
+    
+    "Berätta om John Smith"
+    "John Smith är en man..."
+        (0.7436852880886261, 0.7275884018369628)
+
+            AVG: (0.7705573896244572,0.7441842969681541)

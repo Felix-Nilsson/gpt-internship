@@ -1,0 +1,133 @@
+{
+    "patient": [
+      {
+        "patient_id": 789012,
+        "födelsedatum": "1985-09-02",
+        "avlidendatum": "-",
+        "kön": "M",
+        "vital_status": 1
+      }
+    ],
+    "activity": [
+      {
+        "patient_id": 789012,
+        "aktivitet_id": 11223344,
+        "förvaltning": "SU",
+        "verksamhet": "Kardiologi",
+        "plats": "Avdelning 303 Hjärtmedicin",
+        "vårdgivarekategori": "LÄK",
+        "aktivitettyp": "slutenvårdvistelse",
+        "kontakttyp": "J",
+        "startdatum": "2023-08-15",
+        "slutdatum": "2023-08-20",
+        "från_plats": "AKUTEN",
+        "till_plats": "HEM"
+      }
+    ],
+    "observation": [
+      {
+        "patient_id": 789012,
+        "aktivitet_id": 65432198,
+        "begrepp": "diagnos",
+        "kod": "I21.9 Akut hjärtinfarkt, ospecificerad",
+        "värde": "primär",
+        "startdatum": "2023-08-15",
+        "slutdatum": "2023-08-20"
+      },
+      {
+        "patient_id": 789012,
+        "aktivitet_id": 98765432,
+        "begrepp": "orsak",
+        "kod": "RÖKNING",
+        "värde": "-",
+        "startdatum": "2023-08-15",
+        "slutdatum": "2023-08-20"
+      }
+    ],
+    "prescription": [
+      {
+        "patient_id": 789012,
+        "akvititet_id": 953,
+        "läkemedel": "Atorvastatin",
+        "substans": "Atorvastatin",
+        "kategori": "Lipidsänkande medel",
+        "atc_kod": "C10AA05",
+        "beredningsform": "Tablett",
+        "dosering": "40 mg en gång dagligen",
+        "styrka": "40",
+        "styrka_enhet": "mg",
+        "vårdgivare": "Eva Johansson",
+        "vårdgivarekategori": "LÄK",
+        "vårdgivaretel": "08-789012",
+        "verksamhet": "Kardiologiavdelning",
+        "förmån": "Y",
+        "förskrivningsdatum": "2023-08-16",
+        "giltigt_till_och_med": "2024-08-16",
+        "senast_uttag": "-",
+        "tidigast_uttag_inom_förmån": "2023-08-16",
+        "förskriven_mängd": 30,
+        "senast_uttagen_mängd": 0,
+        "återstående_mängd": 30,
+        "uttag_antal": 1,
+        "uttag_kvar": 1
+      }
+    ],
+    "journal": [
+      {
+        "patient_id": 789012,
+        "aktivitet_id": 98712345,
+        "aktivitettyp": "slutanteckning, läkare",
+        "vårdgivare": "Eva Johansson",
+        "vårdgivarekategori": "LÄK",
+        "vårdgivaretel": "08-789012",
+        "förvaltning": "SU",
+        "verksamhet": "Kardiologiavdelning",
+        "plats": "Avdelning 303 Hjärtmedicin",
+        "startdatum": "2023-08-15",
+        "slutdatum": "2023-08-20",
+        "huvuddiagnos": "I21.9 Akut hjärtinfarkt, ospecificerad",
+        "anamnes": "Patienten sökte vård på grund av bröstsmärta och andfåddhet.",
+        "socialt": "Arbetar som lärare och är rökare.",
+        "tidigare_sjukdomar": "-",
+        "nuvarande_sjukdomar": "-",
+        "aktuellt": "Patienten inkom med bröstsmärta och andfåddhet. Klinisk undersökning och EKG bekräftade diagnosen akut hjärtinfarkt. Behandling med trombolys och blodförtunnande medel inleddes.",
+        "sammanfattning": "Patienten har diagnostiserats med akut hjärtinfarkt. Behandlingen inkluderar trombolys och blodförtunnande medel.",
+        "bedömning": "Akut hjärtinfarkt",
+        "planering": "Fortsatt behandling med trombolys och blodförtunnande medel. Uppföljning och livsstilsråd om rökstopp planeras.",
+        "från_plats": "HEM",
+        "till_plats": "HEM"
+      },
+      {
+        "patient_id": 789012,
+        "aktivitet_id": 98712346,
+        "aktivitettyp": "vård- och läkemedelsberättelse",
+        "vårdgivare": "Eva Johansson",
+        "vårdgivarekategori": "LÄK",
+        "vårdgivaretel": "08-789012",
+        "förvaltning": "SU",
+        "verksamhet": "Kardiologiavdelning",
+        "plats": "Avdelning 303 Hjärtmedicin",
+        "startdatum": "2023-08-15",
+        "slutdatum": "2023-08-20",
+        "orsak": "Du sökte vård på grund av bröstsmärta och andfåddhet.",
+        "läkemedelsberättelse": "Du behandlades på avdelningen med trombolys och blodförtunnande medel för att behandla akut hjärtinfarkt.",
+        "planering": "Du kommer fortsätta behandling med trombolys och blodförtunnande medel. En uppföljning och rådgivning om rökstopp är planerad."
+      }
+    ],
+    "plan": [
+      {
+        "patient_id": 789012,
+        "aktivitet_id": "789",
+        "aktivitet_kod": "J",
+        "aktivitet_typ": "Uppföljning",
+        "vårdgivare": "Eva Johansson",
+        "vårdgivarekategori": "LÄK",
+        "startdatum": "2023-08-25",
+        "slutdatum": "-",
+        "uppföljningsbesök": "Kardiologiavdelning",
+        "orsak": "Uppföljning av akut hjärtinfarkt",
+        "status": "Planerad"
+      }
+    ]
+  }
+  

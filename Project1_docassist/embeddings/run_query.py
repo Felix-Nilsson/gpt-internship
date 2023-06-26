@@ -36,4 +36,4 @@ def strings_ranked_by_relatedness(
 
 def return_best_record(query,):
     df = make_records()
-    return strings_ranked_by_relatedness(query,df,top_n=5)
+    return strings_ranked_by_relatedness(query,df,top_n=2)

@@ -1,16 +1,16 @@
-# Patientdata
-patient = [
+{
+
+"patient" : [
     {
         "patient_id": 987321,
         "födelsedatum": "1978-06-10",
         "avlidendatum": "-",
         "kön": "K",
-        "vital_status": 1,
-    },
-]
+        "vital_status": 1
+    }
+],
 
-# Registrerad aktiviteter/vistelser
-activity = [
+"activity" : [
     {
         "patient_id": 987321,
         "aktivitet_id": 22334456,
@@ -23,12 +23,12 @@ activity = [
         "startdatum": "2023-06-18",
         "slutdatum": "2023-06-25",
         "från_plats": "AKUTEN",
-        "till_plats": "HEM",
-    },
-]
+        "till_plats": "HEM"
+    }
+],
 
-# Registerade diagnoser, sökorsaker
-observation = [
+
+"observation" : [
     {
         "patient_id": 987321,
         "aktivitet_id": 12345679,
@@ -36,7 +36,7 @@ observation = [
         "kod": "S723 Fraktur på nedre benskaftet, ospecificerad",
         "värde": "primär",
         "startdatum": "2023-06-18",
-        "slutdatum": "2023-06-25",
+        "slutdatum": "2023-06-25"
     },
     {
         "patient_id": 987321,
@@ -45,12 +45,11 @@ observation = [
         "kod": "SMÄRTA",
         "värde": "-",
         "startdatum": "2023-06-18",
-        "slutdatum": "2023-06-25",
-    },
-]
+        "slutdatum": "2023-06-25"
+    }
+],
 
-# Läkemedelsrecept
-prescription = [
+"prescription" : [
     {
         "patient_id": 987321,
         "akvititet_id": 952,
@@ -75,12 +74,12 @@ prescription = [
         "senast_uttagen_mängd": 0,
         "återstående_mängd": 60,
         "uttag_antal": 1,
-        "uttag_kvar": 1,
-    },
-]
+        "uttag_kvar": 1
+    }
+],
 
-# Journalanteckningar
-journal = [
+
+"journal" : [
     {
         "patient_id": 987321,
         "aktivitet_id": 59494,
@@ -103,7 +102,7 @@ journal = [
         "bedömning": "Fraktur på nedre benskaftet",
         "planering": "Fortsatt smärtkontroll och immobilisering genom gipsbehandling. Uppföljning av frakturen planeras om två veckor.",
         "från_plats": "HEM",
-        "till_plats": "HEM",
+        "till_plats": "HEM"
     },
     {
         "patient_id": 987321,
@@ -119,12 +118,11 @@ journal = [
         "slutdatum": "2023-06-25",
         "orsak": "Du sökte vård på grund av smärta och svullnad i höger ben efter en fallolycka.",
         "läkemedelsberättelse": "Du behandlades på avdelningen med smärtstillande läkemedel (Oxikodon) för att kontrollera smärtan.",
-        "planering": "Du kommer fortsätta smärtkontroll och immobilisering genom gipsbehandling. En uppföljning av frakturen är planerad om två veckor.",
-    },
-]
+        "planering": "Du kommer fortsätta smärtkontroll och immobilisering genom gipsbehandling. En uppföljning av frakturen är planerad om två veckor."
+    }
+],
 
-# Vårdplanering
-plan = [
+"plan" : [
     {
         "patient_id": 987321,
         "aktivitet_id": "987",
@@ -136,6 +134,7 @@ plan = [
         "förstaplanutskrivningsdatum": "2023-06-25",
         "sistautskrivningsklardatum": "2023-06-25",
         "utskrivningsdatum": "2023-06-25",
-        "fastvårdkontaktutsedd": "N",
-    },
+        "fastvårdkontaktutsedd": "N"
+    }
 ]
+}

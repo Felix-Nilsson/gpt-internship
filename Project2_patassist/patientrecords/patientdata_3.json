@@ -1,0 +1,134 @@
+{
+    "patient": [
+      {
+        "patient_id": 123456,
+        "födelsedatum": "1992-03-15",
+        "avlidendatum": "-",
+        "kön": "K",
+        "vital_status": 1
+      }
+    ],
+    "activity": [
+      {
+        "patient_id": 123456,
+        "aktivitet_id": 99887766,
+        "förvaltning": "SU",
+        "verksamhet": "Gynekologi",
+        "plats": "Avdelning 404 Gynekologi Östra",
+        "vårdgivarekategori": "LÄK",
+        "aktivitettyp": "slutenvårdvistelse",
+        "kontakttyp": "J",
+        "startdatum": "2023-06-20",
+        "slutdatum": "2023-06-27",
+        "från_plats": "MOTTAGNING",
+        "till_plats": "HEM"
+      }
+    ],
+    "observation": [
+      {
+        "patient_id": 123456,
+        "aktivitet_id": 24681357,
+        "begrepp": "diagnos",
+        "kod": "N92.0 Oregelbunden menstruation, oregelbunden cykel",
+        "värde": "primär",
+        "startdatum": "2023-06-20",
+        "slutdatum": "2023-06-27"
+      },
+      {
+        "patient_id": 123456,
+        "aktivitet_id": 76543210,
+        "begrepp": "orsak",
+        "kod": "HORM",
+        "värde": "-",
+        "startdatum": "2023-06-20",
+        "slutdatum": "2023-06-27"
+      }
+    ],
+    "prescription": [
+      {
+        "patient_id": 123456,
+        "aktivitet_id": 159,
+        "läkemedel": "Levonorgestrel",
+        "substans": "Levonorgestrel",
+        "kategori": "Preventionsmedel",
+        "atc_kod": "G03AC03",
+        "beredningsform": "Tablett",
+        "dosering": "1 tablett dagligen i 21 dagar, följt av 7 dagars uppehåll",
+        "styrka": "0.15",
+        "styrka_enhet": "mg",
+        "vårdgivare": "Anna Andersson",
+        "vårdgivarekategori": "LÄK",
+        "vårdgivaretel": "08-123456",
+        "verksamhet": "Gynekologavdelning",
+        "förmån": "Y",
+        "förskrivningsdatum": "2023-06-22",
+        "giltigt_till_och_med": "2024-06-22",
+        "senast_uttag": "-",
+        "tidigast_uttag_inom_förmån": "2023-06-22",
+        "förskriven_mängd": 63,
+        "senast_uttagen_mängd": 0,
+        "återstående_mängd": 63,
+        "uttag_antal": 1,
+        "uttag_kvar": 1
+      }
+    ],
+    "journal": [
+      {
+        "patient_id": 123456,
+        "aktivitet_id": 57890,
+        "aktivitettyp": "slutanteckning, läkare",
+        "vårdgivare": "Anna Andersson",
+        "vårdgivarekategori": "LÄK",
+        "vårdgivaretel": "08-123456",
+        "förvaltning": "SU",
+        "verksamhet": "Gynekologavdelning",
+        "plats": "Avdelning 404 Gynekologi Östra",
+        "startdatum": "2023-06-20",
+        "slutdatum": "2023-06-27",
+        "huvuddiagnos": "N92.0 Oregelbunden menstruation, oregelbunden cykel",
+        "anamnes": "Patienten har upplevt oregelbunden menstruation och cykel under en längre tid.",
+        "socialt": "Arbetar som lärare och bor ensam.",
+        "tidigare_sjukdomar": "-",
+        "nuvarande_sjukdomar": "-",
+        "aktuellt": "Patienten har genomgått en slutenvårdsvistelse för utredning och behandling av oregelbunden menstruation och cykel. Diagnosen N92.0 har fastställts.",
+        "sammanfattning": "Patienten har diagnostiserats med oregelbunden menstruation och cykel (N92.0) och har genomgått utredning och behandling på gynekologavdelningen.",
+        "bedömning": "Oregelbunden menstruation, oregelbunden cykel",
+        "planering": "Fortsatt uppföljning av menstruationscykeln och behandling med Levonorgestrel. Patienten kommer kallas till återbesök om tre månader för utvärdering av behandlingseffekt.",
+        "från_plats": "HEM",
+        "till_plats": "HEM"
+      },
+      {
+        "patient_id": 123456,
+        "aktivitet_id": 57891,
+        "aktivitettyp": "vård- och läkemedelsberättelse",
+        "vårdgivare": "Anna Andersson",
+        "vårdgivarekategori": "LÄK",
+        "vårdgivaretel": "08-123456",
+        "förvaltning": "SU",
+        "verksamhet": "Gynekologavdelning",
+        "plats": "Avdelning 404 Gynekologi Östra",
+        "startdatum": "2023-06-20",
+        "slutdatum": "2023-06-27",
+        "orsak": "Du sökte vård på grund av oregelbunden menstruation och cykel.",
+        "läkemedelsberättelse": "Du behandlades på avdelningen med Levonorgestrel för att reglera din menstruationscykel.",
+        "planering": "Du kommer fortsätta behandling med Levonorgestrel för att reglera menstruationscykeln. Ett återbesök är planerat om tre månader för utvärdering av behandlingseffekt."
+      }
+    ],
+    "plan": [
+      {
+        "patient_id": 123456,
+        "aktivitet_id": 12345,
+        "aktivitettyp": "uppföljning",
+        "vårdgivare": "Anna Andersson",
+        "vårdgivarekategori": "LÄK",
+        "vårdgivaretel": "08-123456",
+        "förvaltning": "SU",
+        "verksamhet": "Gynekologavdelning",
+        "plats": "Avdelning 404 Gynekologi Östra",
+        "startdatum": "2023-09-27",
+        "slutdatum": "2023-09-27",
+        "planerad_aktivitet": "Återbesök för utvärdering av behandlingseffekt med Levonorgestrel."
+      }
+    ]
+  }
+  

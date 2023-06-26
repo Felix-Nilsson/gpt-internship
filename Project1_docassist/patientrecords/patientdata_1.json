@@ -1,59 +1,54 @@
-# Sök på ICD-10-koder: https://verktyg.internetmedicin.se/koder
-# Sök på mediciner: https://www.fass.se
+{
 
-# Patientdata
-patient = [
+"patient" : [
     {
         "patient_id": 123123,
         "födelsedatum": "1950-01-01",
-        "avlidendatum": "-",  # - om ej avliden
-        "kön": "M",  # M=man, K=kvinna
-        "vital_status": 1,  # 1=lever, 0=död
-    },
-]
+        "avlidendatum": "-", 
+        "kön": "M", 
+        "vital_status": 1  
+    }
+],
 
-# Registrerad aktiviteter/vistelser:
-activity = [
+"activity" : [
     {
         "patient_id": 123123,
         "aktivitet_id": 11223344,
-        "förvaltning": "SU",  # SU, KS, NU, SÄS, AL, SKAS, FSS
-        "verksamhet": "Medicinalavdelning X",  # Akutmedicin, Beroendekliniken, Specialistmedicin, Ortopedi, Neurosjukvård, m.fl.
+        "förvaltning": "SU",  
+        "verksamhet": "Medicinalavdelning X",  
         "plats": "Avdelning 357 Medicin Östra",
-        "vårdgivarekategori": "LÄK",  # LÄK, SSK, ÖVR, BMS, SGY, MSK, USK, SKÖ
+        "vårdgivarekategori": "LÄK", 
         "aktivitettyp": "slutenvårdvistelse",
-        "kontakttyp": "J",  # J, I, E, U3, y, A, F, ... (vet inte vad dessa står för, men säger förmodligen något om vad vistelsen handlade om?)
+        "kontakttyp": "J", 
         "startdatum": "2020-03-28",
         "slutdatum": "2020-03-30",
-        "från_plats": "AKUTEN",  # t.ex. HEM, AKUTEN eller kod för avdelning (t.ex. "Avdelning 357 Medicin Östra" ovan)
-        "till_plats": "HEM",
-    },
-]
+        "från_plats": "AKUTEN", 
+        "till_plats": "HEM"
+    }
+],
 
-# Registerade diagnoser, sökorsaker (vet inte varför orsak räknas som observation); labbresultat har eventuellt sin egen tabell
-observation = [
+"observation" : [
     {
         "patient_id": 123123,
         "aktivitet_id": 12345678,
         "begrepp": "diagnos",
-        "kod": "J189 Pneumoni, ospecificerad",  # ICD10-kod om begrepp=diagnos
-        "värde": "primär",  # primär, sekundär eller 0 om begrepp=diagnos
+        "kod": "J189 Pneumoni, ospecificerad",  
+        "värde": "primär",  
         "startdatum": "2020-03-28",
-        "slutdatum": "2020-03-30",
+        "slutdatum": "2020-03-30"
     },
     {
         "patient_id": 123123,
         "aktivitet_id": 87654321,
-        "begrepp": "orsak",  # t.ex. PSYOHÄL, DYSPNE (andnöd), AKUTBUK (akuta bukbesvär), SVIKT, KOL (dessa tillämpas ganska godtyckligt mellan avdelningar)
+        "begrepp": "orsak", 
         "kod": "FEBER",
         "värde": "-",
         "startdatum": "2020-03-28",
-        "slutdatum": "2020-03-30",
-    },
-]
+        "slutdatum": "2020-03-30"
+    }
+],
 
-# Läkemedelsrecept
-prescription = [
+"prescription" : [
     {
         "patient_id": 123123,
         "akvititet_id": 951,
@@ -69,21 +64,20 @@ prescription = [
         "vårdgivarekategori": "LÄK",
         "vårdgivaretel": "031-123456",
         "verksamhet": "Medicinalavdelning X",
-        "förmån": "Y",  # Y=yes, N=no
+        "förmån": "Y", 
         "förskrivningsdatum": "2020-03-30",
         "giltigt_till_och_med": "2021-03-30",
         "senast_uttag": "-",
-        "tidigast_uttag_inom_förmån": "2020-03-30",  # När de tidigast kan göra ett uttag och hålla sig inom förmånsperioden
+        "tidigast_uttag_inom_förmån": "2020-03-30", 
         "förskriven_mängd": 12,
         "senast_uttagen_mängd": 0,
         "återstående_mängd": 12,
         "uttag_antal": 1,
-        "uttag_kvar": 1,
-    },
-]
+        "uttag_kvar": 1
+    }
+],
 
-# Journalanteckningar (slutanteckningar, vårdberättelser, m.m.)
-journal = [
+"journal" : [
     {
         "patient_id": 123123,
         "aktivitet_id": 59492,
@@ -106,7 +100,7 @@ journal = [
         "bedömning": "Bakteriell pneumoni. Oklart agens, blododlingar negativa. Svarar bra på bensylpc",
         "planering": "Fortsatt behandling med antibiotika i totalt 7 dagar till och me 4/3. Initieras på fenoxmetylpc x 3 vid hemkomst.",
         "från_plats": "HEM",
-        "till_plats": "HEM",
+        "till_plats": "HEM"
     },
     {
         "patient_id": 123123,
@@ -122,23 +116,23 @@ journal = [
         "slutdatum": "2020-03-30",
         "orsak": "Du sökte vård med anledning av feber, hosta och trötthet sedan två dagar. Du fick behandling med antibiotika i blodet och mådde snart bättre på detta.",
         "läkemedelsberättelse": "Du behandlades på avdelningen med bensylpenicillin i blodet och mådde efter någon dags behandling bättre.",
-        "planering": "Du ska fortsätta med antibiotika i tablettform (fenoxmetylpenicillin) morgon, middag och kväll i ytterligare fyra dagar till och med söndag 3/4. Du kommer bli uppringd av läkare om ca två veckor.",
-    },
-]
+        "planering": "Du ska fortsätta med antibiotika i tablettform (fenoxmetylpenicillin) morgon, middag och kväll i ytterligare fyra dagar till och med söndag 3/4. Du kommer bli uppringd av läkare om ca två veckor."
+    }
+],
 
-# Vårdplanering (bl.a. planerat utskrivningsdatum)
-plan = [
+"plan" : [
     {
         "patient_id": 123123,
         "aktivitet_id": "123",
         "aktivitet_källa": "vårdplan",
-        "inskrivenihemsjukvård": "Y",  # N=no, Y=yes
+        "inskrivenihemsjukvård": "Y",
         "ärendestartdatum": "2020-01-01",
         "ärendeslutdatum": "2020-01-02",
-        "inskrivningsdatum": "2020-01-01",  # Patienter kan skrivas in före det aktuella ärendet startat
-        "förstaplanutskrivningsdatum": "2020-01-02",  # Planerat utskrivningsdatum
-        "sistautskrivningsklardatum": "2020-01-02",  # När patienten blev redo att skrivas ut (tar ibland tid innan de faktiskt skrivs ut)
-        "utskrivningsdatum": "2020-01-02",  # När patienten faktiskt skrevs ut
-        "fastvårdkontaktutsedd": "Y",  # Y=yes, N=no 
-    },
+        "inskrivningsdatum": "2020-01-01",
+        "förstaplanutskrivningsdatum": "2020-01-02",
+        "sistautskrivningsklardatum": "2020-01-02",  
+        "utskrivningsdatum": "2020-01-02",  
+        "fastvårdkontaktutsedd": "Y"
+    }
 ]
+}

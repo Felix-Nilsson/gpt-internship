@@ -1,0 +1,55 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//ChatGPT//Test Calendar//EN
+
+BEGIN:VEVENT
+UID:1234567890
+DTSTART:20230620T090000
+DTEND:20230620T100000
+SUMMARY:Röntgen av nedre benskaftet
+DESCRIPTION:Patienten kommer att genomgå en röntgenundersökning för att 
+bedöma frakturens omfattning och läge.
+LOCATION:Radiologiavdelningen
+END:VEVENT
+
+BEGIN:VEVENT
+UID:2345678901
+DTSTART:20230621T080000
+DTEND:20230621T090000
+SUMMARY:Laboratorieanalyser
+DESCRIPTION:Patienten ska genomgå laboratorieanalyser för att bedöma 
+allmän hälsa och identifiera eventuella underliggande faktorer.
+LOCATION:Kliniskt laboratorium
+END:VEVENT
+
+BEGIN:VEVENT
+UID:3456789012
+DTSTART:20230622T100000
+DTEND:20230622T110000
+SUMMARY:Smärtbedömning
+DESCRIPTION:En smärtbedömning kommer att utföras för att bedöma patientens 
+smärtintensitet och smärtupplevelse.
+LOCATION:Smärtklinik
+END:VEVENT
+
+BEGIN:VEVENT
+UID:4567890123
+DTSTART:20230628T090000
+DTEND:20230628T100000
+SUMMARY:Uppföljning av fraktur
+DESCRIPTION:En uppföljande röntgenundersökning kommer att genomföras för 
+att övervaka frakturläkning och bedöma behandlingens framsteg.
+LOCATION:Radiologiavdelningen
+END:VEVENT
+
+BEGIN:VEVENT
+UID:5678901234
+DTSTART:20230630T110000
+DTEND:20230630T120000
+SUMMARY:Funktionsbedömning
+DESCRIPTION:En funktionsbedömning kommer att utföras för att bedöma 
+rörlighet, styrka och eventuella restriktioner i det skadade benet.
+LOCATION:Fysioterapikliniken
+END:VEVENT
+
+END:VCALENDAR

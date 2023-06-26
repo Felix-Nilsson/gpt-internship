@@ -1,0 +1,56 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//ChatGPT//Test Calendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Patientundersökningar
+
+BEGIN:VEVENT
+UID:1234567890
+SUMMARY:EKG
+DTSTART:20230620T080000
+DTEND:20230620T090000
+DESCRIPTION:EKG-test för att undersöka hjärtats elektriska aktivitet.
+LOCATION:Kardiologi Södra, Avdelning 303
+END:VEVENT
+
+BEGIN:VEVENT
+UID:2345678901
+SUMMARY:Blodprov
+DTSTART:20230621T100000
+DTEND:20230621T120000
+DESCRIPTION:Blodprov för att analysera lipidnivåer och kolesterol.
+LOCATION:Kardiologi Södra, Avdelning 303
+END:VEVENT
+
+BEGIN:VEVENT
+UID:3456789012
+SUMMARY:Stressprov
+DTSTART:20230625T090000
+DTEND:20230625T110000
+DESCRIPTION:Stressprov för att bedöma hjärtfunktionen under ansträngning.
+LOCATION:Kardiologi Södra, Avdelning 303
+END:VEVENT
+
+BEGIN:VEVENT
+UID:4567890123
+SUMMARY:Ekokardiografi
+DTSTART:20230626T140000
+DTEND:20230626T150000
+DESCRIPTION:Ekokardiografi för att undersöka hjärtats struktur och 
+funktion.
+LOCATION:Kardiologi Södra, Avdelning 303
+END:VEVENT
+
+BEGIN:VEVENT
+UID:5678901234
+SUMMARY:Koronarangiografi
+DTSTART:20230628T130000
+DTEND:20230628T150000
+DESCRIPTION:Koronarangiografi för att visualisera kranskärlen och bedöma 
+eventuella förträngningar.
+LOCATION:Kardiologi Södra, Avdelning 303
+END:VEVENT
+
+END:VCALENDAR
+

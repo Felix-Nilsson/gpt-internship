@@ -1,0 +1,58 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//ChatGPT//Test Calendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+
+BEGIN:VEVENT
+UID:20230626T080000Z-1
+SUMMARY:Lungröntgen
+DTSTART:20230626T080000Z
+DTEND:20230626T090000Z
+DESCRIPTION:Patienten ska genomgå en lungröntgen för att bedöma 
+behandlingsresponsen och övervaka infiltraten i lungorna.
+LOCATION:Radiologiavdelningen
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20230627T100000Z-2
+SUMMARY:Blododlingar
+DTSTART:20230627T100000Z
+DTEND:20230627T110000Z
+DESCRIPTION:Patienten ska genomgå blododlingar för att undersöka 
+förekomsten av bakteriell infektion i blodet.
+LOCATION:Laboratoriet
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20230628T140000Z-3
+SUMMARY:CRP-provtagning
+DTSTART:20230628T140000Z
+DTEND:20230628T143000Z
+DESCRIPTION:Patientens CRP-nivå ska mätas för att övervaka inflammationen 
+och bedöma behandlingseffektiviteten.
+LOCATION:Laboratoriet
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20230629T090000Z-4
+SUMMARY:Spirometri
+DTSTART:20230629T090000Z
+DTEND:20230629T100000Z
+DESCRIPTION:Patienten ska genomgå spirometri för att bedöma lungfunktionen 
+och utesluta eventuella underliggande lungsjukdomar.
+LOCATION:Lungfunktionslaboratoriet
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20230630T120000Z-5
+SUMMARY:Blodtrycksövervakning
+DTSTART:20230630T120000Z
+DTEND:20230630T130000Z
+DESCRIPTION:Patientens blodtryck ska övervakas under en längre tid för att 
+bedöma och övervaka blodtrycksnivåerna.
+LOCATION:Hemsjukvården
+END:VEVENT
+
+END:VCALENDAR
+

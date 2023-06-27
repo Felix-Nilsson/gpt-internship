@@ -10,10 +10,10 @@ patient_ids = []
 
 conversation = [{'role':'system', 'content': ""}]
 
-def run_conversation(query, model="gpt-3.5-turbo-0613"):
+def run_conversation(query, patients, model="gpt-3.5-turbo-0613"):
     
     print(query)
-
+    
     findIDMessages = [{'role':'system', 
                        'content': f"""You are a identification bot, 
                        your job is to retrieve 6 digit numbers from the text delimited by ___, 
@@ -35,7 +35,7 @@ def run_conversation(query, model="gpt-3.5-turbo-0613"):
 
     #findIDMessages.append({'role':'assistant','content':response_message})
 
-    if response_message != "NONE":
+    if response_message != "NONE" and response_message in patients:
         #local_id = response_message
         patient_ids.insert(0,response_message)
 
@@ -90,8 +90,8 @@ def run_conversation(query, model="gpt-3.5-turbo-0613"):
     return(finished_response)
 
 
-def get_chat_response(query):
+def get_chat_response(query, patients):
 
-    response = run_conversation(query)
+    response = run_conversation(query, patients)
 
     return response

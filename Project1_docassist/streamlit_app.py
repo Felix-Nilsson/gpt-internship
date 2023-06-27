@@ -9,9 +9,10 @@ import streamlit_authenticator as stauth
 import yaml
 from yaml.loader import SafeLoader
 
+
 st.set_page_config(page_title="L-Assist")
 
-with open('patientrecords/config.yaml', 'r') as file:
+with open('patientrecords/config_doc.yaml', 'r') as file:
     config = yaml.load(file, Loader=SafeLoader)
 
 authenticator = stauth.Authenticate(
@@ -24,12 +25,14 @@ authenticator = stauth.Authenticate(
 
 name, authentication_status, username = authenticator.login('Login', 'main')
 
+
 def handle_logout():
     authenticator.logout('Logout', 'main', key='unique_key')
     st.session_state.clear()
 
 if st.session_state["authentication_status"]:
-    
+    patients = config['credentials']['usernames'][username]['patients']
+
     with st.sidebar:
         st.title("L-Assist")
         st.sidebar.button('Logout', on_click=handle_logout)
@@ -60,13 +63,13 @@ if st.session_state["authentication_status"]:
     with user_container:
         user_input = get_text()
 
-    def generate_response(prompt):
-        response = get_chat_response(prompt)
+    def generate_response(prompt, patients):
+        response = get_chat_response(prompt, patients)
         return response
 
     with bot_container:
         if user_input:
-            response = generate_response(user_input)
+            response = generate_response(user_input, patients)
             st.session_state.past.append(user_input)
             st.session_state.generated.append(response)
         

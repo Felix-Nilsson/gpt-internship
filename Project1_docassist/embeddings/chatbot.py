@@ -6,6 +6,7 @@ import json
 # Load your API key from an environment variable or secret management service
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
+patient_ids = []
 
 conversation = [{'role':'system', 'content': ""}]
 
@@ -34,9 +35,9 @@ def run_conversation(query, model="gpt-3.5-turbo-0613"):
 
     #findIDMessages.append({'role':'assistant','content':response_message})
 
-    print(response_message)
-
-    id = response_message
+    if response_message != "NONE":
+        #local_id = response_message
+        patient_ids.insert(0,response_message)
 
     #CHECK IF GPT WANTS TO CALL A FUNCTION
     """if response_message.get("function_call"):
@@ -48,9 +49,11 @@ def run_conversation(query, model="gpt-3.5-turbo-0613"):
 
 
     #CALL GPT AGAIN WITH THE NEW INFORMATION
-    patient_data = return_best_record(query, id)
-
-    patient_data = " ".join(patient_data[0])
+    
+    patient_data = ""
+    if patient_ids != []:
+        patient_data = return_best_record(query, patient_ids[0])
+        patient_data = " ".join(patient_data[0])
 
     #context has to be defined here now since the patient_data is added into it rather than the prompt
     context_with_data = f'''

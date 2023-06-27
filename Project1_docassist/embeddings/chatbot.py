@@ -1,6 +1,7 @@
 import os
 import openai
 from embeddings.run_query import return_best_record
+import json
 
 # Load your API key from an environment variable or secret management service
 openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -8,38 +9,47 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 
 conversation = [{'role':'system', 'content': ""}]
 
-def get_completion(conversation, prompt, model="gpt-3.5-turbo",): # Andrew mentioned that the prompt/ completion paradigm is preferable for this class
-    conversation.append({'role':'user','content':prompt})
-    messages = conversation
+def run_conversation(query, model="gpt-3.5-turbo-0613"):
+    
+    print(query)
+
+    findIDMessages = [{'role':'system', 
+                       'content': f"""You are a identification bot, 
+                       your job is to retrieve 6 digit numbers from the text delimited by ___, 
+                       e.g. 564967 or 138763. 
+                       If no 6 digit number can be found, respond \"NONE\"
+                       
+                        ___{query}___
+                       
+                       """}]
+
+    #print(findIDMessages)
+    #findIDMessages.append({'role':'user','content':query})
 
     response = openai.ChatCompletion.create(
         model=model,
-        messages=messages,
-        temperature=0, # this is the degree of randomness of the model's output
+        messages=findIDMessages,
     )
+    response_message = response["choices"][0]["message"]["content"]
 
-    conversation.append({'role':'assistant','content':response.choices[0].message["content"]})
+    #findIDMessages.append({'role':'assistant','content':response_message})
 
-    #Print a overview of the conversation, could maybe be used to save a log
-    for dict in conversation:
-        print("\n=========  " + dict['role'] + "  =========")
-        print(dict['content'].split("___")[0])
+    print(response_message)
 
-    finished_response = f"""{response.choices[0].message["content"]} 
-        \n*OBS: som läkare bär du alltid själv ansvaret mot patienten*"""
+    id = response_message
 
-    return finished_response
+    #CHECK IF GPT WANTS TO CALL A FUNCTION
+    """if response_message.get("function_call"):
+        function_args = json.loads(response_message["function_call"]["arguments"])
 
-def get_chat_response(query):
+        id = function_args.get("id")
+        print("Current ID of interest: " + id)"""
 
-    patient_data = return_best_record(query)
 
-    """
-    if len([elem for elem in patient_data[1] if elem > 0.7]) == 0:
-        patient_data = ""
-    else:
-    #todo: join with cooler delimiter"""
-    
+
+    #CALL GPT AGAIN WITH THE NEW INFORMATION
+    patient_data = return_best_record(query, id)
+
     patient_data = " ".join(patient_data[0])
 
     #context has to be defined here now since the patient_data is added into it rather than the prompt
@@ -47,18 +57,38 @@ def get_chat_response(query):
     Du är en AI-assistent för läkare på ett sjukhus.
     Du svarar alltid kort och koncist, inte längre än 2 meningar.
     
-    
-    
     Ifall meddelandet ber om information om en specifik patient, använd informationen avgränsad av tre understreck.
 
     ___{patient_data}___
     '''
 
+    messages = conversation
+
+    messages.append({'role':'user','content':query})
+
     #Update the context with relevant information for every question
-    conversation[0] = {'role':'system', 'content': context_with_data}
+    messages[0] = {'role':'system', 'content': context_with_data}
 
-    prompt = f"""{query}"""
 
-    response = get_completion(conversation, prompt)
+    second_response = openai.ChatCompletion.create(
+        model=model,
+        messages=messages,
+        temperature=0, # this is the degree of randomness of the model's output
+    )
+
+    messages.append({'role':'assistant','content':second_response.choices[0].message["content"]})
+
+    finished_response = f'''{second_response.choices[0].message["content"]} 
+    \n*OBS: som läkare bär du alltid själv ansvaret mot patienten*'''
+
+    print(second_response)
+    print(finished_response)
+
+    return(finished_response)
+
+
+def get_chat_response(query):
+
+    response = run_conversation(query)
 
     return response

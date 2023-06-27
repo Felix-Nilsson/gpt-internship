@@ -1,0 +1,38 @@
+[
+    {
+        "patient_id":"654321",
+        "question":"Har patient 654321 fått hjärtinfarkt?",
+        "reference_answers":[
+            "Ja, han har fått akut transmural hjärtinfarkt.",
+            "Han fick transmural hjärtinfarkt, så det stämmer.",
+            "Korrekt, patient 654321 har drabbats av en akut hjärtinfarkt.",
+            "Ja, Han har fått en transmural hjärtinfarkt som är akut",
+            "Ja, Han har lidit av hjärtinfarkt"
+        ]
+    },
+
+    {
+        "patient_id":"112255",
+        "question":"Säg vårdgivaren för patient 112255",
+        "reference_answers":[
+            "Maria Eriksson är den vårdgivare som tar hand om patient 112255.",
+            "Patient 112255 har Maria Eriksson som sin vårdgivare.",
+            "Vårdansvaret för patient 112255 ligger hos Maria Eriksson.",
+            "Maria Eriksson ansvarar för vården av patient 112255.",
+            "Maria Eriksson är den vårdpersonal som är ansvarig för patient 112255."
+        ] 
+    },
+
+    {
+        "patient_id":"112200",
+        "question":"Berätta om doseringen av läkemedlet paracetamol för patient 112200",
+        "reference_answers":[
+            "Patienten får 500 mg paracetamol vid behov, som mest fyra dagligen",
+            "Patienten har möjlighet att ta 500 mg paracetamol efter behov, inte överstigande fyra gånger per dag.",
+            "Paracetamoldosen för patienten är 500 mg vid behov, med en maximal frekvens av fyra gånger dagligen.",
+            "För att lindra symtomen kan patienten ta 500 mg paracetamol efter behov, dock högst fyra gånger per dag.",
+            "Vid behov kan patienten inta upp till fyra dagliga doser av 500 mg paracetamol."
+        ] 
+    }
+
+]

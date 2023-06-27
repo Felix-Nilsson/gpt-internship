@@ -12,8 +12,6 @@ conversation = [{'role':'system', 'content': ""}]
 
 def run_conversation(query, patients, model="gpt-3.5-turbo-0613"):
     
-    print(query)
-    
     findIDMessages = [{'role':'system', 
                        'content': f"""You are a identification bot, 
                        your job is to retrieve 6 digit numbers from the text delimited by ___, 
@@ -35,7 +33,7 @@ def run_conversation(query, patients, model="gpt-3.5-turbo-0613"):
 
     #findIDMessages.append({'role':'assistant','content':response_message})
 
-    if response_message != "NONE" and response_message in patients:
+    if response_message != "NONE" :# and response_message in patients:
         #local_id = response_message
         patient_ids.insert(0,response_message)
 
@@ -55,6 +53,7 @@ def run_conversation(query, patients, model="gpt-3.5-turbo-0613"):
         patient_data = return_best_record(query, patient_ids[0])
         patient_data = " ".join(patient_data[0])
 
+    #print(patient_ids)
     #context has to be defined here now since the patient_data is added into it rather than the prompt
     context_with_data = f'''
     Du är en AI-assistent för läkare på ett sjukhus.

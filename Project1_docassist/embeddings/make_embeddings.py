@@ -19,14 +19,18 @@ def make_embeddings(texts):
     return pd.DataFrame(data=d)
 
 #todo: make it react to new content and create new embeddings if so
-def make_records(id):
-    path = f"patientrecords/{id}/embeddings.pkl"
+def make_records(identifier):
+    path = f"patientrecords/{identifier}/embeddings.pkl"
+    
+    #patientrecords/112255
     if os.path.exists(path):
         df = pd.read_pickle(path)
-    else:   
+        
+    else: 
+          
         df = pd.concat([
-            make_embeddings([read_json(id)]),
-            make_embeddings([read_ics(id)])
+            make_embeddings([read_json(identifier)]),
+            make_embeddings([read_ics(identifier)])
         ]
         ) 
         df.to_pickle(path)

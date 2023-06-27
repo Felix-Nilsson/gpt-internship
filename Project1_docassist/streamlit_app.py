@@ -24,13 +24,16 @@ authenticator = stauth.Authenticate(
 
 name, authentication_status, username = authenticator.login('Login', 'main')
 
-
+def handle_logout():
+    authenticator.logout('Logout', 'main', key='unique_key')
+    st.session_state.clear()
 
 if st.session_state["authentication_status"]:
-    authenticator.logout('Logout', 'main', key='unique_key')
-    st.write(f'Welcome *{st.session_state["name"]}*')
+    
     with st.sidebar:
         st.title("L-Assist")
+        st.sidebar.button('Logout', on_click=handle_logout)
+        st.write(f'Välkommen *{st.session_state["name"]}*')
         st.markdown('''
         ## About
         Ett första försök att bygga en chatt-bot för läkare

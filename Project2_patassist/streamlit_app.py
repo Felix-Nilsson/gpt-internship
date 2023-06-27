@@ -26,12 +26,17 @@ name, authentication_status, username = authenticator.login('Login', 'main')
 
 id = username[1:]
 
+def handle_logout():
+    authenticator.logout('Logout', 'main', key='unique_key')
+    st.session_state.clear()
+
 
 if st.session_state["authentication_status"]:
-    authenticator.logout('Logout', 'main', key='unique_key')
-    st.write(f'Welcome *{st.session_state["name"]}*')
+    
     with st.sidebar:
         st.title("P-Assist")
+        st.sidebar.button('Logout', on_click=handle_logout)
+        st.write(f'Välkommen *{st.session_state["name"]}*')
         st.markdown('''
         ## About
         Ett första försök att bygga en chatt-bot för patienter
@@ -74,9 +79,9 @@ if st.session_state["authentication_status"]:
                 message(st.session_state["generated"][i], key=str(i))
 
 elif st.session_state["authentication_status"] is False:
-    st.error('Username/password is incorrect')
+        st.error('Username/password is incorrect')
 elif st.session_state["authentication_status"] is None:
-    st.warning('Please enter your username and password')
+        st.warning('Please enter your username and password')
 
 
 

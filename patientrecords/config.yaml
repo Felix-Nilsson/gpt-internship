@@ -25,7 +25,7 @@ credentials:
       name: '987321' 
       password: $2b$12$AfmoTVBMoCNOWsLfLWoqbuwyAwCx7Rj9FJqo7kn.c8rvhc01TrZ2.
 cookie:
-  expiry_days: 30
+  expiry_days: 0
   key: some_signature_key # Must be string
   name: some_cookie_name
 preauthorized:

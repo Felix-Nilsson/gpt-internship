@@ -84,9 +84,6 @@ def run_conversation(query, patients, model="gpt-3.5-turbo-0613"):
     finished_response = f'''{second_response.choices[0].message["content"]} 
     \n*OBS: som läkare bär du alltid själv ansvaret mot patienten*'''
 
-    print(second_response)
-    print(finished_response)
-
     return(finished_response)
 
 

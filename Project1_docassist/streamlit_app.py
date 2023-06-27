@@ -11,7 +11,7 @@ from yaml.loader import SafeLoader
 
 st.set_page_config(page_title="L-Assist")
 
-with open('Project2_patassist/patientrecords/config.yaml', 'r') as file:
+with open('patientrecords\config.yaml', 'r') as file:
     config = yaml.load(file, Loader=SafeLoader)
 
 authenticator = stauth.Authenticate(

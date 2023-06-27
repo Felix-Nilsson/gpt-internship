@@ -2,6 +2,7 @@ import os
 import openai
 from embeddings.run_query import return_best_record
 import json
+import re
 
 # Load your API key from an environment variable or secret management service
 openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -10,50 +11,31 @@ patient_ids = []
 
 conversation = [{'role':'system', 'content': ""}]
 
-def run_conversation(query, patients, model="gpt-3.5-turbo-0613"):
+
+def find_patient_ids(string):
+    pattern = r'\d{6}'  # Regular expression pattern to match six digits in a row
+    match = re.search(pattern, string)
+    if match:
+        return match.group()
+    else:
+        return "NONE"
+
+def get_chat_response(query, patients, model="gpt-3.5-turbo-0613"):
     
-    findIDMessages = [{'role':'system', 
-                       'content': f"""You are a identification bot, 
-                       your job is to retrieve 6 digit numbers from the text delimited by ___, 
-                       e.g. 564967 or 138763. 
-                       If no 6 digit number can be found, respond \"NONE\"
-                       
-                        ___{query}___
-                       
-                       """}]
+    response_message = find_patient_ids(query)
+    print("id to add?  ",response_message)
 
-    #print(findIDMessages)
-    #findIDMessages.append({'role':'user','content':query})
-
-    response = openai.ChatCompletion.create(
-        model=model,
-        messages=findIDMessages,
-    )
-    response_message = response["choices"][0]["message"]["content"]
-
-    #findIDMessages.append({'role':'assistant','content':response_message})
-
-    if response_message != "NONE" :# and response_message in patients:
-        #local_id = response_message
+    if response_message != "NONE" and response_message in patients:
         patient_ids.insert(0,response_message)
 
-    #CHECK IF GPT WANTS TO CALL A FUNCTION
-    """if response_message.get("function_call"):
-        function_args = json.loads(response_message["function_call"]["arguments"])
 
-        id = function_args.get("id")
-        print("Current ID of interest: " + id)"""
-
-
-
-    #CALL GPT AGAIN WITH THE NEW INFORMATION
-    
+    #CALL GPT WITH THE QUERY AND RELEVANT PATIENT INFORMATION
     patient_data = ""
     if patient_ids != []:
         patient_data = return_best_record(query, patient_ids[0])
         patient_data = " ".join(patient_data[0])
 
-    #print(patient_ids)
+    print("id list  ",patient_ids)
     #context has to be defined here now since the patient_data is added into it rather than the prompt
     context_with_data = f'''
     Du är en AI-assistent för läkare på ett sjukhus.
@@ -84,10 +66,3 @@ def run_conversation(query, patients, model="gpt-3.5-turbo-0613"):
     \n*OBS: som läkare bär du alltid själv ansvaret mot patienten*'''
 
     return(finished_response)
-
-
-def get_chat_response(query, patients):
-
-    response = run_conversation(query, patients)
-
-    return response

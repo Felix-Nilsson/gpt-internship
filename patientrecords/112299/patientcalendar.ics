@@ -1,0 +1,41 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//ChatGPT//Test Calendar//EN
+
+BEGIN:VEVENT
+UID:1234567890
+SUMMARY:Röntgen av ryggraden
+DTSTART:20230910T080000
+DTEND:20230910T090000
+DESCRIPTION:Patient 112299: Röntgen av ryggraden för att bedöma omfattningen av skoliosen.
+LOCATION:Radiologiavdelningen
+END:VEVENT
+
+BEGIN:VEVENT
+UID:2345678901
+SUMMARY:Kontroll av bentäthet
+DTSTART:20230915T100000
+DTEND:20230915T110000
+DESCRIPTION:Patient 112299: Kontroll av bentäthet för att utvärdera risk för osteoporos.
+LOCATION:Osteoporoskliniken
+END:VEVENT
+
+BEGIN:VEVENT
+UID:3456789012
+SUMMARY:Fysisk undersökning och neurologisk bedömning
+DTSTART:20230918T140000
+DTEND:20230918T150000
+DESCRIPTION:Patient 112299: Fysisk undersökning och neurologisk bedömning av ryggraden.
+LOCATION:Ortopedkliniken
+END:VEVENT
+
+BEGIN:VEVENT
+UID:4567890123
+SUMMARY:Konsultation med ortopedisk specialist
+DTSTART:20230920T160000
+DTEND:20230920T170000
+DESCRIPTION:Patient 112299: Konsultation med ortopedisk specialist för att diskutera behandlingsalternativ.
+LOCATION:Ortopedkliniken
+END:VEVENT
+
+END:VCALENDAR

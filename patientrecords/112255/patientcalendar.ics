@@ -1,0 +1,39 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//ChatGPT//Test Calendar//EN
+
+BEGIN:VEVENT
+UID:11223344
+SUMMARY:Strålbehandling
+DESCRIPTION:Strålbehandling pågår.
+LOCATION:Strålningsavdelningen
+DTSTART;VALUE=DATE:20231205
+DTEND;VALUE=DATE:20231221
+END:VEVENT
+
+BEGIN:VEVENT
+UID:22334455
+SUMMARY:Akut strålsjuka Diagnos
+DESCRIPTION:Akut strålsjuka har diagnostiserats.\nKod: T66.0 Akut strålsjuka
+DTSTART;VALUE=DATE:20231205
+DTEND;VALUE=DATE:20231221
+END:VEVENT
+
+BEGIN:VEVENT
+UID:87654321
+SUMMARY:Orsak till tillstånd
+DESCRIPTION:Strålningsbehandling är den identifierade orsaken till patientens tillstånd.
+DTSTART;VALUE=DATE:20231205
+DTEND;VALUE=DATE:20231221
+END:VEVENT
+
+BEGIN:VEVENT
+UID:951
+SUMMARY:Filgrastim-förskrivning
+DESCRIPTION:Filgrastim har förskrivits för att stödja benmärgen under behandlingen.\nDosering: 5 μg/kg kroppsvikt per dag\nVårdgivare: Maria Eriksson\nVårdgivartelefon: 08-112255
+LOCATION:Onkologiskt centrum
+DTSTART:20231204T000000
+DTEND:20231205T000000
+END:VEVENT
+
+END:VCALENDAR

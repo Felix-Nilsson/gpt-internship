@@ -1,0 +1,58 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//OpenAI//Potentiella Undersökningar//SV
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Potentiella Undersökningar
+
+BEGIN:VEVENT
+UID:20230626T090000Z
+DTSTAMP:20230626T090000Z
+DTSTART:20230626T090000Z
+DTEND:20230626T100000Z
+SUMMARY:Ultraljud av njurarna och urinvägarna
+DESCRIPTION:En ultraljudsundersökning av njurarna och urinvägarna för att upptäcka och bedöma njurstenar.
+LOCATION:Radiologikliniken
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20230627T130000Z
+DTSTAMP:20230627T130000Z
+DTSTART:20230627T130000Z
+DTEND:20230627T140000Z
+SUMMARY:Urinprov
+DESCRIPTION:Tas för analys av urinens sammansättning och förekomst av eventuella avvikelser relaterade till njursten.
+LOCATION:Laboratoriet
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20230628T100000Z
+DTSTAMP:20230628T100000Z
+DTSTART:20230628T100000Z
+DTEND:20230628T110000Z
+SUMMARY:Röntgen av buken
+DESCRIPTION:En röntgenundersökning av buken för att visualisera och bedöma njurstenar.
+LOCATION:Radiologikliniken
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20230629T090000Z
+DTSTAMP:20230629T090000Z
+DTSTART:20230629T090000Z
+DTEND:20230629T100000Z
+SUMMARY:CT-undersökning av buken
+DESCRIPTION:En datortomografi (CT) av buken för detaljerad visualisering av njurarna och urinvägarna samt bedömning av njurstenar.
+LOCATION:Radiologikliniken
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20230630T140000Z
+DTSTAMP:20230630T140000Z
+DTSTART:20230630T140000Z
+DTEND:20230630T150000Z
+SUMMARY:Urografi
+DESCRIPTION:En röntgenundersökning med kontrastmedel för att visualisera och bedöma njurarna, urinblåsan och urinvägarna.
+LOCATION:Radiologikliniken
+END:VEVENT
+
+END:VCALENDAR

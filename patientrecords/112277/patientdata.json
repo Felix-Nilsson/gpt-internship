@@ -1,0 +1,131 @@
+{
+    "patient": [
+    {
+    "patient_id": 123456,
+    "födelsedatum": "1990-03-15",
+    "avlidendatum": "-",
+    "kön": "M",
+    "vital_status": 1
+    }
+    ],
+    "activity": [
+    {
+    "patient_id": 123456,
+    "aktivitet_id": 11223344,
+    "förvaltning": "SU",
+    "verksamhet": "Akutmottagning",
+    "plats": "Akutmottagning",
+    "vårdgivarekategori": "LÄK",
+    "aktivitettyp": "besök",
+    "kontakttyp": "A",
+    "startdatum": "2023-09-10",
+    "slutdatum": "2023-09-10",
+    "från_plats": "HEM",
+    "till_plats": "Akutmottagning"
+    }
+    ],
+    "observation": [
+    {
+    "patient_id": 123456,
+    "aktivitet_id": 99887766,
+    "begrepp": "diagnos",
+    "kod": "A82 Rabies",
+    "värde": "primär",
+    "startdatum": "2023-09-10",
+    "slutdatum": "2023-09-10"
+    }
+    ],
+    "prescription": [
+    {
+    "patient_id": 123456,
+    "aktivitet_id": 987,
+    "läkemedel": "Rabiesimmunoglobulin",
+    "substans": "Rabiesimmunoglobulin",
+    "kategori": "Immunologiska läkemedel",
+    "atc_kod": "J06BB04",
+    "beredningsform": "Injektionsvätska",
+    "dosering": "20 IE/kg kroppsvikt, administreras en gång",
+    "styrka": "20",
+    "styrka_enhet": "IE/kg",
+    "vårdgivare": "Anna Andersson",
+    "vårdgivarekategori": "LÄK",
+    "vårdgivaretel": "08-123456",
+    "verksamhet": "Infektionskliniken",
+    "förmån": "Y",
+    "förskrivningsdatum": "2023-09-10",
+    "giltigt_till_och_med": "2023-09-17",
+    "senast_uttag": "-",
+    "tidigast_uttag_inom_förmån": "2023-09-10",
+    "förskriven_mängd": 1,
+    "senast_uttagen_mängd": 0,
+    "återstående_mängd": 1,
+    "uttag_antal": 0,
+    "uttag_kvar": 0
+    },
+    {
+    "patient_id": 123456,
+    "aktivitet_id": 876,
+    "läkemedel": "Rabiesvaccin",
+    "substans": "Rabiesvaccin",
+    "kategori": "Vacciner",
+    "atc_kod": "J07BG01",
+    "beredningsform": "Injektionsvätska, suspension",
+    "dosering": "1 ml, administreras enligt schema",
+    "styrka": "1",
+    "styrka_enhet": "ml",
+    "vårdgivare": "Anna Andersson",
+    "vårdgivarekategori": "LÄK",
+    "vårdgivaretel": "08-123456",
+    "verksamhet": "Infektionskliniken",
+    "förmån": "Y",
+    "förskrivningsdatum": "2023-09-10",
+    "giltigt_till_och_med": "2024-09-10",
+    "senast_uttag": "-",
+    "tidigast_uttag_inom_förmån": "2023-09-10",
+    "förskriven_mängd": 3,
+    "senast_uttagen_mängd": 0,
+    "återstående_mängd": 3,
+    "uttag_antal": 0,
+    "uttag_kvar": 0
+    }
+    ],
+    "journal": [
+    {
+    "patient_id": 123456,
+    "aktivitet_id": 59494,
+    "aktivitettyp": "slutanteckning, läkare",
+    "vårdgivare": "Anna Andersson",
+    "vårdgivarekategori": "LÄK",
+    "vårdgivaretel": "08-123456",
+    "förvaltning": "SU",
+    "verksamhet": "Infektionskliniken",
+    "plats": "Infektionskliniken",
+    "startdatum": "2023-09-10",
+    "slutdatum": "2023-09-10",
+    "huvuddiagnos": "A82 Rabies",
+    "anamnes": "Patienten blev biten av en hund som senare visade sig ha rabies. Inget tidigare skydd mot rabiesviruset.",
+    "socialt": "-",
+    "tidigare_sjukdomar": "-",
+    "nuvarande_sjukdomar": "-",
+    "aktuellt": "Patienten sökte akutmottagningen efter att ha blivit biten av en hund. Efter utvärdering av hundens status konstaterades att den hade rabies. Patienten har inte tidigare vaccinerats mot rabies. Rabiesimmunoglobulin och rabiesvaccin förskrivs och administreras enligt rekommenderade riktlinjer.",
+    "sammanfattning": "Patienten blev biten av en hund som hade rabies. Rabiesimmunoglobulin och rabiesvaccin förskrivs och administreras enligt rekommenderade riktlinjer.",
+    "bedömning": "Rabies",
+    "planering": "Administrera rabiesimmunoglobulin och rabiesvaccin enligt rekommenderade riktlinjer. Fortsatt uppföljning och vaccinationsschema kommer att följas."
+    }
+    ],
+    "plan": [
+    {
+    "patient_id": 123456,
+    "aktivitet_id": "987",
+    "aktivitet_källa": "vårdplan",
+    "inskrivenihemsjukvård": "N",
+    "ärendestartdatum": "2023-09-10",
+    "ärendeslutdatum": "2023-09-10",
+    "inskrivningsdatum": "2023-09-10",
+    "förstaplanutskrivningsdatum": "2023-09-10",
+    "sista_planutskrivningsdatum": "2023-09-10",
+    "planbeskrivning": "Administrera rabiesimmunoglobulin och rabiesvaccin enligt rekommenderade riktlinjer. Fortsatt uppföljning och vaccinationsschema kommer att följas.",
+    "åtgärdstyp": "Rabiesvaccination"
+    }
+    ]
+    }

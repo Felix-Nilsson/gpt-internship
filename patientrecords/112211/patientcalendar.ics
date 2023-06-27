@@ -1,0 +1,48 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//ChatGPT//Test Calendar//EN
+
+BEGIN:VEVENT
+UID:11223344-112211
+SUMMARY:Aktivitet: Slutenvårdsvistelse
+DTSTART;VALUE=DATE:20231105
+DTEND;VALUE=DATE:20231109
+LOCATION:Akutmottagning, Huvudbyggnad
+DESCRIPTION:Aktivitet: Slutenvårdsvistelse\nPlats: Akutmottagning, Huvudbyggnad\nVårdgivarekategori: LÄK\nKontakttyp: J\nFrån plats: HEM\nTill plats: Avdelning 205 Medicin
+END:VEVENT
+
+BEGIN:VEVENT
+UID:22334455-112211
+SUMMARY:Observation: Diagnos
+DTSTART;VALUE=DATE:20231105
+DTEND;VALUE=DATE:20231109
+DESCRIPTION:Observation: Diagnos\nDiagnos: T63.0x1A Giftormbett, initialt besök\nVärde: primär
+END:VEVENT
+
+BEGIN:VEVENT
+UID:59876-112211
+SUMMARY:Journal: Slutanteckning (Läkare)
+DTSTART;VALUE=DATE:20231105
+DTEND;VALUE=DATE:20231109
+LOCATION:Akutmottagning, Huvudbyggnad
+DESCRIPTION:Journal: Slutanteckning (Läkare)\nVårdgivare: Lisa Andersson (LÄK)\nPlats: Akutmottagning, Huvudbyggnad\nHuvuddiagnos: T63.0x1A Giftormbett, initialt besök\nAnamnes: Patienten rapporterade att han blev biten av en orm under en vandring i skogen. Ormen identifierades senare som en giftig art.\nTidigare sjukdomar: -\nNuvarande sjukdomar: -\nAktuellt: Patienten sökte akutmottagningen efter att ha blivit biten av en giftig orm. Bitplatsen rengjordes och patienten fick administrering av motgift samt smärtlindring. Hans tillstånd övervakades noggrant under sjukhusvistelsen.\nSammanfattning: Patienten diagnostiserades med giftormbett och behandlades på akutmottagningen. Motgift administrerades och patientens tillstånd övervakades under sjukhusvistelsen.\nBedömning: Giftormbett\nPlanering: Administrering av motgift, smärtlindring och övervakning av tillståndet.
+END:VEVENT
+
+BEGIN:VEVENT
+UID:59877-112211
+SUMMARY:Journal: Slutanteckning (Sjuksköterska)
+DTSTART;VALUE=DATE:20231105
+DTEND;VALUE=DATE:20231109
+LOCATION:Avdelning 205 Medicin
+DESCRIPTION:Journal: Slutanteckning (Sjuksköterska)\nVårdgivare: Maria Svensson (SSK)\nPlats: Avdelning 205 Medicin\nHuvuddiagnos: T63.0x1A Giftormbett, initialt besök\nOmvårdnad: Patienten observerades för tecken på förgiftning och övervakades noga under sjukhusvistelsen. Sårvård utfördes på bitplatsen, och smärta och obehag hanterades med lämpliga läkemedel.\nPlanering: Fortlöpande observation och omvårdnad, smärtlindring och sårvård.
+END:VEVENT
+
+BEGIN:VEVENT
+UID:98765-112211
+SUMMARY:Plan: Vårdplan
+DTSTART;VALUE=DATE:20231105
+DTEND;VALUE=DATE:20231109
+DESCRIPTION:Plan: Vårdplan\nInskriven i hemsjukvård: Nej\nInskrivningsdatum: 20231105\nFörsta planutskrivningsdatum: 20231108\nSista utskrivningsklardatum: 20231108\nUtskrivningsdatum: 20231108\nFast vårdkontakt utsedd: Nej
+END:VEVENT
+
+END:VCALENDAR

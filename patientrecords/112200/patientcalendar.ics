@@ -1,0 +1,49 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//ChatGPT//Testkalender//SV
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:44556677@ortopedimottagning.com
+SUMMARY:Besök på Ortopedimottagning
+DESCRIPTION:Besök på Ortopedimottagning för patient 112200.
+LOCATION:Ortopedimottagning
+DTSTART;VALUE=DATE:20230601
+DTEND;VALUE=DATE:20230601
+END:VEVENT
+BEGIN:VEVENT
+UID:11223344@ortopedimottagning.com
+SUMMARY:Diagnos - Främre korsbandsskada
+DESCRIPTION:Diagnos för patient 112200 - S83.5 Främre korsbandsskada (akut).
+DTSTART;VALUE=DATE:20230601
+DTEND;VALUE=DATE:20230601
+END:VEVENT
+BEGIN:VEVENT
+UID:99887766@ortopedimottagning.com
+SUMMARY:Förskrivning - Smärtstillande
+DESCRIPTION:Förskrivning av smärtstillande läkemedel för patient 112200 - Paracetamol.
+DTSTART;VALUE=DATE:20230601
+DTEND;VALUE=DATE:20230608
+END:VEVENT
+BEGIN:VEVENT
+UID:876@ortopedimottagning.com
+SUMMARY:Förskrivning - Antiinflammatoriskt
+DESCRIPTION:Förskrivning av antiinflammatoriskt läkemedel för patient 112200 - Ibuprofen.
+DTSTART;VALUE=DATE:20230601
+DTEND;VALUE=DATE:20230608
+END:VEVENT
+BEGIN:VEVENT
+UID:59494@ortopedimottagning.com
+SUMMARY:Slutanteckning - Främre korsbandsskada
+DESCRIPTION:Slutanteckning för patient 112200 - Främre korsbandsskada.
+DTSTART;VALUE=DATE:20230601
+DTEND;VALUE=DATE:20230601
+END:VEVENT
+BEGIN:VEVENT
+UID:987@ortopedimottagning.com
+SUMMARY:Uppföljning av främre korsbandsskada
+DESCRIPTION:Uppföljning av främre korsbandsskada för patient 112200.
+DTSTART;VALUE=DATE:20230601
+DTEND;VALUE=DATE:20230601
+END:VEVENT
+END:VCALENDAR

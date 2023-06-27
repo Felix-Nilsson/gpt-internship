@@ -1,0 +1,50 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//ChatGPT//Test Calendar//EN
+
+BEGIN:VEVENT
+UID:112222-99887766
+SUMMARY:Röntgenundersökning av axelled
+DTSTART:20231020T080000
+DTEND:20231020T090000
+LOCATION:Akutmottagning, Huvudbyggnad
+DESCRIPTION:Röntgenundersökning av axelled för att bedöma omfattningen av förluxationen (S43.0x0A Förluxation av axel, ospecificerad led).
+END:VEVENT
+
+BEGIN:VEVENT
+UID:112222-77665544
+SUMMARY:Blodprovtagning
+DTSTART:20231020T093000
+DTEND:20231020T100000
+LOCATION:Akutmottagning, Huvudbyggnad
+DESCRIPTION:Blodprovtagning för att kontrollera allmänna hälsoparametrar och söka efter infektionsmarkörer och inflammatoriska markörer.
+END:VEVENT
+
+BEGIN:VEVENT
+UID:112222-22334455
+SUMMARY:Ultraljud av axelled
+DTSTART:20231020T103000
+DTEND:20231020T110000
+LOCATION:Akutmottagning, Huvudbyggnad
+DESCRIPTION:Ultraljud av axelled för att bedöma eventuella mjukdelsskador och söka efter skada på muskler, senor eller ligament.
+END:VEVENT
+
+BEGIN:VEVENT
+UID:112222-00112233
+SUMMARY:Neurologisk undersökning
+DTSTART:20231020T113000
+DTEND:20231020T120000
+LOCATION:Akutmottagning, Huvudbyggnad
+DESCRIPTION:Neurologisk undersökning av den drabbade armen för att kontrollera nervskador och nervrotskompression.
+END:VEVENT
+
+BEGIN:VEVENT
+UID:112222-44556677
+SUMMARY:Fysioterapeutisk bedömning
+DTSTART:20231020T130000
+DTEND:20231020T140000
+LOCATION:Akutmottagning, Huvudbyggnad
+DESCRIPTION:Fysioterapeutisk bedömning och rörelseanalys för att utvärdera rörelseomfång, muskelstyrka och funktion i axelleden.
+END:VEVENT
+
+END:VCALENDAR

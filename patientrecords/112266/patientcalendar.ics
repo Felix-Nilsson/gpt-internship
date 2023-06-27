@@ -1,0 +1,62 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//OpenAI//GPT-3.5.2.0//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Testkalender
+
+BEGIN:VEVENT
+UID:borreliaserologi123456
+SUMMARY:Borreliaserologi
+DTSTART:20230910T080000
+DTEND:20230910T090000
+DESCRIPTION:Ett test för att bekräfta diagnosen Lyme-borrelios och övervaka behandlingens framsteg.
+LOCATION:Infektionskliniken
+END:VEVENT
+
+BEGIN:VEVENT
+UID:kliniskundersokning123456
+SUMMARY:Klinisk undersökning
+DTSTART:20230912T140000
+DTEND:20230912T150000
+DESCRIPTION:En klinisk undersökning för att bedöma allmänt tillstånd och kontrollera symtom relaterade till Lyme-borrelios.
+LOCATION:Infektionskliniken
+END:VEVENT
+
+BEGIN:VEVENT
+UID:antibiotikakanslighetstest123456
+SUMMARY:Antibiotikakänslighetstest
+DTSTART:20230915T100000
+DTEND:20230915T110000
+DESCRIPTION:Ett test för att verifiera att Doxycyklin är effektiv mot den specifika borreliabakterien.
+LOCATION:Infektionskliniken
+END:VEVENT
+
+BEGIN:VEVENT
+UID:uppfoljandelabprover123456
+SUMMARY:Uppföljande laboratorieprov
+DTSTART:20230925T090000
+DTEND:20230925T100000
+DESCRIPTION:Uppföljande laboratorieprov för att kontrollera läkning och säkerställa ingen ytterligare åtgärd behövs.
+LOCATION:Infektionskliniken
+END:VEVENT
+
+BEGIN:VEVENT
+UID:rontgenundersokning123456
+SUMMARY:Röntgenundersökning
+DTSTART:20230930T130000
+DTEND:20230930T140000
+DESCRIPTION:En röntgenundersökning för att utvärdera eventuella skador eller förändringar i muskuloskeletala systemet.
+LOCATION:Radiologiavdelningen
+END:VEVENT
+
+BEGIN:VEVENT
+UID:uppfoljningvitalatecken123456
+SUMMARY:Uppföljning av vitala tecken
+DTSTART:20230912T090000
+DTEND:20230912T093000
+DESCRIPTION:Regelbunden uppföljning av vitala tecken som puls, blodtryck och temperatur.
+LOCATION:Infektionskliniken
+END:VEVENT
+
+END:VCALENDAR

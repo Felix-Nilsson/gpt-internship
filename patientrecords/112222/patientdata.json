@@ -1,0 +1,73 @@
+{
+  "patient": [
+    {
+      "patient_id": 112222,
+      "födelsedatum": "1990-03-15",
+      "avlidendatum": "-",
+      "kön": "K",
+      "vital_status": 1
+    }
+  ],
+  "activity": [
+    {
+      "patient_id": 112222,
+      "aktivitet_id": 99887766,
+      "förvaltning": "SU",
+      "verksamhet": "Akutmottagning",
+      "plats": "Akutmottagning, Huvudbyggnad",
+      "vårdgivarekategori": "LÄK",
+      "aktivitettyp": "slutenvårdvistelse",
+      "kontakttyp": "J",
+      "startdatum": "2023-10-20",
+      "slutdatum": "2023-10-22",
+      "från_plats": "HEM",
+      "till_plats": "Avdelning 103 Ortopedi"
+    }
+  ],
+  "observation": [
+    {
+      "patient_id": 112222,
+      "aktivitet_id": 77665544,
+      "begrepp": "diagnos",
+      "kod": "S43.0x0A Förluxation av axel, ospecificerad led",
+      "värde": "primär",
+      "startdatum": "2023-10-20",
+      "slutdatum": "2023-10-22"
+    }
+  ],
+  "journal": [
+    {
+      "patient_id": 112222,
+      "aktivitet_id": 112233,
+      "aktivitettyp": "slutanteckning, läkare",
+      "vårdgivare": "Emma Johansson",
+      "vårdgivarekategori": "LÄK",
+      "förvaltning": "SU",
+      "verksamhet": "Akutmottagning",
+      "plats": "Akutmottagning, Huvudbyggnad",
+      "startdatum": "2023-10-20",
+      "slutdatum": "2023-10-22",
+      "huvuddiagnos": "S43.0x0A Förluxation av axel, ospecificerad led",
+      "anamnes": "Patienten berättade att hon föll i duschen och landade på sin vänstra arm. Hon upplevde omedelbar smärta och svårigheter att röra sin axel efter fallet.",
+      "tidigare_sjukdomar": "-",
+      "nuvarande_sjukdomar": "-",
+      "aktuellt": "Patienten sökte akutmottagningen efter att ha fallit i duschen och fått sin axel ur led. Efter bedömning bekräftades diagnosen axelförluxation. En repositionering (återställning) av axeln utfördes under sedering, och en axelslinga applicerades för att stabilisera ledvinkeln. Patienten fick smärtlindring och instruktioner om rehabiliteringsövningar.",
+      "sammanfattning": "Patienten diagnosticerades med förluxation av axel och behandlades på akutmottagningen. Axeln återställdes och en axelslinga applicerades för att stabilisera leden. Smärtlindring och rehabiliteringsinstruktioner gavs till patienten."
+    }
+  ],
+  "plan": [
+    {
+      "patient_id": 112222,
+      "aktivitet_id": "332211",
+      "aktivitet_källa": "vårdplan",
+      "inskrivenihemsjukvård": "N",
+      "ärendestartdatum": "2023-10-20",
+      "ärendeslutdatum": "2023-10-22",
+      "inskrivningsdatum": "2023-10-20",
+      "förstaplanutskrivningsdatum": "2023-10-22",
+      "sistautskrivningsklardatum": "2023-10-22",
+      "utskrivningsdatum": "2023-10-22",
+      "fastvårdkontaktutsedd": "N"
+    }
+  ]
+}

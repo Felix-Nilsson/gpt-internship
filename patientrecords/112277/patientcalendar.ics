@@ -1,0 +1,57 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//OpenAI//Patient Calendar//EN
+
+BEGIN:VEVENT
+UID:11223344
+DTSTART:20230910T000000
+DTEND:20230910T235959
+SUMMARY:Besök - Akutmottagning
+LOCATION:Akutmottagning
+DESCRIPTION:Besök på Akutmottagning.
+END:VEVENT
+
+BEGIN:VEVENT
+UID:99887766
+DTSTART:20230910T000000
+DTEND:20230910T235959
+SUMMARY:Diagnos - A82 Rabies
+DESCRIPTION:Primär diagnos av A82 Rabies.
+END:VEVENT
+
+BEGIN:VEVENT
+UID:987
+DTSTART:20230910T000000
+DTEND:20230910T235959
+SUMMARY:Rabiesimmunoglobulin förskrivning
+LOCATION:Infektionskliniken
+DESCRIPTION:Rabiesimmunoglobulin förskrivet av Anna Andersson på Infektionskliniken.
+END:VEVENT
+
+BEGIN:VEVENT
+UID:876
+DTSTART:20230910T000000
+DTEND:20230910T235959
+SUMMARY:Rabiesvaccin förskrivning
+LOCATION:Infektionskliniken
+DESCRIPTION:Rabiesvaccin förskrivet av Anna Andersson på Infektionskliniken.
+END:VEVENT
+
+BEGIN:VEVENT
+UID:59494
+DTSTART:20230910T000000
+DTEND:20230910T235959
+SUMMARY:Slutanteckning - Läkare
+LOCATION:Infektionskliniken
+DESCRIPTION:Slutanteckning av Anna Andersson på Infektionskliniken.
+END:VEVENT
+
+BEGIN:VEVENT
+UID:987-plan
+DTSTART:20230910T000000
+DTEND:20230910T235959
+SUMMARY:Rabiesvaccination - Plan
+DESCRIPTION:Administrera rabiesimmunoglobulin och rabiesvaccin enligt rekommenderade riktlinjer. Fortsatt uppföljning och vaccinationsschema kommer att följas.
+END:VEVENT
+
+END:VCALENDAR

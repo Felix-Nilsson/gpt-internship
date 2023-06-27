@@ -1,0 +1,90 @@
+{
+  "patient": [
+    {
+      "patient_id": 112211,
+      "födelsedatum": "1985-07-12",
+      "avlidendatum": "-",
+      "kön": "M",
+      "vital_status": 1
+    }
+  ],
+  "activity": [
+    {
+      "patient_id": 112211,
+      "aktivitet_id": 11223344,
+      "förvaltning": "SU",
+      "verksamhet": "Akutmottagning",
+      "plats": "Akutmottagning, Huvudbyggnad",
+      "vårdgivarekategori": "LÄK",
+      "aktivitettyp": "slutenvårdvistelse",
+      "kontakttyp": "J",
+      "startdatum": "2023-11-05",
+      "slutdatum": "2023-11-08",
+      "från_plats": "HEM",
+      "till_plats": "Avdelning 205 Medicin"
+    }
+  ],
+  "observation": [
+    {
+      "patient_id": 112211,
+      "aktivitet_id": 22334455,
+      "begrepp": "diagnos",
+      "kod": "T63.0x1A Giftormbett, initialt besök",
+      "värde": "primär",
+      "startdatum": "2023-11-05",
+      "slutdatum": "2023-11-08"
+    }
+  ],
+  "journal": [
+    {
+      "patient_id": 112211,
+      "aktivitet_id": 59876,
+      "aktivitettyp": "slutanteckning, läkare",
+      "vårdgivare": "Lisa Andersson",
+      "vårdgivarekategori": "LÄK",
+      "förvaltning": "SU",
+      "verksamhet": "Akutmottagning",
+      "plats": "Akutmottagning, Huvudbyggnad",
+      "startdatum": "2023-11-05",
+      "slutdatum": "2023-11-08",
+      "huvuddiagnos": "T63.0x1A Giftormbett, initialt besök",
+      "anamnes": "Patienten rapporterade att han blev biten av en orm under en vandring i skogen. Ormen identifierades senare som en giftig art.",
+      "tidigare_sjukdomar": "-",
+      "nuvarande_sjukdomar": "-",
+      "aktuellt": "Patienten sökte akutmottagningen efter att ha blivit biten av en giftig orm. Bitplatsen rengjordes och patienten fick administrering av motgift samt smärtlindring. Hans tillstånd övervakades noggrant under sjukhusvistelsen.",
+      "sammanfattning": "Patienten diagnostiserades med giftormbett och behandlades på akutmottagningen. Motgift administrerades och patientens tillstånd övervakades under sjukhusvistelsen.",
+      "bedömning": "Giftormbett",
+      "planering": "Administrering av motgift, smärtlindring och övervakning av tillståndet."
+    },
+    {
+      "patient_id": 112211,
+      "aktivitet_id": 59877,
+      "aktivitettyp": "slutanteckning, sjuksköterska",
+      "vårdgivare": "Maria Svensson",
+      "vårdgivarekategori": "SSK",
+      "förvaltning": "SU",
+      "verksamhet": "Avdelning 205 Medicin",
+      "plats": "Avdelning 205 Medicin",
+      "startdatum": "2023-11-05",
+      "slutdatum": "2023-11-08",
+      "huvuddiagnos": "T63.0x1A Giftormbett, initialt besök",
+      "omvårdnad": "Patienten observerades för tecken på förgiftning och övervakades noga under sjukhusvistelsen. Sårvård utfördes på bitplatsen, och smärta och obehag hanterades med lämpliga läkemedel.",
+      "planering": "Fortlöpande observation och omvårdnad, smärtlindring och sårvård."
+    }
+  ],
+  "plan": [
+    {
+      "patient_id": 112211,
+      "aktivitet_id": "98765",
+      "aktivitet_källa": "vårdplan",
+      "inskrivenihemsjukvård": "N",
+      "ärendestartdatum": "2023-11-05",
+      "ärendeslutdatum": "2023-11-08",
+      "inskrivningsdatum": "2023-11-05",
+      "förstaplanutskrivningsdatum": "2023-11-08",
+      "sistautskrivningsklardatum": "2023-11-08",
+      "utskrivningsdatum": "2023-11-08",
+      "fastvårdkontaktutsedd": "N"
+    }
+  ]
+}

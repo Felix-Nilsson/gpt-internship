@@ -1,0 +1,127 @@
+{
+  "patient": [
+    {
+      "patient_id": 112266,
+      "födelsedatum": "1990-02-25",
+      "avlidendatum": "-",
+      "kön": "K",
+      "vital_status": 1
+    }
+  ],
+  "activity": [
+    {
+      "patient_id": 112266,
+      "aktivitet_id": 987654,
+      "förvaltning": "SU",
+      "verksamhet": "Infektionskliniken",
+      "plats": "Avdelning 301",
+      "vårdgivarekategori": "LÄK",
+      "aktivitettyp": "slutenvårdvistelse",
+      "kontakttyp": "J",
+      "startdatum": "2023-09-10",
+      "slutdatum": "2023-09-20",
+      "från_plats": "AKUTEN",
+      "till_plats": "AVDELNING"
+    }
+  ],
+  "observation": [
+    {
+      "patient_id": 112266,
+      "aktivitet_id": 987654,
+      "begrepp": "diagnos",
+      "kod": "A69.2 Lyme-borrelios",
+      "värde": "primär",
+      "startdatum": "2023-09-10",
+      "slutdatum": "2023-09-20"
+    }
+  ],
+  "prescription": [
+    {
+      "patient_id": 112266,
+      "akvititet_id": 54321,
+      "läkemedel": "Doxycyklin",
+      "substans": "Doxycyklin",
+      "kategori": "Antibiotika",
+      "atc_kod": "J01AA02",
+      "beredningsform": "Tablett",
+      "dosering": "100 mg två gånger dagligen i 14 dagar",
+      "styrka": "100",
+      "styrka_enhet": "mg",
+      "vårdgivare": "Anna Andersson",
+      "vårdgivarekategori": "LÄK",
+      "vårdgivaretel": "08-112266",
+      "verksamhet": "Infektionskliniken",
+      "förmån": "Y",
+      "förskrivningsdatum": "2023-09-10",
+      "giltigt_till_och_med": "2024-09-10",
+      "senast_uttag": "-",
+      "tidigast_uttag_inom_förmån": "2023-09-10",
+      "förskriven_mängd": 28,
+      "senast_uttagen_mängd": 0,
+      "återstående_mängd": 28,
+      "uttag_antal": 0,
+      "uttag_kvar": 0
+    }
+  ],
+  "journal": [
+    {
+      "patient_id": 112266,
+      "aktivitet_id": 876543,
+      "aktivitettyp": "slutanteckning, läkare",
+      "vårdgivare": "Anna Andersson",
+      "vårdgivarekategori": "LÄK",
+      "vårdgivaretel": "08-112266",
+      "förvaltning": "SU",
+      "verksamhet": "Infektionskliniken",
+      "plats": "Avdelning 301",
+      "startdatum": "2023-09-10",
+      "slutdatum": "2023-09-20",
+      "huvuddiagnos": "A69.2 Lyme-borrelios",
+      "anamnes": "Patienten sökte vård efter att ha upptäckt en rodnad ringformad hudutslag efter ett fästingbett. Inga andra symtom rapporterade.",
+      "socialt": "-",
+      "tidigare_sjukdomar": "-",
+      "nuvarande_sjukdomar": "-",
+      "aktuellt": "Patienten uppvisade typiska tecken på Lyme-borrelios med rodnad ringformad hudutslag runt bettstället. Diagnosen bekräftades genom klinisk bedömning och laboratorieprovtagning. Behandling med Doxycyklin inleddes.",
+      "sammanfattning": "Patienten har diagnostiserats med Lyme-borrelios efter att ha uppvisat rodnad ringformad hudutslag runt ett fästingbett. Behandlingen inkluderar antibiotika (Doxycyklin) under 14 dagar.",
+      "bedömning": "Lyme-borrelios",
+      "planering": "Fortsatt behandling med Doxycyklin. Uppföljning planeras efter avslutad behandling."
+    },
+    {
+      "patient_id": 112266,
+      "aktivitet_id": 876544,
+      "aktivitettyp": "vård- och läkemedelsberättelse",
+      "vårdgivare": "Anna Andersson",
+      "vårdgivarekategori": "LÄK",
+      "vårdgivaretel": "08-112266",
+      "förvaltning": "SU",
+      "verksamhet": "Infektionskliniken",
+      "plats": "Avdelning 301",
+      "startdatum": "2023-09-10",
+      "slutdatum": "2023-09-20",
+      "orsak": "Du sökte vård på grund av rodnad ringformad hudutslag efter ett fästingbett.",
+      "läkemedelsberättelse": "Du behandlades på avdelningen med antibiotika (Doxycyklin) för att behandla Lyme-borrelios.",
+      "planering": "Du kommer fortsätta behandlingen med Doxycyklin. En uppföljning är planerad efter avslutad behandling."
+    }
+  ],
+  "plan": [
+    {
+      "patient_id": 112266,
+      "aktivitet_id": "987",
+      "aktivitet_källa": "vårdplan",
+      "inskrivenihemsjukvård": "N",
+      "ärendestartdatum": "2023-09-10",
+      "ärendeslutdatum": "2023-09-20",
+      "inskrivningsdatum": "2023-09-10",
+      "förstaplanutskrivningsdatum": "2023-09-20",
+      "sistautskrivningsklardatum": "2023-09-20",
+      "utskrivningsdatum": "2023-09-20",
+      "planstartdatum": "2023-09-10",
+      "planslutdatum": "2023-09-20",
+      "aktivitettyp": "Slutenvårdvistelse",
+      "aktivitet": "Slutenvårdvistelse",
+      "slutvårdgivarekategori": "LÄK",
+      "slutvårdgivare": "Anna Andersson",
+      "slutvårdgivaretel": "08-112266"
+    }
+  ]
+}

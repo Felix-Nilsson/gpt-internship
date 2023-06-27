@@ -1,0 +1,95 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//OpenAI//Patient Calendar//EN
+
+BEGIN:VEVENT
+UID:44556677
+DTSTART:20230901T080000Z
+DTEND:20230901T100000Z
+SUMMARY:Röntgenundersökning av bröstet
+DESCRIPTION:Potentiell undersökning: Röntgenundersökning av bröstet för att undersöka eventuella avvikelser i lungor och hjärta.
+LOCATION:Radiologiavdelningen
+END:VEVENT
+
+BEGIN:VEVENT
+UID:44556678
+DTSTART:20230903T130000Z
+DTEND:20230903T143000Z
+SUMMARY:EKG (elektrokardiogram)
+DESCRIPTION:Potentiell undersökning: EKG (elektrokardiogram) för att mäta och utvärdera hjärtats elektriska aktivitet.
+LOCATION:Kardiologimottagningen
+END:VEVENT
+
+BEGIN:VEVENT
+UID:44556679
+DTSTART:20230905T090000Z
+DTEND:20230905T103000Z
+SUMMARY:Blodprovstagning
+DESCRIPTION:Potentiell undersökning: Blodprovstagning för att analysera hjärtmarkörer och lipider.
+LOCATION:Klinisk laboratorium
+END:VEVENT
+
+BEGIN:VEVENT
+UID:44556680
+DTSTART:20230907T140000Z
+DTEND:20230907T153000Z
+SUMMARY:Ekokardiografi
+DESCRIPTION:Potentiell undersökning: Ekokardiografi (ultraljud av hjärtat) för att undersöka hjärtstrukturen och hjärtfunktionen.
+LOCATION:Kardiologimottagningen
+END:VEVENT
+
+BEGIN:VEVENT
+UID:44556681
+DTSTART:20230909T100000Z
+DTEND:20230909T120000Z
+SUMMARY:Belastningstest
+DESCRIPTION:Potentiell undersökning: Belastningstest (t.ex. arbets-EKG eller stressprov) för att bedöma hjärtats reaktion på fysisk ansträngning.
+LOCATION:Kardiologimottagningen
+END:VEVENT
+
+BEGIN:VEVENT
+UID:44556682
+DTSTART:20230911T080000Z
+DTEND:20230911T100000Z
+SUMMARY:Koronarangiografi
+DESCRIPTION:Potentiell undersökning: Koronarangiografi (hjärtkateterisering) för att undersöka kranskärlens tillstånd och identifiera eventuella förträngningar eller blockeringar.
+LOCATION:Interventionsradiologi
+END:VEVENT
+
+BEGIN:VEVENT
+UID:44556683
+DTSTART:20230913T090000Z
+DTEND:20230913T103000Z
+SUMMARY:CT-undersökning av hjärtat
+DESCRIPTION:Potentiell undersökning: CT-undersökning av hjärtat för att få detaljerade bilder av hjärtats struktur och blodkärl.
+LOCATION:Radiologiavdelningen
+END:VEVENT
+
+BEGIN:VEVENT
+UID:44556684
+DTSTART:20230915T140000Z
+DTEND:20230915T153000Z
+SUMMARY:Holter-övervakning
+DESCRIPTION:Potentiell undersökning: Holter-övervakning (24-timmars EKG-övervakning) för att registrera hjärtats aktivitet under en längre tidsperiod.
+LOCATION:Kardiologimottagningen
+END:VEVENT
+
+BEGIN:VEVENT
+UID:44556685
+DTSTART:20230917T100000Z
+DTEND:20230917T120000Z
+SUMMARY:Hjärtbiopsi
+DESCRIPTION:Potentiell undersökning: Hjärtbiopsi för att ta vävnadsprov från hjärtat vid misstanke om hjärtmuskelinflammation eller annan hjärtsjukdom.
+LOCATION:Kardiologimottagningen
+END:VEVENT
+
+BEGIN:VEVENT
+UID:44556686
+DTSTART:20230919T080000Z
+DTEND:20230919T100000Z
+SUMMARY:Ambulansövervakning
+DESCRIPTION:Potentiell undersökning: Ambulansövervakning för att övervaka hjärtaktiviteten under en längre tid.
+LOCATION:Ambulansfordon
+END:VEVENT
+
+END:VCALENDAR

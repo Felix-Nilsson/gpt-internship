@@ -1,0 +1,91 @@
+{
+  "patient": [
+    {
+      "patient_id": 112299,
+      "födelsedatum": "1999-02-28",
+      "avlidendatum": "-",
+      "kön": "K",
+      "vital_status": 1
+    }
+  ],
+  "activity": [
+    {
+      "patient_id": 112299,
+      "aktivitet_id": 22337788,
+      "förvaltning": "SU",
+      "verksamhet": "Ortopedi",
+      "plats": "Avdelning 101 Kirurgi Södra",
+      "vårdgivarekategori": "LÄK",
+      "aktivitettyp": "slutenvårdvistelse",
+      "kontakttyp": "J",
+      "startdatum": "2023-09-10",
+      "slutdatum": "2023-09-20",
+      "från_plats": "HEM",
+      "till_plats": "HEM"
+    }
+  ],
+  "observation": [
+    {
+      "patient_id": 112299,
+      "aktivitet_id": 12345679,
+      "begrepp": "diagnos",
+      "kod": "M41.9 Skolios, ospecificerad",
+      "värde": "primär",
+      "startdatum": "2023-09-10",
+      "slutdatum": "2023-09-20"
+    }
+  ],
+  "journal": [
+    {
+      "patient_id": 112299,
+      "aktivitet_id": 59494,
+      "aktivitettyp": "slutanteckning, läkare",
+      "vårdgivare": "Emma Johnson",
+      "vårdgivarekategori": "LÄK",
+      "förvaltning": "SU",
+      "verksamhet": "Ortopedi",
+      "plats": "Avdelning 101 Kirurgi Södra",
+      "startdatum": "2023-09-10",
+      "slutdatum": "2023-09-20",
+      "huvuddiagnos": "M41.9 Skolios, ospecificerad",
+      "anamnes": "Patienten har besvärats av ryggsmärta och en avvikande ryggform.",
+      "socialt": "Studerar på gymnasiet och är aktiv inom dans.",
+      "tidigare_sjukdomar": "-",
+      "nuvarande_sjukdomar": "-",
+      "aktuellt": "Patienten sökte vård på grund av ryggsmärta och en synlig avvikande ryggform. Utifrån klinisk undersökning och röntgenbilder bekräftades diagnosen skolios. Planen är att övervaka ryggkurvan och vid behov vidta ytterligare åtgärder för att hantera symptomen.",
+      "sammanfattning": "Patienten har diagnostiserats med skolios, vilket resulterar i ryggsmärta och en avvikande ryggform. Nuvarande behandling fokuserar på övervakning av ryggkurvan och symptomhantering.",
+      "bedömning": "Skolios",
+      "planering": "Övervakning av ryggkurvan och vid behov vidta ytterligare åtgärder för symptomhantering."
+    },
+    {
+      "patient_id": 112299,
+      "aktivitet_id": 59495,
+      "aktivitettyp": "vård- och läkemedelsberättelse",
+      "vårdgivare": "Emma Johnson",
+      "vårdgivarekategori": "LÄK",
+      "förvaltning": "SU",
+      "verksamhet": "Ortopedi",
+      "plats": "Avdelning 101 Kirurgi Södra",
+      "startdatum": "2023-09-10",
+      "slutdatum": "2023-09-20",
+      "orsak": "Du sökte vård på grund av ryggsmärta och en synlig avvikande ryggform.",
+      "läkemedelsberättelse": "Du fick behandling med smärtstillande läkemedel för att hantera ryggsmärtan under din sjukhusvistelse.",
+      "planering": "Din skolios kommer övervakas och vid behov vidtas åtgärder för att hantera symptomen."
+    }
+  ],
+  "plan": [
+    {
+      "patient_id": 112299,
+      "aktivitet_id": "987",
+      "aktivitet_källa": "vårdplan",
+      "inskrivenihemsjukvård": "N",
+      "ärendestartdatum": "2023-09-10",
+      "ärendeslutdatum": "2023-09-20",
+      "inskrivningsdatum": "2023-09-10",
+      "förstaplanutskrivningsdatum": "2023-09-20",
+      "sistautskrivningsklardatum": "2023-09-20",
+      "utskrivningsdatum": "2023-09-20",
+      "fastvårdkontaktutsedd": "N"
+    }
+  ]
+}

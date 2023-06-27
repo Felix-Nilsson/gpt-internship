@@ -1,0 +1,118 @@
+{
+    "patient": [
+      {
+        "patient_id": 112255,
+        "födelsedatum": "1985-03-22",
+        "avlidendatum": "-",
+        "kön": "M",
+        "vital_status": 1
+      }
+    ],
+    "activity": [
+      {
+        "patient_id": 112255,
+        "aktivitet_id": 11223344,
+        "förvaltning": "SU",
+        "verksamhet": "Onkologi",
+        "plats": "Strålningsavdelningen",
+        "vårdgivarekategori": "LÄK",
+        "aktivitettyp": "strålbehandling",
+        "kontakttyp": "J",
+        "startdatum": "2023-12-05",
+        "slutdatum": "2023-12-20",
+        "från_plats": "HEM",
+        "till_plats": "HEM"
+      }
+    ],
+    "observation": [
+      {
+        "patient_id": 112255,
+        "aktivitet_id": 22334455,
+        "begrepp": "diagnos",
+        "kod": "T66.0 Akut strålsjuka",
+        "värde": "primär",
+        "startdatum": "2023-12-05",
+        "slutdatum": "2023-12-20"
+      },
+      {
+        "patient_id": 112255,
+        "aktivitet_id": 87654321,
+        "begrepp": "orsak",
+        "kod": "STRÅLNINGSBEHANDLING",
+        "värde": "-",
+        "startdatum": "2023-12-05",
+        "slutdatum": "2023-12-20"
+      }
+    ],
+    "prescription": [
+      {
+        "patient_id": 112255,
+        "akvititet_id": 951,
+        "läkemedel": "Filgrastim",
+        "substans": "Filgrastim",
+        "kategori": "Hematopoetiska tillväxtfaktorer",
+        "atc_kod": "L03AA02",
+        "beredningsform": "Injektionsvätska, lösning",
+        "dosering": "5 μg/kg kroppsvikt per dag",
+        "styrka": "5",
+        "styrka_enhet": "μg/kg",
+        "vårdgivare": "Maria Eriksson",
+        "vårdgivarekategori": "LÄK",
+        "vårdgivaretel": "08-112255",
+        "verksamhet": "Onkologiskt centrum",
+        "förmån": "Y",
+        "förskrivningsdatum": "2023-12-04",
+        "giltigt_till_och_med": "2024-12-04",
+        "senast_uttag": "-",
+        "tidigast_uttag_inom_förmån": "2023-12-05",
+        "förskriven_mängd": 300,
+        "senast_uttagen_mängd": 0,
+        "återstående_mängd": 300,
+        "uttag_antal": 1,
+        "uttag_kvar": 1
+      }
+    ],
+    "journal": [
+      {
+        "patient_id": 112255,
+        "aktivitet_id": 59496,
+        "aktivitettyp": "slutanteckning, läkare",
+        "vårdgivare": "Maria Eriksson",
+        "vårdgivarekategori": "LÄK",
+        "vårdgivaretel": "08-112255",
+        "förvaltning": "SU",
+        "verksamhet": "Onkologiskt centrum",
+        "plats": "Strålningsavdelningen",
+        "startdatum": "2023-12-05",
+        "slutdatum": "2023-12-20",
+        "huvuddiagnos": "T66.0 Akut strålsjuka",
+        "anamnes": "Patienten exponerades för hög stråldos vid en olycka på en kärnkraftsanläggning.",
+        "socialt": "Arbetar som ingenjör och bor ensam.",
+        "tidigare_sjukdomar": "-",
+        "nuvarande_sjukdomar": "-",
+        "aktuellt": "Patienten har diagnostiserats med akut strålsjuka efter hög stråldos vid en olycka på en kärnkraftsanläggning. Strålbehandling och användning av Filgrastim för att stödja benmärgen har påbörjats.",
+        "sammanfattning": "Patienten har diagnostiserats med akut strålsjuka efter en olycka på en kärnkraftsanläggning. Behandlingen inkluderar strålbehandling och användning av Filgrastim för att stödja benmärgen.",
+        "bedömning": "Akut strålsjuka",
+        "planering": "Fortsatt strålbehandling och användning av Filgrastim för att stödja benmärgen. Uppföljning och övervakning av patientens tillstånd planeras regelbundet.",
+        "från_plats": "HEM",
+        "till_plats": "HEM"
+      },
+      {
+        "patient_id": 112255,
+        "aktivitet_id": 59497,
+        "aktivitettyp": "vård- och läkemedelsberättelse",
+        "vårdgivare": "Maria Eriksson",
+        "vårdgivarekategori": "LÄK",
+        "vårdgivaretel": "08-112255",
+        "förvaltning": "SU",
+        "verksamhet": "Onkologiskt centrum",
+        "plats": "Strålningsavdelningen",
+        "startdatum": "2023-12-05",
+        "slutdatum": "2023-12-20",
+        "orsak": "Du sökte vård på grund av hög stråldos vid en olycka på en kärnkraftsanläggning.",
+        "läkemedelsberättelse": "Du behandlas med strålbehandling och får läkemedlet Filgrastim för att stödja benmärgen under behandlingen.",
+        "planering": "Du kommer fortsätta med strålbehandling och användning av Filgrastim för att stödja benmärgen. Ditt tillstånd kommer att följas upp regelbundet."
+      }
+    ]
+  }
+  

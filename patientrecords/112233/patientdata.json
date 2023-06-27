@@ -1,0 +1,143 @@
+{
+    "patient": [
+      {
+        "patient_id": 112233,
+        "födelsedatum": "1990-03-15",
+        "avlidendatum": "-",
+        "kön": "M",
+        "vital_status": 1
+      }
+    ],
+    "activity": [
+      {
+        "patient_id": 112233,
+        "aktivitet_id": 44556677,
+        "förvaltning": "SU",
+        "verksamhet": "Kardiologi",
+        "plats": "Avdelning 303 Hjärtintensivvård",
+        "vårdgivarekategori": "LÄK",
+        "aktivitettyp": "intensivvård",
+        "kontakttyp": "I",
+        "startdatum": "2023-09-01",
+        "slutdatum": "2023-09-10",
+        "från_plats": "AKUTEN",
+        "till_plats": "AVDELNING"
+      }
+    ],
+    "observation": [
+      {
+        "patient_id": 112233,
+        "aktivitet_id": 11223344,
+        "begrepp": "diagnos",
+        "kod": "I21.9 Akut hjärtinfarkt, ospecificerad",
+        "värde": "primär",
+        "startdatum": "2023-09-01",
+        "slutdatum": "2023-09-10"
+      },
+      {
+        "patient_id": 112233,
+        "aktivitet_id": 55667788,
+        "begrepp": "orsak",
+        "kod": "HÖGT BLODTRYCK",
+        "värde": "-",
+        "startdatum": "2023-09-01",
+        "slutdatum": "2023-09-10"
+      }
+    ],
+    "prescription": [
+      {
+        "patient_id": 112233,
+        "akvititet_id": 667,
+        "läkemedel": "Metoprolol",
+        "substans": "Metoprololtartrat",
+        "kategori": "Betablockerare",
+        "atc_kod": "C07AB02",
+        "beredningsform": "Tablett",
+        "dosering": "50 mg morgon och kväll",
+        "styrka": "50",
+        "styrka_enhet": "mg",
+        "vårdgivare": "Anna Andersson",
+        "vårdgivarekategori": "LÄK",
+        "vårdgivaretel": "08-112233",
+        "verksamhet": "Kardiologi",
+        "förmån": "Y",
+        "förskrivningsdatum": "2023-09-01",
+        "giltigt_till_och_med": "2024-09-01",
+        "senast_uttag": "-",
+        "tidigast_uttag_inom_förmån": "2023-09-01",
+        "förskriven_mängd": 60,
+        "senast_uttagen_mängd": 0,
+        "återstående_mängd": 60,
+        "uttag_antal": 1,
+        "uttag_kvar": 1
+      }
+    ],
+    "journal": [
+      {
+        "patient_id": 112233,
+        "aktivitet_id": 99887766,
+        "aktivitettyp": "slutanteckning, läkare",
+        "vårdgivare": "Anna Andersson",
+        "vårdgivarekategori": "LÄK",
+        "vårdgivaretel": "08-112233",
+        "förvaltning": "SU",
+        "verksamhet": "Kardiologi",
+        "plats": "Avdelning 303 Hjärtintensivvård",
+        "startdatum": "2023-09-01",
+        "slutdatum": "2023-09-10",
+        "huvuddiagnos": "I21.9 Akut hjärtinfarkt, ospecificerad",
+        "anamnes": "Patienten sökte akutvård på grund av bröstsmärta och andfåddhet.",
+        "socialt": "Patienten är gift och har två barn. Han är anställd som ingenjör.",
+        "tidigare_sjukdomar": "-",
+        "nuvarande_sjukdomar": "-",
+        "aktuellt": "Patienten inkom med bröstsmärta och andfåddhet. Klinisk undersökning och EKG bekräftade diagnosen akut hjärtinfarkt. Omedelbar behandling och övervakning i hjärtintensivvård inleddes.",
+        "sammanfattning": "Patienten har diagnosticerats med en akut hjärtinfarkt. Han har fått behandling och övervakning på hjärtintensivvård.",
+        "bedömning": "Akut hjärtinfarkt",
+        "planering": "Fortsatt övervakning och behandling på hjärtintensivvård. Utvärdering av behandlingseffekt och uppföljning planeras.",
+        "från_plats": "AKUTEN",
+        "till_plats": "AVDELNING"
+      },
+      {
+        "patient_id": 112233,
+        "aktivitet_id": 99887767,
+        "aktivitettyp": "vård- och läkemedelsberättelse",
+        "vårdgivare": "Anna Andersson",
+        "vårdgivarekategori": "LÄK",
+        "vårdgivaretel": "08-112233",
+        "förvaltning": "SU",
+        "verksamhet": "Kardiologi",
+        "plats": "Avdelning 303 Hjärtintensivvård",
+        "startdatum": "2023-09-01",
+        "slutdatum": "2023-09-10",
+        "orsak": "Du sökte akutvård på grund av bröstsmärta och andfåddhet.",
+        "läkemedelsberättelse": "Du har fått behandling med Metoprolol för att kontrollera hjärtfrekvensen och blodtrycket.",
+        "planering": "Du kommer fortsätta övervakas och behandlas på hjärtintensivvård. Vi kommer utvärdera behandlingseffekten och planera uppföljning."
+      }
+    ],
+    "plan": [
+      {
+        "patient_id": 112233,
+        "aktivitet_id": 22334455,
+        "aktivitettyp": "läkemedelsordination",
+        "vårdgivare": "Anna Andersson",
+        "vårdgivarekategori": "LÄK",
+        "vårdgivaretel": "08-112233",
+        "förvaltning": "SU",
+        "verksamhet": "Kardiologi",
+        "startdatum": "2023-09-01",
+        "slutdatum": "2023-09-10",
+        "läkemedel": "Acetylsalicylsyra",
+        "substans": "Acetylsalicylsyra",
+        "kategori": "Blodförtunnande medel",
+        "atc_kod": "B01AC06",
+        "beredningsform": "Tablett",
+        "dosering": "75 mg en gång dagligen",
+        "styrka": "75",
+        "styrka_enhet": "mg",
+        "indikation": "Förebyggande av blodproppar efter hjärtinfarkt",
+        "förmån": "Y",
+        "giltigt_till_och_med": "2024-09-01"
+      }
+    ]
+  }
+  

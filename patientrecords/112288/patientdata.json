@@ -1,0 +1,124 @@
+{
+  "patient": [
+    {
+      "patient_id": 112288,
+      "födelsedatum": "1985-03-12",
+      "avlidendatum": "-",
+      "kön": "M",
+      "vital_status": 1
+    }
+  ],
+  "activity": [
+    {
+      "patient_id": 112288,
+      "aktivitet_id": 98765432,
+      "förvaltning": "SU",
+      "verksamhet": "Urologi",
+      "plats": "Avdelning 303 Urologi",
+      "vårdgivarekategori": "LÄK",
+      "aktivitettyp": "slutenvårdvistelse",
+      "kontakttyp": "J",
+      "startdatum": "2023-05-10",
+      "slutdatum": "2023-05-15",
+      "från_plats": "AKUTEN",
+      "till_plats": "HEM"
+    }
+  ],
+  "observation": [
+    {
+      "patient_id": 112288,
+      "aktivitet_id": 24681357,
+      "begrepp": "diagnos",
+      "kod": "N20 Njursten",
+      "värde": "primär",
+      "startdatum": "2023-05-10",
+      "slutdatum": "2023-05-15"
+    }
+  ],
+  "prescription": [
+    {
+      "patient_id": 112288,
+      "aktivitet_id": 987,
+      "läkemedel": "Diclofenac",
+      "substans": "Diclofenac",
+      "kategori": "Antiinflammatoriska läkemedel, icke-steroida",
+      "atc_kod": "M01AB05",
+      "beredningsform": "Tablett",
+      "dosering": "50 mg var 8:e timme vid behov för smärta",
+      "styrka": "50",
+      "styrka_enhet": "mg",
+      "vårdgivare": "Lisa Andersson",
+      "vårdgivarekategori": "LÄK",
+      "vårdgivaretel": "08-112288",
+      "verksamhet": "Urologimottagning",
+      "förmån": "Y",
+      "förskrivningsdatum": "2023-05-10",
+      "giltigt_till_och_med": "2024-05-10",
+      "senast_uttag": "-",
+      "tidigast_uttag_inom_förmån": "2023-05-10",
+      "förskriven_mängd": 40,
+      "senast_uttagen_mängd": 0,
+      "återstående_mängd": 40,
+      "uttag_antal": 0,
+      "uttag_kvar": 0
+    }
+  ],
+  "journal": [
+    {
+      "patient_id": 112288,
+      "aktivitet_id": 59494,
+      "aktivitettyp": "slutanteckning, läkare",
+      "vårdgivare": "Lisa Andersson",
+      "vårdgivarekategori": "LÄK",
+      "vårdgivaretel": "08-112288",
+      "förvaltning": "SU",
+      "verksamhet": "Urologi",
+      "plats": "Avdelning 303 Urologi",
+      "startdatum": "2023-05-10",
+      "slutdatum": "2023-05-15",
+      "huvuddiagnos": "N20 Njursten",
+      "anamnes": "Patienten har upplevt intensiv smärta i nedre delen av buken och har tidigare haft liknande episoder.",
+      "socialt": "Arbetar som kontorsanställd och är gift utan barn.",
+      "tidigare_sjukdomar": "-",
+      "nuvarande_sjukdomar": "-",
+      "aktuellt": "Patienten sökte vård på grund av intensiv smärta i nedre delen av buken. Genom röntgenundersökning konstaterades njursten. Smärtkontroll och behandling för att underlätta njurstenens passage inleddes.",
+      "sammanfattning": "Patienten har diagnostiserats med njursten efter att ha upplevt intensiv buksmärta. Behandlingen fokuserar på smärtlindring och underlättande av njurstenens passage.",
+      "bedömning": "Njursten",
+      "planering": "Fortsatt smärtkontroll och behandling för att underlätta njurstenens passage. Uppföljning planeras efter behandlingens avslut."
+    },
+    {
+      "patient_id": 112288,
+      "aktivitet_id": 59495,
+      "aktivitettyp": "vård- och läkemedelsberättelse",
+      "vårdgivare": "Lisa Andersson",
+      "vårdgivarekategori": "LÄK",
+      "vårdgivaretel": "08-112288",
+      "förvaltning": "SU",
+      "verksamhet": "Urologi",
+      "plats": "Avdelning 303 Urologi",
+      "startdatum": "2023-05-10",
+      "slutdatum": "2023-05-15",
+      "orsak": "Du sökte vård på grund av intensiv smärta i nedre delen av buken.",
+      "läkemedelsberättelse": "Du behandlades på avdelningen med smärtstillande läkemedel (Diclofenac) för att kontrollera smärtan och underlätta passage av njurstenen.",
+      "planering": "Du kommer fortsätta smärtkontroll och behandling för att underlätta njurstenens passage. En uppföljning är planerad efter avslutad behandling."
+    }
+  ],
+  "plan": [
+    {
+      "patient_id": 112288,
+      "aktivitet_id": "987",
+      "aktivitet_källa": "vårdplan",
+      "inskrivenihemsjukvård": "N",
+      "ärendestartdatum": "2023-05-10",
+      "ärendeslutdatum": "2023-05-15",
+      "inskrivningsdatum": "2023-05-10",
+      "förstaplanutskrivningsdatum": "2023-05-15",
+      "sistautskrivningsdatum": "2023-05-15",
+      "uppföljningsdatum": "2023-05-25",
+      "behandlingsorsak": "Smärtkontroll och underlättande av njurstenens passage",
+      "behandlingsåtgärd": "Diclofenac 50 mg var 8:e timme vid behov för smärta",
+      "behandlingsmål": "Smärtkontroll och passage av njursten",
+      "behandlingsplan": "Fortsatt smärtkontroll och behandling för att underlätta passage av njursten. Uppföljning planeras efter behandlingens avslut."
+    }
+  ]
+}

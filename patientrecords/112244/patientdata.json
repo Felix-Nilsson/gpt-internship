@@ -1,0 +1,133 @@
+{
+  "patient": [
+    {
+      "patient_id": 112244,
+      "födelsedatum": "1985-03-15",
+      "avlidendatum": "-",
+      "kön": "M",
+      "vital_status": 1
+    }
+  ],
+  "activity": [
+    {
+      "patient_id": 112244,
+      "aktivitet_id": 11223344,
+      "förvaltning": "SU",
+      "verksamhet": "Kirurgi",
+      "plats": "Avdelning 105",
+      "vårdgivarekategori": "LÄK",
+      "aktivitettyp": "slutenvårdvistelse",
+      "kontakttyp": "J",
+      "startdatum": "2023-10-01",
+      "slutdatum": "2023-10-10",
+      "från_plats": "AKUTEN",
+      "till_plats": "AVDELNING"
+    }
+  ],
+  "observation": [
+    {
+      "patient_id": 112244,
+      "aktivitet_id": 22334455,
+      "begrepp": "diagnos",
+      "kod": "I50.9 Hjärtsvikt, ospecificerad",
+      "värde": "primär",
+      "startdatum": "2023-10-01",
+      "slutdatum": "2023-10-10"
+    },
+    {
+      "patient_id": 112244,
+      "aktivitet_id": 55667788,
+      "begrepp": "orsak",
+      "kod": "HYPERTONI",
+      "värde": "-",
+      "startdatum": "2023-10-01",
+      "slutdatum": "2023-10-10"
+    }
+  ],
+  "prescription": [
+    {
+      "patient_id": 112244,
+      "akvititet_id": 987,
+      "läkemedel": "Metoprolol",
+      "substans": "Metoprolol",
+      "kategori": "Betablockerare",
+      "atc_kod": "C07AB02",
+      "beredningsform": "Tablett",
+      "dosering": "50 mg två gånger dagligen",
+      "styrka": "50",
+      "styrka_enhet": "mg",
+      "vårdgivare": "Eva Svensson",
+      "vårdgivarekategori": "LÄK",
+      "vårdgivaretel": "08-112244",
+      "verksamhet": "Kirurgi",
+      "förmån": "Y",
+      "förskrivningsdatum": "2023-10-01",
+      "giltigt_till_och_med": "2024-10-01",
+      "senast_uttag": "-",
+      "tidigast_uttag_inom_förmån": "2023-10-01",
+      "förskriven_mängd": 60,
+      "senast_uttagen_mängd": 0,
+      "återstående_mängd": 60,
+      "uttag_antal": 1,
+      "uttag_kvar": 1
+    }
+  ],
+  "journal": [
+    {
+      "patient_id": 112244,
+      "aktivitet_id": 99001122,
+      "aktivitettyp": "slutanteckning, läkare",
+      "vårdgivare": "Eva Svensson",
+      "vårdgivarekategori": "LÄK",
+      "vårdgivaretel": "08-112244",
+      "förvaltning": "SU",
+      "verksamhet": "Kirurgi",
+      "plats": "Avdelning 105",
+      "startdatum": "2023-10-01",
+      "slutdatum": "2023-10-10",
+      "huvuddiagnos": "I50.9 Hjärtsvikt, ospecificerad",
+      "anamnes": "Patienten rapporterar andfåddhet och trötthet vid ansträngning.",
+      "socialt": "Arbetar som ingenjör och bor ensam.",
+      "tidigare_sjukdomar": "-",
+      "nuvarande_sjukdomar": "-",
+      "aktuellt": "Patienten inkom med andfåddhet och trötthet vid ansträngning. Klinisk undersökning och hjärtundersökning bekräftade diagnosen hjärtsvikt. Behandling med Metoprolol inleddes för att förbättra hjärtfunktionen.",
+      "sammanfattning": "Patienten har diagnostiserats med hjärtsvikt och behandlas med Metoprolol för att förbättra hjärtfunktionen.",
+      "bedömning": "Hjärtsvikt",
+      "planering": "Fortsatt behandling med Metoprolol och regelbundna uppföljningar av hjärtfunktionen.",
+      "från_plats": "AKUTEN",
+      "till_plats": "AVDELNING"
+    },
+    {
+      "patient_id": 112244,
+      "aktivitet_id": 99001123,
+      "aktivitettyp": "vård- och läkemedelsberättelse",
+      "vårdgivare": "Eva Svensson",
+      "vårdgivarekategori": "LÄK",
+      "vårdgivaretel": "08-112244",
+      "förvaltning": "SU",
+      "verksamhet": "Kirurgi",
+      "plats": "Avdelning 105",
+      "startdatum": "2023-10-01",
+      "slutdatum": "2023-10-10",
+      "orsak": "Du sökte vård på grund av andfåddhet och trötthet vid ansträngning.",
+      "läkemedelsberättelse": "Du behandlas på avdelningen med läkemedlet Metoprolol för att förbättra hjärtfunktionen.",
+      "planering": "Du kommer fortsätta behandlingen med Metoprolol och genomgå regelbundna uppföljningar av hjärtfunktionen."
+    }
+  ],
+  "plan": [
+    {
+      "patient_id": 112244,
+      "aktivitet_id": "678",
+      "aktivitet_källa": "vårdplan",
+      "inskrivenihemsjukvård": "N",
+      "ärendestartdatum": "2023-10-01",
+      "ärendeslutdatum": "2023-10-10",
+      "förvaltning": "SU",
+      "verksamhet": "Kirurgi",
+      "aktivitetskod": "190",
+      "aktivitetsbeskrivning": "Fortsatt behandling med Metoprolol",
+      "utförare": "Eva Svensson",
+      "utföraretel": "08-112244"
+    }
+  ]
+}

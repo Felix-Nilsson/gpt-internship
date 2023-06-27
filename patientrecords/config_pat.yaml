@@ -24,6 +24,46 @@ credentials:
       email: 987321@gmail.com
       name: '987321' 
       password: $2b$12$AfmoTVBMoCNOWsLfLWoqbuwyAwCx7Rj9FJqo7kn.c8rvhc01TrZ2.
+    p112200:
+      email: 112200@gmail.com
+      name: '112200' 
+      password: $2b$12$AfmoTVBMoCNOWsLfLWoqbuwyAwCx7Rj9FJqo7kn.c8rvhc01TrZ2.
+    p112211:
+      email: 112211@gmail.com
+      name: '112211' 
+      password: $2b$12$AfmoTVBMoCNOWsLfLWoqbuwyAwCx7Rj9FJqo7kn.c8rvhc01TrZ2.
+    p112222:
+      email: 112222@gmail.com
+      name: '112222' 
+      password: $2b$12$AfmoTVBMoCNOWsLfLWoqbuwyAwCx7Rj9FJqo7kn.c8rvhc01TrZ2.
+    p112233:
+      email: 112233@gmail.com
+      name: '112233' 
+      password: $2b$12$AfmoTVBMoCNOWsLfLWoqbuwyAwCx7Rj9FJqo7kn.c8rvhc01TrZ2.
+    p112244:
+      email: 112244@gmail.com
+      name: '112244' 
+      password: $2b$12$AfmoTVBMoCNOWsLfLWoqbuwyAwCx7Rj9FJqo7kn.c8rvhc01TrZ2.
+    p112255:
+      email: 112255@gmail.com
+      name: '112255' 
+      password: $2b$12$AfmoTVBMoCNOWsLfLWoqbuwyAwCx7Rj9FJqo7kn.c8rvhc01TrZ2.
+    p112266:
+      email: 112266@gmail.com
+      name: '112266' 
+      password: $2b$12$AfmoTVBMoCNOWsLfLWoqbuwyAwCx7Rj9FJqo7kn.c8rvhc01TrZ2.
+    p112277:
+      email: 112277@gmail.com
+      name: '112277' 
+      password: $2b$12$AfmoTVBMoCNOWsLfLWoqbuwyAwCx7Rj9FJqo7kn.c8rvhc01TrZ2.
+    p112288:
+      email: 112288@gmail.com
+      name: '112288' 
+      password: $2b$12$AfmoTVBMoCNOWsLfLWoqbuwyAwCx7Rj9FJqo7kn.c8rvhc01TrZ2.
+    p112299:
+      email: 112299@gmail.com
+      name: '112299' 
+      password: $2b$12$AfmoTVBMoCNOWsLfLWoqbuwyAwCx7Rj9FJqo7kn.c8rvhc01TrZ2.
 cookie:
   expiry_days: 0
   key: some_signature_key # Must be string

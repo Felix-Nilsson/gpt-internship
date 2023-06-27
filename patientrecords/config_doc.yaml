@@ -15,21 +15,6 @@ credentials:
       name: 'Henrik Johansson' 
       password: $2b$12$H811Om3K0jLjDLcVPHjCdeEtssUsZUZGbxcqUwEyj97wPinkbTpq6
       patients: ['654321','654322','112222','112288','112255']
-    evakarlsson:
-      email: evakarlsson@gmail.com
-      name: 'Eva Karlsson' 
-      password: $2b$12$H811Om3K0jLjDLcVPHjCdeEtssUsZUZGbxcqUwEyj97wPinkbTpq6
-      patients: []
-    evajohansson:
-      email: evajohansson@gmail.com
-      name: 'Eva Johansson' 
-      password: $2b$12$H811Om3K0jLjDLcVPHjCdeEtssUsZUZGbxcqUwEyj97wPinkbTpq6
-      patients: []
-    larssvensson:
-      email: larssvensson@gmail.com
-      name: 'Lars Svensson' 
-      password: $2b$12$H811Om3K0jLjDLcVPHjCdeEtssUsZUZGbxcqUwEyj97wPinkbTpq6
-      patients: []
 cookie:
   expiry_days: 0
   key: some_signature_key # Must be string

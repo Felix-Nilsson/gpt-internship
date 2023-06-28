@@ -1,5 +1,6 @@
 [
     {
+        "test_index":"0",
         "patient_id":"654321",
         "question":"Har patient 654321 fått hjärtinfarkt?",
         "reference_answers":[
@@ -12,6 +13,7 @@
     },
 
     {
+        "test_index":"1",
         "patient_id":"112255",
         "question":"Säg vårdgivaren för patient 112255",
         "reference_answers":[
@@ -24,6 +26,7 @@
     },
 
     {
+        "test_index":"2",
         "patient_id":"112200",
         "question":"Berätta om doseringen av läkemedlet paracetamol för patient 112200",
         "reference_answers":[
@@ -32,6 +35,97 @@
             "Paracetamoldosen för patienten är 500 mg vid behov, med en maximal frekvens av fyra gånger dagligen.",
             "För att lindra symtomen kan patienten ta 500 mg paracetamol efter behov, dock högst fyra gånger per dag.",
             "Vid behov kan patienten inta upp till fyra dagliga doser av 500 mg paracetamol."
+        ] 
+    },
+
+    {
+        "test_index":"3",
+        "patient_id":"112299",
+        "question":"Vilket datum blev patient 112299 inskriven på sjukhuset?",
+        "reference_answers":[
+            "Patienten blev inskriven 2023-09-10.",
+            "Inskrivningen av patienten skedde den 10 september 2023.",
+            "Den 10 september 2023 blev patienten registrerad på sjukhuset.",
+            "År 2023-09-10 blev patienten inlagd på sjukhuset.",
+            "På dagen 2023-09-10 blev patienten inskriven för vård."
+        ] 
+    },
+
+    {
+        "test_index":"4",
+        "patient_id":"789012",
+        "question":"Vad är orsaken bakom hjärtinfarkten som patient 789012 upplevde?",
+        "reference_answers":[
+            "Orsaken bakom patientens hjärtinfarkt var rökning.",
+            "Hjärtinfarkten patienten 78012 upplevde berodde på rökning.",
+            "Hjärtinfarkten hos patient 78012 orsakades av rökning.",
+            "Rökning var det som låg bakom patientens hjärtinfarkt.",
+            "Patientens hjärtinfarkt uppstod på grund av rökning."
+        ] 
+    },
+
+    {
+        "test_index":"5",
+        "patient_id":"654322",
+        "question":"Hur ser patient 654322's sociala liv ut?",
+        "reference_answers":[
+            "Patient 654322 arbetar som revisor, har två barn och är ogift.",
+            "Patient 654322 är anställd som revisor och är ogift med två barn.",
+            "Patient 654322 jobbar som revisor och är ogift förälder till två barn.",
+            "Patienten arbetar med bokföring som revisor och är ogift förälder till två barn.",
+            "Han är förälder med två barn, ej gift och arbetar som revisor"
+        ] 
+    },
+
+    {
+        "test_index":"6",
+        "patient_id":"987321",
+        "question":"När ska patient 987321 genomgå laboratorieanalyser?",
+        "reference_answers":[
+            "Patienten ska genomgå laboratorieanalyser 2023-06-21",
+            "Den 21 juni 2023 ska patienten genomgå laboratorieanalyser.",
+            "Det är planerat att utföra laboratorieanalyser på patient 987321 den 21 juni 2023.",
+            "Patient 987321 kommer att bli föremål för laboratorieanalyser den 21 juni 2023.",
+            "Laboratorieanalyserna är schemalagda för patient 987321 den 21 juni 2023."
+        ] 
+    },
+
+    {
+        "test_index":"7",
+        "patient_id":"123123",
+        "question":"Vilken dag ska patient 123123 undergå spirometri?",
+        "reference_answers":[
+            "Patient 123123 ska genomgå spirometri 2023-06-29.",
+            "Den 29 juni 2023 kommer patient 123123 att genomgå en spirometri.",
+            "Spirometri är schemalagd för patienten den 29:e juni 2023.",
+            "På dagen 2023-06-29 kommer patienten att genomgå spirometri.",
+            "Patient 123123 kommer att genomgå en spirometri den 29 juni 2023."
+        ] 
+    },
+
+    {
+        "test_index":"8",
+        "patient_id":"112288",
+        "question":"Vilka läkemedel har patient 112288 blivit administrerad?",
+        "reference_answers":[
+            "Patienten 112288 har blivit administrerad läkemedlet Diclofenac.",
+            "Läkemedlet Diclofenac har administrerats till patienten 112288.",
+            "Patienten har fått läkemedlet Diclofenac administrerat.",
+            "Läkemedlet Diclofenac har givits till patienten 112288.",
+            "Patienten har fått läkemedlet Diclofenac."
+        ] 
+    },
+
+    {
+        "test_index":"9",
+        "patient_id":"112244",
+        "question":"Vad bedömde läkaren Eva Karlsson att patient 112244 upplevde för sjukdom?",
+        "reference_answers":[
+            "Läkaren Eva Karlsson bedömde att patienten 112244 hade hjärtsvikt.",
+            "En bedömning gjordes av läkaren Eva Karlsson att patienten led av hjärtsvikt.",
+            "Patienten diagnostiserades med hjärtsvikt enligt läkaren Eva Karlsson.",
+            "Enligt läkaren Eva Karlsson led patienten av hjärtsvikt enligt bedömning.",
+            "Patienten 112244 diagnostiserades med hjärtsvikt av läkaren Eva Karlsson."
         ] 
     }
 

@@ -1,7 +1,7 @@
 from embeddings.make_embeddings import make_embeddings
 from embeddings.chatbot import get_chat_response
 from embeddings.run_query import strings_ranked_by_relatedness
-import numpy
+import numpy as np
 
 import json
 
@@ -12,7 +12,17 @@ def run_test(question,reference_answers,identifier):
 
     embedded_references = make_embeddings(reference_answers)
 
+    print(question)
+    print(candidate)
+
     return strings_ranked_by_relatedness(candidate,embedded_references)[1]
+"""
+q = "Vad åt patient 112288 till lunch igår?"
+refs = ["Han åt pizza igår till lunch", "Igår åt patient 112288 pizza till lunch"]
+res = run_test(q,refs,112288)
+print(res,np.mean(res))
+"""
+
 with open("Project1_docassist/tests/results.csv","w") as g:
     g.write("max,min,avg")
 
@@ -26,7 +36,7 @@ with open("Project1_docassist/tests/results.csv","w") as g:
             results = run_test(question,reference_answers,identifier)
             low = min(results)
             high = max(results)
-            mean = numpy.mean(results)
+            mean = np.mean(results)
 
             g.write(f"\n{high},{low},{mean}")
 

@@ -57,8 +57,8 @@
         "question":"Vad är orsaken bakom hjärtinfarkten som patient 789012 upplevde?",
         "reference_answers":[
             "Orsaken bakom patientens hjärtinfarkt var rökning.",
-            "Hjärtinfarkten patienten 78012 upplevde berodde på rökning.",
-            "Hjärtinfarkten hos patient 78012 orsakades av rökning.",
+            "Hjärtinfarkten patienten 789012 upplevde berodde på rökning.",
+            "Hjärtinfarkten hos patient 789012 orsakades av rökning.",
             "Rökning var det som låg bakom patientens hjärtinfarkt.",
             "Patientens hjärtinfarkt uppstod på grund av rökning."
         ] 
@@ -67,7 +67,7 @@
     {
         "test_index":"5",
         "patient_id":"654322",
-        "question":"Hur ser patient 654322's sociala liv ut?",
+        "question":"Hur ser patient 654322's sociala liv ut och vad jobbar den med?",
         "reference_answers":[
             "Patient 654322 arbetar som revisor, har två barn och är ogift.",
             "Patient 654322 är anställd som revisor och är ogift med två barn.",

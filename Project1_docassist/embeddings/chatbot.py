@@ -23,7 +23,6 @@ def find_patient_ids(string):
 def get_chat_response(query, patients, model="gpt-3.5-turbo-0613"):
     
     response_message = find_patient_ids(query)
-    print("id to add?  ",response_message)
 
     if response_message != "NONE" and response_message in patients:
         patient_ids.insert(0,response_message)
@@ -35,7 +34,6 @@ def get_chat_response(query, patients, model="gpt-3.5-turbo-0613"):
         patient_data = return_best_record(query, patient_ids[0])
         patient_data = " ".join(patient_data[0])
 
-    print("id list  ",patient_ids)
     #context has to be defined here now since the patient_data is added into it rather than the prompt
     context_with_data = f'''
     Du är en AI-assistent för läkare på ett sjukhus.

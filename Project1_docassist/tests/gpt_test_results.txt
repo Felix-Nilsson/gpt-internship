@@ -1,0 +1,11 @@
+Testing case: 0
+Test case 0 - Failed!
+
+Testing case: 1
+Test case 1 - Passed!
+Answer generated: V�rdgivaren f�r patient 112255 �r Maria Eriksson. 
+Passing answer: Patient 112255 har Maria Eriksson som sin vårdgivare.
+
+Testing case: 2
+Test case 2 - Failed!
+

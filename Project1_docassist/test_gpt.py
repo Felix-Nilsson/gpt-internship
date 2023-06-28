@@ -1,20 +1,23 @@
 import os
 import openai
 import json
+import re
 from embeddings.chatbot import get_chat_response
 
 # Load your API key from an environment variable or secret management service
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
-def compare(actual_output, expected_output):
+def compare(actual_output: str, expected_output: list[str]):
+    """Tests if a sentence conveys the same info as one of the sentences in a list, returns 'a,b', a = 1/0 if test passes/fails, b = index of expected answer that passed"""
 
     generated_test_prompt_en_which_option = f'''
     Compare the following sentence with the options given below and indicate whether it conveys the same information or not. 
     If it conveys the same information, answer '1'; otherwise, answer '0'. 
-    Additionally, provide the number of the option that conveys the same information.
+    Additionally, provide the index of the option that conveys the same information.
 
-    Example of how to answer for a sentence that conveys the same information as the first option: "1,1".
-    Example of how to answer for a sentence that conveys the same information as the third option: "1,3".
+    Example of how to answer for a sentence that conveys the same information as the first option: "1,0".
+    Example of how to answer for a sentence that conveys the same information as the third option: "1,2".
+    Example of how to answer for a sentence that conveys the same information as the tenth option: "1,10"
     Example of how to answer for a sentence that does not convey the same information as any option: "0,0"
 
     Sentence to compare: '{actual_output}'
@@ -47,22 +50,20 @@ with open("Project1_docassist/tests/gpt_test_results.txt","w") as g:
             case_answer = get_chat_response(question, patient_id)
             case_answer = case_answer.split('\n')[0]
 
-            g.write('Testing case: ' + test_index + '\n')
-            #print('\nTesting case: ',test_index)
-
             result = compare(case_answer, reference_answers)
+
+            #Check so that result has the right format
+            if re.match(r"^[01],\d+$", result) is None:
+                g.write('Test case ' + test_index + ':  ERROR: wrong format from GPT\n')
+                continue #Throw error instead?
 
             passed = result.split(',')[0]
             option = result.split(',')[1]
 
             if (passed == '1'):
-                g.write('Test case ' + test_index + ' - Passed!\n')
-                g.write('Answer generated: ' + case_answer + '\n')
-                g.write('Passing answer: ' + reference_answers[int(option) - 1] + '\n\n')
-                #print('Test passed')
-                #print('Answer generated:',case_answer)
-                #print('Passing answer:',reference_answers[int(option) - 1])
+                g.write('Test case ' + test_index + ':  PASSED\n')
+                g.write('Generated answer: "' + case_answer + '"\n')
+                g.write('Reference answer: "' + reference_answers[int(option)] + '"\n\n')
                 continue
-            #print('Test failed')
-            g.write('Test case ' + test_index + ' - Failed!\n\n')
+            g.write('Test case ' + test_index + ':  FAILED\n\n')
             

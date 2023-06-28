@@ -1,11 +1,8 @@
-Testing case: 0
-Test case 0 - Failed!
+Test case 0:  FAILED
 
-Testing case: 1
-Test case 1 - Passed!
-Answer generated: Vï¿½rdgivaren fï¿½r patient 112255 ï¿½r Maria Eriksson. 
-Passing answer: Patient 112255 har Maria Eriksson som sin vÃ¥rdgivare.
+Test case 1:  PASSED
+Generated answer: "Vårdgivaren för patient 112255 är Maria Eriksson. "
+Reference answer: "Maria Eriksson Ã¤r den vÃ¥rdgivare som tar hand om patient 112255."
 
-Testing case: 2
-Test case 2 - Failed!
+Test case 2:  FAILED
 

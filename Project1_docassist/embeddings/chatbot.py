@@ -15,7 +15,7 @@ messages = [{'role':'system', 'content': ""}]
 
 
 def find_patient_id(text: str):
-    """"Searches through text for a 6-digit patient ID"""
+    """Searches through text for a 6-digit patient ID"""
 
     pattern = r'\d{6}'  # Regular expression pattern to match six digits in a row
     match = re.search(pattern, text)

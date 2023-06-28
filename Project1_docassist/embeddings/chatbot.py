@@ -27,6 +27,7 @@ def get_chat_response(query, patients, model="gpt-3.5-turbo-0613"):
     if response_message != "NONE" and response_message in patients:
         patient_ids.insert(0,response_message)
 
+    print("patient_ids:",patient_ids)
 
     #CALL GPT WITH THE QUERY AND RELEVANT PATIENT INFORMATION
     patient_data = ""
@@ -40,7 +41,7 @@ def get_chat_response(query, patients, model="gpt-3.5-turbo-0613"):
     Du svarar alltid kort och koncist, inte längre än 2 meningar.
     
     Ifall meddelandet ber om information om en specifik patient, använd informationen avgränsad av tre understreck.
-
+    Ifall det inte finns någon information avgränsad av tre understreck, Svara med "Jag har inte tillräckligt med information"
     ___{patient_data}___
     '''
 

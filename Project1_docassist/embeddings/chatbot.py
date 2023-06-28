@@ -10,21 +10,21 @@ openai.api_key = os.getenv('OPENAI_API_KEY')
 #All patients that have been asked about
 patient_ids = []
 
-#AI's memory of the conversation
-messages = [{'role':'system', 'content': ""}]
+#Conversation memory
+memory = [{'role':'system', 'content': ""}]
 
 
 def find_patient_id(text: str):
     """Searches through text for a 6-digit patient ID"""
 
-    pattern = r'\d{6}'  # Regular expression pattern to match six digits in a row
+    pattern = r'\d{6}'  #Regular expression pattern to match six digits in a row
     match = re.search(pattern, text)
     if match:
         return match.group()
     else:
         return None
 
-def get_chat_response(query: str, patients: list[str], model='gpt-3.5-turbo-0613'):
+def get_chat_response(query: str, patients: list[str], remember=True, model='gpt-3.5-turbo-0613'):
     """Takes a query and a list of patients whose information the doctor can access, returns a response to the query"""
     
     current_patient_id = find_patient_id(query)
@@ -49,21 +49,28 @@ def get_chat_response(query: str, patients: list[str], model='gpt-3.5-turbo-0613
     Ifall det inte finns någon information avgränsad av tre understreck, Svara med "Jag har inte tillräckligt med information"
     ___{patient_data}___
     '''
+    
+    messages = memory
 
-    #Add the query to the AI's memory
-    messages.append({'role':'user','content':query})
+    if not remember:
+        #Reset conversation memory
+        messages = [{'role':'system', 'content': context_with_data}]
 
     #Update the context with relevant information for every question
     messages[0] = {'role':'system', 'content': context_with_data}
 
+    #Add the query to the conversation memory
+    messages.append({'role':'user','content':query})
 
     response = openai.ChatCompletion.create(
         model=model,
         messages=messages,
-        temperature=0, # this is the degree of randomness of the model's output
+        temperature=0, #Fegree of randomness of the model's output
     )
 
-    #Add the response to the AI's memory
+    print(response.usage)
+
+    #Add the response to the conversation memory
     messages.append({'role':'assistant','content':response.choices[0].message["content"]})
 
 

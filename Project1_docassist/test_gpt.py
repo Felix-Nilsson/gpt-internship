@@ -2,6 +2,7 @@ import os
 import openai
 import json
 import re
+import time
 from embeddings.chatbot import get_chat_response
 
 # Load your API key from an environment variable or secret management service
@@ -47,7 +48,7 @@ with open("Project1_docassist/tests/gpt_test_results.txt","w") as g:
             question = case['question']
             reference_answers = case['reference_answers']
 
-            case_answer = get_chat_response(question, patient_id)
+            case_answer = get_chat_response(question, patient_id, False)
             case_answer = case_answer.split('\n')[0]
 
             result = compare(case_answer, reference_answers)
@@ -59,6 +60,9 @@ with open("Project1_docassist/tests/gpt_test_results.txt","w") as g:
 
             passed = result.split(',')[0]
             option = result.split(',')[1]
+
+            #Give the API time to rest?
+            time.sleep(6) #seconds
 
             if (passed == '1'):
                 g.write('Test case ' + test_index + ':  PASSED\n')

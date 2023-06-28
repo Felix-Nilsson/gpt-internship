@@ -107,10 +107,10 @@
     {
         "test_index":"8",
         "patient_id":"112288",
-        "question":"Vilka läkemedel har patient 112288 blivit administrerad?",
+        "question":"Vilka läkemedel har patienten 112288 blivit tilldelad?",
         "reference_answers":[
             "Patienten 112288 har blivit administrerad läkemedlet Diclofenac.",
-            "Läkemedlet Diclofenac har administrerats till patienten 112288.",
+            "Läkemedlet Diclofenac har tilldelad till patienten 112288.",
             "Patienten har fått läkemedlet Diclofenac administrerat.",
             "Läkemedlet Diclofenac har givits till patienten 112288.",
             "Patienten har fått läkemedlet Diclofenac."

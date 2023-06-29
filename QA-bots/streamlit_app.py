@@ -11,7 +11,7 @@ import yaml
 from yaml.loader import SafeLoader
 
 
-st.set_page_config(page_title="L-Assist")
+st.set_page_config(page_title="MedHelp")
 
 with open('patientrecords/config_joined.yaml', 'r') as file:
     config = yaml.load(file, Loader=SafeLoader)
@@ -42,20 +42,31 @@ if st.session_state["authentication_status"]:
 
 
     with st.sidebar:
-        st.title("L-Assist")
+        st.title("MedHelp")
         st.sidebar.button('Logout', on_click=handle_logout)
         st.write(f'Välkommen *{st.session_state["name"]}*')
         st.markdown('''
         ## About
-        Ett första försstatusök att bygga en chatt-bot för läkare
+        
+        Ett första försök att bygga en chatt-bot för läkare och patienter med GPT modeller,
+        gjort i sammarbete mellan AI-Sweden och Sahlgrenska Universitetssjukhus
+        under GPT Summer Internship 2023.
+
+        Gjort av:
     
-    💡  Note: Bara dummy-data används, fortfarande i ett tidigt stadie
+        - Henrik Johansson
+        - Oskar Pauli
+        - Felix Nilsson
+
+        🔗 [Projektsida](https://my.ai.se/projects/287)
+
+        💡  Note: Bara dummy-data används, fortfarande i ett tidigt stadie
         ''')
 
     add_vertical_space(5)
 
     if 'generated' not in st.session_state:
-        st.session_state['generated'] = ["Välkommen till Assistenten! Hur kan jag hjälpa dig?"]
+        st.session_state['generated'] = ["Välkommen till MedHelp! Hur kan jag hjälpa dig?"]
 
     if 'past' not in st.session_state:
         st.session_state['past'] = ["Hejsan!"]

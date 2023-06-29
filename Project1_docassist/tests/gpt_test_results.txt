@@ -21,7 +21,7 @@ Refence answers:
 
 
 Test case 2:  PASSED
-Generated answer: "Doseringen av läkemedlet Paracetamol för patient 112200 är 500 mg vid behov, max 4 gånger dagligen. "
+Generated answer: "Doseringen av läkemedlet paracetamol för patient 112200 är 500 mg vid behov, max 4 gånger dagligen. "
 
 Refence answers:
 X  "Patienten får 500 mg paracetamol vid behov, som mest fyra dagligen"
@@ -43,7 +43,7 @@ X  "På dagen 2023-09-10 blev patienten inskriven för vård."
 
 
 Test case 4:  PASSED
-Generated answer: "Orsaken bakom hjärtinfarkten hos patient 789012 var rökning. "
+Generated answer: "Orsaken till hjärtinfarkten hos patient 789012 var rökning. "
 
 Refence answers:
 ✓  "Orsaken bakom patientens hjärtinfarkt var rökning."
@@ -53,17 +53,7 @@ X  "Hjärtinfarkten patienten 789012 upplevde berodde på rökning."
 ✓  "Patientens hjärtinfarkt uppstod på grund av rökning."
 
 
-Test case 5:  PASSED
-Generated answer: "Patient 654322 är ogift utan barn och arbetar som revisor. "
-
-Refence answers:
-✓  "Patient 654322 arbetar som revisor, har inga barn och är ogift."
-X  "Patient 654322 är anställd som revisor och är ogift utan barn."
-X  "Patient 654322 jobbar som revisor och är ogift."
-X  "Patienten arbetar med bokföring som revisor och är ogift utan barn."
-X  "Han har inga barn, ej gift och arbetar som revisor"
-
-
+Test case 5:  ERROR: wrong format from GPT
 Test case 6:  PASSED
 Generated answer: "Patient 987321 ska genomgå laboratorieanalyser den 21 juni 2023. "
 
@@ -87,14 +77,14 @@ X  "På dagen 2023-06-29 kommer patienten att genomgå spirometri."
 
 
 Test case 8:  PASSED
-Generated answer: "Patienten 112288 har blivit tilldelad läkemedlet Diclofenac. "
+Generated answer: "Patienten 112288 har blivit tilldelad läkemedlet Diclofenac, i form av tabletter, med en dosering på 50 mg var 8:e timme vid behov för smärta. "
 
 Refence answers:
-X  "Patienten 112288 har blivit administrerad läkemedlet Diclofenac."
+✓  "Patienten 112288 har blivit administrerad läkemedlet Diclofenac."
 X  "Läkemedlet Diclofenac har tilldelad till patienten 112288."
 X  "Patienten har fått läkemedlet Diclofenac administrerat."
 X  "Läkemedlet Diclofenac har givits till patienten 112288."
-✓  "Patienten har fått läkemedlet Diclofenac."
+X  "Patienten har fått läkemedlet Diclofenac."
 
 
 Test case 9:  PASSED

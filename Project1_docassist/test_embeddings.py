@@ -5,7 +5,7 @@ import numpy as np
 
 import json
 
-def run_test(question,reference_answers,identifier):
+def run_similarity_test(question,reference_answers,identifier):
 
     candidate = [get_chat_response(question,[str(identifier)])]
     candidate = candidate[0].split("*")[0].replace("\n","").strip()
@@ -17,12 +17,7 @@ def run_test(question,reference_answers,identifier):
 
     return strings_ranked_by_relatedness(candidate,embedded_references)[1]
 
-"""
-q = "Vad åt patient 112288 till lunch igår?"
-refs = ["Han åt pizza igår till lunch", "Igår åt patient 112288 pizza till lunch"]
-res = run_test(q,refs,112288)
-print(res,np.mean(res))
-"""
+
 
 def run_positive_tests():
     with open("Project1_docassist/tests/positive_results.csv","w") as g:
@@ -37,7 +32,7 @@ def run_positive_tests():
                 reference_answers = case['reference_answers']
                 identifier = case['patient_id']
 
-                results = run_test(question,reference_answers,identifier)
+                results = run_similarity_test(question,reference_answers,identifier)
                 low = min(results)
                 high = max(results)
                 mean = np.mean(results)
@@ -57,7 +52,7 @@ def run_negative_tests():
                 reference_answers = case['reference_answers']
                 
 
-                results = run_test(question,reference_answers,"")
+                results = run_similarity_test(question,reference_answers,"")
                 low = min(results)
                 high = max(results)
                 mean = np.mean(results)

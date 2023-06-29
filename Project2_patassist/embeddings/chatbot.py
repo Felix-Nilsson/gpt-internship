@@ -1,10 +1,12 @@
 import os
 import openai
 from embeddings.run_query import return_best_record
+#from googletrans import Translator
 
 # Load your API key from an environment variable or secret management service
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
+#translator = Translator()
 
 conversation = [{'role':'system', 'content': ""}]
 
@@ -12,11 +14,22 @@ def get_completion(conversation, prompt, model="gpt-3.5-turbo",): # Andrew menti
     conversation.append({'role':'user','content':prompt})
     messages = conversation
 
+    #Skeleton for checking moderation, maybe useless
+    """
+    translated_prompt = translator.translate(str(prompt),dest='en',src='sv').text
+
+    moderation = openai.Moderation.create(
+        input=translated_prompt
+    )
+    output = moderation["results"][0]
+    print (output)
+
     response = openai.ChatCompletion.create(
         model=model,
         messages=messages,
         temperature=0, # this is the degree of randomness of the model's output
     )
+    """
 
     conversation.append({'role':'assistant','content':response.choices[0].message["content"]})
 

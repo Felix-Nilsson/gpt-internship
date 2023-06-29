@@ -57,8 +57,8 @@ Test case 5:  PASSED
 Generated answer: "Patient 654322 är ogift utan barn och arbetar som revisor. "
 
 Refence answers:
-X  "Patient 654322 arbetar som revisor, har inga barn och är ogift."
-✓  "Patient 654322 är anställd som revisor och är ogift utan barn."
+✓  "Patient 654322 arbetar som revisor, har inga barn och är ogift."
+X  "Patient 654322 är anställd som revisor och är ogift utan barn."
 X  "Patient 654322 jobbar som revisor och är ogift."
 X  "Patienten arbetar med bokföring som revisor och är ogift utan barn."
 X  "Han har inga barn, ej gift och arbetar som revisor"
@@ -73,3 +73,36 @@ X  "Patienten ska genomgå laboratorieanalyser 2023-06-21"
 ✓  "Det är planerat att utföra laboratorieanalyser på patient 987321 den 21 juni 2023."
 ✓  "Patient 987321 kommer att bli föremål för laboratorieanalyser den 21 juni 2023."
 ✓  "Laboratorieanalyserna är schemalagda för patient 987321 den 21 juni 2023."
+
+
+Test case 7:  PASSED
+Generated answer: "Patient 123123 ska genomgå spirometri den 29 juni. "
+
+Refence answers:
+X  "Patient 123123 ska genomgå spirometri 2023-06-29."
+✓  "Den 29 juni 2023 kommer patient 123123 att genomgå en spirometri."
+✓  "Spirometri är schemalagd för patienten den 29:e juni 2023."
+X  "På dagen 2023-06-29 kommer patienten att genomgå spirometri."
+✓  "Patient 123123 kommer att genomgå en spirometri den 29 juni 2023."
+
+
+Test case 8:  PASSED
+Generated answer: "Patienten 112288 har blivit tilldelad läkemedlet Diclofenac. "
+
+Refence answers:
+X  "Patienten 112288 har blivit administrerad läkemedlet Diclofenac."
+X  "Läkemedlet Diclofenac har tilldelad till patienten 112288."
+X  "Patienten har fått läkemedlet Diclofenac administrerat."
+X  "Läkemedlet Diclofenac har givits till patienten 112288."
+✓  "Patienten har fått läkemedlet Diclofenac."
+
+
+Test case 9:  PASSED
+Generated answer: "Läkaren Eva Karlsson bedömde att patient 112244 upplevde hjärtsvikt. "
+
+Refence answers:
+✓  "Läkaren Eva Karlsson bedömde att patienten 112244 hade hjärtsvikt."
+X  "En bedömning gjordes av läkaren Eva Karlsson att patienten led av hjärtsvikt."
+X  "Patienten diagnostiserades med hjärtsvikt enligt läkaren Eva Karlsson."
+X  "Enligt läkaren Eva Karlsson led patienten av hjärtsvikt enligt bedömning."
+X  "Patienten 112244 diagnostiserades med hjärtsvikt av läkaren Eva Karlsson."

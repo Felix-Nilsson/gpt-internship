@@ -1,138 +1,132 @@
 {
-
-"patient" : [
+  "patient": [
     {
-        "patient_id": 123123,
-        "födelsedatum": "1950-01-01",
-        "avlidendatum": "-", 
-        "kön": "M", 
-        "vital_status": 1  
+      "patient_id": 123123,
+      "födelsedatum": "1950-01-01",
+      "avlidendatum": "-",
+      "kön": "M",
+      "vital_status": 1
     }
-],
-
-"activity" : [
+  ],
+  "activity": [
     {
-        "patient_id": 123123,
-        "aktivitet_id": 11223344,
-        "förvaltning": "SU",  
-        "verksamhet": "Medicinalavdelning X",  
-        "plats": "Avdelning 357 Medicin Östra",
-        "vårdgivarekategori": "LÄK", 
-        "aktivitettyp": "slutenvårdvistelse",
-        "kontakttyp": "J", 
-        "startdatum": "2020-03-28",
-        "slutdatum": "2020-03-30",
-        "från_plats": "AKUTEN", 
-        "till_plats": "HEM"
+      "patient_id": 123123,
+      "aktivitet_id": 11223344,
+      "förvaltning": "SU",
+      "verksamhet": "Medicinalavdelning X",
+      "plats": "Avdelning 357 Medicin Östra",
+      "vårdgivarekategori": "LÄK",
+      "aktivitettyp": "slutenvårdvistelse",
+      "kontakttyp": "J",
+      "startdatum": "2020-03-28",
+      "slutdatum": "2020-03-30",
+      "från_plats": "AKUTEN",
+      "till_plats": "HEM"
     }
-],
-
-"observation" : [
+  ],
+  "observation": [
     {
-        "patient_id": 123123,
-        "aktivitet_id": 12345678,
-        "begrepp": "diagnos",
-        "kod": "J189 Pneumoni, ospecificerad",  
-        "värde": "primär",  
-        "startdatum": "2020-03-28",
-        "slutdatum": "2020-03-30"
+      "patient_id": 123123,
+      "aktivitet_id": 12345678,
+      "begrepp": "diagnos",
+      "kod": "J189 Pneumoni, ospecificerad",
+      "värde": "primär",
+      "startdatum": "2020-03-28",
+      "slutdatum": "2020-03-30"
     },
     {
-        "patient_id": 123123,
-        "aktivitet_id": 87654321,
-        "begrepp": "orsak", 
-        "kod": "FEBER",
-        "värde": "-",
-        "startdatum": "2020-03-28",
-        "slutdatum": "2020-03-30"
+      "patient_id": 123123,
+      "aktivitet_id": 87654321,
+      "begrepp": "orsak",
+      "kod": "FEBER",
+      "värde": "-",
+      "startdatum": "2020-03-28",
+      "slutdatum": "2020-03-30"
     }
-],
-
-"prescription" : [
+  ],
+  "prescription": [
     {
-        "patient_id": 123123,
-        "akvititet_id": 951,
-        "läkemedel": "fenoximetylpenicillin oxifarm",
-        "substans": "fenoximetylpenicillin",
-        "kategori": "antibakteriella betalaktamer, penicillin",
-        "atc_kod": "J01CE02",
-        "beredningsform": "filmdragerad tablett",
-        "dosering": "1 tablett morgon, middag, kväll i fyra dagar",
-        "styrka": "1",
-        "styrka_enhet": "g",
-        "vårdgivare": "August B. Carlsson",
-        "vårdgivarekategori": "LÄK",
-        "vårdgivaretel": "031-123456",
-        "verksamhet": "Medicinalavdelning X",
-        "förmån": "Y", 
-        "förskrivningsdatum": "2020-03-30",
-        "giltigt_till_och_med": "2021-03-30",
-        "senast_uttag": "-",
-        "tidigast_uttag_inom_förmån": "2020-03-30", 
-        "förskriven_mängd": 12,
-        "senast_uttagen_mängd": 0,
-        "återstående_mängd": 12,
-        "uttag_antal": 1,
-        "uttag_kvar": 1
+      "patient_id": 123123,
+      "akvititet_id": 951,
+      "läkemedel": "fenoximetylpenicillin oxifarm",
+      "substans": "fenoximetylpenicillin",
+      "kategori": "antibakteriella betalaktamer, penicillin",
+      "atc_kod": "J01CE02",
+      "beredningsform": "filmdragerad tablett",
+      "dosering": "1 tablett morgon, middag, kväll i fyra dagar",
+      "styrka": "1",
+      "styrka_enhet": "g",
+      "vårdgivare": "August B. Carlsson",
+      "vårdgivarekategori": "LÄK",
+      "vårdgivaretel": "031-123456",
+      "verksamhet": "Medicinalavdelning X",
+      "förmån": "Y",
+      "förskrivningsdatum": "2020-03-30",
+      "giltigt_till_och_med": "2021-03-30",
+      "senast_uttag": "-",
+      "tidigast_uttag_inom_förmån": "2020-03-30",
+      "förskriven_mängd": 12,
+      "senast_uttagen_mängd": 0,
+      "återstående_mängd": 12,
+      "uttag_antal": 1,
+      "uttag_kvar": 1
     }
-],
-
-"journal" : [
+  ],
+  "journal": [
     {
-        "patient_id": 123123,
-        "aktivitet_id": 59492,
-        "aktivitettyp": "slutanteckning, läkare",
-        "vårdgivare": "August B. Carlsson",
-        "vårdgivarekategori": "LÄK",
-        "vårdgivaretel": "031-123456",
-        "förvaltning": "SU",
-        "verksamhet": "Medicinalavdelning X",
-        "plats": "Avdelning 357 Medicin Östra",
-        "startdatum": "2020-03-28",
-        "slutdatum": "2020-03-30",
-        "huvuddiagnos": "J189 Pneumoni, ospecificerad",
-        "anamnes": "feber, hosta och lågt blodtryck",
-        "socialt": "pensionär, tidigare industriarbetare",
-        "tidigare_sjukdomar": "Kolecystekomerad 2010. Tidigare rökare.",
-        "nuvarande_sjukdomar": "Hypertoni. Atros. Dyspepsi.",
-        "aktuellt": "Inkommer med två dagars anamnes på feber och hosta. Hypoton och förhöjd andningsfrekvens vid inkomst. CABR 2. Lungrtg med högersidiga infiltrat. CRP 270.",
-        "sammanfattning": "Initieras på bensylpc 3gx3 och stötdos Nebcina tillsammans med vätska. Initial syrgaskrävande. Förbättras på inslagen behandling. Feberfri sedan 29/3, syrgas avvecklas. CRP mer än halverad 30/3. Översätts samma dag på peroral behandling med fenoximetylpc",
-        "bedömning": "Bakteriell pneumoni. Oklart agens, blododlingar negativa. Svarar bra på bensylpc",
-        "planering": "Fortsatt behandling med antibiotika i totalt 7 dagar till och me 4/3. Initieras på fenoxmetylpc x 3 vid hemkomst.",
-        "från_plats": "HEM",
-        "till_plats": "HEM"
+      "patient_id": 123123,
+      "aktivitet_id": 59492,
+      "aktivitettyp": "slutanteckning, läkare",
+      "vårdgivare": "August B. Carlsson",
+      "vårdgivarekategori": "LÄK",
+      "vårdgivaretel": "031-123456",
+      "förvaltning": "SU",
+      "verksamhet": "Medicinalavdelning X",
+      "plats": "Avdelning 357 Medicin Östra",
+      "startdatum": "2020-03-28",
+      "slutdatum": "2020-03-30",
+      "huvuddiagnos": "J189 Pneumoni, ospecificerad",
+      "anamnes": "feber, hosta och lågt blodtryck",
+      "socialt": "pensionär, tidigare industriarbetare",
+      "tidigare_sjukdomar": "Kolecystekomerad 2010. Tidigare rökare.",
+      "nuvarande_sjukdomar": "Hypertoni. Atros. Dyspepsi.",
+      "aktuellt": "Inkommer med två dagars anamnes på feber och hosta. Hypoton och förhöjd andningsfrekvens vid inkomst. CABR 2. Lungrtg med högersidiga infiltrat. CRP 270.",
+      "sammanfattning": "Initieras på bensylpc 3gx3 och stötdos Nebcina tillsammans med vätska. Initial syrgaskrävande. Förbättras på inslagen behandling. Feberfri sedan 29/3, syrgas avvecklas. CRP mer än halverad 30/3. Översätts samma dag på peroral behandling med fenoximetylpc",
+      "bedömning": "Bakteriell pneumoni. Oklart agens, blododlingar negativa. Svarar bra på bensylpc",
+      "planering": "Fortsatt behandling med antibiotika i totalt 7 dagar till och me 4/3. Initieras på fenoxmetylpc x 3 vid hemkomst.",
+      "från_plats": "HEM",
+      "till_plats": "HEM"
     },
     {
-        "patient_id": 123123,
-        "aktivitet_id": 59493,
-        "aktivitettyp": "vård- och läkemedelsberättelse",
-        "vårdgivare": "August B. Carlsson",
-        "vårdgivarekategori": "LÄK",
-        "vårdgivaretel": "031-123456",
-        "förvaltning": "SU",
-        "verksamhet": "Medicinalavdelning X",
-        "plats": "Avdelning 357 Medicin Östra",
-        "startdatum": "2020-03-28",
-        "slutdatum": "2020-03-30",
-        "orsak": "Du sökte vård med anledning av feber, hosta och trötthet sedan två dagar. Du fick behandling med antibiotika i blodet och mådde snart bättre på detta.",
-        "läkemedelsberättelse": "Du behandlades på avdelningen med bensylpenicillin i blodet och mådde efter någon dags behandling bättre.",
-        "planering": "Du ska fortsätta med antibiotika i tablettform (fenoxmetylpenicillin) morgon, middag och kväll i ytterligare fyra dagar till och med söndag 3/4. Du kommer bli uppringd av läkare om ca två veckor."
+      "patient_id": 123123,
+      "aktivitet_id": 59493,
+      "aktivitettyp": "vård- och läkemedelsberättelse",
+      "vårdgivare": "August B. Carlsson",
+      "vårdgivarekategori": "LÄK",
+      "vårdgivaretel": "031-123456",
+      "förvaltning": "SU",
+      "verksamhet": "Medicinalavdelning X",
+      "plats": "Avdelning 357 Medicin Östra",
+      "startdatum": "2020-03-28",
+      "slutdatum": "2020-03-30",
+      "orsak": "Du sökte vård med anledning av feber, hosta och trötthet sedan två dagar. Du fick behandling med antibiotika i blodet och mådde snart bättre på detta.",
+      "läkemedelsberättelse": "Du behandlades på avdelningen med bensylpenicillin i blodet och mådde efter någon dags behandling bättre.",
+      "planering": "Du ska fortsätta med antibiotika i tablettform (fenoxmetylpenicillin) morgon, middag och kväll i ytterligare fyra dagar till och med söndag 3/4. Du kommer bli uppringd av läkare om ca två veckor."
     }
-],
-
-"plan" : [
+  ],
+  "plan": [
     {
-        "patient_id": 123123,
-        "aktivitet_id": "123",
-        "aktivitet_källa": "vårdplan",
-        "inskrivenihemsjukvård": "Y",
-        "ärendestartdatum": "2020-01-01",
-        "ärendeslutdatum": "2020-01-02",
-        "inskrivningsdatum": "2020-01-01",
-        "förstaplanutskrivningsdatum": "2020-01-02",
-        "sistautskrivningsklardatum": "2020-01-02",  
-        "utskrivningsdatum": "2020-01-02",  
-        "fastvårdkontaktutsedd": "Y"
+      "patient_id": 123123,
+      "aktivitet_id": "123",
+      "aktivitet_källa": "vårdplan",
+      "inskrivenihemsjukvård": "Y",
+      "ärendestartdatum": "2020-01-01",
+      "ärendeslutdatum": "2020-01-02",
+      "inskrivningsdatum": "2020-01-01",
+      "förstaplanutskrivningsdatum": "2020-01-02",
+      "sistautskrivningsklardatum": "2020-01-02",
+      "utskrivningsdatum": "2020-01-02",
+      "fastvårdkontaktutsedd": "Y"
     }
-]
+  ]
 }

@@ -3,7 +3,7 @@ import openai
 import json
 import re
 import time
-from embeddings.chatbot import get_chat_response
+from ..embeddings.chatbot import get_chat_response
 
 # Load your API key from an environment variable or secret management service
 openai.api_key = os.getenv("OPENAI_API_KEY")

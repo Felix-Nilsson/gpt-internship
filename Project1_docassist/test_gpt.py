@@ -43,45 +43,54 @@ def compare(actual_output: str, expected_output: list[str]):
 
     return(test_response.choices[0].message["content"])
 
-with open("Project1_docassist/tests/gpt_test_results.txt","w", encoding="utf-8") as g:
+def test_gpt():
+    with open("Project1_docassist/tests/gpt_test_results.txt","w", encoding="utf-8") as g:
 
-    with open("Project1_docassist/tests/cases.json","r", encoding="utf-8") as f:
-        data = json.load(f)
+        with open("Project1_docassist/tests/cases.json","r", encoding="utf-8") as f:
+            data = json.load(f)
+            ans = 0
 
-        for case in data:
-            test_index = case['test_index']
-            patient_id = case['patient_id']
-            question = case['question']
-            reference_answers = case['reference_answers']
+            for case in data:
+                test_index = case['test_index']
+                patient_id = case['patient_id']
+                question = case['question']
+                reference_answers = case['reference_answers']
 
-            case_answer = get_chat_response(question, patient_id, False)
-            case_answer = case_answer.split('\n')[0]
+                case_answer = get_chat_response(question, patient_id, False)
+                case_answer = case_answer.split('\n')[0]
 
-            result = compare(case_answer, reference_answers)
+                result = compare(case_answer, reference_answers)
 
-            #Check so that result has the right format
-            if re.match(r'^\[([01](?:,[01])*)\]$', result) is None:
-                g.write('Test case ' + test_index + ':  ERROR: wrong format from GPT\n')
-                continue #Throw error instead?
+                #Check so that result has the right format
+                if re.match(r'^\[([01](?:,[01])*)\]$', result) is None:
+                    g.write('Test case ' + test_index + ':  ERROR: wrong format from GPT\n')
+                    continue #Throw error instead?
 
-            #Clean result string
-            result = str(result).replace('[','').replace(']','').split(',')
-            
-            #Write results to file
-            if '1' in result:
-                g.write('Test case ' + test_index + ':  PASSED\n')
-            else:
-                g.write('Test case ' + test_index + ':  FAILED\n')
-
-            g.write('Generated answer: "' + case_answer + '"\n\n')
-
-            g.write('Refence answers:\n')
-
-            for i in range(0, len(result)):
-                if result[i] == '1':
-                    g.write('✓  "' + reference_answers[i] + '"\n')
+                #Clean result string
+                result = str(result).replace('[','').replace(']','').split(',')
+                
+                #Write results to file
+                if '1' in result:
+                    ans += 1
+                    g.write('Test case ' + test_index + ':  PASSED\n')
                 else:
-                    g.write('X  "' + reference_answers[i] + '"\n')
+                    g.write('Test case ' + test_index + ':  FAILED\n')
 
-            if int(test_index) < len(data) - 1:
-                g.write('\n\n')
+                g.write('Generated answer: "' + case_answer + '"\n\n')
+
+                g.write('Refence answers:\n')
+
+                for i in range(0, len(result)):
+                    if result[i] == '1':
+                        g.write('✓  "' + reference_answers[i] + '"\n')
+                    else:
+                        g.write('X  "' + reference_answers[i] + '"\n')
+
+                if int(test_index) < len(data) - 1:
+                    g.write('\n\n')
+
+    return ans
+
+test_gpt()
+
+    

@@ -35,7 +35,6 @@ def get_chat_response(query: str, patients: list[str], remember=True, model='gpt
         not_accessible_msg = " Är du säker på att du har tillgång till patienten?"
 
     if (current_patient_id is not None) and (current_patient_id in patients):
-        print(current_patient_id)
         patient_ids.insert(0,current_patient_id)
 
 
@@ -72,8 +71,6 @@ def get_chat_response(query: str, patients: list[str], remember=True, model='gpt
         messages=messages,
         temperature=0, #Fegree of randomness of the model's output
     )
-
-    print(response.usage)
 
     #Add the response to the conversation memory
     messages.append({'role':'assistant','content':response.choices[0].message["content"]})

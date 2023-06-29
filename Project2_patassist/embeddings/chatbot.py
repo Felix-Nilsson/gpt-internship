@@ -23,13 +23,13 @@ def get_completion(conversation, prompt, model="gpt-3.5-turbo",): # Andrew menti
     )
     output = moderation["results"][0]
     print (output)
-
+    """
     response = openai.ChatCompletion.create(
         model=model,
         messages=messages,
         temperature=0, # this is the degree of randomness of the model's output
     )
-    """
+    
 
     conversation.append({'role':'assistant','content':response.choices[0].message["content"]})
 

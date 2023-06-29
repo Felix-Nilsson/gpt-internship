@@ -44,9 +44,9 @@ def compare(actual_output: str, expected_output: list[str]):
     return(test_response.choices[0].message["content"])
 
 def test_gpt():
-    with open("Project1_docassist/tests/gpt_test_results.txt","w", encoding="utf-8") as g:
+    with open("testing/tests/gpt_test_results.txt","w", encoding="utf-8") as g:
 
-        with open("Project1_docassist/tests/cases.json","r", encoding="utf-8") as f:
+        with open("testing/tests/cases.json","r", encoding="utf-8") as f:
             data = json.load(f)
             ans = 0
 

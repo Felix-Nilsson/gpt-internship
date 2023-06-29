@@ -37,13 +37,13 @@ def barplot_vector(data):
     ax.set_title('Bar Plot for different methods and their score')
 
     # Show the plot
-    plt.savefig('Project1_docassist/tests/plots_n_results/barplot_tot.png')
+    plt.savefig('testing/tests/plots_n_results/barplot_tot.png')
 
 
-pos_embed = pd.read_csv("Project1_docassist/tests/data/positive_results.csv")
-neg_embed = pd.read_csv("Project1_docassist/tests/data/negative_results.csv")
-pos_bleu = pd.read_csv("Project1_docassist/tests/data/bleu_positive.csv")
-neg_bleu = pd.read_csv("Project1_docassist/tests/data/bleu_negative.csv")
+pos_embed = pd.read_csv("testing/tests/data/positive_results.csv")
+neg_embed = pd.read_csv("testing/tests/data/negative_results.csv")
+pos_bleu = pd.read_csv("testing/tests/data/bleu_positive.csv")
+neg_bleu = pd.read_csv("testing/tests/data/bleu_negative.csv")
 
 smpe = np.sum(pos_embed['avg'])
 smne = np.sum(neg_embed['avg'])

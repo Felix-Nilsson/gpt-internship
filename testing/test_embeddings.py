@@ -20,10 +20,10 @@ def run_similarity_test(question,reference_answers,identifier):
 
 
 def run_positive_tests():
-    with open("Project1_docassist/tests/positive_results.csv","w") as g:
+    with open("testing/tests/data/positive_results.csv","w") as g:
         g.write("index,max,min,avg")
 
-        with open("Project1_docassist/tests/cases.json","r") as f:
+        with open("testing/tests/cases.json","r") as f:
             data = json.load(f)
             for case in data:
                 index = case["test_index"]
@@ -40,10 +40,10 @@ def run_positive_tests():
                 g.write(f"\n{index},{high},{low},{mean}")
 
 def run_negative_tests():
-    with open("Project1_docassist/tests/negative_results.csv","w") as g:
+    with open("testing/tests/data/negative_results.csv","w") as g:
         g.write("index,max,min,avg")
 
-        with open("Project1_docassist/tests/cases.json","r") as f:
+        with open("testing/tests/cases.json","r") as f:
             data = json.load(f)
             for case in data:
                 index = case["test_index"]

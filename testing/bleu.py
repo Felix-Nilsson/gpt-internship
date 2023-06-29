@@ -13,7 +13,7 @@ def run_bleu(reference_answers,can, method):
     
 
 def bleu_smoothing_eval():
-    with open('Project1_docassist/tests/cases.json') as file:
+    with open('testing/tests/cases.json') as file:
         data = json.load(file)
         matrix = np.empty((0,8))
         for case in data:
@@ -49,10 +49,10 @@ def bleu_smoothing_eval():
     plt.show()
 
 def run_bleu_test(is_negative=False):
-    with open('Project1_docassist/tests/cases.json') as file:
-        path = "Project1_docassist/tests/bleu_positive.csv"
+    with open('testing/tests/cases.json') as file:
+        path = "testing/tests/data/bleu_positive.csv"
         if is_negative:
-            path = "Project1_docassist/tests/bleu_negative.csv"
+            path = "testing/tests/data/bleu_negative.csv"
 
         with open(path,"w") as f:
 

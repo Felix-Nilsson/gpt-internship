@@ -13,7 +13,7 @@ def run_bleu(reference_answers,can, method):
     
 
 def bleu_smoothing_eval():
-    with open('Project1_docassist/tests/cases.json') as file:
+    with open('testing/tests/cases.json') as file:
         data = json.load(file)
         matrix = np.empty((0,8))
         for case in data:

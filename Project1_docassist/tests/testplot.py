@@ -2,10 +2,10 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
-pos_emb = pd.read_csv("Project1_docassist/tests/positive_results.csv")
-neg_emb = pd.read_csv("Project1_docassist/tests/negative_results.csv")
-pos_bleu = pd.read_csv("Project1_docassist/tests/bleu_positive.csv")
-neg_bleu = pd.read_csv("Project1_docassist/tests/bleu_negative.csv")
+pos_emb = pd.read_csv("Project1_docassist/tests/data/positive_results.csv")
+neg_emb = pd.read_csv("Project1_docassist/tests/data/negative_results.csv")
+pos_bleu = pd.read_csv("Project1_docassist/tests/data/bleu_positive.csv")
+neg_bleu = pd.read_csv("Project1_docassist/tests/data/bleu_negative.csv")
 
 matrix = np.vstack((pos_emb['avg'],neg_emb['avg'],pos_bleu['avg'],neg_bleu['avg'])).T
 
@@ -25,4 +25,4 @@ ax.set_xlabel('Testing method')
 ax.set_ylabel('Score')
 ax.set_title('Boxplot for different methods and scores')
 
-plt.savefig('Project1_docassist/tests/boxplot_avg.png')
+plt.savefig('Project1_docassist/tests/plots/boxplot_avg.png')

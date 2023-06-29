@@ -82,5 +82,6 @@ with open("Project1_docassist/tests/gpt_test_results.txt","w", encoding="utf-8")
                     g.write('✓  "' + reference_answers[i] + '"\n')
                 else:
                     g.write('X  "' + reference_answers[i] + '"\n')
-            
-            g.write('\n\n')
+
+            if int(test_index) < len(data) - 1:
+                g.write('\n\n')

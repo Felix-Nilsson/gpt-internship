@@ -69,11 +69,11 @@
         "patient_id":"654322",
         "question":"Hur ser patient 654322's sociala liv ut och vad jobbar den med?",
         "reference_answers":[
-            "Patient 654322 arbetar som revisor, har två barn och är ogift.",
-            "Patient 654322 är anställd som revisor och är ogift med två barn.",
-            "Patient 654322 jobbar som revisor och är ogift förälder till två barn.",
-            "Patienten arbetar med bokföring som revisor och är ogift förälder till två barn.",
-            "Han är förälder med två barn, ej gift och arbetar som revisor"
+            "Patient 654322 arbetar som revisor, har inga barn och är ogift.",
+            "Patient 654322 är anställd som revisor och är ogift utan barn.",
+            "Patient 654322 jobbar som revisor och är ogift.",
+            "Patienten arbetar med bokföring som revisor och är ogift utan barn.",
+            "Han har inga barn, ej gift och arbetar som revisor"
         ] 
     },
 

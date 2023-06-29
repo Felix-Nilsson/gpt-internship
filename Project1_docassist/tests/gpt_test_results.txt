@@ -1,8 +1,75 @@
-Test case 0:  FAILED
+Test case 0:  PASSED
+Generated answer: "Ja, patient 654321 har fått en akut transmural hjärtinfarkt. "
+
+Refence answers:
+✓  "Ja, han har fått akut transmural hjärtinfarkt."
+X  "Han fick transmural hjärtinfarkt, så det stämmer."
+X  "Korrekt, patient 654321 har drabbats av en akut hjärtinfarkt."
+X  "Ja, Han har fått en transmural hjärtinfarkt som är akut"
+X  "Ja, Han har lidit av hjärtinfarkt"
+
 
 Test case 1:  PASSED
-Generated answer: "V�rdgivaren f�r patient 112255 �r Maria Eriksson. "
-Reference answer: "Maria Eriksson är den vårdgivare som tar hand om patient 112255."
+Generated answer: "Vårdgivaren för patient 112255 är Maria Eriksson. "
 
-Test case 2:  FAILED
+Refence answers:
+✓  "Maria Eriksson är den vårdgivare som tar hand om patient 112255."
+✓  "Patient 112255 har Maria Eriksson som sin vårdgivare."
+✓  "Vårdansvaret för patient 112255 ligger hos Maria Eriksson."
+✓  "Maria Eriksson ansvarar för vården av patient 112255."
+✓  "Maria Eriksson är den vårdpersonal som är ansvarig för patient 112255."
 
+
+Test case 2:  PASSED
+Generated answer: "Doseringen av läkemedlet Paracetamol för patient 112200 är 500 mg vid behov, max 4 gånger dagligen. "
+
+Refence answers:
+X  "Patienten får 500 mg paracetamol vid behov, som mest fyra dagligen"
+✓  "Patienten har möjlighet att ta 500 mg paracetamol efter behov, inte överstigande fyra gånger per dag."
+✓  "Paracetamoldosen för patienten är 500 mg vid behov, med en maximal frekvens av fyra gånger dagligen."
+✓  "För att lindra symtomen kan patienten ta 500 mg paracetamol efter behov, dock högst fyra gånger per dag."
+✓  "Vid behov kan patienten inta upp till fyra dagliga doser av 500 mg paracetamol."
+
+
+Test case 3:  PASSED
+Generated answer: "Patient 112299 blev inskriven på sjukhuset den 10 september 2023. "
+
+Refence answers:
+X  "Patienten blev inskriven 2023-09-10."
+✓  "Inskrivningen av patienten skedde den 10 september 2023."
+✓  "Den 10 september 2023 blev patienten registrerad på sjukhuset."
+X  "År 2023-09-10 blev patienten inlagd på sjukhuset."
+X  "På dagen 2023-09-10 blev patienten inskriven för vård."
+
+
+Test case 4:  PASSED
+Generated answer: "Orsaken bakom hjärtinfarkten hos patient 789012 var rökning. "
+
+Refence answers:
+✓  "Orsaken bakom patientens hjärtinfarkt var rökning."
+X  "Hjärtinfarkten patienten 789012 upplevde berodde på rökning."
+✓  "Hjärtinfarkten hos patient 789012 orsakades av rökning."
+✓  "Rökning var det som låg bakom patientens hjärtinfarkt."
+✓  "Patientens hjärtinfarkt uppstod på grund av rökning."
+
+
+Test case 5:  PASSED
+Generated answer: "Patient 654322 är ogift utan barn och arbetar som revisor. "
+
+Refence answers:
+X  "Patient 654322 arbetar som revisor, har inga barn och är ogift."
+✓  "Patient 654322 är anställd som revisor och är ogift utan barn."
+X  "Patient 654322 jobbar som revisor och är ogift."
+X  "Patienten arbetar med bokföring som revisor och är ogift utan barn."
+X  "Han har inga barn, ej gift och arbetar som revisor"
+
+
+Test case 6:  PASSED
+Generated answer: "Patient 987321 ska genomgå laboratorieanalyser den 21 juni 2023. "
+
+Refence answers:
+X  "Patienten ska genomgå laboratorieanalyser 2023-06-21"
+✓  "Den 21 juni 2023 ska patienten genomgå laboratorieanalyser."
+✓  "Det är planerat att utföra laboratorieanalyser på patient 987321 den 21 juni 2023."
+✓  "Patient 987321 kommer att bli föremål för laboratorieanalyser den 21 juni 2023."
+✓  "Laboratorieanalyserna är schemalagda för patient 987321 den 21 juni 2023."

@@ -83,5 +83,5 @@ def run_bleu_test(is_negative=False):
                 f.write(f"{result}\n")
 
 
-run_bleu_test(is_negative=False)
-#run_bleu_test(is_negative=True)
+#run_bleu_test(is_negative=False)
+run_bleu_test(is_negative=True) 

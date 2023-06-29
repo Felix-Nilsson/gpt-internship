@@ -30,7 +30,12 @@ def get_chat_response(query: str, patients: list[str], remember=True, model='gpt
     current_patient_id = find_patient_id(query)
 
     #Check if the patient 'belongs' to the current doctor
+    not_accessible_msg  = ""
+    if not current_patient_id in patients:
+        not_accessible_msg = " Är du säker på att du har tillgång till patienten?"
+
     if (current_patient_id is not None) and (current_patient_id in patients):
+        print(current_patient_id)
         patient_ids.insert(0,current_patient_id)
 
 
@@ -74,7 +79,7 @@ def get_chat_response(query: str, patients: list[str], remember=True, model='gpt
     messages.append({'role':'assistant','content':response.choices[0].message["content"]})
 
 
-    finished_response = f'''{response.choices[0].message["content"]} 
+    finished_response = f'''{response.choices[0].message["content"]}{not_accessible_msg} 
     \n*OBS: som läkare bär du alltid själv ansvaret mot patienten*'''
 
     return(finished_response)

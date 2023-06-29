@@ -1,7 +1,7 @@
 {
     "patient": [
     {
-    "patient_id": 123456,
+    "patient_id": 112277,
     "födelsedatum": "1990-03-15",
     "avlidendatum": "-",
     "kön": "M",
@@ -10,7 +10,7 @@
     ],
     "activity": [
     {
-    "patient_id": 123456,
+    "patient_id": 112277,
     "aktivitet_id": 11223344,
     "förvaltning": "SU",
     "verksamhet": "Akutmottagning",
@@ -26,7 +26,7 @@
     ],
     "observation": [
     {
-    "patient_id": 123456,
+    "patient_id": 112277,
     "aktivitet_id": 99887766,
     "begrepp": "diagnos",
     "kod": "A82 Rabies",
@@ -37,7 +37,7 @@
     ],
     "prescription": [
     {
-    "patient_id": 123456,
+    "patient_id": 112277,
     "aktivitet_id": 987,
     "läkemedel": "Rabiesimmunoglobulin",
     "substans": "Rabiesimmunoglobulin",
@@ -49,7 +49,7 @@
     "styrka_enhet": "IE/kg",
     "vårdgivare": "Anna Andersson",
     "vårdgivarekategori": "LÄK",
-    "vårdgivaretel": "08-123456",
+    "vårdgivaretel": "08-112277",
     "verksamhet": "Infektionskliniken",
     "förmån": "Y",
     "förskrivningsdatum": "2023-09-10",
@@ -63,7 +63,7 @@
     "uttag_kvar": 0
     },
     {
-    "patient_id": 123456,
+    "patient_id": 112277,
     "aktivitet_id": 876,
     "läkemedel": "Rabiesvaccin",
     "substans": "Rabiesvaccin",
@@ -75,7 +75,7 @@
     "styrka_enhet": "ml",
     "vårdgivare": "Anna Andersson",
     "vårdgivarekategori": "LÄK",
-    "vårdgivaretel": "08-123456",
+    "vårdgivaretel": "08-112277",
     "verksamhet": "Infektionskliniken",
     "förmån": "Y",
     "förskrivningsdatum": "2023-09-10",
@@ -91,12 +91,12 @@
     ],
     "journal": [
     {
-    "patient_id": 123456,
+    "patient_id": 112277,
     "aktivitet_id": 59494,
     "aktivitettyp": "slutanteckning, läkare",
     "vårdgivare": "Anna Andersson",
     "vårdgivarekategori": "LÄK",
-    "vårdgivaretel": "08-123456",
+    "vårdgivaretel": "08-112277",
     "förvaltning": "SU",
     "verksamhet": "Infektionskliniken",
     "plats": "Infektionskliniken",
@@ -115,7 +115,7 @@
     ],
     "plan": [
     {
-    "patient_id": 123456,
+    "patient_id": 112277,
     "aktivitet_id": "987",
     "aktivitet_källa": "vårdplan",
     "inskrivenihemsjukvård": "N",

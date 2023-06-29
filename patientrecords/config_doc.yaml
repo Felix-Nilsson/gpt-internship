@@ -1,7 +1,7 @@
 credentials:
   usernames:
     oskarpauli:
-      email: Oskar Pauli@gmail.com
+      email: oskarpauli@gmail.com
       name: 'Oskar Pauli' 
       password: $2b$12$H811Om3K0jLjDLcVPHjCdeEtssUsZUZGbxcqUwEyj97wPinkbTpq6
       patients: ['123123','112200','112266','112233','112299','112244']

@@ -1,0 +1,9 @@
+Test case 0:  PASSED
+Generated answer: "Ja, patient 654321 har fått en akut transmural hjärtinfarkt."
+
+Refence answers:
+✓  "Ja, han har fått akut transmural hjärtinfarkt."
+X  "Han fick transmural hjärtinfarkt, så det stämmer."
+X  "Korrekt, patient 654321 har drabbats av en akut hjärtinfarkt."
+✓  "Ja, Han har fått en transmural hjärtinfarkt som är akut"
+X  "Ja, Han har lidit av hjärtinfarkt"

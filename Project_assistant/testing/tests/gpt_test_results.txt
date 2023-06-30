@@ -1,16 +1,16 @@
 Test case 0:  PASSED
-Generated answer: "Ja, patient 654321 har fått en akut transmural hjärtinfarkt. "
+Generated answer: "Ja, patient 654321 har fått en akut transmural hjärtinfarkt."
 
 Refence answers:
 ✓  "Ja, han har fått akut transmural hjärtinfarkt."
 X  "Han fick transmural hjärtinfarkt, så det stämmer."
 X  "Korrekt, patient 654321 har drabbats av en akut hjärtinfarkt."
-X  "Ja, Han har fått en transmural hjärtinfarkt som är akut"
+✓  "Ja, Han har fått en transmural hjärtinfarkt som är akut"
 X  "Ja, Han har lidit av hjärtinfarkt"
 
 
 Test case 1:  PASSED
-Generated answer: "Vårdgivaren för patient 112255 är Maria Eriksson. "
+Generated answer: "Vårdgivaren för patient 112255 är Maria Eriksson."
 
 Refence answers:
 ✓  "Maria Eriksson är den vårdgivare som tar hand om patient 112255."
@@ -21,7 +21,7 @@ Refence answers:
 
 
 Test case 2:  PASSED
-Generated answer: "Doseringen av läkemedlet paracetamol för patient 112200 är 500 mg vid behov, max 4 gånger dagligen. "
+Generated answer: "Doseringen av läkemedlet paracetamol för patient 112200 är 500 mg vid behov, max 4 gånger dagligen."
 
 Refence answers:
 X  "Patienten får 500 mg paracetamol vid behov, som mest fyra dagligen"
@@ -32,7 +32,7 @@ X  "Patienten får 500 mg paracetamol vid behov, som mest fyra dagligen"
 
 
 Test case 3:  PASSED
-Generated answer: "Patient 112299 blev inskriven på sjukhuset den 10 september 2023. "
+Generated answer: "Patient 112299 blev inskriven på sjukhuset den 10 september 2023."
 
 Refence answers:
 X  "Patienten blev inskriven 2023-09-10."
@@ -43,7 +43,7 @@ X  "På dagen 2023-09-10 blev patienten inskriven för vård."
 
 
 Test case 4:  PASSED
-Generated answer: "Orsaken till hjärtinfarkten hos patient 789012 var rökning. "
+Generated answer: "Orsaken till hjärtinfarkten hos patient 789012 var rökning."
 
 Refence answers:
 ✓  "Orsaken bakom patientens hjärtinfarkt var rökning."
@@ -53,9 +53,19 @@ X  "Hjärtinfarkten patienten 789012 upplevde berodde på rökning."
 ✓  "Patientens hjärtinfarkt uppstod på grund av rökning."
 
 
-Test case 5:  ERROR: wrong format from GPT
+Test case 5:  PASSED
+Generated answer: "Patient 654322 är ogift utan barn och arbetar som revisor."
+
+Refence answers:
+✓  "Patient 654322 arbetar som revisor, har inga barn och är ogift."
+X  "Patient 654322 är anställd som revisor och är ogift utan barn."
+X  "Patient 654322 jobbar som revisor och är ogift."
+X  "Patienten arbetar med bokföring som revisor och är ogift utan barn."
+X  "Han har inga barn, ej gift och arbetar som revisor"
+
+
 Test case 6:  PASSED
-Generated answer: "Patient 987321 ska genomgå laboratorieanalyser den 21 juni 2023. "
+Generated answer: "Patient 987321 ska genomgå laboratorieanalyser den 21 juni 2023."
 
 Refence answers:
 X  "Patienten ska genomgå laboratorieanalyser 2023-06-21"
@@ -66,7 +76,7 @@ X  "Patienten ska genomgå laboratorieanalyser 2023-06-21"
 
 
 Test case 7:  PASSED
-Generated answer: "Patient 123123 ska genomgå spirometri den 29 juni. "
+Generated answer: "Patient 123123 ska genomgå spirometri den 29 juni."
 
 Refence answers:
 X  "Patient 123123 ska genomgå spirometri 2023-06-29."
@@ -77,18 +87,18 @@ X  "På dagen 2023-06-29 kommer patienten att genomgå spirometri."
 
 
 Test case 8:  PASSED
-Generated answer: "Patienten 112288 har blivit tilldelad läkemedlet Diclofenac, i form av tabletter, med en dosering på 50 mg var 8:e timme vid behov för smärta. "
+Generated answer: "Patienten 112288 har blivit tilldelad läkemedlet Diclofenac."
 
 Refence answers:
 ✓  "Patienten 112288 har blivit administrerad läkemedlet Diclofenac."
 X  "Läkemedlet Diclofenac har tilldelad till patienten 112288."
 X  "Patienten har fått läkemedlet Diclofenac administrerat."
-X  "Läkemedlet Diclofenac har givits till patienten 112288."
+✓  "Läkemedlet Diclofenac har givits till patienten 112288."
 X  "Patienten har fått läkemedlet Diclofenac."
 
 
 Test case 9:  PASSED
-Generated answer: "Läkaren Eva Karlsson bedömde att patient 112244 upplevde hjärtsvikt. "
+Generated answer: "Läkaren Eva Karlsson bedömde att patient 112244 upplevde hjärtsvikt."
 
 Refence answers:
 ✓  "Läkaren Eva Karlsson bedömde att patienten 112244 hade hjärtsvikt."

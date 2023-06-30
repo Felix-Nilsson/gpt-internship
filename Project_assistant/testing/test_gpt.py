@@ -3,7 +3,13 @@ import openai
 import json
 import re
 import time
-from ..embeddings.chatbot import get_chat_response
+import sys
+
+#print(sys.path,'\n')
+sys.path.append("c:\\Users\\henke\\Documents\\Git\\gpt-internship\\Project_assistant")
+#print(sys.path,'\n\n')
+
+import embeddings.chatbot as chatbot
 
 # Load your API key from an environment variable or secret management service
 openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -44,19 +50,22 @@ def compare(actual_output: str, expected_output: list[str]):
     return(test_response.choices[0].message["content"])
 
 def test_gpt():
-    with open("testing/tests/gpt_test_results.txt","w", encoding="utf-8") as g:
+    with open("Project_assistant/testing/tests/gpt_test_results.txt","w", encoding="utf-8") as g:
 
-        with open("testing/tests/cases.json","r", encoding="utf-8") as f:
+        with open("Project_assistant/testing/tests/cases.json","r", encoding="utf-8") as f:
             data = json.load(f)
             ans = 0
 
             for case in data:
+
+                cb = chatbot.Chatbot('Doctor')
+
                 test_index = case['test_index']
                 patient_id = case['patient_id']
                 question = case['question']
                 reference_answers = case['reference_answers']
 
-                case_answer = get_chat_response(question, patient_id, False)
+                case_answer = cb.get_chat_response(question, patient_id, False)
                 case_answer = case_answer.split('\n')[0]
 
                 result = compare(case_answer, reference_answers)
@@ -76,18 +85,21 @@ def test_gpt():
                 else:
                     g.write('Test case ' + test_index + ':  FAILED\n')
 
+                #Write the generated answer for comparison with the reference answers
                 g.write('Generated answer: "' + case_answer + '"\n\n')
 
+                #Show which, if any, reference answers that the generated answer passses for
                 g.write('Refence answers:\n')
-
                 for i in range(0, len(result)):
                     if result[i] == '1':
                         g.write('✓  "' + reference_answers[i] + '"\n')
                     else:
                         g.write('X  "' + reference_answers[i] + '"\n')
 
-                if int(test_index) < len(data) - 1:
-                    g.write('\n\n')
+                g.write('\n\n')
+
+        #Write the total pass ratio for the test cases
+        g.write('Tests passed: ' + ans + '/' + len(data))
 
     return ans
 

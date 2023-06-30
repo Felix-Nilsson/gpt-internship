@@ -1,4 +1,4 @@
-# MedHelp
+<h1 style="text-align: center;">MedHelp</h1>
 
 
 ![](img/patientdialogue.png "Example of patient dialogue")
@@ -12,14 +12,15 @@ It was made in python using GPT-3.5 Turbo & Streamlit.
 
 This is one of three projects produced as of AI Swedens "GPT Summer Internship" for the summer of 2023, and was a collaboration between AI Sweden and Sahlgrenska University Hospital in Gothenburg.
 
-- [MedHelp](#medhelp)
-  - [Description](#description)
-  - [Getting Started](#getting-started)
-    - [Dependencies](#dependencies)
-    - [Executing program](#executing-program)
-  - [Authors:](#authors)
-  - [Acknowledgments](#acknowledgments)
+MedHelp is designed primarily with swedish in mind.
 
+- [Description](#description)
+- [Getting Started](#getting-started)
+  - [Dependencies](#dependencies)
+  - [Executing program](#executing-program)
+- [Testing](#testing)
+- [Authors:](#authors)
+- [Acknowledgments](#acknowledgments)
 
 
 
@@ -57,6 +58,21 @@ streamlit run Project_assistant/streamlit_app.py
 ```
 Please note that if you restart the interface, you need to close down your previous tab/tabs that were running it or this will produce some errors.
 
+
+## Testing
+Testing applications that use LLMs can be difficult, and we are in the process of trying out different metrics and test cases to see what gives the best results.
+Currently, there is only a small handcrafted dataset consisting of queries made by our different fictional doctors, and reference responses that MedHelp should match.
+We check the likeness between these reference responses and the candidate response generated during the test. The candidate responses are generated in two ways:
+
+* Without access to background information to check that MedHelp does not hallucinate a fictious answer. It should basically answer "I don't know".
+* With access, to see that the information is used and the likeness it high.
+
+This is done with the following metrics, and the latest scores are presented bellow:
+* Cosine Similarity, using embedded versions of reference and candidate answers
+* [BLEU score](https://en.wikipedia.org/wiki/BLEU)
+* GPT Testing: We prompt GPT to itself judge whether the generated candidate answer provides the same information as the reference answers.
+
+![](Project_assistant/testing/tests/plots_n_results/barplot_tot.png "Example of patient dialogue")
 
 
 ## Authors:

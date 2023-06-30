@@ -18,7 +18,8 @@ def strings_ranked_by_relatedness(
     relatedness_fn=lambda x, y: 1 - spatial.distance.cosine(x, y),
     top_n: int = 5
 ) -> tuple[list[str], list[float]]:
-    """Returns a list of strings and relatednesses, sorted from most related to least."""
+    """Returns a list of strings and similarity score, sorted from most similar to least. Cosine similarity is used."""
+
     query_embedding_response = openai.Embedding.create(
         model=EMBEDDING_MODEL,
         input=query,
@@ -35,5 +36,7 @@ def strings_ranked_by_relatedness(
 
 
 def return_best_record(query, id,):
+    """Finds the similarity between the query and the documents associated with the id."""
+
     df = make_records(id)
     return strings_ranked_by_relatedness(query,df,top_n=5)

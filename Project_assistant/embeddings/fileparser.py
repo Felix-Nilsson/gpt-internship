@@ -13,6 +13,8 @@ def pdf_to_plaintext(filename):
     return text
 
 def read_ics(id):
+    """Reads .ics files to a string."""
+
     filename = f'patientrecords/{str(id)}/patientcalendar.ics'
     with open(filename,'r') as f:
         data = f.read()
@@ -20,6 +22,8 @@ def read_ics(id):
 
 
 def read_json(id):
+    """Reads .json files to a string."""
+
     filename = f'patientrecords/{str(id)}/patientdata.json'
     with open(filename,'r') as f:
         data = json.load(f)

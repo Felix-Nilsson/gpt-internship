@@ -46,12 +46,20 @@ def compare(actual_output: str, expected_output: list[str]):
         temperature=0, # this is the degree of randomness of the model's output
     )
 
-    return(test_response.choices[0].message["content"])
+    return(test_response.choices[0].message['content'])
 
-def test_gpt():
-    with open("Project_assistant/testing/tests/gpt_test_results.txt","w", encoding="utf-8") as g:
+def test_gpt(is_negative=False):
+    """Test the AI GPT assistant using another GPT, returns the number of passed test cases"""
 
-        with open("Project_assistant/testing/tests/cases.json","r", encoding="utf-8") as f:
+    if is_negative:
+        result_file_path = 'Project_assistant/testing/tests/data/gpt_test_results_negative.txt'
+    else:
+        result_file_path = 'Project_assistant/testing/tests/data/gpt_test_results_positive.txt'
+
+
+    with open(result_file_path, 'w', encoding='utf-8') as g:
+
+        with open('Project_assistant/testing/tests/cases.json', 'r', encoding='utf-8') as f:
             data = json.load(f)
             ans = 0
 
@@ -62,6 +70,9 @@ def test_gpt():
                 patient_id = case['patient_id']
                 question = case['question']
                 reference_answers = case['reference_answers']
+
+                if is_negative:
+                    patient_id = ''
 
                 #To keep track of it running
                 print('Running test for case',test_index)
@@ -104,6 +115,10 @@ def test_gpt():
 
     return ans
 
-test_gpt()
+#Run positive test
+test_gpt(is_negative=0)
+
+#Run negative test
+#test_gpt(is_negative=0)
 
     

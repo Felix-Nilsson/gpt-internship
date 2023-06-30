@@ -57,9 +57,9 @@ def bleu_smoothing_eval():
 def run_bleu_test(is_negative=False):
     cb = chatbot.Chatbot('Doctor')
     with open('Project_assistant/testing/tests/cases.json', encoding="utf-8") as file:
-        path = "Project_assistant/testing/tests/bleu_positive.csv"
+        path = "Project_assistant/testing/tests/data/bleu_positive.csv"
         if is_negative:
-            path = "Project_assistant/testing/tests/bleu_negative.csv"
+            path = "Project_assistant/testing/tests/data/bleu_negative.csv"
 
         with open(path,"w", encoding="utf-8") as f:
 

@@ -106,3 +106,6 @@ X  "En bedömning gjordes av läkaren Eva Karlsson att patienten led av hjärtsv
 X  "Patienten diagnostiserades med hjärtsvikt enligt läkaren Eva Karlsson."
 X  "Enligt läkaren Eva Karlsson led patienten av hjärtsvikt enligt bedömning."
 X  "Patienten 112244 diagnostiserades med hjärtsvikt av läkaren Eva Karlsson."
+
+
+Tests passed: 10/10

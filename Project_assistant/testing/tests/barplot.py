@@ -28,7 +28,7 @@ def barplot_vector(data):
 
     # Set the x-axis ticks and labels
     ax.set_xticks(positions)
-    ax.set_xticklabels(labels, rotation = 45, ha = 'right')
+    ax.set_xticklabels(labels, rotation = 15, ha = 'right')
 
     # Set the y-axis label
     ax.set_ylabel('Score')
@@ -37,13 +37,13 @@ def barplot_vector(data):
     ax.set_title('Bar Plot for different methods and their score')
 
     # Show the plot
-    plt.savefig('testing/tests/plots_n_results/barplot_tot.png')
+    plt.savefig('Project_assistant/testing/tests/plots_n_results/barplot_tot.png')
 
 
-pos_embed = pd.read_csv("testing/tests/data/positive_results.csv")
-neg_embed = pd.read_csv("testing/tests/data/negative_results.csv")
-pos_bleu = pd.read_csv("testing/tests/data/bleu_positive.csv")
-neg_bleu = pd.read_csv("testing/tests/data/bleu_negative.csv")
+pos_embed = pd.read_csv("Project_assistant/testing/tests/data/positive_results.csv")
+neg_embed = pd.read_csv("Project_assistant/testing/tests/data/negative_results.csv")
+pos_bleu = pd.read_csv("Project_assistant/testing/tests/data/bleu_positive.csv")
+neg_bleu = pd.read_csv("Project_assistant/testing/tests/data/bleu_negative.csv")
 
 smpe = np.sum(pos_embed['avg'])
 smne = np.sum(neg_embed['avg'])

@@ -1,11 +1,16 @@
 <h1 align= center>MedHelp</h1>
 
 
-![](img/MedHelp2.png "Example of patient dialogue")
 
-![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
-![ChatGPT](https://img.shields.io/badge/chatGPT-74aa9c?style=for-the-badge&logo=openai&logoColor=white)
-![Pandas](https://img.shields.io/badge/pandas-%23150458.svg?style=for-the-badge&logo=pandas&logoColor=white)
+<p align="center">
+  <img src="img/MedHelp2.png" />
+</p>
+
+<p align="center">
+<img src="https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54"/>
+<img src="https://img.shields.io/badge/chatGPT-74aa9c?style=for-the-badge&logo=openai&logoColor=white"/>
+<img src="https://img.shields.io/badge/pandas-%23150458.svg?style=for-the-badge&logo=pandas&logoColor=white"/>
+</p>
 
 
 MedHelp is a chatbot designed to assist medical staff and patients in finding medical information which for example are stored in journals or calendars.
@@ -18,7 +23,10 @@ MedHelp is designed primarily with swedish in mind.
 
 🔗 [Link to blog]( https://my.ai.se/projects/287)
 
-![](img/patientdialogue.png "Example of patient dialogue")
+<p align="center">
+  <img src="img/patientdialogue.png" />
+</p>
+
 
 ## Table of Contents 
 - [Table of Contents](#table-of-contents)
@@ -80,12 +88,18 @@ This is done with the following metrics, and the latest scores are presented bel
 * [BLEU score](https://en.wikipedia.org/wiki/BLEU)
 * GPT Testing: We prompt GPT to itself judge whether the generated candidate answer provides the same information as the reference answers.
 
+<p align="center">
+  <img src="Project_assistant/testing/tests/plots_n_results/barplot_tot.png" />
+</p>
 
-![](Project_assistant/testing/tests/plots_n_results/barplot_tot.png "Bar plot over testing methodologies")
+
 
 In particular, the BLEU scoring and Embedded Similarity are most similar since for any test $x$ we have $x \in [0,1]$, whereas GPT tests have $x \in \{0,1\}$. With this in mind we present the variance in the tests:
 
-![](Project_assistant/testing/tests/plots_n_results/boxplot_avg.png "Box plot comparing variance between BLEU and Embedded Similarity")
+<p align="center">
+  <img src="Project_assistant/testing/tests/plots_n_results/boxplot_avg.png" />
+</p>
+
 
 ## ✍️ Authors:
 [Henrik Johansson](https://github.com/henkejson)

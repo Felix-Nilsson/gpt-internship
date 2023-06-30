@@ -9,12 +9,12 @@ def barplot_vector(data):
     positions = np.arange(len(data))
 
     # Set the grouping of bars
-    grouping = [1, 3, 3, 2]
+    grouping = [2, 3, 3, 2]
 
     # Create the figure and axes
     fig, ax = plt.subplots()
 
-    labels = ['gpt', 'pos embed min', 'pos embed avg', 'pos embed max', 'neg embed min', 'neg embed avg', 'neg embed max', 'pos bleu', 'neg bleu']
+    labels = ['pos gpt', 'neg gpt', 'pos embed min', 'pos embed avg', 'pos embed max', 'neg embed min', 'neg embed avg', 'neg embed max', 'pos bleu', 'neg bleu']
     colors = ['gold', 'lightsalmon', 'darkorchid', 'goldenrod']
 
     # Plot the bars
@@ -56,8 +56,9 @@ smne1 = np.sum(neg_embed['min'])
 smpe2 = np.sum(pos_embed['max'])
 smne2 = np.sum(neg_embed['max'])
 
-gpt_ans = 9
+gpt_ans_pos = 10
+gpt_ans_neg = 1
 
-vector = [gpt_ans, smpe2, smpe, smpe1, smne2, smne, smne1, smpb, smnb]
+vector = [gpt_ans_pos, gpt_ans_neg, smpe2, smpe, smpe1, smne2, smne, smne1, smpb, smnb]
 
 barplot_vector(vector)

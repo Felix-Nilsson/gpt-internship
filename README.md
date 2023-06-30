@@ -5,6 +5,8 @@
 
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 ![ChatGPT](https://img.shields.io/badge/chatGPT-74aa9c?style=for-the-badge&logo=openai&logoColor=white)
+![Pandas](https://img.shields.io/badge/pandas-%23150458.svg?style=for-the-badge&logo=pandas&logoColor=white)
+
 
 MedHelp is a chatbot designed to assist medical staff and patients in finding medical information which for example are stored in journals or calendars.
 
@@ -14,17 +16,21 @@ This is one of three projects produced as of AI Swedens "GPT Summer Internship" 
 
 MedHelp is designed primarily with swedish in mind.
 
-- [Description](#description)
-- [Getting Started](#getting-started)
+🔗 [Link to blog]( https://my.ai.se/projects/287)
+
+## Table of Contents 
+- [Table of Contents](#table-of-contents)
+- [📋Description](#description)
+- [🏃‍♂️ Getting Started](#️-getting-started)
   - [Dependencies](#dependencies)
   - [Executing program](#executing-program)
-- [Testing](#testing)
-- [Authors:](#authors)
-- [Acknowledgments](#acknowledgments)
+- [🧪 Testing](#-testing)
+- [✍️ Authors:](#️-authors)
+- [🤝 Acknowledgments](#-acknowledgments)
 
 
 
-## Description
+## 📋Description
 
 MedHelp is designed with two users in mind:
 
@@ -38,7 +44,7 @@ They were however made to be similar in structure to real documents, with guidan
 
 Upon prompting, MedHelp will check if the user is a doctor or patient, and depending on the query will pick suitable documents as background (using embeddings and similarity scoring) to produce a high quality answer. This is done via a web interface in the form of a simple chat.
 
-## Getting Started
+## 🏃‍♂️ Getting Started
 
 ### Dependencies
 
@@ -59,23 +65,27 @@ streamlit run Project_assistant/streamlit_app.py
 Please note that if you restart the interface, you need to close down your previous tab/tabs that were running it or this will produce some errors.
 
 
-## Testing
+## 🧪 Testing
 Testing applications that use LLMs can be difficult, and we are in the process of trying out different metrics and test cases to see what gives the best results.
 Currently, there is only a small handcrafted dataset consisting of queries made by our different fictional doctors, and reference responses that MedHelp should match.
 We check the likeness between these reference responses and the candidate response generated during the test. The candidate responses are generated in two ways:
 
-* Without access to background information to check that MedHelp does not hallucinate a fictious answer. It should basically answer "I don't know".
-* With access, to see that the information is used and the likeness it high.
+* Negative: Without access to background information, this is to check that MedHelp does not hallucinate a fictious answer. It should basically answer "I don't know".
+* Positive: With access, to see that the information is used and the likeness it high.
 
 This is done with the following metrics, and the latest scores are presented bellow:
-* Cosine Similarity, using embedded versions of reference and candidate answers
+* [Cosine Similarity](https://en.wikipedia.org/wiki/Cosine_similarity), using [embedded](https://platform.openai.com/docs/guides/embeddings/what-are-embeddings) versions of reference and candidate answers
 * [BLEU score](https://en.wikipedia.org/wiki/BLEU)
 * GPT Testing: We prompt GPT to itself judge whether the generated candidate answer provides the same information as the reference answers.
 
-![](Project_assistant/testing/tests/plots_n_results/barplot_tot.png "Example of patient dialogue")
 
+![](Project_assistant/testing/tests/plots_n_results/barplot_tot.png "Bar plot over testing methodologies")
 
-## Authors:
+In particular, the BLEU scoring and Embedded Similarity are most similar since for any test $x$ we have $x \in [0,1]$, whereas GPT tests have $x \in \{0,1\}$. With this in mind we present the variance in the tests:
+
+![](Project_assistant/testing/tests/plots_n_results/boxplot_avg.png "Box plot comparing variance between BLEU and Embedded Similarity")
+
+## ✍️ Authors:
 [Henrik Johansson](https://github.com/henkejson)
 
 [Oskar Pauli](https://github.com/OGPauli)
@@ -83,6 +93,6 @@ This is done with the following metrics, and the latest scores are presented bel
 [Felix Nilsson](https://github.com/Felix-Nilsson)
 
 
-## Acknowledgments
+## 🤝 Acknowledgments
 
 We would like to thank Isak Barbopoulos at Sahlgrenska for supervising this project and providing guidance.

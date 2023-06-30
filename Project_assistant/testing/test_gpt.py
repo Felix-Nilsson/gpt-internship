@@ -5,9 +5,8 @@ import re
 import time
 import sys
 
-#print(sys.path,'\n')
-sys.path.append("c:\\Users\\henke\\Documents\\Git\\gpt-internship\\Project_assistant")
-#print(sys.path,'\n\n')
+#This is to enable importing from the embeddings folder
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 import embeddings.chatbot as chatbot
 
@@ -57,13 +56,15 @@ def test_gpt():
             ans = 0
 
             for case in data:
-
                 cb = chatbot.Chatbot('Doctor')
 
                 test_index = case['test_index']
                 patient_id = case['patient_id']
                 question = case['question']
                 reference_answers = case['reference_answers']
+
+                #To keep track of it running
+                print('Running test for case',test_index)
 
                 case_answer = cb.get_chat_response(question, patient_id, False)
                 case_answer = case_answer.split('\n')[0]
@@ -72,7 +73,7 @@ def test_gpt():
 
                 #Check so that result has the right format
                 if re.match(r'^\[([01](?:,[01])*)\]$', result) is None:
-                    g.write('Test case ' + test_index + ':  ERROR: wrong format from GPT\n')
+                    g.write('Test case ' + test_index + ':  ERROR: wrong format from GPT\n\n')
                     continue #Throw error instead?
 
                 #Clean result string
@@ -99,7 +100,7 @@ def test_gpt():
                 g.write('\n\n')
 
         #Write the total pass ratio for the test cases
-        g.write('Tests passed: ' + ans + '/' + len(data))
+        g.write('Tests passed: ' + str(ans) + '/' + str(len(data)))
 
     return ans
 

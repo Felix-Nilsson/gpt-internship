@@ -1,6 +1,7 @@
 #Fix the imports of files in the embeddings folder
 import sys
-sys.path.append("c:\\Users\\henke\\Documents\\Git\\gpt-internship\\Project_assistant")
+import os
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 import embeddings.chatbot as chatbot
 from embeddings.make_embeddings import make_embeddings

@@ -17,7 +17,7 @@ MedHelp is a chatbot designed to assist medical staff and patients in finding me
 
 It was made in python using GPT-3.5 Turbo & Streamlit.
 
-This is one of three projects produced as of AI Swedens "GPT Summer Internship" for the summer of 2023, and was a collaboration between AI Sweden and Sahlgrenska University Hospital in Gothenburg.
+This is one of three projects produced as part of AI Swedens "GPT Summer Internship" for the summer of 2023, and was a collaboration between AI Sweden and Sahlgrenska University Hospital in Gothenburg.
 
 MedHelp is designed primarily with swedish in mind.
 
@@ -58,7 +58,7 @@ Upon prompting, MedHelp will check if the user is a doctor or patient, and depen
 
 ### Dependencies
 
-* You need to store your API key to OpenAI under the environment variable ```OPENAI_API_KEY ```.
+* You need to store your API key to OpenAI under the environment variable ```OPENAI_API_KEY```.
 * You need to have streamlit installed to run the web interface
 * Possibly need to install some miscellaneous libraries python libaries like ```pandas```, ```PyPDF2``` or ```SciPy```
 

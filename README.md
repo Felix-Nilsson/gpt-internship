@@ -1,7 +1,7 @@
-<h1 style="text-align: center;">MedHelp</h1>
+<h1 align= center>MedHelp</h1>
 
 
-![](img/patientdialogue.png "Example of patient dialogue")
+![](img/MedHelp2.png "Example of patient dialogue")
 
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 ![ChatGPT](https://img.shields.io/badge/chatGPT-74aa9c?style=for-the-badge&logo=openai&logoColor=white)
@@ -17,6 +17,8 @@ This is one of three projects produced as of AI Swedens "GPT Summer Internship" 
 MedHelp is designed primarily with swedish in mind.
 
 🔗 [Link to blog]( https://my.ai.se/projects/287)
+
+![](img/patientdialogue.png "Example of patient dialogue")
 
 ## Table of Contents 
 - [Table of Contents](#table-of-contents)

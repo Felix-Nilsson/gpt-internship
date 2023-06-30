@@ -30,18 +30,18 @@ MedHelp is designed primarily with swedish in mind.
 
 ## Table of Contents 
 - [Table of Contents](#table-of-contents)
-- [📋Description](#description)
+- [📋 Description](#-description)
 - [🏃‍♂️ Getting Started](#️-getting-started)
   - [Dependencies](#dependencies)
   - [Executing program](#executing-program)
 - [🧪 Testing](#-testing)
-- [✍️ Authors:](#️-authors)
+- [✍️ Authors](#️-authors)
 - [🤝 Acknowledgments](#-acknowledgments)
 
 
 
 
-## 📋Description
+## 📋 Description
 
 MedHelp is designed with two users in mind:
 
@@ -102,7 +102,7 @@ In particular, the BLEU scoring and Embedded Similarity are most similar since f
 </p>
 
 
-## ✍️ Authors:
+## ✍️ Authors
 [Henrik Johansson](https://github.com/henkejson)
 
 [Oskar Pauli](https://github.com/OGPauli)

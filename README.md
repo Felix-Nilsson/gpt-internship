@@ -31,7 +31,7 @@ MedHelp is designed primarily with swedish in mind.
 ## Table of Contents 
 - [Table of Contents](#table-of-contents)
 - [📋 Description](#-description)
-- [🏃‍♂️ Getting Started](#️-getting-started)
+- [🚀 Getting Started](#-getting-started)
   - [Dependencies](#dependencies)
   - [Executing program](#executing-program)
 - [🧪 Testing](#-testing)
@@ -55,7 +55,7 @@ They were however made to be similar in structure to real documents, with guidan
 
 Upon prompting, MedHelp will check if the user is a doctor or patient, and depending on the query will pick suitable documents as background (using embeddings and similarity scoring) to produce a high quality answer. This is done via a web interface in the form of a simple chat.
 
-## 🏃‍♂️ Getting Started
+## 🚀 Getting Started
 
 ### Dependencies
 

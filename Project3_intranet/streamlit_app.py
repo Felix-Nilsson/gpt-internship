@@ -28,15 +28,22 @@ authenticator = stauth.Authenticate(
 
 name, authentication_status, username = authenticator.login('Login', 'main')
 
+@st.cache_resource
+def get_chatbot():
+    return chatbot.Chatbot()
+
+chatbot = get_chatbot()
 
 def handle_logout():
     authenticator.logout('Logout', 'main', key='unique_key')
     st.session_state.clear()
+    st.experimental_singleton.clear()
+
 
 
 if st.session_state["authentication_status"]:
     patients = config['credentials']['usernames'][username]['patients']
-    chatbot = chatbot.Chatbot()
+        
 
     with st.sidebar:
         st.title("MedHelp")

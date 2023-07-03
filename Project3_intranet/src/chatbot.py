@@ -17,11 +17,15 @@ class Chatbot:
 
         #Get patient data related to the query
         data = return_best_record(query)
+
         tmp = ''
         for e in range(len(data[0])):
-            tmp += data[0][e]
-            tmp += data[1][e]
-            tmp += "\n"
+            if data[2][e] > 0.77:
+                tmp += data[0][e]
+                tmp += data[1][e]
+                tmp += "\n"
+            else:
+                tmp += ''
 
         #Context/System message to describe what the gpt is supposed to do
         context = f'''
@@ -31,31 +35,35 @@ class Chatbot:
         Säg gärna vilken fil du hittade informationen i.
         Du får använda informationen från intranätet som är avgränsat med tre understreck.
 
-        ___{data}___
+        ___{tmp}___
         '''
-
-
+        
+        
         if not remember:
             #Reset conversation memory
-            self.memory = [{'role':'system', 'content': context}]
-
+            messages = [{'role':'system', 'content': context}]
+        else:
+            messages = self.memory
         #Update the context with relevant information for every question
-        self.memory[0] = {'role':'system', 'content': context}
+        
+
+        messages[0] = {'role':'system', 'content': context}
 
         #Add the query to the conversation memory
-        self.memory.append({'role':'user','content':query})
+        messages.append({'role':'user','content':query})
 
         response = openai.ChatCompletion.create(
             model=model,
-            messages=self.memory,
+            messages=messages,
             temperature=0, #Degree of randomness of the model's output
         )
 
         #Add the response to the conversation memory
-        self.memory.append({'role':'assistant','content':response.choices[0].message["content"]})
+        messages.append({'role':'assistant','content':response.choices[0].message["content"]})
 
 
         finished_response = f'''{response.choices[0].message["content"]}'''
+        
 
         #print(status,self.patient_ids)
 

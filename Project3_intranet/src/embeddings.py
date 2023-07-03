@@ -27,12 +27,27 @@ def make_records():
     #patientrecords/112255
     if os.path.exists(pickle_path):
         df = pd.read_pickle(pickle_path)
-        
-    else: 
+        current_files = [elem.name for elem in os.scandir("Project3_intranet/data/records")]
+
+        #checks that pickle file is up to date
+        #for big datasets this is slow, could maybe swap for faster strategy like bloomfilter
+        if set(df["filename"]) != set(current_files):
+            print("src/embeddings.py: embeddings.pkl file outdated, removing and generating...")
+            os.remove(pickle_path)
+            df = pd.DataFrame(make_emeddings(current_files))
+            df.to_pickle(pickle_path)
+            print("done")
+        else:
+            print("src/embeddings.py: embeddings.pkl found & up to date")
+    else:
+        print("src/embeddings.py: embeddings.pkl file not found, generating...") 
         entries = os.scandir('Project3_intranet/data/records')
         names = [entry.name for entry in entries]
 
         df = pd.DataFrame(make_emeddings(names))
         df.to_pickle(pickle_path)
+        print("done")
 
     return df
+
+make_records()

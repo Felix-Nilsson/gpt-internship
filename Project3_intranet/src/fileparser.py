@@ -1,7 +1,7 @@
 from PyPDF2 import PdfReader
 import json
 
-data_dir = "Project3_intranet/data"
+data_dir = "Project3_intranet/data/records"
 
 def pdf_to_plaintext(filename):
     file = f'{data_dir}/{filename}'
@@ -33,4 +33,4 @@ def read_json(filename):
         data = json.load(f)
         return str(data)
 
-print(pdf_to_plaintext("Hospital Guidelines Visitor Policy.pdf"))
+#print(pdf_to_plaintext("Hospital Guidelines Visitor Policy.pdf"))

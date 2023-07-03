@@ -19,7 +19,7 @@ def run_bleu(reference_answers,can, method):
 
 def bleu_smoothing_eval():
     cb = chatbot.Chatbot('Doctor')
-    with open('Project_assistant/testing/tests/cases.json', encoding="utf-8") as file:
+    with open('Project_assistant/tests/cases.json', encoding="utf-8") as file:
         data = json.load(file)
         matrix = np.empty((0,8))
         for case in data:
@@ -56,16 +56,18 @@ def bleu_smoothing_eval():
 
 def run_bleu_test(is_negative=False):
     cb = chatbot.Chatbot('Doctor')
-    with open('Project_assistant/testing/tests/cases.json', encoding="utf-8") as file:
-        path = "Project_assistant/testing/tests/data/bleu_positive.csv"
+    with open('Project_assistant/tests/cases.json', encoding="utf-8") as file:
+        path = "Project_assistant/tests/results/data/bleu_positive.csv"
         if is_negative:
-            path = "Project_assistant/testing/tests/data/bleu_negative.csv"
+            path = "Project_assistant/tests/results/data/bleu_negative.csv"
 
         with open(path,"w", encoding="utf-8") as f:
 
-            print(f"Running BLEU, negative={is_negative}")
+            print(f"\nRunning BLEU, negative={is_negative}")
             data = json.load(file)
         
+            f.write('avg')
+
             for case in data:
                 question = case['question']
                 reference_answers = case['reference_answers']
@@ -86,9 +88,8 @@ def run_bleu_test(is_negative=False):
 
                 result = run_bleu(ref_ans, can, "method5")
 
-                
-                f.write(f"{result}\n")
+                f.write(f"\n{result}")
 
 
 #run_bleu_test(is_negative=False)
-run_bleu_test(is_negative=True) 
+#run_bleu_test(is_negative=True) 

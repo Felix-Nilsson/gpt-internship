@@ -48,18 +48,20 @@ def compare(actual_output: str, expected_output: list[str]):
 
     return(test_response.choices[0].message['content'])
 
-def test_gpt(is_negative=False):
+def run_gpt_test(is_negative=False):
     """Test the AI GPT assistant using another GPT, returns the number of passed test cases"""
 
+    print(f"\nRunning GPT Test, negative={is_negative}")
+
     if is_negative:
-        result_file_path = 'Project_assistant/testing/tests/data/gpt_test_results_negative.txt'
+        result_file_path = 'Project_assistant/tests/results/data/gpt_test_results_negative.txt'
     else:
-        result_file_path = 'Project_assistant/testing/tests/data/gpt_test_results_positive.txt'
+        result_file_path = 'Project_assistant/tests/results/data/gpt_test_results_positive.txt'
 
 
     with open(result_file_path, 'w', encoding='utf-8') as g:
 
-        with open('Project_assistant/testing/tests/cases.json', 'r', encoding='utf-8') as f:
+        with open('Project_assistant/tests/cases.json', 'r', encoding='utf-8') as f:
             data = json.load(f)
             ans = 0
 
@@ -75,7 +77,7 @@ def test_gpt(is_negative=False):
                     patient_id = ''
 
                 #To keep track of it running
-                print('Running test for case',test_index)
+                print('[GPT] Running case:',test_index)
 
                 case_answer = cb.get_chat_response(question, patient_id, False)
                 case_answer = case_answer.split('\n')[0]
@@ -116,9 +118,9 @@ def test_gpt(is_negative=False):
     return ans
 
 #Run positive test
-test_gpt(is_negative=0)
+#run_gpt_test(is_negative=0)
 
 #Run negative test
-#test_gpt(is_negative=0)
+#run_gpt_test(is_negative=1)
 
     

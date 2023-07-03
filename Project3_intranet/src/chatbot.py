@@ -1,6 +1,6 @@
 import os
 import openai
-from similarity import return_best_record
+from src.similarity import return_best_record
 import re
 
 class Chatbot:
@@ -34,26 +34,25 @@ class Chatbot:
         ___{data}___
         '''
 
-        messages = self.memory
 
         if not remember:
             #Reset conversation memory
-            messages = [{'role':'system', 'content': context}]
+            self.memory = [{'role':'system', 'content': context}]
 
         #Update the context with relevant information for every question
-        messages[0] = {'role':'system', 'content': context}
+        self.memory[0] = {'role':'system', 'content': context}
 
         #Add the query to the conversation memory
-        messages.append({'role':'user','content':query})
+        self.memory.append({'role':'user','content':query})
 
         response = openai.ChatCompletion.create(
             model=model,
-            messages=messages,
-            temperature=0, #Fegree of randomness of the model's output
+            messages=self.memory,
+            temperature=0, #Degree of randomness of the model's output
         )
 
         #Add the response to the conversation memory
-        messages.append({'role':'assistant','content':response.choices[0].message["content"]})
+        self.memory.append({'role':'assistant','content':response.choices[0].message["content"]})
 
 
         finished_response = f'''{response.choices[0].message["content"]}'''
@@ -61,7 +60,3 @@ class Chatbot:
         #print(status,self.patient_ids)
 
         return(finished_response)
-
-chatbot = Chatbot()
-
-print(chatbot.get_chat_response('Vem är chefsläkare på akutmottagningen?'))

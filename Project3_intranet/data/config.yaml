@@ -1,0 +1,25 @@
+credentials:
+  usernames:
+    oskarpauli:
+      email: oskarpauli@gmail.com
+      name: 'Oskar Pauli' 
+      password: $2b$12$H811Om3K0jLjDLcVPHjCdeEtssUsZUZGbxcqUwEyj97wPinkbTpq6
+      patients: ['123123','112200','112266','112233','112299','112244']
+    felixnilsson:
+      email: felixnilsson@gmail.com
+      name: 'Felix Nilsson' 
+      password: $2b$12$H811Om3K0jLjDLcVPHjCdeEtssUsZUZGbxcqUwEyj97wPinkbTpq6
+      patients: ['123456','112211','112277','789012','987321']
+    henrikjohansson:
+      email: henrikjohansson@gmail.com
+      name: 'Henrik Johansson' 
+      password: $2b$12$H811Om3K0jLjDLcVPHjCdeEtssUsZUZGbxcqUwEyj97wPinkbTpq6
+      patients: ['654321','654322','112222','112288','112255']
+cookie:
+  expiry_days: 0
+  key: some_signature_key # Must be string
+  name: some_cookie_name
+preauthorized:
+  emails:
+  - melsby@gmail.com
+

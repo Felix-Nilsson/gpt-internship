@@ -25,17 +25,15 @@ def strings_ranked_by_relatedness(
     )
     query_embedding = query_embedding_response["data"][0]["embedding"]
     strings_and_relatednesses = [
-        (row['filename'], relatedness_fn(query_embedding, row["embedding"]))
+        (row['filename'], row['text'], relatedness_fn(query_embedding, row["embedding"]))
         for i, row in df.iterrows()
     ]
-    strings_and_relatednesses.sort(key=lambda x: x[1], reverse=True)
-    strings, relatednesses = zip(*strings_and_relatednesses)
-    return strings[:top_n], relatednesses[:top_n]
+    strings_and_relatednesses.sort(key=lambda x: x[2], reverse=True)
+    names, strings, relatednesses = zip(*strings_and_relatednesses)
+    return names[:top_n], strings[:top_n], relatednesses[:top_n]
 
 def return_best_record(query):
     """Finds the similarity between the query and the documents associated with the id."""
 
     df = make_records()
-    return strings_ranked_by_relatedness(query,df,top_n=5)
-
-print(return_best_record('Number of visitors'))
+    return strings_ranked_by_relatedness(query,df,top_n=3)

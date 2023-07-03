@@ -16,7 +16,7 @@ def make_embedding(text):
 def make_emeddings(names):
     texts = [pdf(name) for name in names]
     embeddings = [make_embedding(text) for text in texts]
-    d = {'filename':names, 'embedding':embeddings}
+    d = {'filename':names, 'text':texts, 'embedding':embeddings}
     return pd.DataFrame(data=d)
 
 def make_records():

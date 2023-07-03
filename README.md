@@ -101,6 +101,14 @@ In particular, the BLEU scoring and Embedded Similarity are most similar since f
   <img src="Project_assistant/testing/tests/plots_n_results/boxplot_avg.png" />
 </p>
 
+To run the tests for yourself run the following python script with the same positioning of the terminal as before:
+```
+python3 Project_assistant/tests/test.py
+```
+To run individiual tests or disable generation of plots, please edit the file ```test.py``` accordingly.
+
+Resulting data and plots are stored in the directories ```tests/results/data``` & ```tests/results/plots```.
+
 
 ## ✍️ Authors
 [Henrik Johansson](https://github.com/henkejson)

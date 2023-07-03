@@ -1,6 +1,6 @@
 import os
 import openai
-from src.similarity import return_best_record
+from similarity import return_best_record
 import re
 
 class Chatbot:
@@ -68,3 +68,7 @@ class Chatbot:
         #print(status,self.patient_ids)
 
         return(finished_response)
+
+chatbot = Chatbot()
+
+print(chatbot.get_chat_response('Vem är chefsläkare på akutmottagningen?'))

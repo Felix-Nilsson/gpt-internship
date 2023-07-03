@@ -90,7 +90,7 @@ This is done with the following metrics, and the latest scores are presented bel
 * GPT Testing: We prompt GPT to itself judge whether the generated candidate answer provides the same information as the reference answers.
 
 <p align="center">
-  <img src="Project_assistant/testing/tests/plots_n_results/barplot_tot.png" />
+  <img src="Project_assistant/tests/results/plots/barplot_tot.png" />
 </p>
 
 
@@ -98,8 +98,16 @@ This is done with the following metrics, and the latest scores are presented bel
 In particular, the BLEU scoring and Embedded Similarity are most similar since for any test $x$ we have $x \in [0,1]$, whereas GPT tests have $x \in \{0,1\}$. With this in mind we present the variance in the tests:
 
 <p align="center">
-  <img src="Project_assistant/testing/tests/plots_n_results/boxplot_avg.png" />
+  <img src="Project_assistant/tests/results/plots/boxplot_avg.png" />
 </p>
+
+To run the tests for yourself run the following python script with the same positioning of the terminal as before:
+```
+python3 Project_assistant/tests/test.py
+```
+To run individiual tests or disable generation of plots, please edit the file ```test.py``` accordingly.
+
+Resulting data and plots are stored in the directories ```tests/results/data``` & ```tests/results/plots```.
 
 
 ## ✍️ Authors

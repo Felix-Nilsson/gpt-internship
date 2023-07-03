@@ -1,6 +1,6 @@
 import os
 import openai
-from src.fileparser import pdf_to_plaintext as pdf
+from fileparser import pdf_to_plaintext as pdf
 import pandas as pd
 
 # Load your API key from an environment variable or secret management service

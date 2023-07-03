@@ -53,12 +53,12 @@ X  "Rökning var det som låg bakom patientens hjärtinfarkt."
 X  "Patientens hjärtinfarkt uppstod på grund av rökning."
 
 
-Test case 5:  FAILED
+Test case 5:  PASSED
 Generated answer: "Jag har inte tillräckligt med information om patient 654322 för att svara på den frågan."
 
 Refence answers:
 X  "Patient 654322 arbetar som revisor, har inga barn och är ogift."
-X  "Patient 654322 är anställd som revisor och är ogift utan barn."
+✓  "Patient 654322 är anställd som revisor och är ogift utan barn."
 X  "Patient 654322 jobbar som revisor och är ogift."
 X  "Patienten arbetar med bokföring som revisor och är ogift utan barn."
 X  "Han har inga barn, ej gift och arbetar som revisor"
@@ -108,4 +108,4 @@ X  "Enligt läkaren Eva Karlsson led patienten av hjärtsvikt enligt bedömning.
 X  "Patienten 112244 diagnostiserades med hjärtsvikt av läkaren Eva Karlsson."
 
 
-Tests passed: 1/10
+Tests passed: 2/10

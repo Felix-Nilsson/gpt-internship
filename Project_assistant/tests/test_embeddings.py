@@ -26,10 +26,14 @@ def run_similarity_test(question,reference_answers,identifier):
 
 
 def run_positive_tests():
-    with open("Project_assistant/testing/tests/data/positive_results.csv","w", encoding="utf-8") as g:
+
+    print(f"\nRunning Embeddings Test, negative={False}")
+
+
+    with open("Project_assistant/tests/results/data/positive_results.csv","w", encoding="utf-8") as g:
         g.write("index,max,min,avg")
 
-        with open("Project_assistant/testing/tests/cases.json","r", encoding="utf-8") as f:
+        with open("Project_assistant/tests/cases.json","r", encoding="utf-8") as f:
             data = json.load(f)
             for case in data:
                 index = case["test_index"]
@@ -46,10 +50,13 @@ def run_positive_tests():
                 g.write(f"\n{index},{high},{low},{mean}")
 
 def run_negative_tests():
-    with open("Project_assistant/testing/tests/data/negative_results.csv","w", encoding="utf-8") as g:
+
+    print(f"\nRunning Embeddings Test, negative={True}")
+
+    with open("Project_assistant/tests/results/data/negative_results.csv","w", encoding="utf-8") as g:
         g.write("index,max,min,avg")
 
-        with open("Project_assistant/testing/tests/cases.json","r", encoding="utf-8") as f:
+        with open("Project_assistant/tests/cases.json","r", encoding="utf-8") as f:
             data = json.load(f)
             for case in data:
                 index = case["test_index"]
@@ -69,5 +76,5 @@ def run_specific_test(index):
     pass
 
             
-run_positive_tests()
+#run_positive_tests()
 #run_negative_tests()

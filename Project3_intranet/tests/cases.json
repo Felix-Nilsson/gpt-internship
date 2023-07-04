@@ -1,7 +1,7 @@
 [
     {
         "test_index":"0",
-        "question":"Vem är chef över kirurgiavdelning",
+        "question":"Vem är chef över kirurgiavdelningen",
         "reference_answers":[
             "Felix Nilsson är chef över kirurgiavdelningen.",
             "Kirurgiavdelningen leds av Felix Nilsson.",

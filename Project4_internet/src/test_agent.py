@@ -32,7 +32,7 @@ def search(query):
 
 tool = [Tool(name='1177', func=search, description='Användbar när du vill ha medicinsk information.')]
 
-agent = initialize_agent(tool, llm=llm, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, verbose=True, early_stopping_method="generate")
+agent = initialize_agent(tool, llm=llm, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, verbose=True, max_iterations = 3, early_stopping_method="generate")
 
 agent.run("Jag har ont i huvudet, vad borde jag göra?")
 

@@ -1,6 +1,6 @@
 import os
 import openai
-from similarity import return_best_record
+from src.similarity import return_best_record
 import re
 
 class Chatbot:

@@ -2,6 +2,7 @@ import streamlit as st
 from streamlit_chat import message
 from streamlit_extras.colored_header import colored_header
 from streamlit_extras.add_vertical_space import add_vertical_space
+from PIL import Image
 
 import src.chatbot as  chatbot 
 
@@ -11,10 +12,12 @@ import yaml
 from yaml.loader import SafeLoader
 
 
+image = Image.open('img/MedHelp2.png')
+
 st.set_page_config(page_title="MedHelp")
 
 
-with open('Project3_intranet/data/config.yaml', 'r') as file:
+with open('patientrecords/config_doc.yaml', 'r') as file:
     config = yaml.load(file, Loader=SafeLoader)
 
 
@@ -37,7 +40,7 @@ chatbot = get_chatbot()
 def handle_logout():
     authenticator.logout('Logout', 'main', key='unique_key')
     st.session_state.clear()
-    st.experimental_singleton.clear()
+    st.cache_resource.clear()
 
 
 
@@ -47,6 +50,7 @@ if st.session_state["authentication_status"]:
 
     with st.sidebar:
         st.title("MedHelp")
+        st.image(image=image)
         st.sidebar.button('Logout', on_click=handle_logout)
         st.write(f'Välkommen *{st.session_state["name"]}*')
         st.markdown('''

@@ -1,0 +1,134 @@
+[
+    {
+        "test_index":"0",
+        "question":"Vem är chef över kirurgiavdelning",
+        "reference_answers":[
+            "Felix Nilsson är chef över kirurgiavdelningen.",
+            "Kirurgiavdelningen leds av Felix Nilsson.",
+            "Felix Nilsson har rollen som chef för kirurgiavdelningen.",
+            "Chefsposten för kirurgiavdelningen innehas av Felix Nilsson.",
+            "Felix Nilsson har ansvaret som chef över kirurgiavdelningen."
+        ]
+    },
+
+    {
+        "test_index":"1",
+        "question":"När ska jag kontakta den medicinska avdelningen?",
+        "reference_answers":[
+            "Kontakta den medicinska avdelningen om du har en patient som har medicinska sjukdomar eller behov av icke-kirurgisk behandling.",
+            "Om du har en patient med medicinska sjukdomar eller behov av icke-kirurgisk behandling, vänligen kontakta den medicinska avdelningen.",
+            "Vid patienter med medicinska sjukdomar eller behov av icke-kirurgisk behandling, bör du ta kontakt med den medicinska avdelningen.",
+            "För patienter som har medicinska sjukdomar eller behov av icke-kirurgisk behandling, rekommenderas att du kontaktar den medicinska avdelningen.",
+            "Om du stöter på patienter med medicinska sjukdomar eller behov av icke-kirurgisk behandling, var vänlig och kontakta den medicinska avdelningen."
+        ] 
+    },
+
+    {
+        "test_index":"2",
+        "question":"Hur utvärderas den grundläggande HLR-utbildningen?",
+        "reference_answers":[
+            "Utbildningen utvärderas och bedöms utifrån ett teoretiskt prov och ett praktiskt prov.",
+            "Bedömningen av utbildningen baseras på både ett teoretiskt och ett praktiskt prov.",
+            "Utvärderingen av utbildningen inkluderar både ett teoretiskt och ett praktiskt prov.",
+            "Både ett teoretiskt och ett praktiskt prov används för att bedöma utbildningen.",
+            "Utbildningen bedöms genom att genomföra både ett teoretiskt och ett praktiskt prov."
+        ] 
+    },
+
+    {
+        "test_index":"3",
+        "question":"Vad är det första man ska tänka på när det kommer till hantering av komplikationer under kirurgiska ingrepp?",
+        "reference_answers":[
+            "Det första man ska tänka på är att ha en korrekt och detaljerad dokumentation.",
+            "En viktig aspekt att ha i åtanke är att upprätthålla en korrekt och detaljerad dokumentation.",
+            "Det primära fokuset bör vara att ha en noggrann och detaljerad dokumentation.",
+            "En prioriterad punkt är att se till att dokumentationen är både korrekt och detaljerad.",
+            "Det allra första att beakta är att ha en exakt och utförlig dokumentation."
+        ] 
+    },
+
+    {
+        "test_index":"4",
+        "question":"Kan du nämna en person som jobbar på barnavdelningen?",
+        "reference_answers":[
+            "Lisa Berggren",
+            "Anna Sjöberg",
+            "Erik Larsson",
+            "Karin Lindström",
+            "Sofia Gustafsson",
+            "Emma Dahlström",
+            "Maria Carlsson,"
+        ] 
+    },
+
+    {
+        "test_index":"5",
+        "question":"Kan du nämna en av cheferna på de olika avdelningarna som finns?",
+        "reference_answers":[
+            "Henrik Johansson är chef över akutmottagningen.",
+            "Felix Nilsson är chef över kirurgiavdelningen.",
+            "Oskar Pauli är chef över den medicinska avdelningen.",
+            "Lisa Berggren är chef över barnavdelningen.",
+            "Markus Eriksson är chef över radiologiavdelningen.",
+            "Maria Eriksson är chef över gynekologiavdelningen.",
+            "Markus Nilsson är chef över kardiologiavdelningen.",
+            "Anders Johansson är chef över neurologiavdelningen.",
+            "Lisa Persson är chef över onkologiavdelningen.",
+            "Erik Johansson är chef över intensivvårdsavdelningen."
+        ] 
+    },
+
+    {
+        "test_index":"6",
+        "question":"Hur många kapitel finns det i HLR-grundutbildningen?",
+        "reference_answers":[
+            "Det finns totalt 7 kapitel i dokumentet.",
+            "Dokumentet består av totalt 7 kapitel.",
+            "Antalet kapitel i dokumentet är sammanlagt 7.",
+            "Det finns 7 kapitel som utgör dokumentet i sin helhet.",
+            "Totalt sett innehåller dokumentet 7 kapitel."
+        ] 
+    },
+
+    {
+        "test_index":"7",
+        "question":"Kan du nämna ett av telefonnumrerna till någon av avdelningarna?",
+        "reference_answers":[
+            "Telefonnumret till akutavdelningen är 1234.",
+            "Telefonnumret till kirurgiavdelningen är 2345.",
+            "Telefonnumret till medicinavdelningen är 3456.",
+            "Telefonnumret till barnavdelningen är 4567.",
+            "Telefonnumret till radiologavdelningen är 5678.",
+            "Telefonnumret till gynekologiavdelningen är 6789.",
+            "Telefonnumret till kardiologavdelningen är 7890.",
+            "Telefonnumret till neurologiavdelningen är 8901.",
+            "Telefonnumret till onkologiavdelningen är 9012.",
+            "Telefonnumret till intensivvårdsavdelningen är 0123."
+        ] 
+    },
+
+    {
+        "test_index":"8",
+        "question":"Vilka förebyggande åtgärder finns för att förhindra fel vid kirurgiska ingrepp?",
+        "reference_answers":[
+            "För att förebygga fel vid kirurgiska ingrepp kan standardiserade protokoll samt regelbundna utbildningar genomföras.",
+            "För att minska risken för fel vid kirurgiska ingrepp kan man tillämpa standardiserade protokoll och genomföra regelbundna utbildningar.",
+            "Genom att använda standardiserade protokoll och arrangera regelbundna utbildningar kan man förebygga fel vid kirurgiska ingrepp.",
+            "För att förebygga fel under kirurgiska ingrepp kan man implementera standardiserade protokoll och hålla regelbundna utbildningar.",
+            "Genom att tillämpa standardiserade protokoll och genomföra regelbundna utbildningar kan man förebygga fel vid kirurgiska ingrepp."
+        ] 
+    },
+
+    {
+        "test_index":"9",
+        "question":"Vad är syftet med att ha en policy för patientsäkerhet?",
+        "reference_answers":[
+            "Syftet är att faställa riktlinjer och procedurer för att säkerställa patientensäkerheten på sjukhuset.",
+            "Målet är att etablera riktlinjer och procedurer för att garantera patientensäkerheten på sjukhuset.",
+            "Syftet är att upprätta riktlinjer och procedurer för att säkra patienternas välbefinnande på sjukhuset.",
+            "Målet är att fastställa riktlinjer och procedurer som främjar patienternas säkerhet på sjukhuset.",
+            "Syftet är att utforma riktlinjer och procedurer som säkerställer att patienterna är trygga på sjukhuset."
+        ] 
+    }
+
+]

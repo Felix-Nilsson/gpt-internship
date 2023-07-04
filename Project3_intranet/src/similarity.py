@@ -1,6 +1,6 @@
 import os
 import openai
-from embeddings import make_records
+from src.embeddings import make_records
 import pandas as pd
 from scipy import spatial
 

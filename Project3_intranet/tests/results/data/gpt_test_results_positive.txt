@@ -1,0 +1,96 @@
+Test case 0:  PASSED
+Generated answer: "Chefskirurgen på kirurgiavdelningen är Felix Nilsson."
+
+Refence answers:
+✓  "Felix Nilsson är chef över kirurgiavdelningen."
+✓  "Kirurgiavdelningen leds av Felix Nilsson."
+✓  "Felix Nilsson har rollen som chef för kirurgiavdelningen."
+✓  "Chefskirurgen för kirurgiavdelningen är Felix Nilsson."
+✓  "Felix Nilsson har ansvaret som chef över kirurgiavdelningen."
+
+
+Test case 1:  ERROR: wrong format from GPT
+
+Test case 2:  PASSED
+Generated answer: "Den grundläggande HLR-utbildningen utvärderas genom praktiska och teoretiska prov samt en certifiering vid godkänd genomförande av utbildningen. (HLR_utbildning.pdf)"
+
+Refence answers:
+X  "Utbildningen utvärderas och bedöms utifrån ett teoretiskt prov och ett praktiskt prov."
+✓  "Bedömningen av utbildningen baseras på både ett teoretiskt och ett praktiskt prov."
+✓  "Utvärderingen av utbildningen inkluderar både ett teoretiskt och ett praktiskt prov."
+✓  "Både ett teoretiskt och ett praktiskt prov används för att bedöma utbildningen."
+✓  "Utbildningen bedöms genom att genomföra både ett teoretiskt och ett praktiskt prov."
+
+
+Test case 3:  ERROR: wrong format from GPT
+
+Test case 4:  PASSED
+Generated answer: "En person som jobbar på barnavdelningen är Karin Lindström. (Personallista.pdf)"
+
+Refence answers:
+X  "En person som jobbar på barnavdelningen är Lisa Berggren"
+X  "En person som jobbar på barnavdelningen är Anna Sjöberg"
+X  "En person som jobbar på barnavdelningen är Erik Larsson"
+✓  "En person som jobbar på barnavdelningen är Karin Lindström"
+X  "En person som jobbar på barnavdelningen är Sofia Gustafsson"
+X  "En person som jobbar på barnavdelningen är Emma Dahlström"
+X  "En person som jobbar på barnavdelningen är Maria Carlsson,"
+
+
+Test case 5:  PASSED
+Generated answer: "På Akutmottagningen är chefsläkaren Henrik Johansson. (Personallista.pdf)"
+
+Refence answers:
+✓  "Henrik Johansson är chef över akutmottagningen."
+X  "Felix Nilsson är chef över kirurgiavdelningen."
+X  "Oskar Pauli är chef över den medicinska avdelningen."
+X  "Lisa Berggren är chef över barnavdelningen."
+X  "Markus Eriksson är chef över radiologiavdelningen."
+X  "Maria Eriksson är chef över gynekologiavdelningen."
+X  "Chefskardiologen på kardiologiavdelningen är Markus Nilsson som är en bra man."
+X  "Anders Johansson är chef över neurologiavdelningen."
+X  "Lisa Persson är chef över onkologiavdelningen."
+X  "Erik Johansson är chef över intensivvårdsavdelningen."
+
+
+Test case 6:  PASSED
+Generated answer: "Det finns totalt 7 kapitel i HLR-grundutbildningen. Informationen finns i filen "HLR_utbildning.pdf"."
+
+Refence answers:
+✓  "Det finns totalt 7 kapitel i dokumentet."
+✓  "Dokumentet består av totalt 7 kapitel."
+✓  "Antalet kapitel i dokumentet är sammanlagt 7."
+✓  "Det finns 7 kapitel som utgör dokumentet i sin helhet."
+✓  "Totalt sett innehåller dokumentet 7 kapitel."
+
+
+Test case 7:  PASSED
+Generated answer: "Ja, telefonnumret till Akutmottagningen är 1234."
+
+Refence answers:
+✓  "Ett av telefonnumren är 1234."
+X  "Telefonnumret till kirurgiavdelningen är 2345."
+X  "Telefonnumret till medicinavdelningen är 3456."
+X  "Telefonnumret till barnavdelningen är 4567."
+X  "Telefonnumret till radiologavdelningen är 5678."
+X  "Telefonnumret till gynekologiavdelningen är 6789."
+X  "Telefonnumret till kardiologavdelningen är 7890."
+X  "Telefonnumret till neurologiavdelningen är 8901."
+X  "Telefonnumret till onkologiavdelningen är 9012."
+X  "Telefonnumret till intensivvårdsavdelningen är 0123."
+
+
+Test case 8:  ERROR: wrong format from GPT
+
+Test case 9:  PASSED
+Generated answer: "Syftet med att ha en policy för patientsäkerhet är att fastställa riktlinjer och procedurer för att säkerställa patientsäkerheten på sjukhuset."
+
+Refence answers:
+✓  "Syftet är att faställa riktlinjer och procedurer för att säkerställa patientensäkerheten på sjukhuset."
+X  "Målet är att etablera riktlinjer och procedurer för att garantera patientensäkerheten på sjukhuset."
+X  "Syftet är att upprätta riktlinjer och procedurer för att säkra patienternas välbefinnande på sjukhuset."
+X  "Målet är att fastställa riktlinjer och procedurer som främjar patienternas säkerhet på sjukhuset."
+X  "Syftet är att utforma riktlinjer och procedurer som säkerställer att patienterna är trygga på sjukhuset."
+
+
+Tests passed: 7/10

@@ -8,7 +8,7 @@ import sys
 #This is to enable importing from the embeddings folder
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
-import embeddings.chatbot as chatbot
+import src.chatbot as chatbot
 
 # Load your API key from an environment variable or secret management service
 openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -54,32 +54,29 @@ def run_gpt_test(is_negative=False):
     print(f"\nRunning GPT Test, negative={is_negative}")
 
     if is_negative:
-        result_file_path = 'Project_assistant/tests/results/data/gpt_test_results_negative.txt'
+        result_file_path = 'Project3_intranet/tests/results/data/gpt_test_results_negative.txt'
     else:
-        result_file_path = 'Project_assistant/tests/results/data/gpt_test_results_positive.txt'
+        result_file_path = 'Project3_intranet/tests/results/data/gpt_test_results_positive.txt'
 
 
     with open(result_file_path, 'w', encoding='utf-8') as g:
 
-        with open('Project_assistant/tests/cases.json', 'r', encoding='utf-8') as f:
+        with open('Project3_intranet/tests/cases.json', 'r', encoding='utf-8') as f:
             data = json.load(f)
             ans = 0
 
             for case in data:
-                cb = chatbot.Chatbot('Doctor')
+                cb = chatbot.Chatbot()
 
                 test_index = case['test_index']
-                patient_id = case['patient_id']
                 question = case['question']
                 reference_answers = case['reference_answers']
 
-                if is_negative:
-                    patient_id = ''
 
                 #To keep track of it running
                 print('[GPT] Running case:',test_index)
 
-                case_answer = cb.get_chat_response(question, patient_id, False)
+                case_answer = cb.get_chat_response(question, False)
                 case_answer = case_answer.split('\n')[0]
 
                 result = compare(case_answer, reference_answers)
@@ -118,7 +115,7 @@ def run_gpt_test(is_negative=False):
     return ans
 
 #Run positive test
-#run_gpt_test(is_negative=0)
+run_gpt_test(is_negative=0)
 
 #Run negative test
 #run_gpt_test(is_negative=1)

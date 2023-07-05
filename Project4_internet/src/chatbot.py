@@ -1,4 +1,4 @@
-from langchain.agents import Tool
+from langchain.agents import Tool, load_tools
 from langchain.agents import AgentType
 from langchain.llms import OpenAI 
 from langchain.chat_models import ChatOpenAI
@@ -31,21 +31,45 @@ class Chatbot:
 
         
 
-    def search_ddg(self, query):
-            search = DuckDuckGoSearchRun()
-            return search.run(f"{query} site:1177.se")
+    def search_1177(self, query):
+        search = DuckDuckGoSearchRun()
+        return search.run(f"{query} site:1177.se")
+
+    def search_fass(self, query):
+        search = DuckDuckGoSearchRun()
+        return search.run(f"{query} site:fass.se")
+
+    def search_internetmedicin(self, query):
+        search = DuckDuckGoSearchRun()
+        return search.run(f"{query} site:verktyg.internetmedicin.se")
+
 
     def get_chat_response(self, query):
 
         llm = ChatOpenAI(temperature=0, model_name="gpt-3.5-turbo")
 
-        tool = [Tool(name='1177', func=self.search_ddg, description='Användbar när du vill ha medicinsk information.')]
+        tool = [
+             Tool(name='internetmedicin', func=self.search_internetmedicin, 
+                  description= """Användbar när du t.ex behöver söka på
+                  en ICD kod för en skada eller sjukdom."""
+                  ),
+             Tool(name='1177', func=self.search_1177,
+                   description='Användbar när du vill ha medicinsk \
+                   information, såsom information om sjukdomar,    \
+                   skador och vården i allmänhet.'
+                   ),
+             Tool(name='fass', func=self.search_fass, 
+                  description= 'Användbar när du vill ha information om \
+                  läkemedel, såsom biverkningar, dosering och tillgång.'
+                  )
+                ]
+        #tool = load_tools(tool)
 
         agent = initialize_agent(tool, 
                                 llm=llm, 
-                                agent=AgentType.OPENAI_MULTI_FUNCTIONS, 
+                                agent=AgentType.CHAT_ZERO_SHOT_REACT_DESCRIPTION, 
                                 verbose=True, 
-                                max_iterations = 3, 
+                                max_iterations = 4, 
                                 early_stopping_method="generate")
 
         return agent.run(f"Svara på frågan på svenska: '{query}'")

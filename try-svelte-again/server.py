@@ -8,7 +8,7 @@ CORS(app)
 
 chatbot = Chatbot()
 
-messages = ['Just in case']
+messages = []
 
 
 @app.route("/")
@@ -29,7 +29,7 @@ def post_response():
             response = chatbot.get_chat_response(prompt)
             messages.append(response)
 
-    return messages[-1]
+    return messages
 
 
 # Path for all the static files (compiled JS/CSS, etc.)

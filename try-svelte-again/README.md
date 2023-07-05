@@ -1,4 +1,4 @@
-#To run this svelte / flask application,
+<h2> To run this svelte / flask application, </h1>
 
 (The order of running the front/backend should not matter)
 

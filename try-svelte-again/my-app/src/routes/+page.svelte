@@ -11,7 +11,7 @@
         // get the form fields data and convert it to URLSearchParams
         const formData = new FormData(e.target);
 
-		messages.push(formData.get("prompt"));
+		//messages.push(formData.get("prompt"));
 
         const data = new URLSearchParams()
         for (let field of formData) {
@@ -25,10 +25,11 @@
 
     async function get_response() {
 		const response = await fetch('http://localhost:5001/data');
-		const data = await response.text();
+		const data = await response.json();
 		
-		messages.push(data);
-		messages = messages;
+		console.log(data);
+		//messages.push(data);
+		messages = data;
 		//console.log(messages);
 		ai_message = data;
 	}

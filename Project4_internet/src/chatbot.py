@@ -43,13 +43,12 @@ class Chatbot:
 
         agent = initialize_agent(tool, 
                                 llm=llm, 
-                                agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, 
+                                agent=AgentType.OPENAI_MULTI_FUNCTIONS, 
                                 verbose=True, 
                                 max_iterations = 3, 
                                 early_stopping_method="generate")
 
         return agent.run(f"Svara på frågan på svenska: '{query}'")
-
 
 
 

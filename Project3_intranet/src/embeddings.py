@@ -13,7 +13,7 @@ def make_embedding(text):
     )
     return embedding['data'][0]['embedding']
 
-def make_emeddings(names):
+def make_embeddings(names):
     texts = [pdf(name) for name in names]
     embeddings = [make_embedding(text) for text in texts]
     d = {'filename':names, 'text':texts, 'embedding':embeddings}
@@ -34,7 +34,7 @@ def make_records():
         if set(df["filename"]) != set(current_files):
             print("src/embeddings.py: embeddings.pkl file outdated, removing and generating...")
             os.remove(pickle_path)
-            df = pd.DataFrame(make_emeddings(current_files))
+            df = pd.DataFrame(make_embeddings(current_files))
             df.to_pickle(pickle_path)
             print("done")
         else:
@@ -44,7 +44,7 @@ def make_records():
         entries = os.scandir('Project3_intranet/data/records')
         names = [entry.name for entry in entries]
 
-        df = pd.DataFrame(make_emeddings(names))
+        df = pd.DataFrame(make_embeddings(names))
         df.to_pickle(pickle_path)
         print("done")
 

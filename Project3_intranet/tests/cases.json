@@ -6,7 +6,7 @@
             "Felix Nilsson är chef över kirurgiavdelningen.",
             "Kirurgiavdelningen leds av Felix Nilsson.",
             "Felix Nilsson har rollen som chef för kirurgiavdelningen.",
-            "Chefsposten för kirurgiavdelningen innehas av Felix Nilsson.",
+            "Chefskirurgen för kirurgiavdelningen är Felix Nilsson.",
             "Felix Nilsson har ansvaret som chef över kirurgiavdelningen."
         ]
     },
@@ -51,13 +51,13 @@
         "test_index":"4",
         "question":"Kan du nämna en person som jobbar på barnavdelningen?",
         "reference_answers":[
-            "Lisa Berggren",
-            "Anna Sjöberg",
-            "Erik Larsson",
-            "Karin Lindström",
-            "Sofia Gustafsson",
-            "Emma Dahlström",
-            "Maria Carlsson,"
+            "En person som jobbar på barnavdelningen är Lisa Berggren",
+            "En person som jobbar på barnavdelningen är Anna Sjöberg",
+            "En person som jobbar på barnavdelningen är Erik Larsson",
+            "En person som jobbar på barnavdelningen är Karin Lindström",
+            "En person som jobbar på barnavdelningen är Sofia Gustafsson",
+            "En person som jobbar på barnavdelningen är Emma Dahlström",
+            "En person som jobbar på barnavdelningen är Maria Carlsson,"
         ] 
     },
 
@@ -71,7 +71,7 @@
             "Lisa Berggren är chef över barnavdelningen.",
             "Markus Eriksson är chef över radiologiavdelningen.",
             "Maria Eriksson är chef över gynekologiavdelningen.",
-            "Markus Nilsson är chef över kardiologiavdelningen.",
+            "Chefskardiologen på kardiologiavdelningen är Markus Nilsson som är en bra man.",
             "Anders Johansson är chef över neurologiavdelningen.",
             "Lisa Persson är chef över onkologiavdelningen.",
             "Erik Johansson är chef över intensivvårdsavdelningen."
@@ -94,7 +94,7 @@
         "test_index":"7",
         "question":"Kan du nämna ett av telefonnumrerna till någon av avdelningarna?",
         "reference_answers":[
-            "Telefonnumret till akutavdelningen är 1234.",
+            "Ett av telefonnumren är 1234.",
             "Telefonnumret till kirurgiavdelningen är 2345.",
             "Telefonnumret till medicinavdelningen är 3456.",
             "Telefonnumret till barnavdelningen är 4567.",

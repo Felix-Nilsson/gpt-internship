@@ -53,7 +53,7 @@ def bleu_smoothing_eval():
     ax.set_ylabel('Score')
     ax.set_title('bleu score vs smoothing method')
 
-    plt.savefig('Project3_intranet/tests/results/plots/boxplot_avg.png')
+    plt.savefig('Project3_intranet/tests/results/plots/bleu_scores.png')
 
 def run_bleu_test(is_negative=False):
     cb = chatbot.Chatbot()

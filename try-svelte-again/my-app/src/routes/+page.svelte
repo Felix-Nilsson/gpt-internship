@@ -1,23 +1,76 @@
 <!-- THIS IS THE STARTPAGE OF THE APP -->
 
 <script>
-    let response = '';
+    let ai_message = '';
+	let messages = [];
 
     const handleSubmit = e => {
-        response = 'responsed';
-    }
+        // getting the action url
+		const ACTION_URL = e.target.action;
+
+        // get the form fields data and convert it to URLSearchParams
+        const formData = new FormData(e.target);
+
+		messages.push(formData.get("prompt"));
+
+        const data = new URLSearchParams()
+        for (let field of formData) {
+            const [key, value] = field;
+            data.append(key, value);
+        }
+
+		fetch(`${ACTION_URL}?${data}`);
+	}
+
+
+    async function get_response() {
+		const response = await fetch('http://localhost:5001/data');
+		const data = await response.text();
+		
+		messages.push(data);
+		messages = messages;
+		//console.log(messages);
+		ai_message = data;
+	}
 
 </script>
+
+
 <body>
-    <form action="http://localhost:5000/input" method='post'>
+	<!-- WE USE PORT 5001 FOR OUR PYTHON "BACKEND" -->
+    <form action="http://localhost:5001/data" on:submit|preventDefault={handleSubmit}>
         <h1>Welcome to Medhelp</h1>
         <input type="text" name="prompt" placeholder="E.g. My toe hurts, what do I do?"/>
         <input type="submit" value="Send"/>
     </form>
-    <h1>AI: {response}</h1>
+
+    <div/>
+
+    <button on:click={get_response}>Get Response</button>
+
+	<h1>MESSAGES:</h1>
+	{#if messages.length != 0}
+		<ul>
+			{#each messages as message}
+				<li>
+					<h2>
+						{message}
+					</h2>
+				</li>
+			{/each}
+		</ul>
+	{/if}
+    
 </body>
 
 
+<style>
+
+	div {
+		height: 40px;
+	}
+
+</style>
 
 <!--
 

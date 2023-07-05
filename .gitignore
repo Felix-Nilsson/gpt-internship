@@ -2,3 +2,4 @@ apikey.txt
 **/__pycache__/
 patientrecords/*/embeddings.pkl
 Project3_intranet/data/pickle/embeddings.pkl
+svelte/client/node_modules/

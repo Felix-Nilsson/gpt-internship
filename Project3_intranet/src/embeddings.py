@@ -50,4 +50,3 @@ def make_records():
 
     return df
 
-make_records()

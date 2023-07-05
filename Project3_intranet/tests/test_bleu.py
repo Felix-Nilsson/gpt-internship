@@ -10,7 +10,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def run_bleu(reference_answers,can, method):
+def run_bleu(reference_answers, can, method):
     
     smoothing = SmoothingFunction()
     function = getattr(smoothing,method)
@@ -77,7 +77,11 @@ def run_bleu_test(is_negative=False):
                 index = case["test_index"]
                 print("\ttest case:",index)
 
-                can = [cb.get_chat_response(question)]
+                if is_negative:
+                    can = [cb.get_chat_response(question, positive=False)]
+                else:
+                    can = [cb.get_chat_response(question, positive=True)]
+
                 can = can[0].split("*")[0].replace("\n","").strip()
                 can = can.split()
 
@@ -86,5 +90,5 @@ def run_bleu_test(is_negative=False):
                 f.write(f"\n{result}")
 
 #bleu_smoothing_eval()
-run_bleu_test(is_negative=False)
-#run_bleu_test(is_negative=True) 
+#run_bleu_test(is_negative=False)
+run_bleu_test(is_negative=True) 

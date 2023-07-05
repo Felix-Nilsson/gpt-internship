@@ -5,16 +5,15 @@ sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 import src.chatbot as chatbot
 from src.embeddings import make_embedding
-from src.similarity import strings_ranked_by_relatedness
 import numpy as np
 from numpy.linalg import norm
 
 import json
 
-def run_similarity_test(question,reference_answers):
+def run_similarity_test(question,reference_answers,remember=False,positive=False):
     cb = chatbot.Chatbot()
 
-    candidate = [cb.get_chat_response(question)]
+    candidate = [cb.get_chat_response(question,remember,positive)]
     candidate = candidate[0].split("*")[0].replace("\n","").strip()
 
     embedded_references = [make_embedding(reference_answer) for reference_answer in reference_answers]
@@ -47,7 +46,7 @@ def run_positive_tests():
                 question = case['question']
                 reference_answers = case['reference_answers']
 
-                results = run_similarity_test(question,reference_answers)
+                results = run_similarity_test(question,reference_answers,remember=True,positive=True)
                 low = min(results)
                 high = max(results)
                 mean = np.mean(results)
@@ -70,7 +69,7 @@ def run_negative_tests():
                 reference_answers = case['reference_answers']
                 
 
-                results = run_similarity_test(question,reference_answers)
+                results = run_similarity_test(question,reference_answers,remember=False,positive=False)
                 low = min(results)
                 high = max(results)
                 mean = np.mean(results)
@@ -81,5 +80,5 @@ def run_specific_test(index):
     pass
 
             
-run_positive_tests()
-#run_negative_tests()
+#run_positive_tests()
+run_negative_tests()

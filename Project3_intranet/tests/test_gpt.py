@@ -48,7 +48,7 @@ def compare(actual_output: str, expected_output: list[str]):
 
     return(test_response.choices[0].message['content'])
 
-def run_gpt_test(is_negative=False):
+def run_gpt_test(is_negative=False, positive=True):
     """Test the AI GPT assistant using another GPT, returns the number of passed test cases"""
 
     print(f"\nRunning GPT Test, negative={is_negative}")
@@ -76,7 +76,8 @@ def run_gpt_test(is_negative=False):
                 #To keep track of it running
                 print('[GPT] Running case:',test_index)
 
-                case_answer = cb.get_chat_response(question, False)
+                case_answer = cb.get_chat_response(question, remember=False, positive=positive)
+                print(case_answer)
                 case_answer = case_answer.split('\n')[0]
 
                 result = compare(case_answer, reference_answers)
@@ -115,9 +116,9 @@ def run_gpt_test(is_negative=False):
     return ans
 
 #Run positive test
-run_gpt_test(is_negative=0)
+#run_gpt_test(is_negative=0)
 
 #Run negative test
-#run_gpt_test(is_negative=1)
+run_gpt_test(is_negative=1, positive=False)
 
     

@@ -1,0 +1,96 @@
+Test case 0:  FAILED
+Generated answer: "Jag har tyvärr inte tillgång till den informationen."
+
+Refence answers:
+X  "Felix Nilsson är chef över kirurgiavdelningen."
+X  "Kirurgiavdelningen leds av Felix Nilsson."
+X  "Felix Nilsson har rollen som chef för kirurgiavdelningen."
+X  "Chefskirurgen för kirurgiavdelningen är Felix Nilsson."
+X  "Felix Nilsson har ansvaret som chef över kirurgiavdelningen."
+
+
+Test case 1:  ERROR: wrong format from GPT
+
+Test case 2:  PASSED
+Generated answer: "Den grundläggande HLR-utbildningen utvärderas vanligtvis genom praktiska övningar och kunskapstester. Det kan också finnas en skriftlig tentamen. (Källa: Okänd)"
+
+Refence answers:
+X  "Utbildningen utvärderas och bedöms utifrån ett teoretiskt prov och ett praktiskt prov."
+X  "Bedömningen av utbildningen baseras på både ett teoretiskt och ett praktiskt prov."
+✓  "Utvärderingen av utbildningen inkluderar både ett teoretiskt och ett praktiskt prov."
+✓  "Både ett teoretiskt och ett praktiskt prov används för att bedöma utbildningen."
+✓  "Utbildningen bedöms genom att genomföra både ett teoretiskt och ett praktiskt prov."
+
+
+Test case 3:  FAILED
+Generated answer: "Det första man ska tänka på är att säkerställa patientens säkerhet och stabilisera deras tillstånd. (Källa: Kirurgisk handbok)"
+
+Refence answers:
+X  "Det första man ska tänka på är att ha en korrekt och detaljerad dokumentation."
+X  "En viktig aspekt att ha i åtanke är att upprätthålla en korrekt och detaljerad dokumentation."
+X  "Det primära fokuset bör vara att ha en noggrann och detaljerad dokumentation."
+X  "En prioriterad punkt är att se till att dokumentationen är både korrekt och detaljerad."
+X  "Det allra första att beakta är att ha en exakt och utförlig dokumentation."
+
+
+Test case 4:  FAILED
+Generated answer: "Jag har inte tillgång till informationen om personer som jobbar på barnavdelningen."
+
+Refence answers:
+X  "En person som jobbar på barnavdelningen är Lisa Berggren"
+X  "En person som jobbar på barnavdelningen är Anna Sjöberg"
+X  "En person som jobbar på barnavdelningen är Erik Larsson"
+X  "En person som jobbar på barnavdelningen är Karin Lindström"
+X  "En person som jobbar på barnavdelningen är Sofia Gustafsson"
+X  "En person som jobbar på barnavdelningen är Emma Dahlström"
+X  "En person som jobbar på barnavdelningen är Maria Carlsson,"
+
+
+Test case 5:  FAILED
+Generated answer: "Tyvärr har jag inte tillgång till informationen om chefer på olika avdelningar."
+
+Refence answers:
+X  "Henrik Johansson är chef över akutmottagningen."
+X  "Felix Nilsson är chef över kirurgiavdelningen."
+X  "Oskar Pauli är chef över den medicinska avdelningen."
+X  "Lisa Berggren är chef över barnavdelningen."
+X  "Markus Eriksson är chef över radiologiavdelningen."
+X  "Maria Eriksson är chef över gynekologiavdelningen."
+X  "Chefskardiologen på kardiologiavdelningen är Markus Nilsson som är en bra man."
+X  "Anders Johansson är chef över neurologiavdelningen."
+X  "Lisa Persson är chef över onkologiavdelningen."
+X  "Erik Johansson är chef över intensivvårdsavdelningen."
+
+
+Test case 6:  PASSED
+Generated answer: "Jag har inte tillgång till informationen om antalet kapitel i HLR-grundutbildningen."
+
+Refence answers:
+X  "Det finns totalt 7 kapitel i dokumentet."
+X  "Dokumentet består av totalt 7 kapitel."
+X  "Antalet kapitel i dokumentet är sammanlagt 7."
+X  "Det finns 7 kapitel som utgör dokumentet i sin helhet."
+✓  "Totalt sett innehåller dokumentet 7 kapitel."
+
+
+Test case 7:  FAILED
+Generated answer: "Tyvärr har jag inte tillgång till den informationen."
+
+Refence answers:
+X  "Ett av telefonnumren är 1234."
+X  "Telefonnumret till kirurgiavdelningen är 2345."
+X  "Telefonnumret till medicinavdelningen är 3456."
+X  "Telefonnumret till barnavdelningen är 4567."
+X  "Telefonnumret till radiologavdelningen är 5678."
+X  "Telefonnumret till gynekologiavdelningen är 6789."
+X  "Telefonnumret till kardiologavdelningen är 7890."
+X  "Telefonnumret till neurologiavdelningen är 8901."
+X  "Telefonnumret till onkologiavdelningen är 9012."
+X  "Telefonnumret till intensivvårdsavdelningen är 0123."
+
+
+Test case 8:  ERROR: wrong format from GPT
+
+Test case 9:  ERROR: wrong format from GPT
+
+Tests passed: 2/10

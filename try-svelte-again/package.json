@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "@svelteuidev/composables": "^0.14.0",
-    "@svelteuidev/core": "^0.14.0"
-  }
-}

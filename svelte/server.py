@@ -35,6 +35,11 @@ async def post_response():
 
     return 'OK'
 
+@app.route("/credentials", methods=['GET'])
+async def creds():
+    with open("credentials/credentials.json") as f:
+        return f.read()
+
 
 # Path for all the static files (compiled JS/CSS, etc.)
 #@app.route("/<path:path>")

@@ -1,46 +1,51 @@
 from flask import Flask, send_from_directory, request
-import random
+from flask_cors import CORS
+import time
 from chatbot import Chatbot
 
 app = Flask(__name__)
+CORS(app)
 
 chatbot = Chatbot()
 
-messages = []
+conversation = {'time': 0, 'messages': []}
 
-# Path for our main Svelte page
+
 @app.route("/")
 def base():
-    return send_from_directory('client/public', 'index.html')
+    return "data transfer '/data'"
 
-#@app.route("/response")
-#def post_response():
-#    return response
+@app.route("/data/get", methods=['GET'])
+async def data():
+    return conversation
 
-# Path for our main Svelte page
-@app.route("/input", methods=['GET'])
-def handle_input():
-    args = request.args
-    if len(args) != 0:
-        prompt = args.getlist('prompt')[0]
-        messages.append(prompt)
-        #print(prompt)
-        response = chatbot.get_chat_response(prompt)
-        messages.append(response)
+#Svelte will go to /data?q='query', here (server.py) we take that query, get a chat response to it, and post the response to /data
+@app.route("/data", methods=['POST'])
+async def post_response():
 
-    return messages[-1]
+    #Get the prompt from the POST body
+    prompt = request.get_json()['prompt']
+    #Get a response to the prompt
+    response = chatbot.get_chat_response(prompt)
+    #Update the conversation with the new messages and the time the update took place
+    conversation['messages'].append(prompt)
+    conversation['messages'].append(response)
+    conversation['time'] = time.time()
+    await data()
+
+    return 'OK'
 
 
 # Path for all the static files (compiled JS/CSS, etc.)
-@app.route("/<path:path>")
-def home(path):
-    return send_from_directory('client/public', path)
+#@app.route("/<path:path>")
+#def home(path):
+#    return send_from_directory('client/public', path)
 
 
-@app.route("/rand")
-def hello():
-    return str(random.randint(0, 100))
+#@app.route("/rand")
+#def hello():
+#    return str(random.randint(0, 100))
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port=5001)

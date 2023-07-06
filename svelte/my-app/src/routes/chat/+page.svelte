@@ -36,9 +36,11 @@
 
 <div class="gradient-strip-top">
     <Center style="padding:20px">
-        <Title order={1} variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="font-size: 5rem">
-            MedHelp
-        </Title>
+        <Button href='/' color=white>
+            <Title order={1} variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="font-size: 5rem">
+                MedHelp
+            </Title>
+        </Button>
     </Center>
 
 </div>

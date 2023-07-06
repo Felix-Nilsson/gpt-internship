@@ -1,6 +1,6 @@
 from flask import Flask, send_from_directory, request
 from flask_cors import CORS
-import random
+import time
 from chatbot import Chatbot
 
 app = Flask(__name__)
@@ -8,7 +8,7 @@ CORS(app)
 
 chatbot = Chatbot()
 
-messages = []
+conversation = {'time': 0, 'messages': []}
 
 
 @app.route("/")
@@ -24,12 +24,13 @@ def post_response():
         args = request.args
         if len(args) != 0:
             prompt = args.getlist('prompt')[0]
-            messages.append(prompt)
+            conversation['messages'].append(prompt)
             #print(prompt)
             response = chatbot.get_chat_response(prompt)
-            messages.append(response)
+            conversation['messages'].append(response)
+            conversation['time'] = time.time()
 
-    return messages
+    return conversation
 
 
 # Path for all the static files (compiled JS/CSS, etc.)

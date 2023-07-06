@@ -2,9 +2,36 @@
     import { Group, Title, Paper, ThemeIcon,
          Input , Button, Center, Burger, Navbar, Header,} from '@svelteuidev/core';
     import Icon from '@iconify/svelte';
+    import Conversation from "./Conversation.svelte";
 
     let opened = false;
-  </script>
+
+    //Backend should be running on port 5001
+    const DATA_URL = 'http://localhost:5001/data';
+
+    let check;
+
+    async function get_response() {
+        check();
+    }
+
+    const handleSubmit = e => {
+
+        //data contains the input
+        let data = new FormData(e.target);
+
+        fetch(DATA_URL, {
+            method: "POST",
+            body: JSON.stringify({'prompt': data.get('prompt')}),
+            headers: {"Content-type": "application/json; charset=UTF-8"}
+        });
+
+		//Start looking for a response
+		get_response();
+	}
+
+
+</script>
 
 
 <div class="gradient-strip-top">
@@ -21,61 +48,32 @@
     {opened}
     on:click={() => (opened = !opened)}
     />
+</div>  
+    <div class="center-screen">
+    <Conversation bind:check_for_messages={check}></Conversation>
 </div>
-  
-  <div class="center-screen">
-    <Group spacing="lg" direction="column">
 
-
-        <Group spacing="lg" direction="row">
-            
-            <ThemeIcon variant='gradient' gradient={{from: 'teal', to: 'blue', deg: 45}} size="xl" radius="lg">
-                <Icon icon="radix-icons:person" />
-            </ThemeIcon>
-           
-            <Paper shadow="xl" radius="lg">
-                <Title order={3} variant='gradient' gradient={{from: 'blue', to: 'teal', deg: 45}} align="left" style="word-wrap;break-word;">
-                    Hej, Jag har ont i magen, vad ska jag göra?
-                </Title>
-              
-            </Paper>
-        </Group>
-
-
-        <Group spacing="lg" direction="row">
-            
-           
-            <Paper shadow="xl" radius="lg">
-                <Title order={3} variant='gradient' gradient={{from: 'red', to: 'yellow', deg: 45}} align="left">
-                    Du borde dricka vatten
-                </Title>
-              
-            </Paper>
-
-            <ThemeIcon variant='gradient' gradient={{from: 'yellow', to: 'red', deg: 45}} size="xl" radius="lg">
-                <Icon icon="carbon:bot"/>
-            </ThemeIcon>
-        </Group>
-
-       
-    </Group>
- 
-</div>
 
 <div class="gradient-strip-bottom">
 
     <Center style="padding:20px">  
         <Group spacing="lg" direction="row">
                 
-                <Input 
-                variant="filled"
-                placeholder="T.ex 'Jag har feber och ont i huvudet, vad borde jag göra?'"
-                radius="lg"
-                size="xl"
-                style="width:20cm"
-                />
+                <form on:submit|preventDefault={handleSubmit}>
+                    <Group spacing="lg" direction="row">
+                        <Input 
+                            name="prompt"
+                            variant="filled"
+                            placeholder="T.ex 'Jag har feber och ont i huvudet, vad borde jag göra?'"
+                            radius="lg"
+                            size="xl"
+                            style="width:20cm"
+                        />
+                        <Button type="submit" color='teal' ripple>Skicka</Button>
+                    </Group>
+                </form>
 
-                <Button color='teal' ripple>Skicka</Button>
+                
             
 
         </Group>
@@ -118,7 +116,7 @@
         bottom: 0; 
         left: 0; 
         right: 0; 
-        top:90%; 
+        top:100% - 100px; 
     }
 
     .gradient-strip-top {

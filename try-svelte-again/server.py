@@ -15,22 +15,25 @@ conversation = {'time': 0, 'messages': []}
 def base():
     return "data transfer '/data'"
 
+@app.route("/data/get", methods=['GET'])
+async def data():
+    return conversation
 
 #Svelte will go to /data?q='query', here (server.py) we take that query, get a chat response to it, and post the response to /data
-@app.route("/data", methods=['POST', 'GET'])
-def post_response():
+@app.route("/data", methods=['POST'])
+async def post_response():
 
-    if request.method == 'GET':
-        args = request.args
-        if len(args) != 0:
-            prompt = args.getlist('prompt')[0]
-            conversation['messages'].append(prompt)
-            #print(prompt)
-            response = chatbot.get_chat_response(prompt)
-            conversation['messages'].append(response)
-            conversation['time'] = time.time()
+    #Get the prompt from the POST body
+    prompt = request.get_json()['prompt']
+    #Get a response to the prompt
+    response = chatbot.get_chat_response(prompt)
+    #Update the conversation with the new messages and the time the update took place
+    conversation['messages'].append(prompt)
+    conversation['messages'].append(response)
+    conversation['time'] = time.time()
+    await data()
 
-    return conversation
+    return 'OK'
 
 
 # Path for all the static files (compiled JS/CSS, etc.)

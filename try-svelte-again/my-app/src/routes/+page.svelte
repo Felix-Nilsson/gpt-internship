@@ -1,37 +1,35 @@
 <!-- THIS IS THE STARTPAGE OF THE APP -->
 <script>
-	import Conversation from './Conversation.svelte';
+	import Conversation from "./conversation.svelte";
 
+    //Backend should be running on port 5001
+    const DATA_URL = 'http://localhost:5001/data';
 
-    const DATA_URL = 'http://localhost:5001/data'
+    let check;
+
+    async function get_response() {
+        check();
+    }
 
     const handleSubmit = e => {
 
-        // get the form fields data and convert it to URLSearchParams
-        const formData = new FormData(e.target);
+        //data contains the input
+        let data = new FormData(e.target);
 
-        const data = new URLSearchParams()
-        for (let field of formData) {
-            const [key, value] = field;
-            data.append(key, value);
-        }
-		fetch(`${DATA_URL}?${data}`);
+        fetch(DATA_URL, {
+            method: "POST",
+            body: JSON.stringify({'prompt': data.get('prompt')}),
+            headers: {"Content-type": "application/json; charset=UTF-8"}
+        });
 
 		//Start looking for a response
 		get_response();
-	}
-
-	let check;
-
-    async function get_response() {
-		check();
 	}
 
 </script>
 
 
 <body>
-	<!-- WE USE PORT 5001 FOR OUR PYTHON "BACKEND" -->
     <form on:submit|preventDefault={handleSubmit}>
         <h1>Welcome to Medhelp</h1>
         <input type="text" name="prompt" placeholder="E.g. My toe hurts, what do I do?"/>
@@ -39,8 +37,6 @@
     </form>
 
     <div/>
-
-    <!--<button on:click={get_response}>Get Response</button>-->
 
 	<h1>MESSAGES:</h1>
 	<Conversation bind:check_for_messages={check}></Conversation>

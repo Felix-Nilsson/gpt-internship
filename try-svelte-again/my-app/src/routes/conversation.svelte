@@ -1,6 +1,6 @@
 <script>
 
-    const DATA_URL = 'http://localhost:5001/data'
+    const DATA_URL = 'http://localhost:5001/data/get'
 
     let last_fetched = 1;
     let messages = []
@@ -15,7 +15,7 @@
 
         while(true) {
             //Give the server some breathing room
-            await timer(5000);
+            await timer(1000);
 
             console.log('checking for updated conversation')
 
@@ -24,7 +24,6 @@
             const data = await response.json();
             
             console.log("last: " + String(last_fetched) + " conv time: " + data['time']);
-            console.log(data);
 
             let new_time = data['time'];
             

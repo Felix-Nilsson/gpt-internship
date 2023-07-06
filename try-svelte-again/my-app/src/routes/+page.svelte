@@ -1,12 +1,12 @@
 <!-- THIS IS THE STARTPAGE OF THE APP -->
 
 <script>
-    let ai_message = '';
+    const DATA_URL = 'http://localhost:5001/data'
+	
+	let ai_message = '';
 	let messages = [];
 
     const handleSubmit = e => {
-        // getting the action url
-		const ACTION_URL = e.target.action;
 
         // get the form fields data and convert it to URLSearchParams
         const formData = new FormData(e.target);
@@ -19,12 +19,12 @@
             data.append(key, value);
         }
 
-		fetch(`${ACTION_URL}?${data}`);
+		fetch(`${DATA_URL}?${data}`);
 	}
 
 
     async function get_response() {
-		const response = await fetch('http://localhost:5001/data');
+		const response = await fetch(DATA_URL);
 		const data = await response.json();
 		
 		console.log(data);
@@ -39,7 +39,7 @@
 
 <body>
 	<!-- WE USE PORT 5001 FOR OUR PYTHON "BACKEND" -->
-    <form action="http://localhost:5001/data" on:submit|preventDefault={handleSubmit}>
+    <form on:submit|preventDefault={handleSubmit}>
         <h1>Welcome to Medhelp</h1>
         <input type="text" name="prompt" placeholder="E.g. My toe hurts, what do I do?"/>
         <input type="submit" value="Send"/>

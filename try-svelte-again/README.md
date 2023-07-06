@@ -6,7 +6,11 @@
 
 Backend: 
 - `cd .\try-svelte-again\`
-- `python server.py` (Run the Flask server)
+- `python server.py`
+
+alternatively,
+- `python .\try-svelte-again\server.py`
+
 
 Frontend:
 - `cd .\try-svelte-again\my-app\`

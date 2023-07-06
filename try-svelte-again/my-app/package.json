@@ -8,6 +8,7 @@
 		"preview": "vite preview"
 	},
 	"devDependencies": {
+		"@iconify/svelte": "^3.1.4",
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/kit": "^1.20.4",
 		"svelte": "^4.0.0",
@@ -17,6 +18,7 @@
 	"dependencies": {
 		"@svelteuidev/composables": "^0.14.0",
 		"@svelteuidev/core": "^0.14.0",
-		"radix-icons-svelte": "^1.2.1"
+		"radix-icons-svelte": "^1.2.1",
+		"tailwindcss": "^3.3.2"
 	}
 }

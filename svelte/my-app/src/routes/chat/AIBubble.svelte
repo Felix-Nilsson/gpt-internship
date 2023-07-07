@@ -21,7 +21,7 @@
         order={3} 
         variant='gradient' 
         gradient={{from: 'red', to: 'yellow', deg: 45}} 
-        align="right" 
+        align="left" 
         style="word-wrap: break-word; line-height: 1.5;">
             <div bind:this={thisObj}>
                 <slot />

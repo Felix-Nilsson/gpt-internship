@@ -103,53 +103,36 @@
 
 
 
-<head>
-    <style>
-        .center-screen {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      min-height: 100vh;
-    }
-    
-        .button {
-      padding-top: 50px;
-      padding-right: 30px;
-      padding-bottom: 50px;
-      padding-left: 80px;
+
+<style>
+    .center-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 100vh;
     }
 
-        .bottom {
-      display: flex;
-      justify-content: bottom;
-      align-items: bottom;
-      text-align: bottom;
-      min-height: 100vh;
-    }
-
-    
     .gradient-strip-bottom {
-        background: rgb(34,193,195);
-        background: linear-gradient(45deg, rgba(34,193,195,1) 0%, rgba(0,80,200,1) 50%, rgba(34,193,195,1) 100%);
-        position: fixed; 
-        bottom: 0; 
-        left: 0; 
-        right: 0; 
-        height: 80px;
+    background: rgb(34,193,195);
+    background: linear-gradient(45deg, rgba(34,193,195,1) 0%, rgba(0,80,200,1) 50%, rgba(34,193,195,1) 100%);
+    position: fixed; 
+    bottom: 0; 
+    left: 0; 
+    right: 0; 
+    height: 80px;
     }
 
     .burger-menu {
-        background: white;
-        /*background: rgb(34,193,195);*/
-        /*background: linear-gradient(45deg, rgba(34,193,195,1) 0%, rgba(0,80,200,1) 50%, rgba(34,193,195,1) 100%);*/
-        position: fixed; 
-        top: 100px; 
-        left: 0;  
-        bottom: 100px;
-        width: 200px;
+    background: white;
+    /*background: rgb(34,193,195);*/
+    /*background: linear-gradient(45deg, rgba(34,193,195,1) 0%, rgba(0,80,200,1) 50%, rgba(34,193,195,1) 100%);*/
+    position: fixed; 
+    top: 100px; 
+    left: 0;  
+    bottom: 100px;
+    width: 200px;
     }
-    
-    
-    </style>
-</head>
+
+
+</style>

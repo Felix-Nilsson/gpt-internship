@@ -156,9 +156,9 @@
         /*background: rgb(34,193,195);*/
         /*background: linear-gradient(45deg, rgba(34,193,195,1) 0%, rgba(0,80,200,1) 50%, rgba(34,193,195,1) 100%);*/
         position: fixed; 
-        top: 0; 
+        top: 100px; 
         left: 0;  
-        bottom: 0;
+        bottom: 100px;
         width: 200px;
     }
     

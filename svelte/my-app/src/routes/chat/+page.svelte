@@ -1,6 +1,6 @@
 <script>
     import { Group, Title, Paper, ThemeIcon,
-         Input , Button, Center, Burger, Navbar, Header, Stack} from '@svelteuidev/core';
+         Input , Button, Center, Burger, Navbar, Header, Stack, Divider} from '@svelteuidev/core';
     import Icon from '@iconify/svelte';
     import Conversation from "./Conversation.svelte";
 
@@ -34,16 +34,18 @@
 </script>
 
 
-<div class="gradient-strip-top">
-    <Center style="padding:20px">
-        <Button href='/' color=transparent>
-            <Title order={1} variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="font-size: 5rem">
-                MedHelp
-            </Title>
-        </Button>
-    </Center>
 
-</div>
+<Button href='/' color=transparent class="side-header-top">
+    <Title 
+    order={1} 
+    variant='gradient' 
+    gradient={{from: 'blue', to: 'red', deg: 45}} 
+    style="font-size:40px; text-align:right; line-height:2">
+        Sahlgrenska AI Hjälp
+    </Title>
+</Button>
+
+
 
 
 {#if opened}
@@ -141,13 +143,11 @@
         height: 100px;
     }
 
-    .gradient-strip-top {
-        background: rgb(34,193,195);
-        background: linear-gradient(45deg, #e1e1e1 0%, #ffffff 50%, #e1e1e1 100%);
+    .side-header-top {
+        background: #ffffff
         position: fixed; 
         top: 0; 
-        left: 0; 
-        right: 0; 
+        left: 75vw; 
         height: 100px;
     }
 

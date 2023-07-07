@@ -63,14 +63,14 @@
    <div class="center-screen">
     <Group spacing="lg" direction="column">
 
+        <Button href='/' color=white>
+            <Title order={1} variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="font-size: 5rem">
+                Sahlgrenska AI Hjälp
+            </Title>
+        </Button>
 
         <form on:submit|preventDefault={handleSubmit}>
             <Stack spacing="lg">
-            <Button href='/' color=white>
-                <Title order={1} variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="font-size: 5rem">
-                    MedHelp
-                </Title>
-            </Button>
 
             <Input 
                 icon={Person} 

@@ -34,8 +34,11 @@
 </script>
 
 
+<div style="position:fixed; background:white; left:0px; right:0px; top:0px; height:80px">
 
-<Button href='/' color=transparent style="position:fixed;right:30px;top:30px;">
+</div>
+
+<Button href='/' color=transparent style="position:fixed;right:30px;top:20px;">
     <Title 
     order={1} 
     variant='gradient' 
@@ -64,7 +67,7 @@
 </div>
 {/if}
 
-<div style="position:fixed; left:30px; top:30px">
+<div style="position:fixed; left:30px; top:20px">
     <Burger color="blue"
     {opened}
     on:click={() => (opened = !opened)}

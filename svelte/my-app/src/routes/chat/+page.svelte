@@ -1,6 +1,6 @@
 <script>
     import { Group, Title, Paper, ThemeIcon,
-         Input , Button, Center, Burger, Navbar, Header,} from '@svelteuidev/core';
+         Input , Button, Center, Burger, Navbar, Header, Stack} from '@svelteuidev/core';
     import Icon from '@iconify/svelte';
     import Conversation from "./Conversation.svelte";
 
@@ -45,6 +45,23 @@
 
 </div>
 
+
+{#if opened}
+<div class="burger-menu"> 
+    <Stack override={{ height: 350 }}  align="center" spacing="xl">
+        <Title order={2} variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}}>
+            Sven Svensson
+        </Title>
+        <Button href='/chat' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} radius="lg" size="xl" ripple>
+            Internethjälp
+        </Button>
+        <Button href='/' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} radius="lg" size="xl" ripple>
+            Logga ut
+        </Button>
+    </Stack>
+</div>
+{/if}
+
 <div style="position:fixed; left:30px; top:30px">
     <Burger color="blue"
     {opened}
@@ -54,6 +71,9 @@
     <div class="center-screen">
     <Conversation bind:check_for_messages={check}></Conversation>
 </div>
+
+
+
 
 
 <div class="gradient-strip-bottom">
@@ -130,6 +150,17 @@
         left: 0; 
         right: 0; 
         bottom:90%; 
+    }
+
+    .burger-menu {
+        background: white;
+        /*background: rgb(34,193,195);*/
+        /*background: linear-gradient(45deg, rgba(34,193,195,1) 0%, rgba(0,80,200,1) 50%, rgba(34,193,195,1) 100%);*/
+        position: fixed; 
+        top: 0; 
+        left: 0;  
+        bottom: 0;
+        width: 200px;
     }
     
     

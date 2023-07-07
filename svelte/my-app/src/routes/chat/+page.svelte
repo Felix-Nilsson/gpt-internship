@@ -36,7 +36,7 @@
 
 <div class="gradient-strip-top">
     <Center style="padding:20px">
-        <Button href='/' color=white>
+        <Button href='/' color=transparent>
             <Title order={1} variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="font-size: 5rem">
                 MedHelp
             </Title>
@@ -61,7 +61,7 @@
     <Center style="padding:20px">  
         <Group spacing="lg" direction="row">
                 
-                <form on:submit|preventDefault={handleSubmit}>
+                <form autocomplete="off" on:submit|preventDefault={handleSubmit}>
                     <Group spacing="lg" direction="row">
                         <Input 
                             name="prompt"
@@ -118,18 +118,17 @@
         bottom: 0; 
         left: 0; 
         right: 0; 
-        top:100% - 100px; 
+        height: 100px;
     }
 
     .gradient-strip-top {
-        /*background: rgb(34,193,195);
-        background: linear-gradient(45deg, rgba(34,193,195,1) 0%, rgba(0,80,200,1) 50%, rgba(34,193,195,1) 100%);*/
-        color:white;
+        background: rgb(34,193,195);
+        background: linear-gradient(45deg, #e1e1e1 0%, #ffffff 50%, #e1e1e1 100%);
         position: fixed; 
         top: 0; 
         left: 0; 
         right: 0; 
-        bottom:90%; 
+        height: 100px;
     }
     
     

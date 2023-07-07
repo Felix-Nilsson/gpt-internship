@@ -1,6 +1,6 @@
 <script>
     import { onMount } from 'svelte';
-    import { Group, Title, Paper, ThemeIcon,
+    import { Flex, Group, Title, Paper, ThemeIcon,
          Input , Button, Center, Burger, Navbar, Header,} from '@svelteuidev/core';
     import { typewriter } from '@svelteuidev/motion';
     import Icon from '@iconify/svelte';
@@ -15,9 +15,9 @@
 
 </script>
 
-<Group spacing="lg" direction="row">
-    <Paper shadow="xl" radius="lg">
-        <Title order={3} variant='gradient' gradient={{from: 'red', to: 'yellow', deg: 45}} align="left">
+<Flex justify="right" gap="lg">
+    <Paper shadow="xl" radius="lg" style="max-width: 55vw">
+        <Title order={3} variant='gradient' gradient={{from: 'red', to: 'yellow', deg: 45}} align="right" style="word-wrap: break-word;">
             <div bind:this={thisObj}>
                 <slot />
             </div>
@@ -27,7 +27,7 @@
     <ThemeIcon variant='gradient' gradient={{from: 'yellow', to: 'red', deg: 45}} size="xl" radius="lg">
         <Icon icon="carbon:bot"/>
     </ThemeIcon>
-</Group>
+</Flex>
 
 
 

@@ -21,7 +21,12 @@
     </ThemeIcon>
 
     <Paper shadow="xl" radius="lg" style="max-width: 55vw">
-        <Title order={3} variant='gradient' gradient={{from: 'blue', to: 'teal', deg: 45}} align="left" style="word-wrap: break-word;">
+        <Title 
+        order={3} 
+        variant='gradient' 
+        gradient={{from: 'blue', to: 'teal', deg: 45}} 
+        align="left" 
+        style="word-wrap: break-word; line-height: 1.5;">
             <div bind:this={thisObj}>
                 <slot/>
             </div>

@@ -51,25 +51,22 @@
 </script>
 
 
-<Stack align="center" spacing="lg" direction="column">
-    
-    <div style="padding-top: 100px; padding-bottom: 100px">
+<div style="padding-top: 100px; padding-bottom: 100px; width: 70vw;">
+    <Stack spacing="lg">
         {#if messages.length != 0}
             {#each messages as message}
                 {#if (messages.indexOf(message) % 2 == 0)}
-                    <Flex>
+                    <Flex justify="left">
                         <UserBubble>{message}</UserBubble>
-                        <div style="width: 20vw;"></div>
+                        <div style="width: 35vw; "></div>
                     </Flex>
                 {:else}
                     <Flex justify="right">
-                        <div style="width: 20vw;"></div>
+                        <div style="width: 35vw; "></div>
                         <AIBubble>{message}</AIBubble>
                     </Flex>
                 {/if}
             {/each}
         {/if}
-    </div>
-    
-    
-</Stack>
+    </Stack>
+</div>

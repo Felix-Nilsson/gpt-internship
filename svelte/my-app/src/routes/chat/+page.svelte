@@ -35,7 +35,7 @@
 
 
 
-<Button href='/' color=transparent class="side-header-top">
+<Button href='/' color=transparent style="position:fixed;right:30px;top:30px;">
     <Title 
     order={1} 
     variant='gradient' 
@@ -140,14 +140,6 @@
         bottom: 0; 
         left: 0; 
         right: 0; 
-        height: 100px;
-    }
-
-    .side-header-top {
-        background: #ffffff
-        position: fixed; 
-        top: 0; 
-        left: 75vw; 
         height: 100px;
     }
 

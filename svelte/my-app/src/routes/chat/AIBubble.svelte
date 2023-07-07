@@ -17,7 +17,12 @@
 
 <Flex justify="right" gap="lg">
     <Paper shadow="xl" radius="lg" style="max-width: 55vw">
-        <Title order={3} variant='gradient' gradient={{from: 'red', to: 'yellow', deg: 45}} align="right" style="word-wrap: break-word;">
+        <Title 
+        order={3} 
+        variant='gradient' 
+        gradient={{from: 'red', to: 'yellow', deg: 45}} 
+        align="right" 
+        style="word-wrap: break-word; line-height: 1.5;">
             <div bind:this={thisObj}>
                 <slot />
             </div>

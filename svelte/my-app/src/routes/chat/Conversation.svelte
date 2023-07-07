@@ -1,5 +1,5 @@
 <script>
-    import { Group, Title, Paper, ThemeIcon,
+    import { Stack, Container, Flex, Group, Title, Paper, ThemeIcon,
         Input , Button, Center, Burger, Navbar, Header,} from '@svelteuidev/core';
     import UserBubble from './UserBubble.svelte';
     import AIBubble from './AIBubble.svelte';
@@ -51,16 +51,25 @@
 </script>
 
 
-<Group spacing="lg" direction="column">
+<Stack align="center" spacing="lg" direction="column">
     
-    {#if messages.length != 0}
-        {#each messages as message}
-            {#if (messages.indexOf(message) % 2 == 0)}
-                <UserBubble>{message}</UserBubble>
-            {:else}
-                <AIBubble>{message}</AIBubble>
-            {/if}
-        {/each}
-    {/if}
+    <div style="padding-top: 100px; padding-bottom: 100px">
+        {#if messages.length != 0}
+            {#each messages as message}
+                {#if (messages.indexOf(message) % 2 == 0)}
+                    <Flex>
+                        <UserBubble>{message}</UserBubble>
+                        <div style="width: 20vw;"></div>
+                    </Flex>
+                {:else}
+                    <Flex justify="right">
+                        <div style="width: 20vw;"></div>
+                        <AIBubble>{message}</AIBubble>
+                    </Flex>
+                {/if}
+            {/each}
+        {/if}
+    </div>
     
-</Group>
+    
+</Stack>

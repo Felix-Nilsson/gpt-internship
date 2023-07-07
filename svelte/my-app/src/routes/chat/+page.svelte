@@ -9,35 +9,30 @@
     //Backend should be running on port 5001
     const DATA_URL = 'http://localhost:5001/data';
 
-    let check;
+    let update_conversation;
 
-    async function get_response() {
-        check();
-    }
-
-    const handleSubmit = e => {
+    const handleSubmit = async (e) => {
 
         //data contains the input
         let data = new FormData(e.target);
 
-        fetch(DATA_URL, {
+        await fetch(DATA_URL, {
             method: "POST",
             body: JSON.stringify({'prompt': data.get('prompt')}),
             headers: {"Content-type": "application/json; charset=UTF-8"}
         });
 
 		//Start looking for a response
-		get_response();
+		await update_conversation();
 	}
-
 
 </script>
 
 
-<div style="position:fixed; background:white; left:0px; right:0px; top:0px; height:80px">
+<!--Background for the header-->
+<div style="position:fixed; background:white; left:0px; right:0px; top:0px; height:80px"></div>
 
-</div>
-
+<!--Clickable title in the header-->
 <Button href='/' color=transparent style="position:fixed;right:30px;top:20px;">
     <Title 
     order={1} 
@@ -49,8 +44,7 @@
 </Button>
 
 
-
-
+<!--Burger menu-->
 {#if opened}
 <div class="burger-menu"> 
     <Stack override={{ height: 350 }}  align="center" spacing="xl">
@@ -67,42 +61,41 @@
 </div>
 {/if}
 
+
+<!--Burger button-->
 <div style="position:fixed; left:30px; top:20px">
     <Burger color="blue"
     {opened}
     on:click={() => (opened = !opened)}
     />
 </div>  
-    <div class="center-screen">
-    <Conversation bind:check_for_messages={check}></Conversation>
+
+
+<!--Conversation-->
+<div class="center-screen">
+    <Conversation bind:check_for_messages={update_conversation}></Conversation>
 </div>
 
 
-
-
-
+<!--Input area-->
 <div class="gradient-strip-bottom">
-
     <Center style="padding:20px">  
         <Group spacing="lg" direction="row">
-                
                 <form autocomplete="off" on:submit|preventDefault={handleSubmit}>
-                    <Group spacing="lg" direction="row">
-                        <Input 
-                            name="prompt"
-                            variant="filled"
-                            placeholder="T.ex 'Jag har feber och ont i huvudet, vad borde jag göra?'"
-                            radius="lg"
-                            size="xl"
-                            style="width:20cm"
-                        />
-                        <Button type="submit" color='teal' ripple>Skicka</Button>
-                    </Group>
+                    <Center>
+                        <Group spacing="lg" direction="row">
+                            <Input 
+                                name="prompt"
+                                variant="filled"
+                                placeholder="T.ex 'Jag har feber och ont i huvudet, vad borde jag göra?'"
+                                radius="lg"
+                                size="l"
+                                style="width:20cm"
+                            />
+                            <Button type="submit" color='teal' ripple>Skicka</Button>
+                        </Group>
+                    </Center>
                 </form>
-
-                
-            
-
         </Group>
     </Center>
 </div>
@@ -143,7 +136,7 @@
         bottom: 0; 
         left: 0; 
         right: 0; 
-        height: 100px;
+        height: 80px;
     }
 
     .burger-menu {

@@ -1,9 +1,9 @@
-<h1 align= center>MedHelp</h1>
+<h1 align= center>Sahlgrenska AI Hjälp</h1>
 
 
 
 <p align="center">
-  <img src="img/MedHelp2.png" />
+  <img src="img/SAH.png" />
 </p>
 
 <p align="center">
@@ -13,13 +13,13 @@
 </p>
 
 
-MedHelp is a chatbot designed to assist medical staff and patients in finding medical information which for example are stored in journals or calendars.
+Sahlgrenska AI Hjälp is a chatbot designed to assist medical staff and patients in finding medical information which for example are stored in journals or calendars.
 
 It was made in python using GPT-3.5 Turbo & Streamlit.
 
 This is one of three projects produced as part of AI Swedens "GPT Summer Internship" for the summer of 2023, and was a collaboration between AI Sweden and Sahlgrenska University Hospital in Gothenburg.
 
-MedHelp is designed primarily with swedish in mind.
+Sahlgrenska AI Hjälp is designed primarily with swedish in mind.
 
 🔗 [Link to blog]( https://my.ai.se/projects/287)
 
@@ -43,7 +43,7 @@ MedHelp is designed primarily with swedish in mind.
 
 ## 📋 Description
 
-MedHelp is designed with two users in mind:
+Sahlgrenska AI Hjälp is designed with two users in mind:
 
 * Medical Staff: doctors, nurses
 * Non Medical Staff: patients, caretakers of patients
@@ -53,7 +53,7 @@ Currently these come in the form of just doctors and patients, with the differen
 Documents are of imaginary patients since in practice these are very sensitive and for legal reasons cannot "leave" the hospital.
 They were however made to be similar in structure to real documents, with guidance from data scientists working in the field.
 
-Upon prompting, MedHelp will check if the user is a doctor or patient, and depending on the query will pick suitable documents as background (using embeddings and similarity scoring) to produce a high quality answer. This is done via a web interface in the form of a simple chat.
+Upon prompting, Sahlgrenska AI Hjälp will check if the user is a doctor or patient, and depending on the query will pick suitable documents as background (using embeddings and similarity scoring) to produce a high quality answer. This is done via a web interface in the form of a simple chat.
 
 ## 🚀 Getting Started
 
@@ -78,10 +78,10 @@ Please note that if you restart the interface, you need to close down your previ
 
 ## 🧪 Testing
 Testing applications that use LLMs can be difficult, and we are in the process of trying out different metrics and test cases to see what gives the best results.
-Currently, there is only a small handcrafted dataset consisting of queries made by our different fictional doctors, and reference responses that MedHelp should match.
+Currently, there is only a small handcrafted dataset consisting of queries made by our different fictional doctors, and reference responses that Sahlgrenska AI Hjälp should match.
 We check the likeness between these reference responses and the candidate response generated during the test. The candidate responses are generated in two ways:
 
-* Negative: Without access to background information, this is to check that MedHelp does not hallucinate a fictious answer. It should basically answer "I don't know".
+* Negative: Without access to background information, this is to check that Sahlgrenska AI Hjälp does not hallucinate a fictious answer. It should basically answer "I don't know".
 * Positive: With access, to see that the information is used and the likeness it high.
 
 This is done with the following metrics, and the latest scores are presented bellow:

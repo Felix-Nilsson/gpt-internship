@@ -4,8 +4,8 @@
 
 <div class="center-screen">
     <Group spacing="lg" direction="column">
-        <Title order={1} variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="font-size: 5rem">
-            MedHelp
+        <Title order={1} variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="font-size: 5rem; line-height: 90px">
+            Sahlgrenska AI Hjälp
         </Title>
             <Button href='/login' variant='gradient' gradient={{from: 'teal', to: 'blue', deg: 60}} radius="lg" size="xl" ripple>
                 Logga in

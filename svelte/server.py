@@ -2,13 +2,15 @@ from flask import Flask, send_from_directory, request
 from flask_cors import CORS
 import time
 from chatbot import Chatbot
+import json
+import bcrypt
 
 app = Flask(__name__)
 CORS(app)
 
 chatbot = Chatbot()
-
 conversation = {'time': 0, 'messages': []}
+result = {'success': "False", 'username': "None"}
 
 
 @app.route("/")
@@ -35,10 +37,43 @@ async def post_response():
 
     return 'OK'
 
-@app.route("/credentials", methods=['GET'])
-async def creds():
+
+@app.route("/credentials/get", methods=['GET'])
+async def get_creds():
+    return result
+
+@app.route("/credentials", methods=['POST'])
+async def set_creds():
+
+    username = request.get_json()['username']
+    candidate_password = request.get_json()['password']
+
     with open("credentials/credentials.json") as f:
-        return f.read()
+        users = json.load(f)
+        
+        if username in users["credentials"]["usernames"]:
+            reference_password = users["credentials"]["usernames"][username]["password"]
+            
+            # converting password to array of bytes
+            bytes = candidate_password.encode('utf-8')
+
+            if bcrypt.checkpw(bytes,reference_password.encode('utf-8')):
+                result["username"] = username
+                result["success"] = True
+    
+            else:
+                result["username"] = None
+                result["success"] = False
+            
+        else:
+            result["username"] = None
+            result["success"] = False
+
+    await get_creds()
+    
+    return "ok"
+
+
 
 
 # Path for all the static files (compiled JS/CSS, etc.)

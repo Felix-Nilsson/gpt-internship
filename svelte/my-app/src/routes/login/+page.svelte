@@ -63,8 +63,8 @@
    <div class="center-screen">
     <Group spacing="lg" direction="column">
 
-        <Button href='/' color=white>
-            <Title order={1} variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="font-size: 5rem">
+        <Button href='/' color=white style="line-height: 1.5">
+            <Title order={1} variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="font-size: 5rem; line-height: 1.5">
                 Sahlgrenska AI Hjälp
             </Title>
         </Button>

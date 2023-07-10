@@ -5,6 +5,7 @@
     import Conversation from "./Conversation.svelte";
 
     let opened = false;
+    let input = "";
 
     //Backend should be running on port 5001
     const DATA_URL = 'http://localhost:5001/data';
@@ -16,6 +17,10 @@
         //data contains the input
         let data = new FormData(e.target);
 
+        //Clear input
+        input = '';
+
+        //Send a update request. The backend will generate a response and update the conversation.
         await fetch(DATA_URL, {
             method: "PUT",
             body: JSON.stringify({'prompt': data.get('prompt')}),
@@ -28,6 +33,7 @@
 
     async function clear_backend() {
         await fetch('http://localhost:5001/data/get', {method: "DELETE"});
+        await update_conversation(1, true);
     }
 
 
@@ -92,6 +98,7 @@
                             <Button type="button" on:click={clear_backend} variant='gradient' gradient={{from: 'teal', to: 'blue', deg: 45}} ripple>Ny Chat</Button>
                             <Input 
                                 name="prompt"
+                                bind:value={input}
                                 variant="filled"
                                 placeholder="T.ex 'Jag har feber och ont i huvudet, vad borde jag göra?'"
                                 radius="lg"

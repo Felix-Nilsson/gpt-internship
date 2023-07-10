@@ -6,6 +6,7 @@
     import { onMount } from 'svelte';
 
     let opened = false;
+    let input = "";
 
     let credentials = {};
     //Backend should be running on port 5001
@@ -20,8 +21,12 @@
         //data contains the input
         let data = new FormData(e.target);
 
+        //Clear input
+        input = '';
+
+        //Send a update request. The backend will generate a response and update the conversation.
         await fetch(DATA_URL, {
-            method: "POST",
+            method: "PUT",
             body: JSON.stringify({'prompt': data.get('prompt')}),
             headers: {"Content-type": "application/json; charset=UTF-8"}
         });
@@ -50,6 +55,12 @@
 
     // Call the function to fetch the credentials when needed
     onMount(fetchCredentials);
+
+
+    async function clear_backend() {
+        await fetch('http://localhost:5001/data/get', {method: "DELETE"});
+        await update_conversation(1, true);
+    }
 
 
 </script>
@@ -110,15 +121,17 @@
                 <form autocomplete="off" on:submit|preventDefault={handleSubmit}>
                     <Center>
                         <Group spacing="lg" direction="row">
+                            <Button type="button" on:click={clear_backend} variant='gradient' gradient={{from: 'teal', to: 'blue', deg: 45}} ripple>Ny Chat</Button>
                             <Input 
                                 name="prompt"
+                                bind:value={input}
                                 variant="filled"
                                 placeholder="T.ex 'Jag har feber och ont i huvudet, vad borde jag göra?'"
                                 radius="lg"
                                 size="l"
                                 style="width:20cm"
                             />
-                            <Button type="submit" color='teal' ripple>Skicka</Button>
+                            <Button type="submit" variant='gradient' gradient={{from: 'yellow', to: 'orange', deg: 45}} ripple>Skicka</Button>
                         </Group>
                     </Center>
                 </form>

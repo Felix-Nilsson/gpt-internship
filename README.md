@@ -15,9 +15,10 @@
 </p>
 
 
-Sahlgrenska AI Hjälp is a chatbot designed to assist medical staff and patients in finding medical information which for example are stored in journals or calendars.
+Sahlgrenska AI Hjälp is a set of chatbots designed to assist medical staff and patients in finding medical information which for example are stored in journals or calendars, or in administrative documents or even on the internet. They are all accessed through a single web interface.
 
-It was made in python using GPT-3.5 Turbo & Streamlit.
+The backend is made in python and flask, using GPT-3.5 Turbo and text-embedding-ada-002 from the OpenAI API.
+The Frontend is made with SvelteKit.
 
 This is one of three projects produced as part of AI Swedens "GPT Summer Internship" for the summer of 2023, and was a collaboration between AI Sweden and Sahlgrenska University Hospital in Gothenburg.
 
@@ -48,34 +49,52 @@ Sahlgrenska AI Hjälp is designed primarily with swedish in mind.
 Sahlgrenska AI Hjälp is designed with two users in mind:
 
 * Medical Staff: doctors, nurses
-* Non Medical Staff: patients, caretakers of patients
+* Patients, caretakers of patients
+* Anonymous Users
   
-Currently these come in the form of just doctors and patients, with the difference being that a patient has access to a single directory of documents, their own, whereas doctors can access a list of patients documents.
+Currently these come in the form of just doctors and patients, with the difference being that a patient has access to a single directory of documents, their own, whereas doctors can access a list of patients documents. In addition to this doctors can use a chatbot which has access administrative documents, like contact information and roles within different departments.
 
-Documents are of imaginary patients since in practice these are very sensitive and for legal reasons cannot "leave" the hospital.
-They were however made to be similar in structure to real documents, with guidance from data scientists working in the field.
+The anonymous users can access a single chatbot, designed to take general health questions and find information on selected websites using agents from LangChain.
 
-Upon prompting, Sahlgrenska AI Hjälp will check if the user is a doctor or patient, and depending on the query will pick suitable documents as background (using embeddings and similarity scoring) to produce a high quality answer. This is done via a web interface in the form of a simple chat.
+---
+
+Documents are of imaginary patients and doctors since in practice these are very sensitive and for legal reasons cannot "leave" the hospital.
+They were however made to be similar in structure to real documents, with guidance from professionals working in the field.
+
+
 
 ## 🚀 Getting Started
 
 ### Dependencies
 
 * You need to store your API key to OpenAI under the environment variable ```OPENAI_API_KEY```.
-* You need to have streamlit installed to run the web interface
-* Possibly need to install some miscellaneous libraries python libaries like ```pandas```, ```PyPDF2``` or ```SciPy```
+  
+* To run the web interface, you need to install ```npm``` and run the ```npm install``` command in the directory ```gpt-internship/svelte```.
+  
+* To run the server backend, you need to install ```flask``` as well as ```flask-cors``` and ```bcrypt```.
+
+* Possibly need to install some miscellaneous libraries python libaries like ```pandas```, ```PyPDF2``` or ```SciPy```.
 
 ### Executing program
 
-To run the web interface, first make sure that your terminal is positioned in the gpt-internship directory, for example by running:
-```
-cd some/path/gpt-internship
-```
-Next, run the following streamlit command:
-```
-streamlit run Project_assistant/streamlit_app.py
-```
-Please note that if you restart the interface, you need to close down your previous tab/tabs that were running it or this will produce some errors.
+(The order of running the front/backend should not matter)
+
+-> Open two terminals, one for the backend and one for the frontend
+
+To run the backend,
+- `cd gpt-internship/svelte`
+- `python server.py`
+
+
+To run the frontend,
+- `cd gpt-internship/svelte/my-app`
+- `npm install`
+- `npm run dev -- --open` (Run the Svelte app)
+
+    (`--open` opens the page in the browser automatically and can be ommitted.)
+
+Note:
+- The frontend should run on localhost:5000 and the backend on localhost:5001.
 
 
 ## 🧪 Testing

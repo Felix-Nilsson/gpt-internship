@@ -9,7 +9,6 @@
 
     let last_fetched = 1;
     let messages = [];
-    let m_count = 0;
 
     // Basically a constant loop that keeps checking if the conversation has been updated in the backend
 
@@ -17,11 +16,9 @@
     const timer = ms => new Promise(res => setTimeout(res,ms))
     
     // Should be called when a query is submitted, so that it will keep checking until a new response is accessed, it will then stop until called again
-    async function check_for_messages() {
+    async function check_for_messages(max_iterations=30, force=false) {
 
-        while(true) {
-            //Give the server some breathing room
-            await timer(1000);
+        for (let i = 0; i < max_iterations; i++) {
 
             console.log('checking for updated conversation')
 
@@ -34,15 +31,18 @@
             let new_time = data['time'];
             
             //Check if the conversation has been updated,
-            if (new_time > last_fetched){
+            if (new_time > last_fetched || force){
                 
-                last_fetched = (new_time + 1);
+                last_fetched = new_time;
 
                 let conversation = data['messages'];
                 messages = conversation;
 
                 break;
             }
+
+            //Give the server some breathing room
+            //await timer(1000);
         }
     }
 

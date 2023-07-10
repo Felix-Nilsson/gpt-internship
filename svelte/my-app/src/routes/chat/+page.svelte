@@ -17,7 +17,7 @@
         let data = new FormData(e.target);
 
         await fetch(DATA_URL, {
-            method: "POST",
+            method: "PUT",
             body: JSON.stringify({'prompt': data.get('prompt')}),
             headers: {"Content-type": "application/json; charset=UTF-8"}
         });
@@ -25,6 +25,11 @@
 		//Start looking for a response
 		await update_conversation();
 	}
+
+    async function clear_backend() {
+        await fetch('http://localhost:5001/data/get', {method: "DELETE"});
+    }
+
 
 </script>
 
@@ -84,6 +89,7 @@
                 <form autocomplete="off" on:submit|preventDefault={handleSubmit}>
                     <Center>
                         <Group spacing="lg" direction="row">
+                            <Button type="button" on:click={clear_backend} variant='gradient' gradient={{from: 'teal', to: 'blue', deg: 45}} ripple>Ny Chat</Button>
                             <Input 
                                 name="prompt"
                                 variant="filled"
@@ -92,7 +98,7 @@
                                 size="l"
                                 style="width:20cm"
                             />
-                            <Button type="submit" color='teal' ripple>Skicka</Button>
+                            <Button type="submit" variant='gradient' gradient={{from: 'yellow', to: 'orange', deg: 45}} ripple>Skicka</Button>
                         </Group>
                     </Center>
                 </form>

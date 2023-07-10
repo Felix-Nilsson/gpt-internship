@@ -17,9 +17,10 @@
     const timer = ms => new Promise(res => setTimeout(res,ms))
     
     // Should be called when a query is submitted, so that it will keep checking until a new response is accessed, it will then stop until called again
-    async function check_for_messages() {
+    async function check_for_messages(max_iterations=30) {
 
-        while(true) {
+        for (let i = 0; i < max_iterations; i++) {
+
             //Give the server some breathing room
             await timer(1000);
 

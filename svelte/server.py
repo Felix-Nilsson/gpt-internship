@@ -17,12 +17,15 @@ result = {'success': "False", 'username': "None"}
 def base():
     return "data transfer '/data'"
 
-@app.route("/data/get", methods=['GET'])
+@app.route("/data/get", methods=['GET', 'DELETE'])
 async def data():
+    global conversation
+    if request.method == 'DELETE':
+        conversation = {'time': 0, 'messages': []}
     return conversation
 
-#Svelte will go to /data?q='query', here (server.py) we take that query, get a chat response to it, and post the response to /data
-@app.route("/data", methods=['POST'])
+
+@app.route("/data", methods=['PUT'])
 async def post_response():
 
     #Get the prompt from the POST body

@@ -3,11 +3,15 @@
          Input , Button, Center, Burger, Navbar, Header, Stack, Divider} from '@svelteuidev/core';
     import Icon from '@iconify/svelte';
     import Conversation from "./Conversation.svelte";
+    import { onMount } from 'svelte';
 
     let opened = false;
 
+    let credentials = {};
     //Backend should be running on port 5001
     const DATA_URL = 'http://localhost:5001/data';
+
+    const CREDENTIALS_URL = 'http://localhost:5001/credentials/get'
 
     let update_conversation;
 
@@ -25,6 +29,28 @@
 		//Start looking for a response
 		await update_conversation();
 	}
+
+    // In your Svelte component
+
+    // Define a function to fetch the JSON data
+    async function fetchCredentials() {
+        try {
+            const response = await fetch(CREDENTIALS_URL);
+            
+            // Check if the response was successful
+            if (response.ok) {
+            credentials = await response.json();
+            } else {
+            console.error('Error:', response.status);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
+    // Call the function to fetch the credentials when needed
+    onMount(fetchCredentials);
+
 
 </script>
 
@@ -49,7 +75,7 @@
 <div class="burger-menu"> 
     <Stack override={{ height: 350 }}  align="center" spacing="xl">
         <Title order={2} variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}}>
-            Sven Svensson
+            {credentials.username}
         </Title>
         <Button href='/chat' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} radius="lg" size="xl" ripple>
             Internethjälp

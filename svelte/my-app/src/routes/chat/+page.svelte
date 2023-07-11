@@ -1,7 +1,5 @@
 <script>
-    import { Group, Title, Paper, ThemeIcon,
-         Input , Button, Center, Burger, Navbar, Header, Stack, Divider} from '@svelteuidev/core';
-    import Icon from '@iconify/svelte';
+    import { Group, Title, Input , Button, Center, Burger, Stack, Flex } from '@svelteuidev/core';
     import Conversation from "./Conversation.svelte";
     import { onMount } from 'svelte';
 
@@ -62,29 +60,23 @@
         await update_conversation(1, true);
     }
 
+    async function get_curr_conv() {
+        await update_conversation(1, true);
+    }
 
 </script>
 
 
-<!--Background for the header-->
-<div style="position:fixed; background:white; left:0px; right:0px; top:0px; height:80px"></div>
-
-<!--Clickable title in the header-->
-<Button href='/' color=transparent style="position:fixed;right:30px;top:20px;">
-    <Title 
-    order={1} 
-    variant='gradient' 
-    gradient={{from: 'blue', to: 'red', deg: 45}} 
-    style="font-size:40px; text-align:right; line-height:2">
-        Sahlgrenska AI Hjälp
-    </Title>
-</Button>
+<!--Conversation-->
+<div class="center-screen">
+    <Conversation bind:check_for_messages={update_conversation}></Conversation>
+</div>
 
 
 <!--Burger menu-->
 {#if opened}
 <div class="burger-menu"> 
-    <Stack override={{ height: 350 }}  align="center" spacing="xl">
+    <Stack align="center" spacing="xl">
         <Title order={2} variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}}>
             {credentials.username}
         </Title>
@@ -94,24 +86,13 @@
         <Button href='/' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} radius="lg" size="xl" ripple>
             Logga ut
         </Button>
+
+        <!-- TODO TODO TODO TODO      Probably remove this, as it is just for convenience when testing     -->
+        <div style="height:200px"></div>
+        <Button type="button" on:click={get_curr_conv} variant='subtle' color='cyan' size='xs' ripple>uppdatera</Button>
     </Stack>
 </div>
 {/if}
-
-
-<!--Burger button-->
-<div style="position:fixed; left:30px; top:20px">
-    <Burger color="blue"
-    {opened}
-    on:click={() => (opened = !opened)}
-    />
-</div>  
-
-
-<!--Conversation-->
-<div class="center-screen">
-    <Conversation bind:check_for_messages={update_conversation}></Conversation>
-</div>
 
 
 <!--Input area-->
@@ -140,6 +121,27 @@
 </div>
 
 
+<!--Background for the header-->
+<div style="position:fixed; background:white; left:0px; right:0px; top:0px; height:80px"></div>
+
+<!--Burger button in the header-->
+<div style="position:fixed; left:30px; top:20px">
+    <Burger color="blue"
+    {opened}
+    on:click={() => (opened = !opened)}
+    />
+</div>  
+
+<!--Clickable title in the header-->
+<Button href='/' color=transparent style="position:fixed;right:30px;top:20px;">
+    <Title 
+    order={1} 
+    variant='gradient' 
+    gradient={{from: 'blue', to: 'red', deg: 45}} 
+    style="font-size:40px; text-align:right; line-height:2">
+        Sahlgrenska AI Hjälp
+    </Title>
+</Button>
 
 
 
@@ -167,10 +169,11 @@
     /*background: rgb(34,193,195);*/
     /*background: linear-gradient(45deg, rgba(34,193,195,1) 0%, rgba(0,80,200,1) 50%, rgba(34,193,195,1) 100%);*/
     position: fixed; 
-    top: 100px; 
+    top: 80px; 
     left: 0;  
-    bottom: 100px;
+    bottom: 80px;
     width: 200px;
+    padding-top: 50px;
     }
 
 

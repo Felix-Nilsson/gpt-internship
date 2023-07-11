@@ -23,5 +23,5 @@ class Chatbot:
                                 max_iterations = 3, 
                                 early_stopping_method="generate")
 
-        #return agent.run(f"Svara alltid kort på svenska utan några länkar: '{query}'")
+        return agent.run(f"Svara på frågan på svenska: '{query}'")
         #return agent.run(query)

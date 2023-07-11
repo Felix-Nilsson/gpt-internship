@@ -105,12 +105,12 @@ def query_db(query: str):
 
     return ans
 
-def query_db(query: str, id: str):
+def query_db(query: str, id: str, n_results = 5):
     collection = get_collection()
     ans = collection.query(
         query_texts= query,
         where={"patient": id},
-        n_results=5
+        n_results=n_results
     )
 
     return ans

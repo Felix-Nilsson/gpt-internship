@@ -1,7 +1,9 @@
+import sys
 import os
 import openai
-from src.similarity import return_best_record
-import re
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+
+from db.chroma import query_db_doc
 
 class Chatbot:
     def __init__(self):
@@ -12,21 +14,12 @@ class Chatbot:
         self.memory = [{'role':'system', 'content': ""}]
 
 
-    def get_chat_response(self,query: str, remember=False, positive=False, model='gpt-3.5-turbo-0613'):
+    def get_chat_response(self,query: str, remember=True, positive=True, model='gpt-3.5-turbo-0613'):
         """Takes a query and a list of patients whose information the doctor can access, returns a response to the query"""
 
         #Get patient data related to the query
-        data = return_best_record(query)
-
-        tmp = ''
-        if positive:
-            for e in range(len(data[0])):
-                if data[2][e] > 0.77:
-                    tmp += data[0][e]
-                    tmp += data[1][e]
-                    tmp += "\n"
-                else:
-                    tmp += ''
+        data = query_db_doc(query,name="docs")
+        print(f"heheh {data}")
 
         #Context/System message to describe what the gpt is supposed to do
         context = f'''
@@ -37,7 +30,7 @@ class Chatbot:
         Använd bara informationen som är avgränsad med tre understreck.
         Om du inte hittar svaret i informationen svarar du att du inte har tillgång till informationen.
 
-        ___{tmp}___
+        ___{data}___
         '''
         
         

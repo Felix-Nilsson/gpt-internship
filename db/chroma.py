@@ -117,8 +117,8 @@ def make_db_docs():
                         )
 
 
-def query_db(query: str, n_results: int = 5):
-    collection = get_collection()
+def query_db_doc(query: str,  name: str, n_results: int = 2):
+    collection = get_collection(name)
     ans = collection.query(
         query_texts= query,
         n_results= n_results
@@ -126,8 +126,8 @@ def query_db(query: str, n_results: int = 5):
 
     return ans
 
-def query_db(query: str, id: str, n_results: int = 5 ):
-    collection = get_collection()
+def query_db(query: str, id: str, name:str, n_results: int = 5 ):
+    collection = get_collection(name)
     ans = collection.query(
         query_texts= query,
         where={"patient": id},

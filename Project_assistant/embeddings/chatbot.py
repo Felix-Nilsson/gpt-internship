@@ -1,8 +1,14 @@
+import sys
 import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
 import openai
-from embeddings.run_query import return_best_record
+#from Project_assistant.embeddings.run_query import return_best_record
 import json
 import re
+
+
+from db.chroma import query_db
+
 
 class Chatbot:
     def __init__(self,status):
@@ -48,8 +54,9 @@ class Chatbot:
         #Get patient data related to the query
         patient_data = ""
         if self.patient_ids != []:
-            patient_data = return_best_record(query, self.patient_ids[0])
-            patient_data = " ".join(patient_data[0])
+            patient_data = query_db(query,self.patient_ids[0])
+            #patient_data = return_best_record(query, self.patient_ids[0])
+            patient_data = " ".join(patient_data["documents"][0])
 
         #Context/System message to describe what the gpt is supposed to do
         context_doctor = f'''

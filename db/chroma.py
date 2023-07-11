@@ -96,11 +96,21 @@ def make_db():
       
         
 
-def query_db():
+def query_db(query: str):
     collection = get_collection()
     ans = collection.query(
-        query_texts= "Vilken patient har skolios?",
-        n_results=3
+        query_texts= query,
+        n_results=5
+    )
+
+    return ans
+
+def query_db(query: str, id: str):
+    collection = get_collection()
+    ans = collection.query(
+        query_texts= query,
+        where={"patient": id},
+        n_results=5
     )
 
     return ans
@@ -115,4 +125,5 @@ def num_tokens_from_string(string: str, encoding_name: str ="cl100k_base") -> in
 
 #make_db()
 #print(query_db())
-print(get_collection().peek())
+#print(get_collection().peek())
+#print(query_db("Vilken läkare har patient 123123?", "123123"))

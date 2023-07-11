@@ -22,6 +22,9 @@ async def data():
     global conversation
     if request.method == 'DELETE':
         conversation = {'time': 0, 'messages': []}
+        #New clean chatbot so it's memory is wiped
+        global chatbot
+        chatbot = Chatbot()
     return conversation
 
 

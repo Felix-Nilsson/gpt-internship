@@ -2,6 +2,7 @@ from langchain.agents import AgentType
 from langchain.llms import OpenAI 
 from langchain.chat_models import ChatOpenAI
 from langchain.agents import initialize_agent
+from langchain.chains.conversation.memory import ConversationBufferWindowMemory
 from tools import Tool1177, ToolFASS, ToolInternetmedicin
 
 import os
@@ -10,18 +11,52 @@ class Chatbot:
     def __init__(self):
         OpenAI.api_key = os.getenv("OPENAI_API_KEY")
 
+        self.llm = ChatOpenAI(temperature=0, model_name="gpt-3.5-turbo")
+
+        self.conversational_memory = ConversationBufferWindowMemory(
+            memory_key='chat_history',
+            k=5, #Remember 5 messages back
+            return_messages=True
+        )
+
     def get_chat_response(self, query):
 
-        llm = ChatOpenAI(temperature=0, model_name="gpt-3.5-turbo")
-
+        
         tools = [Tool1177(), ToolFASS(), ToolInternetmedicin()]
 
-        agent = initialize_agent(tools=tools, 
-                                llm=llm, 
-                                agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, 
-                                verbose=True, 
-                                max_iterations = 3, 
-                                early_stopping_method="generate")
+        agent = initialize_agent(
+            tools=tools, 
+            llm=self.llm, 
+            agent=AgentType.CHAT_CONVERSATIONAL_REACT_DESCRIPTION, 
+            verbose=True, 
+            max_iterations = 3, 
+            early_stopping_method="generate",
+            memory=self.conversational_memory
+        )
 
-        return agent.run(f"Svara på frågan på svenska: '{query}'")
-        #return agent.run(query)
+        #Update the context/system message
+        context = """Assistent är en 'large language model' skapad för att hjälpa läkare och patienter att hitta information.
+        
+        Assistent svarar alltid på svenska, oavsett vilket språk användaren använder.
+
+        Assistent är här för att hjälpa till och hittar aldrig på information utanför den som finns i de tillgängliga verktygen.
+
+        Assistent svarar alltid med svar som är formaterade enligt markdown.
+
+        Assistent avslutar alltid svaret med en paragraf 'För mer information kan du besöka:' med en punktlista av alla källor som använts för svaret.
+        """
+
+        new_prompt = agent.agent.create_prompt(
+            system_message=context,
+            tools=tools
+        )
+
+        agent.agent.llm_chain.prompt = new_prompt
+
+        output = agent(query)
+
+        response = output['output']
+
+        print("Chat history: " + str(output['chat_history']))
+
+        return response

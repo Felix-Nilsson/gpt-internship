@@ -4,7 +4,7 @@ import json
 data_dir = "Project3_intranet/data/records"
 
 def pdf_to_plaintext(filename):
-    file = f'{data_dir}/{filename}'
+    file = filename
 
     reader = PdfReader(file)
 

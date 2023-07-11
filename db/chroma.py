@@ -2,17 +2,20 @@ import chromadb
 from chromadb.config import Settings
 from chromadb.utils import embedding_functions
 
+from langchain.text_splitter import NLTKTextSplitter
+
 import sys
 import os
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-from Project_assistant.embeddings.fileparser import read_ics,read_json
+from Project_assistant.embeddings.fileparser import pdf_to_plaintext
 
 import tiktoken
 
 import json
 import re
+import nltk
 
-def get_collection():
+def get_collection(name:str):
     client = chromadb.Client(Settings(
         chroma_db_impl="duckdb+parquet",
         persist_directory="db/storage"
@@ -25,16 +28,16 @@ def get_collection():
                 )
     
     collection = client.get_or_create_collection(
-            name="patientrecords", 
+            name=name, 
             embedding_function=emb_fn,
             metadata={"hnsw:space": "cosine"}
         )
     return collection
 
 
-def make_db():
+def make_db_patients():
     
-    collection = get_collection()
+    collection = get_collection("patientrecords")
     
     dirs = [ f.path for f in os.scandir("patientrecords") if f.is_dir() ]
     dirs = [d.split("/")[1] for d in dirs]
@@ -47,7 +50,7 @@ def make_db():
 
             with open(file_path, 'r') as f:
                
-                if filetype == "patientdata.json":
+                if filetype == "patientdatprint(make_db_docs())a.json":
                     json_obj = json.load(f)
                     chunks = [json_obj[key] for key in json_obj.keys()] #splits json doc into chunks by keys, ~500 tokens
 
@@ -55,7 +58,14 @@ def make_db():
 
                         collection.add(
                             documents=[str(chunk)],
-                            metadatas=[{"patient":str(d), "type":"json", "chunk_size": num_tokens_from_string(str(chunk))}],
+                            metadatas=[
+                                {
+                                    "patient":str(d), 
+                                    "type":"json", 
+                                    "chunk_size": num_tokens_from_string(str(chunk)),
+                                    "chunk_index":i 
+                                }
+                            ],
                             ids=[f"{d}_{i}_json"]
                         )
                 
@@ -67,45 +77,56 @@ def make_db():
 
                         collection.add(
                             documents=[match],
-                            metadatas=[{"patient":str(d), "type":"ics", "chunk_size": num_tokens_from_string(match)}],
+                            metadatas=[
+                                {
+                                    "patient":str(d), 
+                                    "type":"ics",
+                                    "chunk_size": num_tokens_from_string(match), 
+                                    "chunk_index":i
+                                }
+                            ],
                             ids=[f"{d}_{i}_ics"]
                         )
-                    
-                    """tmp = True
-                    chunk = []
-                    for line in f:
-                        #print(line)
-                        if line == "BEGIN:VEVENT\n":
-                            tmp = True
-                            
-                        if line == "END:VEVENT\n":
-                            tmp = False
-
-                        if tmp:
-                            chunk.append(f.readline())
-                        
-                        if not tmp:
-                            chunks.append(chunk)
-                            chunk = []
-
-                        if chunk == []:
-                            continue"""
-                        
-                #print(chunks)
 
       
         
+def make_db_docs():
+    nltk.download("punkt")
+    collection = get_collection("docs")
+    
+    dirs = [ f.path for f in os.scandir("Project3_intranet/data/records") ]
 
-def query_db(query: str):
+    for d in dirs:
+        pdf = pdf_to_plaintext(d)
+        text_splitter = NLTKTextSplitter()
+        chunks = text_splitter.split_text(pdf)
+
+        for i, chunk in enumerate(chunks):
+                        formatted_filename = d.split("/")[-1]
+                        collection.add(
+                            documents=[str(chunk)],
+                            metadatas=[
+                                {
+                                    "doc":str(formatted_filename), 
+                                    "type":"txt", 
+                                    "chunk_size": num_tokens_from_string(str(chunk)),
+                                    "chunk_index":i 
+                                }
+                            ],
+                            ids=[f"{formatted_filename}_{i}"]
+                        )
+
+
+def query_db(query: str, n_results: int = 5):
     collection = get_collection()
     ans = collection.query(
         query_texts= query,
-        n_results=5
+        n_results= n_results
     )
 
     return ans
 
-def query_db(query: str, id: str, n_results = 5):
+def query_db(query: str, id: str, n_results: int = 5 ):
     collection = get_collection()
     ans = collection.query(
         query_texts= query,
@@ -123,7 +144,24 @@ def num_tokens_from_string(string: str, encoding_name: str ="cl100k_base") -> in
     return num_tokens
 
 
-#make_db()
-#print(query_db())
-#print(get_collection().peek())
-#print(query_db("Vilken läkare har patient 123123?", "123123"))
+#todo: if collection is huge this should be paralellized in e.g. pyspark
+def get_biggest_chunk():
+    collection = get_collection("docs")
+
+    ans = collection.get(
+        include=["metadatas"]
+    )
+    
+    ids = ans['ids']
+
+    max_size = 0
+    max_info = {}
+    for i in range(len(ids)):
+        if ans["metadatas"][i]["chunk_size"] > max_size:
+            max_size = ans["metadatas"][i]["chunk_size"]
+            max_info = ans["metadatas"][i]
+    
+    return max_size,max_info
+        
+    
+print(get_biggest_chunk())

@@ -50,10 +50,14 @@ def make_db_patients():
 
             with open(file_path, 'r') as f:
                
-                if filetype == "patientdatprint(make_db_docs())a.json":
+                if filetype == "patientdata.json":
                     json_obj = json.load(f)
-                    chunks = [json_obj[key] for key in json_obj.keys()] #splits json doc into chunks by keys, ~500 tokens
-
+                    chunks = [json_obj[key] for key in json_obj.keys() if key not in ["prescription", "journal"]] #splits json doc into chunks by keys, ~500 tokens
+                    if "prescription" in json_obj.keys():
+                        chunks += json_obj["prescription"]
+                    if "journal" in json_obj.keys():
+                        chunks += json_obj["journal"]
+                    
                     for i, chunk in enumerate(chunks):
 
                         collection.add(
@@ -145,8 +149,8 @@ def num_tokens_from_string(string: str, encoding_name: str ="cl100k_base") -> in
 
 
 #todo: if collection is huge this should be paralellized in e.g. pyspark
-def get_biggest_chunk():
-    collection = get_collection("docs")
+def get_biggest_chunk(name:str):
+    collection = get_collection(name)
 
     ans = collection.get(
         include=["metadatas"]
@@ -164,4 +168,5 @@ def get_biggest_chunk():
     return max_size,max_info
         
     
-print(get_biggest_chunk())
+print(get_biggest_chunk("patientrecords"))
+#print(query_db("Beskriv patient 112200s anamnes","112200","patientrecords"))

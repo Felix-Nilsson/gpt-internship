@@ -15,6 +15,8 @@ class Chatbot:
 
         self.conversational_memory = ConversationBufferWindowMemory(
             memory_key='chat_history',
+            input_key='input',
+            output_key='output',
             k=5, #Remember 5 messages back
             return_messages=True
         )
@@ -29,6 +31,7 @@ class Chatbot:
             llm=self.llm, 
             agent=AgentType.CHAT_CONVERSATIONAL_REACT_DESCRIPTION, 
             verbose=True, 
+            return_intermediate_steps=True,
             max_iterations = 3, 
             early_stopping_method="generate",
             memory=self.conversational_memory
@@ -57,6 +60,21 @@ class Chatbot:
 
         response = output['output']
 
-        print("Chat history: " + str(output['chat_history']))
+        # Use this one to show the explanation to the user, needs to be reformatted?
+        print(output['intermediate_steps'])
+        explanation = 'WIP'
+        #explanation = output['intermediate_steps'][0]
 
-        return response
+        #agent_action = explanation[0]
+        
+
+        #Do this for each explanation[1][i] to get all the sources for step 1
+        #print("\nchatbot.py LINK: " + str(explanation[1][0]['link']))
+        #print("\nchatbot.py TITLE: " + str(explanation[1][0]['title']))
+        #print("\nchatbot.py SNIPPET: " + str(explanation[1][0]['snippet']))
+        
+
+        # This one should only keep track of the 5 latest messages, but can be useful to check that it works
+        #history = output['chat_history']
+
+        return response, explanation

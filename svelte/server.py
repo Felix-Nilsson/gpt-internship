@@ -9,7 +9,7 @@ app = Flask(__name__)
 CORS(app)
 
 chatbot = Chatbot()
-conversation = {'time': 0, 'messages': []}
+conversation = {'time': 0, 'messages': [], 'explanations': []}
 result = {'success': "False", 'username': "None"}
 
 
@@ -21,8 +21,8 @@ def base():
 async def data():
     global conversation
     if request.method == 'DELETE':
-        conversation = {'time': 0, 'messages': []}
-        #New clean chatbot so it's memory is wiped
+        conversation = conversation = {'time': 0, 'messages': [], 'explanations': []}
+        #New clean chatbot so its memory is wiped
         global chatbot
         chatbot = Chatbot()
     return conversation
@@ -34,10 +34,11 @@ async def post_response():
     #Get the prompt from the POST body
     prompt = request.get_json()['prompt']
     #Get a response to the prompt
-    response = chatbot.get_chat_response(prompt)
+    response, explanation = chatbot.get_chat_response(prompt)
     #Update the conversation with the new messages and the time the update took place
     conversation['messages'].append(prompt)
     conversation['messages'].append(response)
+    conversation['explanations'].append(explanation)
     conversation['time'] = time.time()
     await data()
 

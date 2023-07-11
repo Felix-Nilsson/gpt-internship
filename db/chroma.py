@@ -34,7 +34,7 @@ def get_collection():
 
 def make_db():
     
-    #collection = get_collection()
+    collection = get_collection()
     
     dirs = [ f.path for f in os.scandir("patientrecords") if f.is_dir() ]
     dirs = [d.split("/")[1] for d in dirs]
@@ -50,11 +50,26 @@ def make_db():
                 if filetype == "patientdata.json":
                     json_obj = json.load(f)
                     chunks = [json_obj[key] for key in json_obj.keys()] #splits json doc into chunks by keys, ~500 tokens
+
+                    for i, chunk in enumerate(chunks):
+
+                        collection.add(
+                            documents=[str(chunk)],
+                            metadatas=[{"patient":str(d), "type":"json", "chunk_size": num_tokens_from_string(str(chunk))}],
+                            ids=[f"{d}_{i}_json"]
+                        )
                 
                 if filetype == "patientcalendar.ics":
                     pattern = r"BEGIN:VEVENT(.*?)END:VEVENT"
                     matches = re.findall(pattern, f.read(), re.DOTALL)
-                    print(matches,"\n")
+
+                    for chunk,i in enumerate(chunks):
+
+                        collection.add(
+                            documents=[chunk],
+                            metadatas=[{"patient":str(d), "type":"ics", "chunk_size": num_tokens_from_string(chunk)}],
+                            ids=[f"{d}_{i}_ics"]
+                        )
                     
                     """tmp = True
                     chunk = []
@@ -77,23 +92,9 @@ def make_db():
                             continue"""
                         
                 #print(chunks)
-                    
 
-
-        #json_obj = json.loads(str(json_str))
-
-    """   
-    collection.add(
-            documents=[ics],
-            metadatas=[{"patient":dir, "type":"ics"}],
-            ids=[f"{dir}_ics"]
-        )
-
-        collection.add(
-            documents=[json],
-            metadatas=[{"patient":dir, "type":"json"}],
-            ids=[f"{dir}_json"]
-        )"""
+      
+        
 
 def query_db():
     collection = get_collection()
@@ -112,4 +113,6 @@ def num_tokens_from_string(string: str, encoding_name: str ="cl100k_base") -> in
     return num_tokens
 
 
-make_db()
+#make_db()
+#print(query_db())
+print(get_collection().peek())

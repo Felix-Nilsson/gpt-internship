@@ -63,11 +63,11 @@ def make_db():
                     pattern = r"BEGIN:VEVENT(.*?)END:VEVENT"
                     matches = re.findall(pattern, f.read(), re.DOTALL)
 
-                    for chunk,i in enumerate(chunks):
+                    for i,match in enumerate(matches):
 
                         collection.add(
-                            documents=[chunk],
-                            metadatas=[{"patient":str(d), "type":"ics", "chunk_size": num_tokens_from_string(chunk)}],
+                            documents=[match],
+                            metadatas=[{"patient":str(d), "type":"ics", "chunk_size": num_tokens_from_string(match)}],
                             ids=[f"{d}_{i}_ics"]
                         )
                     

@@ -30,6 +30,7 @@ async def data():
 
 @app.route("/data", methods=['PUT'])
 async def post_response():
+    global conversation
 
     #Get the prompt from the POST body
     prompt = request.get_json()['prompt']

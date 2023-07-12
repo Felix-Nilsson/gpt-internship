@@ -62,8 +62,8 @@ class Chatbot:
 
         # Use this one to show the explanation to the user, needs to be reformatted?
         print(output['intermediate_steps'])
-        explanation = 'WIP'
-        #explanation = output['intermediate_steps'][0]
+        #explanation = 'WIP'
+        explanation = output['intermediate_steps'][0]
 
         #agent_action = explanation[0]
         

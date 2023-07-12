@@ -9,7 +9,6 @@
     onMount(() => {
         message = thisObj.textContent;
     })
-    console.log(message)
 
 </script>
 

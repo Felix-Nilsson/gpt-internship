@@ -1,5 +1,5 @@
 <script>
-    import { Stack, Flex, Box, Button, Text, Paper, Center } from '@svelteuidev/core';
+    import { Stack, Flex, Box, Button, Text, Paper, Overlay, Title, Space } from '@svelteuidev/core';
     import UserBubble from './UserBubble.svelte';
     import AIBubble from './AIBubble.svelte';
 
@@ -9,13 +9,10 @@
     let last_fetched = 1;
     let messages = [];
     let explanations = [];
+    let showModal = false;
 
-    // Basically a constant loop that keeps checking if the conversation has been updated in the backend
 
-    //timer to make the while loop go slower
-    const timer = ms => new Promise(res => setTimeout(res,ms))
-    
-    // Should be called when a query is submitted, so that it will keep checking until a new response is accessed, it will then stop until called again
+    //Get the conversation from the backend and update the frontend, force forces an overwrite of the current values even if the backend values are the same
     async function check_for_messages(max_iterations=30, force=false) {
 
         for (let i = 0; i < max_iterations; i++) {
@@ -39,30 +36,36 @@
                 messages = conversation;
 
                 let expl = data['explanations'];
-                explanations = expl;
+
+                for (let i = 0; i < expl.length; i++) {
+                    explanations[i] = {
+                        tool: expl[i][0]["tool"],
+                        tool_input: expl[i][0]["tool_input"],
+                        sources: expl[i][1]
+                    }
+                }
 
                 break;
             }
-
-            //Give the server some breathing room
-            //await timer(1000);
         }
     }
 
     export { check_for_messages };
 
-    let showModal = false;
+    //let curr_tool = ""
+    //let curr_input = ""
+    let curr_sources = []
 
-    const modalButtonPressed = (e) => {
-        console.log(showModal)
-        showModal = true
-        console.log(showModal)
-    }
+    async function modalButtonPressed(explanation_id) {
 
-    let explanation = "BLa bla bla blblablblbalba bl bl b abalba lbalbalb alb alba l balbal bal bal ba ba bal abl bal bal bal balbal babal lba lab baballbal balba balalbalba bal bal bla bal bal lba lba lba bal ba ballablba lba lba bl blba blba lba bal "
+        let id = explanation_id - 1;
+        id /= 2;
 
-    async function get_explanation() {
-        
+        //curr_tool =  explanations[id]["tool"]
+        //curr_input = explanations[id]["tool_input"]
+        curr_sources = explanations[id]["sources"]
+
+        showModal = true;
     }
 
 
@@ -82,7 +85,7 @@
                     <Flex justify="right">
                         <div style="width: 35vw; "></div>
                         <AIBubble>{message}</AIBubble>
-                        <Button on:click={modalButtonPressed} variant='subtle' radius="sm" size="xs" ripple> ? </Button>
+                        <Button on:click={() => modalButtonPressed(i)} variant='subtle' radius="sm" size="xs" ripple> ? </Button>
                     </Flex>
                 {/if}
             {/each}
@@ -90,18 +93,21 @@
     </Stack>
 </div>
 
+<!-- SOURCE MODAL -->
 {#if showModal}
-    <Box on:click={() => showModal = false} css={{
-        position: 'fixed',
-        backgroundColor: 'black',
-        opacity: 0.5,
-        top: 0,
-        left: 0,
-        width: '100vw',
-        height: '100vh',
-        zIndex: 1
-    }}/>
-    <Paper style="position:fixed; z-index: 1; width: 60vw; height: 60vh;" shadow="md" color="white">
-        {explanation}
+    <Box>
+        <Overlay on:click={() => (showModal = false)} opacity={0.5} color='black' zIndex=4/>
+    </Box>
+    <Paper style="position:fixed; top:10vh; width: 70vw; max-height: 80vh; z-index: 5; padding: 25px" shadow="md" color="white">
+        <Title><b>Källor:</b> </Title>
+        <Space h="xl"/>
+        <Stack spacing="xs">
+            {#each curr_sources as source}
+                <Text><b>{source["title"]}</b> (<a href={source["link"]}>Länk: {source["link"]}</a>)</Text>
+                <Text>Utdrag: {source["snippet"]}</Text>
+                <Space h="sm"/>
+            {/each}
+        </Stack>
+        
     </Paper>
 {/if}

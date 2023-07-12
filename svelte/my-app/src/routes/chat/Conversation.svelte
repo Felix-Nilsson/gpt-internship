@@ -112,13 +112,13 @@
     <Box>
         <Overlay on:click={() => (showModal = false)} opacity={0.5} color='black' zIndex=4/>
     </Box>
-    <Paper style="position:fixed; top:10vh; width: 70vw; max-height: 80vh; z-index: 5; padding: 25px" shadow="md" color="white">
+    <Paper style="position:fixed; top:10vh; left:15vw; width: 70vw; max-height: 80vh; z-index: 5; padding: 25px" shadow="md" color="white">
         <Title><b>Källor:</b> </Title>
         <Space h="xl"/>
         <Stack spacing="xs">
             {#each curr_sources as source}
                 <Text><b>{source["title"]}</b> (<a href={source["link"]} target="_blank" rel="noopener noreferrer">Länk: {source["link"]}</a>)</Text>
-                <Text>Utdrag: {source["snippet"]}</Text>
+                <Text>Utdrag: "{source["snippet"]}"</Text>
                 <Space h="sm"/>
             {/each}
         </Stack>

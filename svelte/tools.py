@@ -1,4 +1,5 @@
 from langchain.tools import BaseTool
+from duckduckgo_search import DDGS
 
 class Tool1177(BaseTool):
     name = "1177.se"
@@ -49,7 +50,6 @@ def _ddg_search(search_query: str, num_results=5) -> list[dict[str, str]]:
             title - The title of the result.
             link - The link to the result.
     """
-    from duckduckgo_search import DDGS
 
     with DDGS() as ddgs:
         results = ddgs.text(

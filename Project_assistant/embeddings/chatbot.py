@@ -54,7 +54,7 @@ class Chatbot:
         #Get patient data related to the query
         patient_data = ""
         if self.patient_ids != []:
-            patient_data = query_db(query,self.patient_ids[0],name="patientrecords")
+            patient_data = query_db(query=query,id=self.patient_ids[0],name="patientrecords")
             #patient_data = return_best_record(query, self.patient_ids[0])
             patient_data = " ".join(patient_data["documents"][0])
 

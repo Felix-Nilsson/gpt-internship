@@ -168,5 +168,3 @@ def get_biggest_chunk(name:str):
     return max_size,max_info
         
     
-print(get_biggest_chunk("patientrecords"))
-#print(query_db("Beskriv patient 112200s anamnes","112200","patientrecords"))

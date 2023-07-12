@@ -69,7 +69,7 @@ They were however made to be similar in structure to real documents, with guidan
 
 * You need to store your API key to OpenAI under the environment variable ```OPENAI_API_KEY```.
   
-* To run the web interface, you need to install ```npm``` and run the ```npm install``` command in the directory ```gpt-internship/svelte```.
+* To run the web interface, you need to install ```npm``` and run the ```npm install``` command in the directory ```gpt-internship/svelte/my-app```.
   
 * To run the server backend, you need to install ```flask``` as well as ```flask-cors``` and ```bcrypt```.
 

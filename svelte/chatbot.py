@@ -43,6 +43,8 @@ class Chatbot:
         Assistent svarar alltid på svenska, oavsett vilket språk användaren använder.
 
         Assistent är här för att hjälpa till och hittar aldrig på information utanför den som finns i de tillgängliga verktygen.
+
+        Assistent använder alltid minst ett av de verktyg som finns tillgängligt, ifall Assistent inte kan svara på frågan utifrån informationen från verktygen svarar Assistent att den endast kan svara på medicinska frågor.
         """
 
         new_prompt = agent.agent.create_prompt(
@@ -58,8 +60,9 @@ class Chatbot:
 
         # Use this one to show the explanation to the user, needs to be reformatted?
         print(output['intermediate_steps'])
-        #explanation = 'WIP'
-        explanation = output['intermediate_steps'][0]
+        explanation = '!!Error - inga källor använda, borde aldrig hända.'
+        if len(output['intermediate_steps']) != 0:
+            explanation = output['intermediate_steps'][0]
 
         #agent_action = explanation[0]
         

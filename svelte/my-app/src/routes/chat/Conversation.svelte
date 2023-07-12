@@ -71,9 +71,9 @@
         let id = explanation_id - 1;
         id /= 2;
 
-        //curr_tool =  explanations[id]["tool"]
-        //curr_input = explanations[id]["tool_input"]
-        curr_sources = explanations[id]["sources"]
+        //curr_tool =  explanations[id]["tool"];
+        //curr_input = explanations[id]["tool_input"];
+        curr_sources = explanations[id]["sources"];
 
         showModal = true;
     }
@@ -116,11 +116,15 @@
         <Title><b>Källor:</b> </Title>
         <Space h="xl"/>
         <Stack spacing="xs">
-            {#each curr_sources as source}
-                <Text><b>{source["title"]}</b> (<a href={source["link"]} target="_blank" rel="noopener noreferrer">Länk: {source["link"]}</a>)</Text>
-                <Text>Utdrag: "{source["snippet"]}"</Text>
-                <Space h="sm"/>
-            {/each}
+            {#if curr_sources != "!"}
+                {#each curr_sources as source}
+                    <Text><b>{source["title"]}</b> (<a href={source["link"]} target="_blank" rel="noopener noreferrer">Länk: {source["link"]}</a>)</Text>
+                    <Text>Utdrag: "{source["snippet"]}"</Text>
+                    <Space h="sm"/>
+                {/each}
+            {:else}
+                <Text>ChatGPT använde sin träning, svaret kan innehålla felaktig information.</Text>
+            {/if}
         </Stack>
         
     </Paper>

@@ -36,6 +36,7 @@ Sahlgrenska AI Hjälp is designed primarily with swedish in mind.
 - [📋 Description](#-description)
 - [🚀 Getting Started](#-getting-started)
   - [Dependencies](#dependencies)
+  - [Initializing the Database](#initializing-the-database)
   - [Executing program](#executing-program)
 - [🧪 Testing](#-testing)
 - [✍️ Authors](#️-authors)
@@ -75,6 +76,14 @@ They were however made to be similar in structure to real documents, with guidan
 
 * Possibly need to install some miscellaneous libraries python libaries like ```pandas```, ```PyPDF2``` or ```SciPy```.
 
+### Initializing the Database
+The project uses a vector database from [Chroma](https://docs.trychroma.com/) for efficient document retrieval. If you are running the project for the first time you need to initialize it and can do so with the following command from the ```gpt-internship``` directory.
+
+```
+python -c "from db.chroma import make_db_complete as d; d()"
+```
+
+(Since the database is persistent, this only needs to be done once or if the documents are updated)
 ### Executing program
 
 (The order of running the front/backend should not matter)

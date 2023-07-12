@@ -15,6 +15,8 @@ import json
 import re
 import nltk
 
+from print_color import print as printc
+
 def get_collection(name:str):
     client = chromadb.Client(Settings(
         chroma_db_impl="duckdb+parquet",
@@ -36,14 +38,16 @@ def get_collection(name:str):
 
 
 def make_db_patients():
+    print("--- Making new Collection: 'patientrecords' ---")
     
     collection = get_collection("patientrecords")
     
     dirs = [ f.path for f in os.scandir("patientrecords") if f.is_dir() ]
     dirs = [d.split("/")[1] for d in dirs]
 
-    for d in dirs:
-        print("making patientrecords:",d)
+    n = len(dirs)
+    for j, d in enumerate(dirs):
+        print(f"[{j+1}/{n}] 'patientrecords': {d} processing ...", end="\r")
         for filetype in ["patientdata.json","patientcalendar.ics"]:
             file_path = f"patientrecords/{d}/{filetype}"
 
@@ -92,17 +96,22 @@ def make_db_patients():
                             ],
                             ids=[f"{d}_{i}_ics"]
                         )
+        printc(f"[{j+1}/{n}] 'patientrecords': {d} Done!              ", color="green")
+    print("--- Collection Complete!: 'patientrecords' ---")
 
       
         
 def make_db_docs():
-    nltk.download("punkt")
+    nltk.download("punkt") ## this should be inactive if punkt has been downloaded
+
+    print("--- Making new Collection: 'patientrecords' ---")
     collection = get_collection("docs")
     
     dirs = [ f.path for f in os.scandir("Project3_intranet/data/records") ]
-
-    for d in dirs:
-        print("making docs:",d)
+    n = len(dirs)
+    
+    for j,d in enumerate(dirs):
+        print(f"[{j+1}/{n}] 'patientrecords': {d} processing ...", end="\r")
         pdf = pdf_to_plaintext(d)
         text_splitter = NLTKTextSplitter()
         chunks = text_splitter.split_text(pdf)
@@ -121,6 +130,8 @@ def make_db_docs():
                             ],
                             ids=[f"{formatted_filename}_{i}"]
                         )
+        printc(f"[{j+1}/{n}] 'patientrecords': {d} Done!                ", color="green")
+    print("--- Collection Complete!: 'docs' ---")
 
 
 def query_db_doc(query: str,  name: str, n_results: int = 2):
@@ -168,4 +179,9 @@ def get_biggest_chunk(name:str):
             max_info = ans["metadatas"][i]
     
     return max_size,max_info
-        
+
+def make_db_complete():
+    print("=== Making Complete Database ===")
+    make_db_patients()
+    make_db_docs()
+    print("=== Database Complete! ===")

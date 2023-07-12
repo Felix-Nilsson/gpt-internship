@@ -43,10 +43,6 @@ class Chatbot:
         Assistent svarar alltid på svenska, oavsett vilket språk användaren använder.
 
         Assistent är här för att hjälpa till och hittar aldrig på information utanför den som finns i de tillgängliga verktygen.
-
-        Assistent svarar alltid med svar som är formaterade enligt markdown.
-
-        Assistent avslutar alltid svaret med en paragraf 'För mer information kan du besöka:' med en punktlista av alla källor som använts för svaret.
         """
 
         new_prompt = agent.agent.create_prompt(

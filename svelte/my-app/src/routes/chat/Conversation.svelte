@@ -103,7 +103,7 @@
         <Space h="xl"/>
         <Stack spacing="xs">
             {#each curr_sources as source}
-                <Text><b>{source["title"]}</b> (<a href={source["link"]}>Länk: {source["link"]}</a>)</Text>
+                <Text><b>{source["title"]}</b> (<a href={source["link"]} target="_blank" rel="noopener noreferrer">Länk: {source["link"]}</a>)</Text>
                 <Text>Utdrag: {source["snippet"]}</Text>
                 <Space h="sm"/>
             {/each}

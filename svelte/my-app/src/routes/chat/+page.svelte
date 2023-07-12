@@ -68,9 +68,8 @@
 
 
 <!--Conversation-->
-<div class="center-screen">
-    <Conversation bind:check_for_messages={update_conversation}></Conversation>
-</div>
+<Conversation bind:check_for_messages={update_conversation}></Conversation>
+
 
 
 <!--Burger menu-->
@@ -149,8 +148,6 @@
     .center-screen {
     display: flex;
     justify-content: center;
-    align-items: center;
-    text-align: center;
     min-height: 100vh;
     }
 

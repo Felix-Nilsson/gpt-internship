@@ -2,6 +2,7 @@
     import { Stack, Flex, Box, Button, Text, Paper, Overlay, Title, Space } from '@svelteuidev/core';
     import UserBubble from './UserBubble.svelte';
     import AIBubble from './AIBubble.svelte';
+    import { onMount, tick } from 'svelte';
 
 
     const DATA_URL = 'http://localhost:5001/data/get'
@@ -10,6 +11,13 @@
     let messages = [];
     let explanations = [];
     let showModal = false;
+    let element;
+
+    onMount(() => scrollToBottom(element))
+
+    const scrollToBottom = async (node) => {
+        node.scroll({ top: node.scrollHeight, behavior: 'smooth' })
+    }
 
 
     //Get the conversation from the backend and update the frontend, force forces an overwrite of the current values even if the backend values are the same
@@ -34,6 +42,8 @@
 
                 let conversation = data['messages'];
                 messages = conversation;
+                await tick();
+                scrollToBottom(element);
 
                 let expl = data['explanations'];
 
@@ -72,25 +82,29 @@
 </script>
 
 
-<div style="padding-top: 100px; padding-bottom: 100px; width: 70vw;">
-    <Stack spacing="lg">
-        {#if messages.length != 0}
-            {#each messages as message, i}
-                {#if (i % 2 == 0)}
-                    <Flex justify="left">
-                        <UserBubble>{message}</UserBubble>
-                        <div style="width: 35vw; "></div>
-                    </Flex>
-                {:else}
-                    <Flex justify="right">
-                        <div style="width: 35vw; "></div>
-                        <AIBubble>{message}</AIBubble>
-                        <Button on:click={() => modalButtonPressed(i)} variant='subtle' radius="sm" size="xs" ripple> ? </Button>
-                    </Flex>
-                {/if}
-            {/each}
-        {/if}
-    </Stack>
+<div bind:this={element} style="position:absolute; left: 0px; right: 0px; top: 0px; bottom: 0px; overflow:auto">
+    <div style="position:relative; left: 15vw; width: 70vw;">
+        <Space h={100}/>
+        <Stack spacing="lg">
+            {#if messages.length != 0}
+                {#each messages as message, i}
+                    {#if (i % 2 == 0)}
+                        <Flex justify="left">
+                            <UserBubble>{message}</UserBubble>
+                            <div style="width: 35vw; "></div>
+                        </Flex>
+                    {:else}
+                        <Flex justify="right">
+                            <div style="width: 35vw; "></div>
+                            <AIBubble>{message}</AIBubble>
+                            <Button on:click={() => modalButtonPressed(i)} variant='subtle' radius="sm" size="xs" ripple> ? </Button>
+                        </Flex>
+                    {/if}
+                {/each}
+            {/if}
+        </Stack>
+        <Space h={100}/>
+    </div>
 </div>
 
 <!-- SOURCE MODAL -->

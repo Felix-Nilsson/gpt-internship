@@ -19,7 +19,6 @@ class Chatbot:
 
         #Get patient data related to the query
         data = query_db_doc(query=query,name="docs")
-        print(f"heheh {data}")
 
         #Context/System message to describe what the gpt is supposed to do
         context = f'''

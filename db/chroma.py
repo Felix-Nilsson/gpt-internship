@@ -7,7 +7,7 @@ from langchain.text_splitter import NLTKTextSplitter
 import sys
 import os
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-from Project_assistant.embeddings.fileparser import pdf_to_plaintext
+from utils.fileparser import pdf_to_plaintext
 
 import tiktoken
 
@@ -43,6 +43,7 @@ def make_db_patients():
     dirs = [d.split("/")[1] for d in dirs]
 
     for d in dirs:
+        print("making patientrecords:",d)
         for filetype in ["patientdata.json","patientcalendar.ics"]:
             file_path = f"patientrecords/{d}/{filetype}"
 
@@ -101,6 +102,7 @@ def make_db_docs():
     dirs = [ f.path for f in os.scandir("Project3_intranet/data/records") ]
 
     for d in dirs:
+        print("making docs:",d)
         pdf = pdf_to_plaintext(d)
         text_splitter = NLTKTextSplitter()
         chunks = text_splitter.split_text(pdf)
@@ -167,4 +169,3 @@ def get_biggest_chunk(name:str):
     
     return max_size,max_info
         
-    

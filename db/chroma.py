@@ -104,14 +104,14 @@ def make_db_patients():
 def make_db_docs():
     nltk.download("punkt") ## this should be inactive if punkt has been downloaded
 
-    print("--- Making new Collection: 'patientrecords' ---")
+    print("--- Making new Collection: 'docs' ---")
     collection = get_collection("docs")
     
     dirs = [ f.path for f in os.scandir("Project3_intranet/data/records") ]
     n = len(dirs)
     
     for j,d in enumerate(dirs):
-        print(f"[{j+1}/{n}] 'patientrecords': {d} processing ...", end="\r")
+        print(f"[{j+1}/{n}] 'docs': {d} processing ...", end="\r")
         pdf = pdf_to_plaintext(d)
         text_splitter = NLTKTextSplitter()
         chunks = text_splitter.split_text(pdf)
@@ -130,7 +130,7 @@ def make_db_docs():
                             ],
                             ids=[f"{formatted_filename}_{i}"]
                         )
-        printc(f"[{j+1}/{n}] 'patientrecords': {d} Done!                ", color="green")
+        printc(f"[{j+1}/{n}] 'docs': {d} Done!                ", color="green")
     print("--- Collection Complete!: 'docs' ---")
 
 

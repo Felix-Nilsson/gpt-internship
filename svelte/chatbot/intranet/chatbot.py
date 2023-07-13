@@ -1,10 +1,9 @@
 import sys
 import os
 import openai
-sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))))
 
-from db.chroma import query_db_doc, query_db
-#from ...db.chroma
+from db.chroma import query_db_doc
 
 class Chatbot:
     def __init__(self):

@@ -60,7 +60,7 @@ class Chatbot:
         response = output['output']
 
         # Use this one to show the explanation to the user, needs to be reformatted?
-        print(output['intermediate_steps'])
+        #print(output['intermediate_steps'])
         explanation = '!!Error - inga källor använda, borde aldrig hända.'
         if len(output['intermediate_steps']) != 0:
             explanation = output['intermediate_steps'][0]

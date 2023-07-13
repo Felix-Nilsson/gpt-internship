@@ -3,13 +3,12 @@ from flask_cors import CORS
 import time
 import json
 import bcrypt
+import yaml
+from yaml.loader import SafeLoader
 
-from internet.chatbot import Chatbot as InternetCB
-from intranet.chatbot import Chatbot as IntranetCB
-
-#TODO REPLACE WITH ACTUAL IMPORTS
-from internet.chatbot import Chatbot as PatientCB
-from internet.chatbot import Chatbot as DoctorCB
+from chatbot.assistent.chatbot import Chatbot as AssistentCB
+from chatbot.internet.chatbot import Chatbot as InternetCB
+from chatbot.intranet.chatbot import Chatbot as IntranetCB
 
 app = Flask(__name__)
 CORS(app)
@@ -29,9 +28,9 @@ def base():
 def _new_chatbot(chat_type):
     global chatbot
     if chat_type == "patient":
-        chatbot = PatientCB()
+        chatbot = AssistentCB("patient")
     elif chat_type == "doctor":
-        chatbot = DoctorCB()
+        chatbot = AssistentCB("doctor")
     elif chat_type == "intranet":
         chatbot = IntranetCB()
     else:
@@ -39,15 +38,16 @@ def _new_chatbot(chat_type):
 
 
 # SET/GET THE CHAT TYPE
-@app.route("/chat-type", methods=['GET', 'PUT'])
+@app.route("/chat-type", methods=['PUT'])
 async def get_set_chat_type():
     global chat_type
     global chatbot
+    global conversation
 
-    if request.method == 'PUT':
-        print(request.get_json()['type'])
-        chat_type = request.get_json()['type']
+    chat_type = request.get_json()['type']
     
+    #reset the chat
+    conversation = {'time': 0, 'messages': [], 'explanations': []}
     _new_chatbot(chat_type)
 
     return chat_type
@@ -63,7 +63,19 @@ async def chat():
         #Get the prompt from the PUT body
         prompt = request.get_json()['prompt']
         #Get a response to the prompt
-        response, explanation = chatbot.get_chat_response(prompt)
+        if chat_type == 'patient':
+            response = chatbot.get_chat_response(prompt, [result['username'][1:]])
+            explanation = "All info kommer från dina egna dokument"
+        elif chat_type == 'doctor':
+            with open('../patientrecords/config_joined.yaml', 'r') as file:
+                config = yaml.load(file, Loader=SafeLoader)
+            
+            patients = config['credentials']['usernames'][result['username']]['patients']
+
+            response = chatbot.get_chat_response(prompt, patients)
+            explanation = "All info kommer från dina egna dokument"
+        else:
+            response, explanation = chatbot.get_chat_response(prompt)
         #Update the conversation with the new messages and the time the update took place
         conversation['messages'].append(prompt)
         conversation['messages'].append(response)
@@ -117,4 +129,4 @@ async def set_creds():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, use_reloader=True, port=5001)
+    app.run(debug=True, use_reloader=False, port=5001)

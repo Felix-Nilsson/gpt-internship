@@ -19,11 +19,6 @@ class Chatbot:
 
         #Get patient data related to the query
         data = query_db_doc(query=query, name="docs")
-<<<<<<< HEAD:svelte/intranet/chatbot.py
-
-        print(data)
-=======
->>>>>>> 1ebea2f9d42f55fa9bcc3fa2000d39028adc1c86:svelte/chatbot/intranet/chatbot.py
 
         #Context/System message to describe what the gpt is supposed to do
         context = f'''

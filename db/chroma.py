@@ -44,7 +44,7 @@ def make_db_patients():
     collection = get_collection("patientrecords")
     
     dirs = [ f.path for f in os.scandir("patientrecords") if f.is_dir() ]
-    dirs = [d.split("/")[1] for d in dirs]
+    dirs = [d.replace("\\", "/").split("/")[1] for d in dirs]
 
     n = len(dirs)
     for j, d in enumerate(dirs):

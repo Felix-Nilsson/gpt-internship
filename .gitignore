@@ -3,3 +3,4 @@ apikey.txt
 svelte/client/node_modules/
 try-svelte-again/my-app/node_modules/
 db/storage
+*.parquet

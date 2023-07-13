@@ -109,6 +109,8 @@ def make_db_docs():
     collection = get_collection("docs")
     
     dirs = [ f.path for f in os.scandir("Project3_intranet/data/records") ]
+    dirs = [d.replace("\\", "/") for d in dirs]
+
     n = len(dirs)
     
     for j,d in enumerate(dirs):
@@ -192,3 +194,10 @@ def make_db_complete():
 
 
     print(f"=== Database Complete - Size: ~{round(s/10**6,2)} MB ===")
+
+#make_db_docs()
+
+#make_db_patients()
+
+#print(get_collection("docs").peek())
+#print(get_collection("patientrecords").peek())

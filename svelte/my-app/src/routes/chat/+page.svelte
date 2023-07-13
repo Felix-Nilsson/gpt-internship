@@ -8,7 +8,7 @@
 
     let credentials = {};
     //Backend should be running on port 5001
-    const DATA_URL = 'http://localhost:5001/data';
+    const DATA_URL = 'http://localhost:5001/chat';
 
     const CREDENTIALS_URL = 'http://localhost:5001/credentials/get'
 
@@ -56,7 +56,7 @@
 
 
     async function clear_backend() {
-        await fetch('http://localhost:5001/data/get', {method: "DELETE"});
+        await fetch(DATA_URL, {method: "DELETE"});
         await update_conversation(1, true);
     }
 

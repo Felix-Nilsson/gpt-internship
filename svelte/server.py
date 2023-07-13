@@ -12,8 +12,7 @@ CORS(app)
 
 chat_type = "internet"
 
-internet_bot = InternetCB()
-intranet_bot = IntranetCB()
+chatbot = InternetCB()
 
 conversation = {'time': 0, 'messages': [], 'explanations': []}
 result = {'success': "False", 'username': "None"}
@@ -28,76 +27,50 @@ def base():
 @app.route("/chat-type", methods=['PUT', 'GET'])
 async def chat_type():
     global chat_type
+    global chatbot
 
     if request.method == 'PUT':
         print(request.get_json()['type'])
         chat_type = request.get_json()['type']
     
+    if chat_type == "patient":
+        #chatbot = pa
+        pass
+    elif chat_type == "doctro":
+        pass
+    elif chat_type == "intranet":
+        chatbot = IntranetCB()
+    else:
+        chatbot = InternetCB()
+
     return chat_type
-        
 
 
 
-# INTERNET CHATBOT
-@app.route("/internet/get", methods=['GET', 'DELETE'])
-async def data():
+@app.route("/chat", methods=['GET', 'PUT', 'DELETE'])
+async def chat():
     global conversation
-    if request.method == 'DELETE':
-        conversation = conversation = {'time': 0, 'messages': [], 'explanations': []}
+    
+    if request.method == 'PUT':
+        #Get the prompt from the PUT body
+        prompt = request.get_json()['prompt']
+        #Get a response to the prompt
+        response, explanation = chatbot.get_chat_response(prompt)
+        #Update the conversation with the new messages and the time the update took place
+        conversation['messages'].append(prompt)
+        conversation['messages'].append(response)
+        conversation['explanations'].append(explanation)
+        conversation['time'] = time.time()
+        
+    elif request.method == 'DELETE':
+        conversation = {'time': 0, 'messages': [], 'explanations': []}
         #New clean chatbot so its memory is wiped
         global internet_bot
         internet_bot = InternetCB()
+    
     return conversation
 
 
-@app.route("/internet", methods=['PUT'])
-async def post_response():
-    global conversation
-
-    #Get the prompt from the PUT body
-    prompt = request.get_json()['prompt']
-    #Get a response to the prompt
-    response, explanation = internet_bot.get_chat_response(prompt)
-    #Update the conversation with the new messages and the time the update took place
-    conversation['messages'].append(prompt)
-    conversation['messages'].append(response)
-    conversation['explanations'].append(explanation)
-    conversation['time'] = time.time()
-    await data()
-
-    return 'OK'
-
-
-
-#INTRANET CHATBOT
-@app.route("/intranet/get", methods=['GET', 'DELETE'])
-async def intranet_data():
-    global conversation
-    if request.method == 'DELETE':
-        conversation = conversation = {'time': 0, 'messages': [], 'explanations': []}
-        #New clean chatbot so its memory is wiped
-        global intranet_bot
-        intranet_bot = InternetCB()
-    return conversation
-
-
-
-@app.route("/intranet", methods=["PUT"])
-async def put_intranet():
-    global conversation
-
-    #Get the prompt from the PUT body
-    prompt = request.get_json()['prompt']
-    #Get a response to the prompt
-    response = intranet_bot.get_chat_response(prompt)
-    #Update the conversation with the new messages and the time the update took place
-    conversation['messages'].append(prompt)
-    conversation['messages'].append(response)
-    conversation['explanations'].append(response.split("(")[1])
-    conversation['time'] = time.time()
-    await intranet_data()
-
-    return 'OK'
 
 
 @app.route("/credentials/get", methods=['GET'])
@@ -136,18 +109,5 @@ async def set_creds():
     return "ok"
 
 
-
-
-# Path for all the static files (compiled JS/CSS, etc.)
-#@app.route("/<path:path>")
-#def home(path):
-#    return send_from_directory('client/public', path)
-
-
-#@app.route("/rand")
-#def hello():
-#    return str(random.randint(0, 100))
-
-
 if __name__ == "__main__":
-    app.run(debug=True, use_reloader=False, port=5001)
+    app.run(debug=True, use_reloader=True, port=5001)

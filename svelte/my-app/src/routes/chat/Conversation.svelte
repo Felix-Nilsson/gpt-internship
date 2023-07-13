@@ -5,7 +5,7 @@
     import { onMount, tick } from 'svelte';
 
 
-    const DATA_URL = 'http://localhost:5001/data/get'
+    const DATA_URL = 'http://localhost:5001/chat'
 
     let last_fetched = 1;
     let messages = [];

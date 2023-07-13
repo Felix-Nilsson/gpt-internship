@@ -80,9 +80,11 @@ They were however made to be similar in structure to real documents, with guidan
 The project uses a vector database from [Chroma](https://docs.trychroma.com/) for efficient document retrieval. If you are running the project for the first time you need to initialize it and can do so with the following command from the ```gpt-internship``` directory.
 
 ```
-python -c "from db.chroma import make_db_complete as d; d()"
+python3 -c "from db.chroma import make_db_docs as d; d()"; 
+python3 -c "from db.chroma import make_db_patients as d; d()";
+python3 -c "from db.chroma import print_db_summary as d; d()"
 ```
-
+If the commands executed correctly, the summary should state that the database is ~3 MB
 (Since the database is persistent, this only needs to be done once or if the documents are updated)
 ### Executing program
 

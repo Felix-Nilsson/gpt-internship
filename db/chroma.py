@@ -198,6 +198,7 @@ def make_db_complete():
 
 
 def print_db_summary():
+    print("Database summary:")
     for name in ["docs","patientrecords"]:
         collection = get_collection(name)
 
@@ -207,11 +208,9 @@ def print_db_summary():
 
         n = len(ans["ids"])
         m = get_biggest_chunk(name)
-        print(f"{name}:\n\tchunks: {n} \n\tbiggest chunk: {m}\n")
+        print(f"\t{name}:\n\tchunks: {n} \n\tbiggest chunk: {m}\n")
     root_directory = Path('db/storage')
     s = sum(f.stat().st_size for f in root_directory.glob('**/*') if f.is_file())
     print(f"Size: ~{round(s/10**6,2)} MB")
 
-    
-
-print_db_summary()
+#if we add anything here, database may break, please only functions :-)

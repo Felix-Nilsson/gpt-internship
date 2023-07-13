@@ -21,8 +21,6 @@ class Chatbot:
         #Get patient data related to the query
         data = query_db_doc(query=query, name="docs")
 
-        #print("intranet chatbot.py  ", data)
-
         #Context/System message to describe what the gpt is supposed to do
         context = f'''
         Du är en AI-assistent som ska svara på frågor.

@@ -21,7 +21,7 @@ from print_color import print as printc
 def get_collection(name:str):
     client = chromadb.Client(Settings(
         chroma_db_impl="duckdb+parquet",
-        persist_directory="db/storage"
+        persist_directory=f"""{os.path.dirname(os.path.dirname(__file__))}/db/storage""".replace('\\', '/')
     ))
 
     openai_api_key = os.getenv("OPENAI_API_KEY")

@@ -183,19 +183,6 @@ def get_biggest_chunk(name:str):
     
     return max_size,max_info
 
-def make_db_complete():
-    print("=== Making Complete Database ===")
-    make_db_patients()
-    make_db_docs()
-
-    #todo: does not match 'properties' size, fix 
-    root_directory = Path('db/storage')
-    s = sum(f.stat().st_size for f in root_directory.glob('**/*') if f.is_file())
-
-
-    print(f"=== Database Complete - Size: ~{round(s/10**6,2)} MB ===")
-
-
 
 def print_db_summary():
     print("Database summary:")

@@ -26,8 +26,7 @@ result = {'success': "False", 'username': "None"}
 def base():
     return "data transfer '/internet', '/intranet' ..."
 
-
-def _new_chatbot(type):
+def _new_chatbot(chat_type):
     global chatbot
     if chat_type == "patient":
         chatbot = PatientCB()
@@ -40,8 +39,8 @@ def _new_chatbot(type):
 
 
 # SET/GET THE CHAT TYPE
-@app.route("/chat-type", methods=['PUT', 'GET'])
-async def chat_type():
+@app.route("/chat-type", methods=['GET', 'PUT'])
+async def get_set_chat_type():
     global chat_type
     global chatbot
 

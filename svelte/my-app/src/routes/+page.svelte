@@ -1,5 +1,30 @@
 <script>
     import { Button, Group, Title } from '@svelteuidev/core';
+    import { goto } from '$app/navigation'
+
+
+    async function set_assistant(type) {
+
+        console.log("setting assistant type...")
+
+        await fetch("http://localhost:5001/chat-type", {
+            method: "PUT",
+            body: JSON.stringify({'type': type}),
+            headers: {"Content-type": "application/json; charset=UTF-8"}
+        });
+        
+        if (type == "internet"){
+            goto("/chat")
+        } else {
+            goto("/login")
+        }
+            
+    }
+
+
+
+
+
 </script>
 
 
@@ -9,13 +34,22 @@
         <Title order={1} variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="font-size: 5rem; line-height: 1.5">
             Sahlgrenska AI Hjälp
         </Title>
-        <!--Login button-->
-        <Button href='/login' variant='gradient' gradient={{from: 'teal', to: 'blue', deg: 60}} radius="lg" size="xl" ripple>
-            Logga in
+        <!--Patient help button-->
+        <Button on:click={() => set_assistant("patient")} variant='gradient' gradient={{from: 'teal', to: 'blue', deg: 60}} radius="lg" size="xl" ripple>
+            Patientassistent
         </Button>
-        <!--Chat button-->
-        <Button href='/chat' variant="outline" radius="lg" size="xl" ripple>
-            Internethjälp
+        <!--Doctor assistant button-->
+        <Button on:click={() => set_assistant("doctor")} variant='gradient' gradient={{from: 'teal', to: 'blue', deg: 60}} radius="lg" size="xl" ripple>
+            Läkarassistent
+        </Button>
+
+        <!--Intranet button-->
+        <Button on:click={() => set_assistant("intranet")} variant='gradient' gradient={{from: 'teal', to: 'blue', deg: 60}} radius="lg" size="xl" ripple>
+            Intranet
+        </Button>
+        <!--Internet button-->
+        <Button on:click={() => set_assistant("internet")} variant='gradient' gradient={{from: 'teal', to: 'blue', deg: 60}} radius="lg" size="xl" ripple>
+            Internet
         </Button>
     </Group>
 </div>

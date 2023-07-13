@@ -3,7 +3,8 @@ from langchain.llms import OpenAI
 from langchain.chat_models import ChatOpenAI
 from langchain.agents import initialize_agent
 from langchain.chains.conversation.memory import ConversationBufferWindowMemory
-from tools import Tool1177, ToolFASS, ToolInternetmedicin
+
+from .tools import Tool1177, ToolFASS, ToolInternetmedicin
 
 import os
 

@@ -1,7 +1,6 @@
 <script>
     import { Input, InputWrapper, Title, Group, Button, Stack } from '@svelteuidev/core';
     import { LockClosed, Person } from 'radix-icons-svelte';
-    import { navigate } from 'svelte-routing';
     import { goto } from '$app/navigation'
     
     const timer = ms => new Promise(res => setTimeout(res,ms))
@@ -25,10 +24,6 @@
 
 
     }
-    const navigateToPage = () => {
-    // Call the navigate function inside the const function
-    navigate('/chat',{replace:true});
-  };
 
     const handleSubmit = async (e) => {
 

@@ -37,6 +37,13 @@ def get_collection(name:str):
         )
     return collection
 
+def get_client():
+     return chromadb.Client(Settings(
+        chroma_db_impl="duckdb+parquet",
+        persist_directory=f"""{os.path.dirname(os.path.dirname(__file__))}/db/storage""".replace('\\', '/')
+    ))
+     
+
 
 def make_db_patients():
     print("--- Making new Collection: 'patientrecords' ---")
@@ -183,21 +190,38 @@ def get_biggest_chunk(name:str):
     
     return max_size,max_info
 
+def get_mean_chunk_size(name:str):
+    collection = get_collection(name)
+
+    ans = collection.get(
+        include=["metadatas"]
+    )
+    
+    
+    n = collection.count()
+    s = 0
+    for i in range(n):
+        s += ans["metadatas"][i]["chunk_size"]
+            
+    
+    return s/n
 
 def print_db_summary():
     print("Database summary:")
-    for name in ["docs","patientrecords"]:
+    for c in get_client().list_collections():
+        name = c.name
         collection = get_collection(name)
 
         ans = collection.get(
             include=["metadatas"]
         )
 
-        n = len(ans["ids"])
+        n = collection.count()
         m = get_biggest_chunk(name)
-        print(f"\t{name}:\n\tchunks: {n} \n\tbiggest chunk: {m}\n")
+        mean = get_mean_chunk_size(name)
+        print(f"\t{name}:\n\tchunks: {n} \n\tbiggest chunk: {m}\n\tmean chunk size: {mean} \n")
     root_directory = Path('db/storage')
     s = sum(f.stat().st_size for f in root_directory.glob('**/*') if f.is_file())
     print(f"Size: ~{round(s/10**6,2)} MB")
 
-#if we add anything here, database may break, please only functions :-)
+#if we add anything here, database initialization may break, please use only functions :-)

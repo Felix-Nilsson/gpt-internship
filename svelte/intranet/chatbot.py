@@ -19,9 +19,9 @@ class Chatbot:
         """Takes a query and a list of patients whose information the doctor can access, returns a response to the query"""
 
         #Get patient data related to the query
-        data = query_db_doc(query=query, name="patientrecords")
+        data = query_db_doc(query=query, name="docs")
 
-        print(data)
+        #print("intranet chatbot.py  ", data)
 
         #Context/System message to describe what the gpt is supposed to do
         context = f'''
@@ -59,8 +59,6 @@ class Chatbot:
         messages.append({'role':'assistant','content':response.choices[0].message["content"]})
 
         finished_response = f'''{response.choices[0].message["content"]}'''
-        print(finished_response)
-        
 
         #print(status,self.patient_ids)
 

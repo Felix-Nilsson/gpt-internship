@@ -19,7 +19,7 @@ class Chatbot:
         """Takes a query and a list of patients whose information the doctor can access, returns a response to the query"""
 
         #Get patient data related to the query
-        data = query_db_doc(query=query, name="patientrecords")
+        data = query_db_doc(query=query, name="docs")
 
         print(data)
 

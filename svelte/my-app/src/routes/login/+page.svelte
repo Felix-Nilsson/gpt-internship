@@ -1,5 +1,5 @@
 <script>
-    import { Input, InputWrapper, Title, Group, Button, Stack } from '@svelteuidev/core';
+    import { Input, Space, Title, Group, Button, Stack } from '@svelteuidev/core';
     import { LockClosed, Person } from 'radix-icons-svelte';
     import { goto } from '$app/navigation'
     
@@ -30,18 +30,16 @@
         //data contains the input
         let data = new FormData(e.target);
         console.log(data)
-        fetch("http://localhost:5001/credentials", {
+
+        await fetch("http://localhost:5001/credentials", {
             mode:"cors",
             method: "POST",
             body: JSON.stringify({'username': data.get("usernamefield"), "password":data.get("passwordfield")}),
             headers: {"Content-type": "application/json; charset=UTF-8"}
         });
 
-       // await timer(3000)
-
         await get_credentials();
 
-        
         console.log("log: " + login_result)
         if (login_result == true){
             //navigateToPage()
@@ -58,11 +56,13 @@
    <div class="center-screen">
     <Group spacing="lg" direction="column">
 
-        <Button href='/' color=white style="line-height: 1.5">
+        <Button href='/' color=white>
             <Title order={1} variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="font-size: 5rem; line-height: 1.5">
                 Sahlgrenska AI Hjälp
             </Title>
         </Button>
+
+        <Space h=lg/>
 
         <form on:submit|preventDefault={handleSubmit}>
             <Stack spacing="lg">

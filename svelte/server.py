@@ -7,6 +7,10 @@ import bcrypt
 from internet.chatbot import Chatbot as InternetCB
 from intranet.chatbot import Chatbot as IntranetCB
 
+#TODO REPLACE WITH ACTUAL IMPORTS
+from internet.chatbot import Chatbot as PatientCB
+from internet.chatbot import Chatbot as DoctorCB
+
 app = Flask(__name__)
 CORS(app)
 
@@ -23,6 +27,18 @@ def base():
     return "data transfer '/internet', '/intranet' ..."
 
 
+def _new_chatbot(type):
+    global chatbot
+    if chat_type == "patient":
+        chatbot = PatientCB()
+    elif chat_type == "doctor":
+        chatbot = DoctorCB()
+    elif chat_type == "intranet":
+        chatbot = IntranetCB()
+    else:
+        chatbot = InternetCB()
+
+
 # SET/GET THE CHAT TYPE
 @app.route("/chat-type", methods=['PUT', 'GET'])
 async def chat_type():
@@ -33,15 +49,7 @@ async def chat_type():
         print(request.get_json()['type'])
         chat_type = request.get_json()['type']
     
-    if chat_type == "patient":
-        #chatbot = pa
-        pass
-    elif chat_type == "doctro":
-        pass
-    elif chat_type == "intranet":
-        chatbot = IntranetCB()
-    else:
-        chatbot = InternetCB()
+    _new_chatbot(chat_type)
 
     return chat_type
 
@@ -49,6 +57,7 @@ async def chat_type():
 
 @app.route("/chat", methods=['GET', 'PUT', 'DELETE'])
 async def chat():
+    global chatbot
     global conversation
     
     if request.method == 'PUT':
@@ -64,9 +73,8 @@ async def chat():
         
     elif request.method == 'DELETE':
         conversation = {'time': 0, 'messages': [], 'explanations': []}
-        #New clean chatbot so its memory is wiped
-        global internet_bot
-        internet_bot = InternetCB()
+        #New chatbot to clear its memory
+        _new_chatbot(chat_type)
     
     return conversation
 

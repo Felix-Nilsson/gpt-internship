@@ -195,9 +195,18 @@ def make_db_complete():
 
     print(f"=== Database Complete - Size: ~{round(s/10**6,2)} MB ===")
 
-#make_db_docs()
 
-#make_db_patients()
 
-#print(get_collection("docs").peek())
-#print(get_collection("patientrecords").peek())
+def print_db_summary():
+    for name in ["docs","patientrecords"]:
+        collection = get_collection(name)
+
+        ans = collection.get(
+            include=["metadatas"]
+        )
+
+        n = len(ans["ids"])
+        m = get_biggest_chunk(name)
+        print(f"{name}:\n\tchunks: {n} \n\tbiggest chunk: {m}\n")
+    
+

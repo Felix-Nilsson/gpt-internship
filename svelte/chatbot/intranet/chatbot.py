@@ -1,10 +1,9 @@
 import sys
 import os
 import openai
-sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))))
 
-from db.chroma import query_db_doc, query_db
-#from ...db.chroma
+from db.chroma import query_db_doc
 
 class Chatbot:
     def __init__(self):
@@ -20,8 +19,11 @@ class Chatbot:
 
         #Get patient data related to the query
         data = query_db_doc(query=query, name="docs")
+<<<<<<< HEAD:svelte/intranet/chatbot.py
 
         print(data)
+=======
+>>>>>>> 1ebea2f9d42f55fa9bcc3fa2000d39028adc1c86:svelte/chatbot/intranet/chatbot.py
 
         #Context/System message to describe what the gpt is supposed to do
         context = f'''
@@ -59,8 +61,6 @@ class Chatbot:
         messages.append({'role':'assistant','content':response.choices[0].message["content"]})
 
         finished_response = f'''{response.choices[0].message["content"]}'''
-        print(finished_response)
-        
 
         #print(status,self.patient_ids)
 

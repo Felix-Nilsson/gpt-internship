@@ -21,7 +21,7 @@ from print_color import print as printc
 def get_collection(name:str):
     client = chromadb.Client(Settings(
         chroma_db_impl="duckdb+parquet",
-        persist_directory="db/storage"
+        persist_directory=f"""{os.path.dirname(os.path.dirname(__file__))}/db/storage""".replace('\\', '/')
     ))
 
     openai_api_key = os.getenv("OPENAI_API_KEY")
@@ -182,19 +182,6 @@ def get_biggest_chunk(name:str):
             max_info = ans["metadatas"][i]
     
     return max_size,max_info
-
-def make_db_complete():
-    print("=== Making Complete Database ===")
-    make_db_patients()
-    make_db_docs()
-
-    #todo: does not match 'properties' size, fix 
-    root_directory = Path('db/storage')
-    s = sum(f.stat().st_size for f in root_directory.glob('**/*') if f.is_file())
-
-
-    print(f"=== Database Complete - Size: ~{round(s/10**6,2)} MB ===")
-
 
 
 def print_db_summary():

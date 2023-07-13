@@ -112,20 +112,28 @@
     <Box>
         <Overlay on:click={() => (showModal = false)} opacity={0.5} color='black' zIndex=4/>
     </Box>
-    <Paper style="position:fixed; top:10vh; left:15vw; width: 70vw; max-height: 80vh; z-index: 5; padding: 25px" shadow="md" color="white">
-        <Title><b>Källor:</b> </Title>
-        <Space h="xl"/>
-        <Stack spacing="xs">
-            {#if curr_sources != "!"}
-                {#each curr_sources as source}
-                    <Text><b>{source["title"]}</b> (<a href={source["link"]} target="_blank" rel="noopener noreferrer">Länk: {source["link"]}</a>)</Text>
-                    <Text>Utdrag: "{source["snippet"]}"</Text>
-                    <Space h="sm"/>
-                {/each}
-            {:else}
-                <Text>ChatGPT använde sin träning, svaret kan innehålla felaktig information.</Text>
-            {/if}
-        </Stack>
-        
-    </Paper>
+    <div style="position:fixed; top:10vh; left:15vw; width: 70vw; max-height: 80vh; z-index: 5; padding: 25px">
+        <Paper style="position:relative; z-index: 5; max-height: 80vh; overflow:scroll;" shadow="md" color="white">
+            <Title variant='gradient' gradient={{from: 'red', to: 'blue', deg: 45}}><b>Källor:</b></Title>
+            <Space h="xl"/>
+            <Stack spacing="xs">
+                {#if curr_sources != "!"}
+                    {#each curr_sources as source}
+                        <Text>
+                            <b>{source["title"]}</b> &nbsp;
+                            <a href={source["link"]} target="_blank" rel="noopener noreferrer">{source["link"]}</a>
+                        </Text>
+    
+                        <Text>Utdrag: "{source["snippet"]}"</Text>
+                        <Space h="sm"/>
+                    {/each}
+                {:else}
+                    <Text variant='gradient' gradient={{from: 'red', to: 'yellow', deg: 45}}>
+                        ChatGPT använde sin träning, svaret kan innehålla felaktig information.
+                    </Text>
+                {/if}
+            </Stack>
+        </Paper>
+    </div>
+    
 {/if}

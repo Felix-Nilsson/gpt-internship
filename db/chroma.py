@@ -224,4 +224,7 @@ def print_db_summary():
     s = sum(f.stat().st_size for f in root_directory.glob('**/*') if f.is_file())
     print(f"Size: ~{round(s/10**6,2)} MB")
 
-#if we add anything here, database initialization may break, please use only functions :-)
+#if we open the database here, database initialization may break, please use only functions :-)
+
+#Eg dont do:
+#print(get_collection("docs").peek())

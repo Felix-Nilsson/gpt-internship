@@ -13,11 +13,14 @@
     const CREDENTIALS_URL = 'http://localhost:5001/credentials/get'
 
     let update_conversation;
+    let new_message_load_animation;
 
     const handleSubmit = async (e) => {
 
         //data contains the input
         let data = new FormData(e.target);
+
+        new_message_load_animation(data.get('prompt'));
 
         //Clear input
         input = '';
@@ -68,7 +71,7 @@
 
 
 <!--Conversation-->
-<Conversation bind:check_for_messages={update_conversation}></Conversation>
+<Conversation bind:check_for_messages={update_conversation} bind:new_message_loading={new_message_load_animation}></Conversation>
 
 
 

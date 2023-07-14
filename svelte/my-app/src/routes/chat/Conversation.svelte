@@ -1,5 +1,5 @@
 <script>
-    import { Stack, Flex, Box, Button, Text, Paper, Overlay, Title, Space } from '@svelteuidev/core';
+    import { Stack, Flex, Box, Button, Text, Paper, Overlay, Title, Space, Loader } from '@svelteuidev/core';
     import UserBubble from './UserBubble.svelte';
     import AIBubble from './AIBubble.svelte';
     import { onMount, tick } from 'svelte';
@@ -41,6 +41,7 @@
                 last_fetched = new_time;
 
                 let conversation = data['messages'];
+                loading = false
                 messages = conversation;
                 await tick();
                 scrollToBottom(element);
@@ -60,7 +61,17 @@
         }
     }
 
-    export { check_for_messages };
+    let loading = false;
+    let new_temp_message = "";
+
+    async function new_message_loading(query) {
+        new_temp_message = query;
+        loading = true;
+        await tick();
+        scrollToBottom(element);
+    }
+
+    export { check_for_messages , new_message_loading };
 
     //let curr_tool = ""
     //let curr_input = ""
@@ -95,17 +106,30 @@
                         </Flex>
                     {:else}
                         <Flex justify="right">
-                            <div style="width: 35vw; "></div>
+                            <div style="width: 35vw;"></div>
                             <AIBubble>{message}</AIBubble>
                             <Button on:click={() => modalButtonPressed(i)} variant='subtle' radius="sm" size="xs" ripple> ? </Button>
                         </Flex>
                     {/if}
                 {/each}
             {/if}
+            {#if loading}
+                <Flex justify="left">
+                    <UserBubble>{new_temp_message}</UserBubble>
+                    <div style="width: 35vw; "></div>
+                </Flex>
+                <Flex justify="right">
+                    <div style="width: 35vw; "></div>
+                    <AIBubble><Loader variant='dots' color='orange'/></AIBubble>
+                    <div style="width: 33px; "></div>
+                </Flex>
+            {/if}
         </Stack>
         <Space h={100}/>
     </div>
 </div>
+
+
 
 <!-- SOURCE MODAL -->
 {#if showModal}
@@ -128,7 +152,7 @@
                         <Space h="sm"/>
                     {/each}
                 {:else}
-                    <Text variant='gradient' gradient={{from: 'red', to: 'yellow', deg: 45}}>
+                    <Text>
                         ChatGPT använde sin träning, svaret kan innehålla felaktig information.
                     </Text>
                 {/if}

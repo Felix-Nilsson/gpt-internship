@@ -13,7 +13,10 @@ from chatbot.intranet.chatbot import Chatbot as IntranetCB
 app = Flask(__name__)
 CORS(app)
 
-chat_type = "internet"
+settings = {
+    'type': 'internet',
+    #...
+}
 
 chatbot = InternetCB()
 
@@ -27,6 +30,12 @@ def base():
 
 def _new_chatbot(chat_type):
     global chatbot
+    global conversation
+
+    #New conversation
+    conversation = {'time': 0, 'messages': [], 'explanations': []}
+
+    #Set the correct chatbot
     if chat_type == "patient":
         chatbot = AssistentCB("patient")
     elif chat_type == "doctor":
@@ -38,19 +47,17 @@ def _new_chatbot(chat_type):
 
 
 # SET/GET THE CHAT TYPE
-@app.route("/chat-type", methods=['PUT'])
-async def get_set_chat_type():
-    global chat_type
-    global chatbot
-    global conversation
+@app.route("/settings", methods=['GET', 'PUT'])
+async def get_set_settings():
+    global settings
 
-    chat_type = request.get_json()['type']
+    if request.method == 'PUT':
+        settings['type'] = request.get_json()['type']
     
-    #reset the chat
-    conversation = {'time': 0, 'messages': [], 'explanations': []}
-    _new_chatbot(chat_type)
+        #Change to chatbot of current type
+        _new_chatbot(settings['type'])
 
-    return chat_type
+    return settings
 
 
 
@@ -63,19 +70,21 @@ async def chat():
         #Get the prompt from the PUT body
         prompt = request.get_json()['prompt']
         #Get a response to the prompt
-        if chat_type == 'patient':
+        if settings['type'] == 'patient':
             response = chatbot.get_chat_response(prompt, [result['username'][1:]])
             explanation = "All info kommer från dina egna dokument"
-        elif chat_type == 'doctor':
+            
+        elif settings['type'] == 'doctor':
+            #Get the doctor's patients
             with open('../patientrecords/config_joined.yaml', 'r') as file:
                 config = yaml.load(file, Loader=SafeLoader)
-            
             patients = config['credentials']['usernames'][result['username']]['patients']
 
             response = chatbot.get_chat_response(prompt, patients)
             explanation = "All info kommer från dina egna dokument"
         else:
             response, explanation = chatbot.get_chat_response(prompt)
+        
         #Update the conversation with the new messages and the time the update took place
         conversation['messages'].append(prompt)
         conversation['messages'].append(response)
@@ -83,9 +92,8 @@ async def chat():
         conversation['time'] = time.time()
         
     elif request.method == 'DELETE':
-        conversation = {'time': 0, 'messages': [], 'explanations': []}
         #New chatbot to clear its memory
-        _new_chatbot(chat_type)
+        _new_chatbot(settings['type'])
     
     return conversation
 

@@ -7,6 +7,8 @@
     let input = "";
 
     let credentials = {};
+    let settings = {};
+
     //Backend should be running on port 5001
     const DATA_URL = 'http://localhost:5001/chat';
 
@@ -36,6 +38,19 @@
 		await update_conversation();
 	}
 
+    //We only have chat-type setting, but more will come
+    async function fetchSettings() {
+        const response = await fetch("http://localhost:5001/settings");
+
+        settings = await response.json();
+
+        //settings["type"] = response.json()["type"];
+        //console.log(settings)
+    }
+
+    onMount(fetchSettings);
+
+
     // In your Svelte component
 
     // Define a function to fetch the JSON data
@@ -56,7 +71,6 @@
 
     // Call the function to fetch the credentials when needed
     onMount(fetchCredentials);
-
 
     async function clear_backend() {
         await fetch(DATA_URL, {method: "DELETE"});
@@ -123,32 +137,94 @@
 </div>
 
 
-<!--Background for the header-->
-<div style="position:fixed; background:white; left:0px; right:0px; top:0px; height:80px"></div>
+<!--Header-->
+<div class="header">
 
-<!--Burger button in the header-->
-<div style="position:fixed; left:30px; top:20px">
-    <Burger color="blue"
-    {opened}
-    on:click={() => (opened = !opened)}
-    />
-</div>  
+    <!--Burger button-->
+    <div class="burger-button">
+        <Burger color="blue"
+        {opened}
+        on:click={() => (opened = !opened)}
+        />
+    </div>
 
-<!--Clickable title in the header-->
-<Button href='/' color=transparent style="position:fixed;right:30px;top:20px;">
-    <Title 
-    order={1} 
-    variant='gradient' 
-    gradient={{from: 'blue', to: 'red', deg: 45}} 
-    style="font-size:40px; text-align:right; line-height:2">
-        Sahlgrenska AI Hjälp
-    </Title>
-</Button>
+    <div class="header-type">
+        <Title
+        style="
+            font-size:30px; 
+            text-align:left; 
+            line-height:1.5"
+        variant='gradient' 
+        gradient={{from: 'blue', to: 'red', deg: 45}}
+        order={1}>
+            {#if settings["type"] == "patient"}
+                Patientassistent
+            {:else if settings["type"] == "doctor"}
+                Läkarassistent
+            {:else if settings["type"] == "intranet"}
+                Intranät
+            {:else}
+                Internet
+            {/if}
+        </Title>
+    </div>
+
+    <!--Clickable title-->
+    <div class="header-title">
+        <Button href='/' color=transparent style="width:400px; height:50px">
+            <Title 
+            style="
+                position:relative; 
+                width:400px; 
+                top:-5px; 
+                font-size:40px; 
+                text-align:right; 
+                line-height:1.5"
+            variant='gradient' 
+            gradient={{from: 'blue', to: 'red', deg: 45}}
+            order={1}>
+                Sahlgrenska AI Hjälp 
+            </Title>
+        </Button>
+    </div>
+</div>
+
+
+
+
 
 
 
 <style>
     
+    .header {
+        position: fixed;
+        background: white;
+        left: 0;
+        right: 0;
+        top: 0;
+        height: 80px;
+    }
+
+    .burger-button {
+        position: fixed;
+        left: 30px;
+        top: 20px;
+    }
+
+    .header-type {
+        position: fixed;
+        left: 90px;
+        top: 12px;
+    }
+
+    .header-title {
+        position: fixed;
+        right: 30px;
+        top: 15px;
+        width: 400px;
+    }
+
     .gradient-strip-bottom {
     background: rgb(34,193,195);
     background: linear-gradient(45deg, rgba(34,193,195,1) 0%, rgba(0,80,200,1) 50%, rgba(34,193,195,1) 100%);

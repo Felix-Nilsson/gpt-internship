@@ -7,7 +7,7 @@
 
         console.log("setting assistant type to " + type + " and resetting any ongoing chats")
 
-        await fetch("http://localhost:5001/chat-type", {
+        await fetch("http://localhost:5001/settings", {
             method: "PUT",
             body: JSON.stringify({'type': type}),
             headers: {"Content-type": "application/json; charset=UTF-8"}
@@ -45,7 +45,7 @@
 
         <!--Intranet button-->
         <Button on:click={() => set_assistant("intranet")} variant='gradient' gradient={{from: 'teal', to: 'blue', deg: 60}} radius="lg" size="xl" ripple>
-            Intranet
+            Intranät
         </Button>
         <!--Internet button-->
         <Button on:click={() => set_assistant("internet")} variant='gradient' gradient={{from: 'teal', to: 'blue', deg: 60}} radius="lg" size="xl" ripple>

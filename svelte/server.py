@@ -76,9 +76,10 @@ async def chat():
             
         elif settings['type'] == 'doctor':
             #Get the doctor's patients
-            with open('../patientrecords/config_joined.yaml', 'r') as file:
-                config = yaml.load(file, Loader=SafeLoader)
-            patients = config['credentials']['usernames'][result['username']]['patients']
+            with open("credentials/credentials.json") as f:
+                users = json.load(f)
+
+            patients = users['credentials']['usernames'][result['username']]['patients']
 
             response = chatbot.get_chat_response(prompt, patients)
             explanation = "All info kommer från dina egna dokument"

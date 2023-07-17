@@ -90,16 +90,16 @@
     }
 
 
-    let settings = {};
+    //Config for the chat
+    let config = {};
 
-    //We only have chat-type setting, but more will come
-    async function fetchSettings() {
-        const response = await fetch("http://localhost:5001/settings");
+    async function fetchConfig() {
+        const response = await fetch("http://localhost:5001/config");
 
-        settings = await response.json();
+        config = await response.json();
     }
 
-    onMount(fetchSettings);
+    onMount(fetchConfig);
 
 
 </script>
@@ -121,7 +121,7 @@
                             <div style="width: 35vw;"></div>
                             <AIBubble>
                                 {message}
-                                {#if settings['type'] == "doctor"}
+                                {#if config['type'] == "doctor"}
                                 <Space h="xs" />
                                 <Center>
                                     <Text

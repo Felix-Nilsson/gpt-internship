@@ -7,7 +7,7 @@
 
         console.log("setting assistant type to " + type + " and resetting any ongoing chats")
 
-        await fetch("http://localhost:5001/settings", {
+        await fetch("http://localhost:5001/config", {
             method: "PUT",
             body: JSON.stringify({'type': type}),
             headers: {"Content-type": "application/json; charset=UTF-8"}

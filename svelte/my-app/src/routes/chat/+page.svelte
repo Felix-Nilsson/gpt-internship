@@ -1,5 +1,5 @@
 <script>
-    import { Group, Title, Input , Button, Center, Burger, Stack, Flex } from '@svelteuidev/core';
+    import { Group, Title, Input , Button, Center, Burger, Stack, Text } from '@svelteuidev/core';
     import Conversation from "./Conversation.svelte";
     import { onMount } from 'svelte';
 
@@ -7,7 +7,7 @@
     let input = "";
 
     let credentials = {};
-    let config = {};
+    let context = {};
 
     //Backend should be running on port 5001
     const DATA_URL = 'http://localhost:5001/chat';
@@ -36,16 +36,21 @@
 
 		//Start looking for a response
 		await update_conversation();
+
+        await fetchContext();
 	}
 
     //We only have chat-type setting, but more will come
-    async function fetchConfig() {
-        const response = await fetch("http://localhost:5001/config");
+    async function fetchContext() {
+        const response = await fetch("http://localhost:5001/context");
 
-        config = await response.json();
+        context = await response.json();
+        if (context['current_patient'] == null) {
+            context['current_patient'] = ""
+        }
     }
 
-    onMount(fetchConfig);
+    onMount(fetchContext);
 
 
     // In your Svelte component
@@ -72,6 +77,7 @@
     async function clear_backend() {
         await fetch(DATA_URL, {method: "DELETE"});
         await update_conversation(1, true);
+        await fetchContext();
     }
 
     async function get_curr_conv() {
@@ -110,6 +116,19 @@
 
 <!--Input area-->
 <div class="gradient-strip-bottom">
+
+    {#if context["type"] == 'doctor'}
+    <div style="position: absolute; left: 30px; top: -30px">
+        <Text
+        variant='gradient' 
+        gradient={{from: 'cyan', to: 'blue', deg: 45}} 
+        weight='semibold'
+        style="line-height: 1.5;">
+            Patient: {context["current_patient"]}
+        </Text>
+    </div>
+    {/if}
+
     <Center style="padding:20px">  
         <Group spacing="lg" direction="row">
                 <form autocomplete="off" on:submit|preventDefault={handleSubmit}>
@@ -154,11 +173,11 @@
         variant='gradient' 
         gradient={{from: 'blue', to: 'red', deg: 45}}
         order={1}>
-            {#if config["type"] == "patient"}
+            {#if context["type"] == "patient"}
                 Patientassistent
-            {:else if config["type"] == "doctor"}
+            {:else if context["type"] == "doctor"}
                 Läkarassistent
-            {:else if config["type"] == "intranet"}
+            {:else if context["type"] == "intranet"}
                 Intranät
             {:else}
                 Internet

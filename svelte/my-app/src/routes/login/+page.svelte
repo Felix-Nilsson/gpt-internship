@@ -29,7 +29,7 @@
 
         //data contains the input
         let data = new FormData(e.target);
-        console.log(data)
+        //console.log(data)
 
         await fetch("http://localhost:5001/credentials", {
             mode:"cors",

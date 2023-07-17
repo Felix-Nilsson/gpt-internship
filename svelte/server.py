@@ -13,8 +13,10 @@ from chatbot.intranet.chatbot import Chatbot as IntranetCB
 app = Flask(__name__)
 CORS(app)
 
-config = {
+context = {
     'type': 'internet',
+    'access_patients': [],
+    'current_patient': "",
     #...
 }
 
@@ -31,6 +33,7 @@ def base():
 def _new_chatbot(chat_type):
     global chatbot
     global conversation
+    global context
 
     #New conversation
     conversation = {'time': 0, 'messages': [], 'explanations': []}
@@ -44,20 +47,28 @@ def _new_chatbot(chat_type):
         chatbot = IntranetCB()
     else:
         chatbot = InternetCB()
+    
+    #Reset the context
+    context = {
+    'type': chat_type,
+    'access_patients': [],
+    'current_patient': "",
+    #...
+}
 
 
-# CONFIGURE THE CHAT
-@app.route("/config", methods=['GET', 'PUT'])
-async def configure():
-    global config
+# CONTEXT OF THE CHAT
+@app.route("/context", methods=['GET', 'PUT'])
+async def chat_context():
+    global context
 
     if request.method == 'PUT':
-        config['type'] = request.get_json()['type']
+        context['type'] = request.get_json()['type']
     
         #Change to chatbot of current type
-        _new_chatbot(config['type'])
+        _new_chatbot(context['type'])
 
-    return config
+    return context
 
 
 
@@ -70,19 +81,23 @@ async def chat():
         #Get the prompt from the PUT body
         prompt = request.get_json()['prompt']
         #Get a response to the prompt
-        if config['type'] == 'patient':
-            response = chatbot.get_chat_response(prompt, [result['username'][1:]])
-            explanation = "All info kommer från dina egna dokument"
+        if context['type'] == 'patient':
+            pat_response = chatbot.get_chat_response(prompt, [result['username'][1:]])
+            response = pat_response['response']
+            explanation = pat_response['explanation']
             
-        elif config['type'] == 'doctor':
+        elif context['type'] == 'doctor':
             #Get the doctor's patients
             with open("credentials/credentials.json") as f:
                 users = json.load(f)
 
-            patients = users['credentials']['usernames'][result['username']]['patients']
+            context['access_patients'] = users['credentials']['usernames'][result['username']]['patients']
+            
 
-            response = chatbot.get_chat_response(prompt, patients)
-            explanation = "All info kommer från dina egna dokument"
+            doc_response = chatbot.get_chat_response(prompt, context['access_patients'])
+            response = doc_response['response']
+            explanation = doc_response['explanation']
+            context['current_patient'] = doc_response['current_patient']
         else:
             response, explanation = chatbot.get_chat_response(prompt)
         
@@ -94,7 +109,7 @@ async def chat():
         
     elif request.method == 'DELETE':
         #New chatbot to clear its memory
-        _new_chatbot(config['type'])
+        _new_chatbot(context['type'])
     
     return conversation
 

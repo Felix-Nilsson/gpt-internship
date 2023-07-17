@@ -90,16 +90,16 @@
     }
 
 
-    //Config for the chat
-    let config = {};
+    //Context for the chat
+    let context = {};
 
-    async function fetchConfig() {
-        const response = await fetch("http://localhost:5001/config");
+    async function fetchContext() {
+        const response = await fetch("http://localhost:5001/context");
 
-        config = await response.json();
+        context = await response.json();
     }
 
-    onMount(fetchConfig);
+    onMount(fetchContext);
 
 
 </script>
@@ -121,7 +121,7 @@
                             <div style="width: 35vw;"></div>
                             <AIBubble>
                                 {message}
-                                {#if config['type'] == "doctor"}
+                                {#if context['type'] == "doctor"}
                                 <Space h="xs" />
                                 <Center>
                                     <Text

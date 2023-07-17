@@ -77,7 +77,7 @@ class Chatbot:
 
         if self.status == "doctor":
             context = context_doctor
-            ending_msg = f'''{not_accessible_msg}\n*OBS: som läkare bär du alltid själv ansvaret mot patienten*'''
+            ending_msg = f'''{not_accessible_msg}'''
 
         elif self.status == "patient":
             context = context_patient

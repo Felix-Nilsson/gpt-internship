@@ -1,5 +1,5 @@
 <script>
-    import { Stack, Flex, Box, Button, Text, Paper, Overlay, Title, Space, Loader } from '@svelteuidev/core';
+    import { Stack, Flex, Box, Button, Text, Paper, Overlay, Title, Space, Loader, Center } from '@svelteuidev/core';
     import UserBubble from './UserBubble.svelte';
     import AIBubble from './AIBubble.svelte';
     import { onMount, tick } from 'svelte';
@@ -90,6 +90,18 @@
     }
 
 
+    let settings = {};
+
+    //We only have chat-type setting, but more will come
+    async function fetchSettings() {
+        const response = await fetch("http://localhost:5001/settings");
+
+        settings = await response.json();
+    }
+
+    onMount(fetchSettings);
+
+
 </script>
 
 
@@ -107,12 +119,26 @@
                     {:else}
                         <Flex justify="right">
                             <div style="width: 35vw;"></div>
-                            <AIBubble>{message}</AIBubble>
+                            <AIBubble>
+                                {message}
+                                {#if settings['type'] == "doctor"}
+                                <Center>
+                                    <Text
+                                        size='sm'
+                                        weight='semibold'
+                                        style="line-height: 1.5;">
+                                            *OBS* Du bär alltid ansvaret mot patienten
+                                    </Text>
+                                </Center>
+                                {/if}
+                            </AIBubble>
                             <Button on:click={() => modalButtonPressed(i)} variant='subtle' radius="sm" size="xs" ripple> ? </Button>
                         </Flex>
                     {/if}
                 {/each}
             {/if}
+
+            <!--Loading response-->
             {#if loading}
                 <Flex justify="left">
                     <UserBubble>{new_temp_message}</UserBubble>

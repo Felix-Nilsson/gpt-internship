@@ -43,9 +43,6 @@
         const response = await fetch("http://localhost:5001/settings");
 
         settings = await response.json();
-
-        //settings["type"] = response.json()["type"];
-        //console.log(settings)
     }
 
     onMount(fetchSettings);

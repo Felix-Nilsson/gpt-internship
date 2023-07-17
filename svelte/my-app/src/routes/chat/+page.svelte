@@ -7,7 +7,7 @@
     let input = "";
 
     let credentials = {};
-    let settings = {};
+    let config = {};
 
     //Backend should be running on port 5001
     const DATA_URL = 'http://localhost:5001/chat';
@@ -39,13 +39,13 @@
 	}
 
     //We only have chat-type setting, but more will come
-    async function fetchSettings() {
-        const response = await fetch("http://localhost:5001/settings");
+    async function fetchConfig() {
+        const response = await fetch("http://localhost:5001/config");
 
-        settings = await response.json();
+        config = await response.json();
     }
 
-    onMount(fetchSettings);
+    onMount(fetchConfig);
 
 
     // In your Svelte component
@@ -154,11 +154,11 @@
         variant='gradient' 
         gradient={{from: 'blue', to: 'red', deg: 45}}
         order={1}>
-            {#if settings["type"] == "patient"}
+            {#if config["type"] == "patient"}
                 Patientassistent
-            {:else if settings["type"] == "doctor"}
+            {:else if config["type"] == "doctor"}
                 Läkarassistent
-            {:else if settings["type"] == "intranet"}
+            {:else if config["type"] == "intranet"}
                 Intranät
             {:else}
                 Internet

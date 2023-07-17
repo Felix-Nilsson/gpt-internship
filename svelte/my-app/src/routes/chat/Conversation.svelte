@@ -122,6 +122,7 @@
                             <AIBubble>
                                 {message}
                                 {#if settings['type'] == "doctor"}
+                                <Space h="xs" />
                                 <Center>
                                     <Text
                                         size='sm'

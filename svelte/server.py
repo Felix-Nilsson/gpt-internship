@@ -13,7 +13,7 @@ from chatbot.intranet.chatbot import Chatbot as IntranetCB
 app = Flask(__name__)
 CORS(app)
 
-settings = {
+config = {
     'type': 'internet',
     #...
 }
@@ -46,18 +46,18 @@ def _new_chatbot(chat_type):
         chatbot = InternetCB()
 
 
-# SET/GET THE CHAT TYPE
-@app.route("/settings", methods=['GET', 'PUT'])
-async def get_set_settings():
-    global settings
+# CONFIGURE THE CHAT
+@app.route("/config", methods=['GET', 'PUT'])
+async def configure():
+    global config
 
     if request.method == 'PUT':
-        settings['type'] = request.get_json()['type']
+        config['type'] = request.get_json()['type']
     
         #Change to chatbot of current type
-        _new_chatbot(settings['type'])
+        _new_chatbot(config['type'])
 
-    return settings
+    return config
 
 
 
@@ -70,11 +70,11 @@ async def chat():
         #Get the prompt from the PUT body
         prompt = request.get_json()['prompt']
         #Get a response to the prompt
-        if settings['type'] == 'patient':
+        if config['type'] == 'patient':
             response = chatbot.get_chat_response(prompt, [result['username'][1:]])
             explanation = "All info kommer från dina egna dokument"
             
-        elif settings['type'] == 'doctor':
+        elif config['type'] == 'doctor':
             #Get the doctor's patients
             with open("credentials/credentials.json") as f:
                 users = json.load(f)
@@ -94,7 +94,7 @@ async def chat():
         
     elif request.method == 'DELETE':
         #New chatbot to clear its memory
-        _new_chatbot(settings['type'])
+        _new_chatbot(config['type'])
     
     return conversation
 

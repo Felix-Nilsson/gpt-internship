@@ -45,6 +45,7 @@
         const response = await fetch("http://localhost:5001/context");
 
         context = await response.json();
+        
         if (context['current_patient'] == null) {
             context['current_patient'] = ""
         }

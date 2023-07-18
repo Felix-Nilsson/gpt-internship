@@ -6,7 +6,7 @@ import bcrypt
 import yaml
 from yaml.loader import SafeLoader
 
-from chatbot.assistent.chatbot import Chatbot as AssistentCB
+from chatbot.assistent.chatbot import Chatbot as AssistantCB
 from chatbot.internet.chatbot import Chatbot as InternetCB
 from chatbot.intranet.chatbot import Chatbot as IntranetCB
 
@@ -14,21 +14,78 @@ app = Flask(__name__)
 CORS(app)
 
 context = {
-    'type': 'internet',
-    'access_patients': [],
-    'current_patient': "",
+    'chat_type': 'internet',
     #...
 }
 
 chatbot = InternetCB()
 
-conversation = {'time': 0, 'messages': [], 'explanations': []}
+#conversation = {'time': 0, 'messages': [], 'explanations': []}
+
+conversation = {
+    'last_updated': 0,
+    'messages': [
+        #This list should be filled up by Message elements (the class will construct them correctly)
+    ]
+}
+
+class Message():
+    def __init__(self, user: bool, content: str, sources:str = None, explanation:str = None, patient:str = None, alert: str = None):
+        """Create a message
+        
+        :param user: User or AI (True == User, False == AI)     [Required]
+        :param content: The message                             [Required]
+        :param sources: Sources, web pages or files             [Optional]
+        :param explanations: Explanation/Thought process?       [Optional]
+        :param patient: The patient discussed in the message    [Optional]
+        :param alert: Alert message                             [Optional]
+        :return: returns a complete message
+        """
+
+        self.message = {
+            'user': user,
+            'content': content,
+            'sources': sources,
+            'explanation': explanation,
+            'patient': patient,
+            'alert': alert,
+        }
+
+        return self.message
+
+    def get(self):
+        return self.message
+    
+    def set(self, user:bool = None, content:str = None, sources:str = None, explanation:str = None, patient:str = None, alert: str = None):
+
+        if user != None:
+            self.message['user'] = user
+        
+        if content != None:
+            self.message['content'] = content
+        
+        if sources != None:
+            self.message['sources'] = sources
+        
+        if explanation != None:
+            self.message['explanation'] = explanation
+        
+        if patient != None:
+            self.message['patient'] = patient
+        
+        if alert != None:
+            self.message['alert'] = alert
+
+
+
+
+
 result = {'success': "False", 'username': "None"}
 
 
 @app.route("/")
 def base():
-    return "data transfer '/internet', '/intranet' ..."
+    return 'Sahlgrenska AI Hjälp "backend"'
 
 def _new_chatbot(chat_type):
     global chatbot
@@ -36,13 +93,18 @@ def _new_chatbot(chat_type):
     global context
 
     #New conversation
-    conversation = {'time': 0, 'messages': [], 'explanations': []}
+    conversation = {
+        'last_updated': 0,
+        'messages': [
+            #This list should be filled up by Message elements (the class will construct them correctly)
+        ]
+    }
 
     #Set the correct chatbot
     if chat_type == "patient":
-        chatbot = AssistentCB("patient")
+        chatbot = AssistantCB("patient")
     elif chat_type == "doctor":
-        chatbot = AssistentCB("doctor")
+        chatbot = AssistantCB("doctor")
     elif chat_type == "intranet":
         chatbot = IntranetCB()
     else:
@@ -50,11 +112,10 @@ def _new_chatbot(chat_type):
     
     #Reset the context
     context = {
-    'type': chat_type,
-    'access_patients': [],
-    'current_patient': "",
-    #...
-}
+        'chat_type': 'internet',
+        #...
+    }
+
 
 
 # CONTEXT OF THE CHAT
@@ -62,11 +123,16 @@ def _new_chatbot(chat_type):
 async def chat_context():
     global context
 
+    print('CONTEXT GET/SET')
+    print('BEFORE  ' + str(context))
+
     if request.method == 'PUT':
-        context['type'] = request.get_json()['type']
+        context['chat_type'] = request.get_json()['chat_type'] #TODO THIS DOES NOT DO WHAT IT IS SUPPOSED???
+        print('REQUEST CONTENT  ' + request.get_json()['chat_type'])
     
         #Change to chatbot of current type
-        _new_chatbot(context['type'])
+        _new_chatbot(context['chat_type'])
+        print('AFTER  ' + str(context))
 
     return context
 
@@ -80,36 +146,41 @@ async def chat():
     if request.method == 'PUT':
         #Get the prompt from the PUT body
         prompt = request.get_json()['prompt']
+
+
         #Get a response to the prompt
-        if context['type'] == 'patient':
+        if context['chat_type'] == 'patient':
             pat_response = chatbot.get_chat_response(prompt, [result['username'][1:]])
-            response = pat_response['response']
-            explanation = pat_response['explanation']
+
+            new_response = Message(user=False, content=pat_response['response'], explanation=pat_response['explanation'])
             
-        elif context['type'] == 'doctor':
+        elif context['chat_type'] == 'doctor':
             #Get the doctor's patients
             with open("credentials/credentials.json") as f:
                 users = json.load(f)
-
-            context['access_patients'] = users['credentials']['usernames'][result['username']]['patients']
+                accessible_patients = users['credentials']['usernames'][result['username']]['patients']
             
+            final_response, current_patient, explanation, alert_message = chatbot.get_chat_response(prompt, accessible_patients)
 
-            doc_response = chatbot.get_chat_response(prompt, context['access_patients'])
-            response = doc_response['response']
-            explanation = doc_response['explanation']
-            context['current_patient'] = doc_response['current_patient']
-        else:
-            response, explanation = chatbot.get_chat_response(prompt)
+            new_response = Message(user=False, content=final_response, explanation=explanation, patient=current_patient, alert=alert_message)
+
+        else: #Intranet or Internet
+            response, sources = chatbot.get_chat_response(prompt)
+
+            new_response = Message(user=False, content=response, sources=sources)
         
-        #Update the conversation with the new messages and the time the update took place
-        conversation['messages'].append(prompt)
-        conversation['messages'].append(response)
-        conversation['explanations'].append(explanation)
-        conversation['time'] = time.time()
+
+        #The prompt/query is the same independently of the type of response we want
+        new_query = Message(user=True, content=prompt)
+
+        # Add the new messages and update the conversation
+        conversation['messages'].append(new_query)
+        conversation['messages'].append(new_response)
+        conversation['last_updated'] = time.time()
         
     elif request.method == 'DELETE':
         #New chatbot to clear its memory
-        _new_chatbot(context['type'])
+        _new_chatbot(context['chat_type'])
     
     return conversation
 

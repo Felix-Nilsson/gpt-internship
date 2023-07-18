@@ -9,7 +9,7 @@
 
         await fetch("http://localhost:5001/context", {
             method: "PUT",
-            body: JSON.stringify({'type': type}),
+            body: JSON.stringify({'chat_type': type}),
             headers: {"Content-type": "application/json; charset=UTF-8"}
         });
         

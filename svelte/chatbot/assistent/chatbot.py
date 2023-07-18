@@ -33,14 +33,22 @@ class Chatbot:
             return None
 
     def get_chat_response(self,query: str, patients: list[str], remember=True, model='gpt-3.5-turbo-0613'):
-        """Takes a query and a list of patients whose information the doctor can access, returns a response to the query"""
+        """Takes a query and a list of patients whose information the doctor can access, returns a response to the query (plus some additional information).
+        
+        :param query: The query/prompt.
+        :param patients: If doctor list of accessible patients, if patient list of only patient ID.
 
-        #Dict to return, should contain all needed information
-        complete_response = {
-            'response': '',
-            'current_patient': '',
-            'alert': ''
-        }
+        :return final_response: AI Response to the prompt.
+        :return current_patient: The patient discussed in the message, or None.
+        :return explanation: The AI's explanation/thought process, or None?
+        :return alert_message: Alert message if needeed, or None.
+        """
+
+        #The return values
+        final_response = ''
+        current_patient = ''
+        explanation = ''
+        alert_message = ''
 
         #System messages to describe what the gpt is supposed to do
         sys_message_doctor = f'''
@@ -56,43 +64,41 @@ class Chatbot:
         Du svarar alltid kort och koncist, inte längre än 2 meningar.
         Du får använda informationen avgränsad av tre understreck.
         '''
-
-        current_patient_id = ''
         
         if self.user_type == 'doctor':
             #Find patient ID in the query
-            current_patient_id = self.find_patient_id(query)
+            current_patient = self.find_patient_id(query)
 
 
-            if current_patient_id == None:
-                #No patient ID included in the query - continue using the last id (if any)
+            if current_patient == None:
+                #No patient ID included in the query - continue using the last id (if any)  - potential angle for alert
                 if self.patient_ids != []:
-                    current_patient_id = self.patient_ids[0]
+                    current_patient = self.patient_ids[0]
 
-            elif current_patient_id in patients:
+            elif current_patient in patients:
                 #The doctor has access to the patient
-                self.patient_ids.insert(0,current_patient_id)
+                self.patient_ids.insert(0,current_patient)
 
-            elif not current_patient_id in patients:
+            elif not current_patient in patients:
                 #The doctor does not have access to the patient
-                complete_response['alert'] = 'Du har ej tillgång till den patienten'
+                alert_message = 'Du har ej tillgång till den patienten'
 
             #Set the explanation for the response
-            complete_response['explanation'] = 'All information kommer från patienternas journaler'
+            explanation = 'All information kommer från patienternas journaler'
 
 
         elif self.user_type == 'patient':
             #Use the patient's own ID
-            current_patient_id = patients[0]
+            current_patient = patients[0]
 
             #Set the explanation for the response
-            complete_response['explanation'] = 'All information kommer från din journal'
+            explanation = 'All information kommer från din journal'
 
 
         #Get patient data related to the query
         patient_data = ''
-        if current_patient_id != '' and current_patient_id != None:
-            patient_data = query_db(query=query,id=current_patient_id,name='patientrecords')
+        if current_patient != '' and current_patient != None:
+            patient_data = query_db(query=query,id=current_patient,name='patientrecords')
             patient_data = ' '.join(patient_data['documents'][0])
 
         
@@ -126,9 +132,9 @@ class Chatbot:
         #Add the response to the conversation memory
         messages.append({'role':'assistant','content':response.choices[0].message['content']})
 
-        #Assemble the complete reponse
-        complete_response['response'] = response.choices[0].message['content']
-        complete_response['current_patient'] = current_patient_id
+        
 
-        return(complete_response)
+        final_response = response.choices[0].message['content']
+
+        return final_response, current_patient, explanation, alert_message
 

@@ -9,7 +9,7 @@
 
     let last_fetched = 1;
     let messages = [];
-    let explanations = [];
+    //let explanations = [];
     let showModal = false;
     let element;
 
@@ -21,42 +21,33 @@
 
 
     //Get the conversation from the backend and update the frontend, force forces an overwrite of the current values even if the backend values are the same
-    async function check_for_messages(max_iterations=30, force=false) {
+    async function check_for_messages(_depth = 0) {
 
-        for (let i = 0; i < max_iterations; i++) {
+        console.log("Checking for updated conversation...");
 
-            console.log('checking for updated conversation')
+        //Check
+        const response = await fetch(DATA_URL);
+        const data = await response.json();
+        
+        let new_time = data['last_updated'];
+        
+        //If the conversation has been updated since we last checked, update local copy
+        if (new_time > last_fetched){
 
-            //Check
-            const response = await fetch(DATA_URL);
-            const data = await response.json();
+            console.log("Updated conversation found!");
             
-            console.log("last: " + String(last_fetched) + " conv time: " + data['time']);
+            last_fetched = new_time;
 
-            let new_time = data['time'];
-            
-            //Check if the conversation has been updated,
-            if (new_time > last_fetched || force){
-                
-                last_fetched = new_time;
-
-                let conversation = data['messages'];
-                loading = false
-                messages = conversation;
-                await tick();
-                scrollToBottom(element);
-
-                let expl = data['explanations'];
-
-                for (let i = 0; i < expl.length; i++) {
-                    explanations[i] = {
-                        tool: expl[i][0]["tool"],
-                        tool_input: expl[i][0]["tool_input"],
-                        sources: expl[i][1]
-                    }
-                }
-
-                break;
+            let conversation = data['messages'];
+            loading = false
+            messages = conversation;
+            await tick();
+            scrollToBottom(element);
+        }
+        else {
+            //_depth is just to stop the function from ever falling into a never-ending recursion
+            if (_depth < 30) {
+                check_for_messages(_depth = _depth + 1);
             }
         }
     }
@@ -73,18 +64,15 @@
 
     export { check_for_messages , new_message_loading };
 
-    //let curr_tool = ""
-    //let curr_input = ""
-    let curr_sources = []
 
-    async function modalButtonPressed(explanation_id) {
+    let current_modal_message_id = 0;
 
-        let id = explanation_id - 1;
-        id /= 2;
+    async function modalButtonPressed(message_id) {
 
-        //curr_tool =  explanations[id]["tool"];
-        //curr_input = explanations[id]["tool_input"];
-        curr_sources = explanations[id]["sources"];
+        current_modal_message_id = message_id;
+
+        //sources = messages[message_id]["sources"];
+        //explanation = messages[message_id]["explanation"]
 
         showModal = true;
     }
@@ -111,19 +99,22 @@
         <Stack spacing="lg">
             {#if messages.length != 0}
                 {#each messages as message, i}
-                    {#if (i % 2 == 0)}
+                    
+                    {#if (message['user'])} 
+                        <!--User bubble-->
                         <Flex justify="left">
-                            <UserBubble>{message}</UserBubble>
+                            <UserBubble>{message['content']}</UserBubble>
                             <div style="width: 35vw; "></div>
                         </Flex>
                     {:else}
-                        <Flex justify="right">
+                        <!--AI bubble-->
+                        <Flex justify="right"> 
                             <div style="width: 35vw;"></div>
                             <AIBubble>
-                                {message}
+                                {message['content']}
                                 {#if context['type'] == "doctor"}
                                 <Space h="xs" />
-                                <Center>
+                                <Center> <!--Responsibility text-->
                                     <Text
                                         size='sm'
                                         weight='semibold'
@@ -133,9 +124,12 @@
                                 </Center>
                                 {/if}
                             </AIBubble>
+
+                            <!--Modal button-->
                             <Button on:click={() => modalButtonPressed(i)} variant='subtle' radius="sm" size="xs" ripple> ? </Button>
                         </Flex>
                     {/if}
+
                 {/each}
             {/if}
 
@@ -163,13 +157,13 @@
     <Box>
         <Overlay on:click={() => (showModal = false)} opacity={0.5} color='black' zIndex=4/>
     </Box>
-    <div style="position:fixed; top:10vh; left:15vw; width: 70vw; max-height: 80vh; z-index: 5; padding: 25px">
+    <div class="modal">
         <Paper style="position:relative; z-index: 5; max-height: 80vh; overflow:scroll;" shadow="md" color="white">
             <Title variant='gradient' gradient={{from: 'red', to: 'blue', deg: 45}}><b>Källor:</b></Title>
             <Space h="xl"/>
             <Stack spacing="xs">
-                {#if curr_sources != "!"}
-                    {#each curr_sources as source}
+                {#if messages[current_modal_message_id] != "!"}
+                    {#each messages[current_modal_message_id]['sources'][1] as source}
                         <Text>
                             <b>{source["title"]}</b> &nbsp;
                             <a href={source["link"]} target="_blank" rel="noopener noreferrer">{source["link"]}</a>
@@ -188,3 +182,22 @@
     </div>
     
 {/if}
+
+
+
+
+<style>
+
+    .modal {
+        position: fixed; 
+        top: 10vh; 
+        left: 15vw; 
+        width: 70vw; 
+        max-height: 80vh; 
+        z-index: 5; 
+        padding: 25px
+    }
+
+
+
+</style>

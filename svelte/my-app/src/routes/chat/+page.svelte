@@ -45,7 +45,7 @@
         const response = await fetch("http://localhost:5001/context");
 
         context = await response.json();
-        
+
         if (context['current_patient'] == null) {
             context['current_patient'] = ""
         }
@@ -77,12 +77,12 @@
 
     async function clear_backend() {
         await fetch(DATA_URL, {method: "DELETE"});
-        await update_conversation(1, true);
+        await update_conversation();
         await fetchContext();
     }
 
     async function get_curr_conv() {
-        await update_conversation(1, true);
+        await update_conversation();
     }
 
 </script>

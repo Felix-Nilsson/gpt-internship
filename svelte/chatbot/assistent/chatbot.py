@@ -46,9 +46,9 @@ class Chatbot:
 
         #The return values
         final_response = ''
-        current_patient = ''
-        explanation = ''
-        alert_message = ''
+        current_patient = None
+        explanation = None
+        alert_message = None
 
         #System messages to describe what the gpt is supposed to do
         sys_message_doctor = f'''

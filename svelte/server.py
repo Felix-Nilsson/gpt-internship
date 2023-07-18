@@ -39,7 +39,6 @@ class Message():
         :param explanations: Explanation/Thought process?       [Optional]
         :param patient: The patient discussed in the message    [Optional]
         :param alert: Alert message                             [Optional]
-        :return: returns a complete message
         """
 
         self.message = {
@@ -50,8 +49,6 @@ class Message():
             'patient': patient,
             'alert': alert,
         }
-
-        return self.message
 
     def get(self):
         return self.message
@@ -112,7 +109,7 @@ def _new_chatbot(chat_type):
     
     #Reset the context
     context = {
-        'chat_type': 'internet',
+        'chat_type': chat_type,
         #...
     }
 
@@ -123,16 +120,11 @@ def _new_chatbot(chat_type):
 async def chat_context():
     global context
 
-    print('CONTEXT GET/SET')
-    print('BEFORE  ' + str(context))
-
     if request.method == 'PUT':
-        context['chat_type'] = request.get_json()['chat_type'] #TODO THIS DOES NOT DO WHAT IT IS SUPPOSED???
-        print('REQUEST CONTENT  ' + request.get_json()['chat_type'])
+        context['chat_type'] = request.get_json()['chat_type'] 
     
         #Change to chatbot of current type
         _new_chatbot(context['chat_type'])
-        print('AFTER  ' + str(context))
 
     return context
 
@@ -150,28 +142,28 @@ async def chat():
 
         #Get a response to the prompt
         if context['chat_type'] == 'patient':
-            pat_response = chatbot.get_chat_response(prompt, [result['username'][1:]])
+            pat_response, pat_current_patient, pat_explanation, pat_alert_message = chatbot.get_chat_response(prompt, [result['username'][1:]])
 
-            new_response = Message(user=False, content=pat_response['response'], explanation=pat_response['explanation'])
+            new_response = Message(user=False, content=pat_response, explanation=pat_explanation, patient=pat_current_patient, alert=pat_alert_message).get()
             
         elif context['chat_type'] == 'doctor':
-            #Get the doctor's patients
+            #Get list of the doctor's patients
             with open("credentials/credentials.json") as f:
                 users = json.load(f)
                 accessible_patients = users['credentials']['usernames'][result['username']]['patients']
             
-            final_response, current_patient, explanation, alert_message = chatbot.get_chat_response(prompt, accessible_patients)
+            doc_response, doc_current_patient, doc_explanation, doc_alert_message = chatbot.get_chat_response(prompt, accessible_patients)
 
-            new_response = Message(user=False, content=final_response, explanation=explanation, patient=current_patient, alert=alert_message)
+            new_response = Message(user=False, content=doc_response, explanation=doc_explanation, patient=doc_current_patient, alert=doc_alert_message).get()
 
         else: #Intranet or Internet
             response, sources = chatbot.get_chat_response(prompt)
 
-            new_response = Message(user=False, content=response, sources=sources)
+            new_response = Message(user=False, content=response, sources=sources).get()
         
 
         #The prompt/query is the same independently of the type of response we want
-        new_query = Message(user=True, content=prompt)
+        new_query = Message(user=True, content=prompt).get()
 
         # Add the new messages and update the conversation
         conversation['messages'].append(new_query)
@@ -182,6 +174,7 @@ async def chat():
         #New chatbot to clear its memory
         _new_chatbot(context['chat_type'])
     
+
     return conversation
 
 

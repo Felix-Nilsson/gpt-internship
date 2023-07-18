@@ -147,8 +147,11 @@
 </div>
 
 
+<!-- ALERT POPUP -->
 
-<!-- SOURCE MODAL -->
+
+
+<!-- MODAL -->
 {#if showModal}
     <Box>
         <Overlay on:click={() => (showModal = false)} opacity={0.5} color='black' zIndex=4/>
@@ -159,7 +162,7 @@
 
                 <!-- SOURCES TAB -->
                 <Tabs.Tab label='Källor' color='red'>
-                    {#if modal_message['sources'] != null && modal_message['sources'].length > 0 && modal_message['sources'] != "!"}
+                    {#if modal_message['sources'] != null && typeof modal_message['sources'] != "string"}
                         <Stack spacing="xs">
                             {#each modal_message['sources'][1] as source}
                                 <Text>
@@ -174,7 +177,7 @@
                     {:else}
                         <Center>
                             <Text style="line-height: 1.5;">
-                                Inga externa källor användes. Svaret är baserat på antingen intern data (t.ex. en patients journal) eller från chatbotens träning
+                                Inga externa källor användes. Svaret är baserat på antingen intern data (t.ex. en patients journal) eller från chatbotens träning. Mer information om intern data kommer (nog) så småningom.
                             </Text>
                         </Center>
                     {/if}

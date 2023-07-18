@@ -1,3 +1,5 @@
+import os
+
 from langchain.agents import AgentType
 from langchain.llms import OpenAI 
 from langchain.chat_models import ChatOpenAI
@@ -6,7 +8,7 @@ from langchain.chains.conversation.memory import ConversationBufferWindowMemory
 
 from .tools import Tool1177, ToolFASS, ToolInternetmedicin
 
-import os
+from ..chat_utils import Message
 
 class Chatbot:
     def __init__(self):
@@ -63,4 +65,4 @@ class Chatbot:
         if len(output['intermediate_steps']) != 0:
             sources = output['intermediate_steps'][0]
 
-        return response, sources
+        return Message(user=False, content=response, sources=sources)

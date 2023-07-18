@@ -6,6 +6,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(
 
 from db.chroma import query_db
 
+from ..chat_utils import Message
 
 class Chatbot:
     def __init__(self, user_type):
@@ -22,6 +23,7 @@ class Chatbot:
         self.memory = [{'role':'system', 'content': ''}]
 
 
+
     def find_patient_id(self,text: str):
         """Searches through text for a 6-digit patient ID"""
 
@@ -32,22 +34,21 @@ class Chatbot:
         else:
             return None
 
+
+
     def get_chat_response(self,query: str, patients: list[str], remember=True, model='gpt-3.5-turbo-0613'):
         """Takes a query and a list of patients whose information the doctor can access, returns a response to the query (plus some additional information).
         
         :param query: The query/prompt.
         :param patients: If doctor list of accessible patients, if patient list of only patient ID.
 
-        :return final_response: AI Response to the prompt.
-        :return current_patient: The patient discussed in the message, or None.
-        :return explanation: The AI's explanation/thought process, or None?
-        :return alert_message: Alert message if needeed, or None.
+        :return: Message with all needed information, check message.py in utils for more information.
         """
 
         #The return values
         final_response = ''
         current_patient = None
-        explanation = None
+        source = None
         alert_message = None
 
         #System messages to describe what the gpt is supposed to do
@@ -138,5 +139,5 @@ class Chatbot:
 
         final_response = response.choices[0].message['content']
 
-        return final_response, current_patient, explanation, alert_message
+        return Message(user=False, content=final_response, sources=source, patient=current_patient, alert=alert_message)
 

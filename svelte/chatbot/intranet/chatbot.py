@@ -5,6 +5,8 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(
 
 from db.chroma import query_db_doc
 
+from ..chat_utils import Message
+
 class Chatbot:
     def __init__(self):
 # ! Do not forget to set the environment variable !
@@ -59,4 +61,4 @@ class Chatbot:
 
         
 
-        return finished_response
+        return Message(user=False, content=finished_response)

@@ -83,8 +83,8 @@ class Chatbot:
                 #The doctor does not have access to the patient
                 alert_message = 'Du har ej tillgång till den patienten'
 
-            #Set the explanation for the response
-            explanation = 'All information kommer från patienternas journaler'
+            #Set the source of the information
+            source = 'All information kommer från patient ' + current_patient + 's dokument'
 
 
         elif self.user_type == 'patient':
@@ -92,7 +92,7 @@ class Chatbot:
             current_patient = patients[0]
 
             #Set the explanation for the response
-            explanation = 'All information kommer från din journal'
+            source = 'All information kommer från din journal'
 
 
         #Get patient data related to the query
@@ -133,6 +133,8 @@ class Chatbot:
         messages.append({'role':'assistant','content':response.choices[0].message['content']})
 
         
+        #Set the explanation for the response
+        #TODO explanation = thought_process
 
         final_response = response.choices[0].message['content']
 

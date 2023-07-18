@@ -158,53 +158,46 @@
             <Tabs grow>
 
                 <!-- SOURCES TAB -->
-                {#if modal_message['sources'] != null && modal_message['sources'].length > 0}
-                    <Tabs.Tab label='Källor' color='red'>
+                <Tabs.Tab label='Källor' color='red'>
+                    {#if modal_message['sources'] != null && modal_message['sources'].length > 0 && modal_message['sources'] != "!"}
                         <Stack spacing="xs">
-                            {#if modal_message['sources'] != "!"}
-                                {#each modal_message['sources'][1] as source}
-                                    <Text>
-                                        <b>{source["title"]}</b> &nbsp;
-                                        <a href={source["link"]} target="_blank" rel="noopener noreferrer">{source["link"]}</a>
-                                    </Text>
-                
-                                    <Text>Utdrag: "{source["snippet"]}"</Text>
-                                    <Space h="sm"/>
-                                {/each}
-                            {:else}
+                            {#each modal_message['sources'][1] as source}
                                 <Text>
-                                    ChatGPT använde sin träning, svaret kan innehålla felaktig information.
+                                    <b>{source["title"]}</b> &nbsp;
+                                    <a href={source["link"]} target="_blank" rel="noopener noreferrer">{source["link"]}</a>
                                 </Text>
-                            {/if}
+            
+                                <Text>Utdrag: "{source["snippet"]}"</Text>
+                                <Space h="sm"/>
+                            {/each}
                         </Stack>
-                    </Tabs.Tab>
-                {:else}
-                    <Tabs.Tab label='Källor' disabled></Tabs.Tab>
-                {/if}
+                    {:else}
+                        <Center>
+                            <Text style="line-height: 1.5;">
+                                Inga externa källor användes. Svaret är baserat på antingen intern data (t.ex. en patients journal) eller från chatbotens träning
+                            </Text>
+                        </Center>
+                    {/if}
+                </Tabs.Tab>
 
                 <!-- EXPLANATION TAB -->
                 {#if modal_message['explanation'] != null}
                     <Tabs.Tab label='Förklarning' color='orange'>
                         <Center>
-                            <Text
-                                size='sm'
-                                weight='semibold'
-                                variant='gradient'
-                                gradient={{from: 'red', to: 'blue', deg: 45}}
-                                style="line-height: 1.5;">
-                                    {modal_message['explanation']}
+                            <Text style="line-height: 1.5;">
+                                {modal_message['explanation']}
                             </Text>
                         </Center>
                     </Tabs.Tab>
                 {:else}
-                    <Tabs.Tab label='Förklaring' disabled></Tabs.Tab>
+                    <Tabs.Tab label='Förklaring' color='orange' disabled></Tabs.Tab>
                 {/if}
 
             </Tabs>
 
             <!-- CURRENTLY DISCUSSED PATIENT -->
             {#if modal_message['patient'] != null}
-                <Divider/>
+                <Divider size='sm' color='#E9ECEF'/>
                 <Center> 
                     <Text
                         size='sm'

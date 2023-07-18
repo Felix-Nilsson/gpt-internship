@@ -156,7 +156,12 @@ async def chat():
 
             new_response = Message(user=False, content=doc_response, explanation=doc_explanation, patient=doc_current_patient, alert=doc_alert_message).get()
 
-        else: #Intranet or Internet
+        elif context['chat_type'] == 'intranet':
+            response = chatbot.get_chat_response(prompt)
+
+            new_response = Message(user=False, content=response).get()
+
+        else: #internet
             response, sources = chatbot.get_chat_response(prompt)
 
             new_response = Message(user=False, content=response, sources=sources).get()

@@ -57,6 +57,6 @@ class Chatbot:
 
         finished_response = f'''{response.choices[0].message["content"]}'''
 
-        #print(status,self.patient_ids)
+        
 
-        return(finished_response, "PLACEHOLDER")
+        return finished_response

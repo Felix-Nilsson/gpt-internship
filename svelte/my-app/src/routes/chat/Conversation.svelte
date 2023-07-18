@@ -1,5 +1,5 @@
 <script>
-    import { Stack, Flex, Box, Button, Text, Paper, Overlay, Title, Space, Loader, Center } from '@svelteuidev/core';
+    import { Stack, Flex, Box, Button, Text, Paper, Overlay, Title, Space, Loader, Center, Tabs, Divider } from '@svelteuidev/core';
     import UserBubble from './UserBubble.svelte';
     import AIBubble from './AIBubble.svelte';
     import { onMount, tick } from 'svelte';
@@ -23,9 +23,7 @@
     //Get the conversation from the backend and update the frontend, force forces an overwrite of the current values even if the backend values are the same
     async function check_for_messages(_depth = 0) {
 
-        console.log("Checking for updated conversation...");
-
-        //Check
+        //Get the latest version of the conversation from the backend
         const response = await fetch(DATA_URL);
         const data = await response.json();
         
@@ -33,25 +31,26 @@
         
         //If the conversation has been updated since we last checked, update local copy
         if (new_time > last_fetched){
-
-            console.log("Updated conversation found!");
             
             last_fetched = new_time;
 
             let conversation = data['messages'];
             loading = false
             messages = conversation;
+
+            //Scroll
             await tick();
             scrollToBottom(element);
         }
         else {
-            //_depth is just to stop the function from ever falling into a never-ending recursion
-            if (_depth < 30) {
+            //_depth is just to stop the function from ever falling into a never-ending recursion, only checks 5 times
+            if (_depth < 5) {
                 check_for_messages(_depth = _depth + 1);
             }
         }
     }
 
+    //LOADING NEW RESPONSE
     let loading = false;
     let new_temp_message = "";
 
@@ -65,20 +64,17 @@
     export { check_for_messages , new_message_loading };
 
 
-    let current_modal_message_id = 0;
+    //MODAL FOR EXPLANATION/SOURCES
+    let modal_message;
 
     async function modalButtonPressed(message_id) {
-
-        current_modal_message_id = message_id;
-
-        //sources = messages[message_id]["sources"];
-        //explanation = messages[message_id]["explanation"]
+        modal_message = messages[message_id]
 
         showModal = true;
     }
 
 
-    //Context for the chat
+    //CONTEXT
     let context = {};
 
     async function fetchContext() {
@@ -159,25 +155,66 @@
     </Box>
     <div class="modal">
         <Paper style="position:relative; z-index: 5; max-height: 80vh; overflow:scroll;" shadow="md" color="white">
-            <Title variant='gradient' gradient={{from: 'red', to: 'blue', deg: 45}}><b>Källor:</b></Title>
-            <Space h="xl"/>
-            <Stack spacing="xs">
-                {#if messages[current_modal_message_id] != "!"}
-                    {#each messages[current_modal_message_id]['sources'][1] as source}
-                        <Text>
-                            <b>{source["title"]}</b> &nbsp;
-                            <a href={source["link"]} target="_blank" rel="noopener noreferrer">{source["link"]}</a>
-                        </Text>
-    
-                        <Text>Utdrag: "{source["snippet"]}"</Text>
-                        <Space h="sm"/>
-                    {/each}
+            <Tabs grow>
+
+                <!-- SOURCES TAB -->
+                {#if modal_message['sources'] != null && modal_message['sources'].length > 0}
+                    <Tabs.Tab label='Källor' color='red'>
+                        <Stack spacing="xs">
+                            {#if modal_message['sources'] != "!"}
+                                {#each modal_message['sources'][1] as source}
+                                    <Text>
+                                        <b>{source["title"]}</b> &nbsp;
+                                        <a href={source["link"]} target="_blank" rel="noopener noreferrer">{source["link"]}</a>
+                                    </Text>
+                
+                                    <Text>Utdrag: "{source["snippet"]}"</Text>
+                                    <Space h="sm"/>
+                                {/each}
+                            {:else}
+                                <Text>
+                                    ChatGPT använde sin träning, svaret kan innehålla felaktig information.
+                                </Text>
+                            {/if}
+                        </Stack>
+                    </Tabs.Tab>
                 {:else}
-                    <Text>
-                        ChatGPT använde sin träning, svaret kan innehålla felaktig information.
-                    </Text>
+                    <Tabs.Tab label='Källor' disabled></Tabs.Tab>
                 {/if}
-            </Stack>
+
+                <!-- EXPLANATION TAB -->
+                {#if modal_message['explanation'] != null}
+                    <Tabs.Tab label='Förklarning' color='orange'>
+                        <Center>
+                            <Text
+                                size='sm'
+                                weight='semibold'
+                                variant='gradient'
+                                gradient={{from: 'red', to: 'blue', deg: 45}}
+                                style="line-height: 1.5;">
+                                    {modal_message['explanation']}
+                            </Text>
+                        </Center>
+                    </Tabs.Tab>
+                {:else}
+                    <Tabs.Tab label='Förklaring' disabled></Tabs.Tab>
+                {/if}
+
+            </Tabs>
+
+            <!-- CURRENTLY DISCUSSED PATIENT -->
+            {#if modal_message['patient'] != null}
+                <Divider/>
+                <Center> 
+                    <Text
+                        size='sm'
+                        weight='semibold'
+                        style="line-height: 1.5;">
+                            Patient: {modal_message['patient']}
+                    </Text>
+                </Center>
+            {/if}
+            
         </Paper>
     </div>
     

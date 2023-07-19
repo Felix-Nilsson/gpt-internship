@@ -165,6 +165,7 @@
         />
     </div>
 
+    <!--Chat-type indicator-->
     <div class="header-type">
         <Title
         style="
@@ -174,11 +175,11 @@
         variant='gradient' 
         gradient={{from: 'blue', to: 'red', deg: 45}}
         order={1}>
-            {#if context["type"] == "patient"}
+            {#if context["chat_type"] == "patient"}
                 Patientassistent
-            {:else if context["type"] == "doctor"}
+            {:else if context["chat_type"] == "doctor"}
                 Läkarassistent
-            {:else if context["type"] == "intranet"}
+            {:else if context["chat_type"] == "intranet"}
                 Intranät
             {:else}
                 Internet

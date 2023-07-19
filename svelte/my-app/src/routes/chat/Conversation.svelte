@@ -21,6 +21,7 @@
         node.scroll({ top: node.scrollHeight, behavior: 'smooth' })
     }
 
+    const timer = ms => new Promise(res => setTimeout(res,ms))
 
     //Get the conversation from the backend and update the frontend, force forces an overwrite of the current values even if the backend values are the same
     async function check_for_messages(_depth = 0) {
@@ -60,6 +61,7 @@
         else {
             //_depth is just to stop the function from ever falling into a never-ending recursion, only checks 5 times
             if (_depth < 5) {
+                await timer(5000) //Wait 5 seconds before trying again
                 console.log('No response found, trying again...')
                 check_for_messages(_depth = _depth + 1);
             }

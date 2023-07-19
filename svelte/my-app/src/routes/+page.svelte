@@ -5,7 +5,7 @@
 
     async function set_assistant(type) {
 
-        console.log("setting assistant type to " + type + " and resetting any ongoing chats")
+        console.log("Setting assistant type to " + type + " and resetting any ongoing chats")
 
         await fetch("http://localhost:5001/context", {
             method: "PUT",

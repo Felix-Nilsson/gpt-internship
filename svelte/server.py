@@ -135,10 +135,11 @@ async def chat():
 
 
 
-@app.route("/credentials", methods=['GET', 'PUT'])
+@app.route("/credentials", methods=['GET', 'PUT', 'DELETE'])
 async def creds():
     global result
 
+    #Attempt login
     if request.method == 'PUT':
 
         #If the login is not successful, it is unsuccessful, indeed
@@ -171,6 +172,10 @@ async def creds():
                     result["username"] = username
                     result["success"] = True
 
+    #Logout
+    elif request.method == 'DELETE':
+        result["username"] = None
+        result["success"] = False
     
     return result
 

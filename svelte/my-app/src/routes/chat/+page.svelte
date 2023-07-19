@@ -1,12 +1,14 @@
 <script>
-    import { Group, Title, Input , Button, Center, Burger, Stack, Text } from '@svelteuidev/core';
+    import { Group, Title, Input , Button, Center, Burger, Stack, Text, Space } from '@svelteuidev/core';
     import Conversation from "./Conversation.svelte";
     import { onMount } from 'svelte';
+    import { goto } from '$app/navigation'
+
 
     let opened = false;
     let input = "";
 
-    let credentials = {};
+    let current_credentials = {'username': ''};
     let context = {};
 
     //Backend should be running on port 5001
@@ -45,28 +47,22 @@
         const response = await fetch("http://localhost:5001/context");
 
         context = await response.json();
-
-        if (context['current_patient'] == null) {
-            context['current_patient'] = ""
-        }
     }
 
     onMount(fetchContext);
 
 
-    // In your Svelte component
-
-    // Define a function to fetch the JSON data
+    //Attempt login
     async function fetchCredentials() {
         try {
-            const response = await fetch(CREDENTIALS_URL);
+            let response = await fetch(CREDENTIALS_URL);
+            response = await response.json()
             
             // Check if the response was successful
-            if (response.ok) {
-            credentials = await response.json();
-            } else {
-            console.error('Error:', response.status);
-            }
+            if (response['success']) {
+                current_credentials = response;
+            } 
+
         } catch (error) {
             console.error('Error:', error);
         }
@@ -74,6 +70,13 @@
 
     // Call the function to fetch the credentials when needed
     onMount(fetchCredentials);
+
+    async function logout() {
+        await fetch(CREDENTIALS_URL, {
+            method: "DELETE",
+        });
+        goto("/")
+    }
 
     async function clear_backend() {
         await fetch(DATA_URL, {method: "DELETE"});
@@ -96,20 +99,59 @@
 <!--Burger menu-->
 {#if opened}
 <div class="burger-menu"> 
-    <Stack align="center" spacing="xl">
-        <Title order={2} variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}}>
-            {credentials.username}
-        </Title>
-        <Button href='/chat' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} radius="lg" size="xl" ripple>
-            Internethjälp
-        </Button>
-        <Button href='/' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} radius="lg" size="xl" ripple>
-            Logga ut
+    <Stack align="center" spacing="lg">
+
+        <Text size='lg' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="text-align:center; line-height:1.5">
+            {current_credentials['username']}
+        </Text>
+
+        <Space h={30}/>
+
+        <Text size='lg' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="text-align:center; line-height:1.5">
+            Testa de andra Chatterna:
+        </Text>
+
+        <!-- NEEDS A ONCLICK FUNCTION THAT SETS THE CORRECT CHAT -->
+        <!-- IF WE EVEN WANT THESE, SURE IT DOES NOT MAKE SENSE TO MARKET THE DOCTOR ASSISTANT TO PATIENTS, etc... -->
+        <Button href='/chat' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} ripple disabled={(context['chat_type'] == 'patient') ? true : false}>
+            Patientassistent
         </Button>
 
+        <Button href='/chat' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} ripple disabled={(context['chat_type'] == 'doctor') ? true : false}>
+            Läkarassistent
+        </Button>
+        
+        <Button href='/chat' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} ripple disabled={(context['chat_type'] == 'intranet') ? true : false}>
+            Intranätassistent
+        </Button>
+
+        <Button href='/chat' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} ripple disabled={(context['chat_type'] == 'internet') ? true : false}>
+            Internethjälp
+        </Button>
+        
+        
+
+        {#if current_credentials['success']}
+            <!-- Username -->
+            <div style="position: absolute; top: 50px">
+                <Text size='lg' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">
+                    {current_credentials['username']}
+                </Text>
+            </div>
+
+            <!-- Logout button -->
+            <div style="position: absolute; bottom: 50px">
+                <Button type="button" on:click={logout} variant='outline' color='cyan' ripple>
+                    Logga ut
+                </Button>
+            </div>
+        {/if}
+        
+
         <!-- TODO TODO TODO TODO      Probably remove this, as it is just for convenience when testing     -->
-        <div style="height:200px"></div>
-        <Button type="button" on:click={get_curr_conv} variant='subtle' color='cyan' size='xs' ripple>uppdatera</Button>
+        <div style="position: absolute; bottom: 5px">
+            <Button type="button" on:click={get_curr_conv} variant='subtle' color='cyan' size='xs' ripple>uppdatera</Button>
+        </div>
     </Stack>
 </div>
 {/if}
@@ -117,19 +159,6 @@
 
 <!--Input area-->
 <div class="gradient-strip-bottom">
-
-    {#if context["type"] == 'doctor'}
-    <div style="position: absolute; left: 30px; top: -30px">
-        <Text
-        variant='gradient' 
-        gradient={{from: 'cyan', to: 'blue', deg: 45}} 
-        weight='semibold'
-        style="line-height: 1.5;">
-            Patient: {context["current_patient"]}
-        </Text>
-    </div>
-    {/if}
-
     <Center style="padding:20px">  
         <Group spacing="lg" direction="row">
                 <form autocomplete="off" on:submit|preventDefault={handleSubmit}>
@@ -254,7 +283,7 @@
     }
 
     .burger-menu {
-    background: white;
+    background: whitesmoke;
     /*background: rgb(34,193,195);*/
     /*background: linear-gradient(45deg, rgba(34,193,195,1) 0%, rgba(0,80,200,1) 50%, rgba(34,193,195,1) 100%);*/
     position: fixed; 

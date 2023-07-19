@@ -62,7 +62,7 @@
             //_depth is just to stop the function from ever falling into a never-ending recursion, only checks 5 times
             if (_depth < 5) {
                 await timer(5000) //Wait 5 seconds before trying again
-                console.log('No response found, trying again...')
+                console.log('No response found, trying again... (' + (_depth + 1) + '/5)')
                 check_for_messages(_depth = _depth + 1);
             }
         }

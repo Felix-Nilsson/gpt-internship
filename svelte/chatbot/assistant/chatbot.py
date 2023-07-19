@@ -70,28 +70,27 @@ class Chatbot:
         if self.user_type == 'doctor':
             #Find patient ID in the query
             current_patient = self.find_patient_id(query)
-            
-            source = 'All information kommer från patient ####s dokument.' #use .replace('####', id)
+        
 
             if current_patient == None:
 
                 if self.patient_ids == []: #No ID provided or in memory
                     current_patient = ''
-                    source = ''
+                    source = 'Inga källor har använts'
                     explanation = 'Assistenten kan inte svara på någon fråga om en patient då du varken gav den ett patient-ID eller har frågat om en patient tidigare.'
                 else: #No ID provided, get last discussed ID from memory
                     current_patient = self.patient_ids[0]
-                    source.replace('####', current_patient)
+                    source = 'All information kommer från patient ' + current_patient + 's dokument.'
                     explanation = 'Du gav inget patient-ID med denna fråga därför använder assistenten informationen från den patient som diskuterats innan.'
 
             elif current_patient in patients: #ID provided and access granted
-                source.replace('####', current_patient)
-                explanation = 'Du gav ett ID och du har tillgång till den patientens information.'
+                source = 'All information kommer från patient ' + current_patient + 's dokument.'
+                explanation = 'Du gav ett ID och har tillgång till patientens information.'
             
             else: #ID provided, NOT granted access
                 alert_message = 'Du har inte tillgång till patient ' + current_patient + 's journal.'
                 current_patient = ''
-                source = ''
+                source = 'Inga källor har använts'
                 explanation = 'Du gav ett ID men du har inte tillgång till den patientens information, därför kan inte assistenten svara.'
 
 

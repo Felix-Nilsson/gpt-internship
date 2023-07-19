@@ -152,9 +152,17 @@ async def creds():
         #Check if credentials exist in the "database"
         with open("credentials/credentials.json") as f:
             users = json.load(f)
+
+            #Chat-type dependant login
+            if context['chat_type'] == 'patient':
+                users = users['credentials']['patients']
+            elif context['chat_type'] == 'doctor' or context['chat_type'] == 'intranet':
+                users = users['credentials']['doctors']
+            else:
+                users = {}
             
-            if username in users["credentials"]["usernames"]:
-                reference_password = users["credentials"]["usernames"][username]["password"]
+            if username in users:
+                reference_password = users[username]["password"]
                 
                 # converting password to array of bytes
                 bytes = candidate_password.encode('utf-8')

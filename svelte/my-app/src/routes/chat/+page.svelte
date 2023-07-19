@@ -104,45 +104,49 @@
 
     <Stack align="center" spacing="lg">
 
-        <Text size='lg' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="text-align:center; line-height:1.5">
-            {current_credentials['username']}
+        <!--<Text size='lg' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">
+            Inloggad som:
         </Text>
+
+        Username
+        <Text size='lg' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">
+            {current_credentials['success'] ? current_credentials['username'] : '_'}
+        </Text>-->
+
+        
+        <Space h={20}/>
+
+        <div style="width: 160px;">
+            <Text size='xs' align='left' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">
+                <h1>{(current_credentials['success'] == true) ? 'Välkommen,' : ' '}</h1>
+                <h3>{(current_credentials['success'] == true) ? current_credentials['username'] : ' '}</h3>
+
+                <h2 id="about">Om</h2>
+                <p>Ett första försök att bygga en chatt-bot för läkare och patienter med GPT modeller, gjort i sammarbete mellan AI-Sweden och Sahlgrenska Universitetssjukhus under GPT Summer Internship 2023.</p>
+                <p>Skapat av:</p>
+                <ul>
+                    <li>Henrik Johansson</li>
+                    <li>Oskar Pauli</li>
+                    <li>Felix Nilsson</li>
+                </ul>
+                <p>🔗 <a href="https://my.ai.se/projects/287">Projektsida</a></p>
+                <p>📝 Note: Ingen av den patientdata som används är äkta, allt har generats specifikt för detta projektet.</p>
+            </Text>
+        </div>
 
         <Space h={30}/>
 
-        <Text size='lg' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="text-align:center; line-height:1.5">
-            Testa de andra Chatterna:
-        </Text>
 
-        <!-- NEEDS A ONCLICK FUNCTION THAT SETS THE CORRECT CHAT -->
-        <!-- IF WE EVEN WANT THESE, SURE IT DOES NOT MAKE SENSE TO MARKET THE DOCTOR ASSISTANT TO PATIENTS, etc... -->
-        <!-- on:click={() => function("chat_type")} -->
-        <Button href='/chat' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} ripple disabled={(context['chat_type'] == 'patient') ? true : false}>
-            Patientassistent
-        </Button>
-
-        <Button href='/chat' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} ripple disabled={(context['chat_type'] == 'doctor') ? true : false}>
-            Läkarassistent
-        </Button>
+        <div style="position: absolute; bottom: 110px">
+            <Button href='/chat' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} ripple disabled={(context['chat_type'] == 'internet') ? true : false}>
+                Internethjälp
+            </Button>
+        </div>
         
-        <Button href='/chat' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} ripple disabled={(context['chat_type'] == 'intranet') ? true : false}>
-            Intranätassistent
-        </Button>
 
-        <Button href='/chat' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} ripple disabled={(context['chat_type'] == 'internet') ? true : false}>
-            Internethjälp
-        </Button>
-        
         
 
         {#if current_credentials['success']}
-            <!-- Username -->
-            <div style="position: absolute; top: 50px">
-                <Text size='lg' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">
-                    {current_credentials['username']}
-                </Text>
-            </div>
-
             <!-- Logout button -->
             <div style="position: absolute; bottom: 50px">
                 <Button type="button" on:click={logout} variant='outline' color='cyan' ripple>

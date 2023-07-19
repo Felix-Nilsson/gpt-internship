@@ -71,6 +71,20 @@
     // Call the function to fetch the credentials when needed
     onMount(fetchCredentials);
 
+    // Could be done to be flexible, but don't know if it is worth it currently
+    async function goto_internet() {
+        await fetch("http://localhost:5001/context", {
+            method: "PUT",
+            body: JSON.stringify({'chat_type': 'internet'}),
+            headers: {"Content-type": "application/json; charset=UTF-8"}
+        });
+
+        //This is a bit of a hack, but it works (reloads the page after we change chat-type)
+        goto('/').then(
+            () => goto('/chat')
+        );
+    }
+
     async function logout() {
         await fetch(CREDENTIALS_URL, {
             method: "DELETE",
@@ -104,16 +118,6 @@
 
     <Stack align="center" spacing="lg">
 
-        <!--<Text size='lg' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">
-            Inloggad som:
-        </Text>
-
-        Username
-        <Text size='lg' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">
-            {current_credentials['success'] ? current_credentials['username'] : '_'}
-        </Text>-->
-
-        
         <Space h={20}/>
 
         <div style="width: 160px;">
@@ -134,18 +138,14 @@
             </Text>
         </div>
 
-        <Space h={30}/>
 
 
         <div style="position: absolute; bottom: 110px">
-            <Button href='/chat' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} ripple disabled={(context['chat_type'] == 'internet') ? true : false}>
-                Internethjälp
+            <Button on:click={goto_internet} variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} ripple disabled={(context['chat_type'] == 'internet') ? true : false}>
+                Internetassistent
             </Button>
         </div>
         
-
-        
-
         {#if current_credentials['success']}
             <!-- Logout button -->
             <div style="position: absolute; bottom: 50px">
@@ -221,9 +221,9 @@
             {:else if context["chat_type"] == "doctor"}
                 Läkarassistent
             {:else if context["chat_type"] == "intranet"}
-                Intranät
+                Intranätsassistent
             {:else}
-                Internet
+                Internetassistent
             {/if}
         </Title>
     </div>

@@ -1,16 +1,18 @@
 <script>
-    import { Stack, Flex, Box, Button, Text, Paper, Overlay, Title, Space, Loader, Center, Tabs, Divider } from '@svelteuidev/core';
+    import { Stack, Flex, Box, Button, Text, Paper, Overlay, Title, Space, Loader, Center, Tabs, Divider, Alert } from '@svelteuidev/core';
     import UserBubble from './UserBubble.svelte';
     import AIBubble from './AIBubble.svelte';
     import { onMount, tick } from 'svelte';
-
+    import { InfoCircled } from 'radix-icons-svelte';
 
     const DATA_URL = 'http://localhost:5001/chat'
 
     let last_fetched = 1;
     let messages = [];
     //let explanations = [];
-    let showModal = false;
+    let show_alert = false;
+    //let alert_message = null;
+    let show_modal = false;
     let element;
 
     onMount(() => scrollToBottom(element))
@@ -22,6 +24,8 @@
 
     //Get the conversation from the backend and update the frontend, force forces an overwrite of the current values even if the backend values are the same
     async function check_for_messages(_depth = 0) {
+
+        console.log('Checking for response...')
 
         //Get the latest version of the conversation from the backend
         const response = await fetch(DATA_URL);
@@ -35,8 +39,19 @@
             last_fetched = new_time;
 
             let conversation = data['messages'];
-            loading = false
+
+            loading = false;
             messages = conversation;
+
+            //Do alert
+            if (messages.length != 0) {
+                if (messages.slice(-1)[0]['alert'] != null) {
+                    show_alert = true;
+                } else {
+                    show_alert = false;
+                }
+                
+            }
 
             //Scroll
             await tick();
@@ -45,6 +60,7 @@
         else {
             //_depth is just to stop the function from ever falling into a never-ending recursion, only checks 5 times
             if (_depth < 5) {
+                console.log('No response found, trying again...')
                 check_for_messages(_depth = _depth + 1);
             }
         }
@@ -70,7 +86,7 @@
     async function modalButtonPressed(message_id) {
         modal_message = messages[message_id]
 
-        showModal = true;
+        show_modal = true;
     }
 
 
@@ -88,36 +104,39 @@
 
 </script>
 
-
-<div bind:this={element} style="position:absolute; left: 0px; right: 0px; top: 0px; bottom: 0px; overflow:auto">
-    <div style="position:relative; left: 15vw; width: 70vw;">
-        <Space h={100}/>
-        <Stack spacing="lg">
+<!-- CHAT -->
+<div bind:this={element} class="chat-area">
+    <Space h={100}/>
+    <Stack align="center" justify="flex-start" spacing="lg">
+        <div class="chat">
             {#if messages.length != 0}
                 {#each messages as message, i}
-                    
+
+                    <!--User bubble-->
                     {#if (message['user'])} 
-                        <!--User bubble-->
                         <Flex justify="left">
                             <UserBubble>{message['content']}</UserBubble>
-                            <div style="width: 35vw; "></div>
+                            <div class="chat-offset"></div>
                         </Flex>
+
+                    <!--AI bubble-->
                     {:else}
-                        <!--AI bubble-->
                         <Flex justify="right"> 
-                            <div style="width: 35vw;"></div>
+                            <div class="chat-offset"></div>
                             <AIBubble>
                                 {message['content']}
+
+                                <!--Responsibility text-->
                                 {#if context['type'] == "doctor"}
-                                <Space h="xs" />
-                                <Center> <!--Responsibility text-->
-                                    <Text
-                                        size='sm'
-                                        weight='semibold'
-                                        style="line-height: 1.5;">
-                                            *OBS* Du bär alltid ansvaret mot patienten
-                                    </Text>
-                                </Center>
+                                    <Space h="xs" />
+                                    <Center> 
+                                        <Text
+                                            size='sm'
+                                            weight='semibold'
+                                            style="line-height: 1.5;">
+                                                *OBS* Du bär alltid ansvaret mot patienten
+                                        </Text>
+                                    </Center>
                                 {/if}
                             </AIBubble>
 
@@ -133,28 +152,34 @@
             {#if loading}
                 <Flex justify="left">
                     <UserBubble>{new_temp_message}</UserBubble>
-                    <div style="width: 35vw; "></div>
+                    <div class="chat-offset"></div>
                 </Flex>
                 <Flex justify="right">
-                    <div style="width: 35vw; "></div>
+                    <div class="chat-offset"></div>
                     <AIBubble><Loader variant='dots' color='orange'/></AIBubble>
                     <div style="width: 33px; "></div>
                 </Flex>
             {/if}
-        </Stack>
-        <Space h={100}/>
-    </div>
+        </div>
+    </Stack>
+    <Space h={120}/>
 </div>
 
 
 <!-- ALERT POPUP -->
-
+{#if show_alert}
+    <div class="alert-area">
+        <Alert icon={InfoCircled}  title="OBS!" variant="light" color="red" withCloseButton closeButtonLabel="Stäng Varninig">
+            {messages.slice(-1)[0]['alert']}
+        </Alert>
+    </div>
+{/if}
 
 
 <!-- MODAL -->
-{#if showModal}
+{#if show_modal}
     <Box>
-        <Overlay on:click={() => (showModal = false)} opacity={0.5} color='black' zIndex=4/>
+        <Overlay on:click={() => (show_modal = false)} opacity={0.5} color='black' zIndex=4/>
     </Box>
     <div class="modal">
         <Paper style="position:relative; z-index: 5; max-height: 80vh; overflow:scroll;" shadow="md" color="white">
@@ -162,24 +187,34 @@
 
                 <!-- SOURCES TAB -->
                 <Tabs.Tab label='Källor' color='red'>
-                    {#if modal_message['sources'] != null && typeof modal_message['sources'] != "string"}
+                    <!--No source-->
+                    {#if modal_message['sources'] == null}
+                        <Center>
+                            <Text style="line-height: 1.5;">
+                                Inga externa källor användes. Svaret är baserat på antingen intern data (t.ex. en patients journal) eller från chatbotens träning. Mer information om intern data kommer (nog) så småningom.
+                            </Text>
+                        </Center>
+
+                    <!--String source-->
+                    {:else if typeof modal_message['sources'] == 'string'}
+                        <Center>
+                            <Text style="line-height: 1.5;">
+                                {modal_message['sources']}
+                            </Text>
+                        </Center>
+
+                    <!--Formatted source with links-->
+                    {:else}
                         <Stack spacing="xs">
                             {#each modal_message['sources'][1] as source}
                                 <Text>
                                     <b>{source["title"]}</b> &nbsp;
                                     <a href={source["link"]} target="_blank" rel="noopener noreferrer">{source["link"]}</a>
                                 </Text>
-            
                                 <Text>Utdrag: "{source["snippet"]}"</Text>
                                 <Space h="sm"/>
                             {/each}
                         </Stack>
-                    {:else}
-                        <Center>
-                            <Text style="line-height: 1.5;">
-                                Inga externa källor användes. Svaret är baserat på antingen intern data (t.ex. en patients journal) eller från chatbotens träning. Mer information om intern data kommer (nog) så småningom.
-                            </Text>
-                        </Center>
                     {/if}
                 </Tabs.Tab>
 
@@ -221,6 +256,25 @@
 
 <style>
 
+    .chat-area {
+        position: absolute; 
+        left: 0px; 
+        right: 0px; 
+        top: 0px; 
+        bottom: 0px; 
+        overflow: auto;
+    }
+
+    .chat {
+        position: relative;
+        min-width: 500px;
+        max-width: 1000px;
+    }
+
+    .chat-offset {
+        width: 400px;
+    }
+
     .modal {
         position: fixed; 
         top: 10vh; 
@@ -231,6 +285,13 @@
         padding: 25px
     }
 
+    .alert-area {
+        position: fixed;
+        top: 90px;
+        right: 50px;
+        max-height: 200px;
+        width: max-content;
+    }
 
 
 </style>

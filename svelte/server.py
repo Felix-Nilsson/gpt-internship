@@ -126,6 +126,8 @@ async def chat():
     elif request.method == 'DELETE':
         #New chatbot to clear its memory
         _new_chatbot(context['chat_type'])
+        conversation['last_updated'] = time.time()
+
     
 
     return conversation

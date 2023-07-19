@@ -1,5 +1,5 @@
 <script>
-    import { Group, Title, Input , Button, Center, Burger, Stack, Text, Space } from '@svelteuidev/core';
+    import { Group, Title, Input , Button, Center, Burger, Stack, Text, Space, Divider } from '@svelteuidev/core';
     import Conversation from "./Conversation.svelte";
     import { onMount } from 'svelte';
     import { goto } from '$app/navigation'
@@ -94,11 +94,14 @@
 <!--Conversation-->
 <Conversation bind:check_for_messages={update_conversation} bind:new_message_loading={new_message_load_animation}></Conversation>
 
-
-
 <!--Burger menu-->
 {#if opened}
 <div class="burger-menu"> 
+
+    <div style="position:absolute; top:0; right:0; height:100vh">
+        <Divider orientation='vertical'/>
+    </div>
+
     <Stack align="center" spacing="lg">
 
         <Text size='lg' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="text-align:center; line-height:1.5">
@@ -113,6 +116,7 @@
 
         <!-- NEEDS A ONCLICK FUNCTION THAT SETS THE CORRECT CHAT -->
         <!-- IF WE EVEN WANT THESE, SURE IT DOES NOT MAKE SENSE TO MARKET THE DOCTOR ASSISTANT TO PATIENTS, etc... -->
+        <!-- on:click={() => function("chat_type")} -->
         <Button href='/chat' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} ripple disabled={(context['chat_type'] == 'patient') ? true : false}>
             Patientassistent
         </Button>
@@ -185,6 +189,10 @@
 
 <!--Header-->
 <div class="header">
+
+    <div style="position:absolute; bottom:0; left:0; width:100vw;">
+        <Divider style="margin:0;"/>
+    </div>
 
     <!--Burger button-->
     <div class="burger-button">
@@ -273,25 +281,24 @@
     }
 
     .gradient-strip-bottom {
-    background: rgb(34,193,195);
-    background: linear-gradient(45deg, rgba(34,193,195,1) 0%, rgba(0,80,200,1) 50%, rgba(34,193,195,1) 100%);
-    position: fixed; 
-    bottom: 0; 
-    left: 0; 
-    right: 0; 
-    height: 80px;
+        background: rgb(34,193,195);
+        background: linear-gradient(45deg, rgba(34,193,195,1) 0%, rgba(0,80,200,1) 50%, rgba(34,193,195,1) 100%);
+        position: fixed; 
+        bottom: 0; 
+        left: 0; 
+        right: 0; 
+        height: 80px;
     }
 
     .burger-menu {
-    background: whitesmoke;
-    /*background: rgb(34,193,195);*/
-    /*background: linear-gradient(45deg, rgba(34,193,195,1) 0%, rgba(0,80,200,1) 50%, rgba(34,193,195,1) 100%);*/
-    position: fixed; 
-    top: 80px; 
-    left: 0;  
-    bottom: 80px;
-    width: 200px;
-    padding-top: 50px;
+        background: white;
+        /*background: rgb(34,193,195);*/
+        /*background: linear-gradient(45deg, rgba(34,193,195,1) 0%, rgba(0,80,200,1) 50%, rgba(34,193,195,1) 100%);*/
+        position: fixed; 
+        top: 80px; 
+        left: 0;  
+        bottom: 80px;
+        width: 200px;
     }
 
 

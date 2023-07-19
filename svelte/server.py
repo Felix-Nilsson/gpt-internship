@@ -135,41 +135,36 @@ async def chat():
 
 
 
-@app.route("/credentials/get", methods=['GET'])
-async def get_creds():
-    return result
-
-@app.route("/credentials", methods=['POST'])
-async def set_creds():
+@app.route("/credentials", methods=['GET', 'PUT'])
+async def creds():
     global result
 
-    username = request.get_json()['username']
-    candidate_password = request.get_json()['password']
+    if request.method == 'PUT':
 
-    with open("credentials/credentials.json") as f:
-        users = json.load(f)
-        
-        if username in users["credentials"]["usernames"]:
-            reference_password = users["credentials"]["usernames"][username]["password"]
+        #If the login is not successful, it is unsuccessful, indeed
+        result["username"] = None
+        result["success"] = False
+
+        #Get username and password from the input
+        username = request.get_json()['username']
+        candidate_password = request.get_json()['password']
+
+        #Check if credentials exist in the "database"
+        with open("credentials/credentials.json") as f:
+            users = json.load(f)
             
-            # converting password to array of bytes
-            bytes = candidate_password.encode('utf-8')
+            if username in users["credentials"]["usernames"]:
+                reference_password = users["credentials"]["usernames"][username]["password"]
+                
+                # converting password to array of bytes
+                bytes = candidate_password.encode('utf-8')
 
-            if bcrypt.checkpw(bytes,reference_password.encode('utf-8')):
-                result["username"] = username
-                result["success"] = True
-    
-            else:
-                result["username"] = None
-                result["success"] = False
-            
-        else:
-            result["username"] = None
-            result["success"] = False
+                if bcrypt.checkpw(bytes,reference_password.encode('utf-8')):
+                    result["username"] = username
+                    result["success"] = True
 
-    await get_creds()
     
-    return "ok"
+    return result
 
 
 if __name__ == "__main__":

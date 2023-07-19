@@ -12,7 +12,7 @@
     //Backend should be running on port 5001
     const DATA_URL = 'http://localhost:5001/chat';
 
-    const CREDENTIALS_URL = 'http://localhost:5001/credentials/get'
+    const CREDENTIALS_URL = 'http://localhost:5001/credentials'
 
     let update_conversation;
     let new_message_load_animation;

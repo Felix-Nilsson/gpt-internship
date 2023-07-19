@@ -144,7 +144,7 @@
                             <Button on:click={() => modalButtonPressed(i)} variant='subtle' radius="sm" size="xs" ripple> ? </Button>
                         </Flex>
                     {/if}
-
+                    <Space h="lg"/>
                 {/each}
             {/if}
 
@@ -154,11 +154,13 @@
                     <UserBubble>{new_temp_message}</UserBubble>
                     <div class="chat-offset"></div>
                 </Flex>
+                <Space h="lg"/>
                 <Flex justify="right">
                     <div class="chat-offset"></div>
                     <AIBubble><Loader variant='dots' color='orange'/></AIBubble>
                     <div style="width: 33px; "></div>
                 </Flex>
+                <Space h="lg"/>
             {/if}
         </div>
     </Stack>
@@ -267,8 +269,7 @@
 
     .chat {
         position: relative;
-        min-width: 500px;
-        max-width: 1000px;
+        width: 1000px;
     }
 
     .chat-offset {

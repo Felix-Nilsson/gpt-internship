@@ -49,6 +49,7 @@ class Chatbot:
         final_response = ''
         current_patient = None
         source = None
+        explanation = None
         alert_message = None
 
         #System messages to describe what the gpt is supposed to do
@@ -69,32 +70,38 @@ class Chatbot:
         if self.user_type == 'doctor':
             #Find patient ID in the query
             current_patient = self.find_patient_id(query)
-
+            
+            source = 'All information kommer från patient ####s dokument.' #use .replace('####', id)
 
             if current_patient == None:
-                #No patient ID included in the query - continue using the last id (if any)  - potential angle for alert
-                if self.patient_ids != []:
+
+                if self.patient_ids == []: #No ID provided or in memory
+                    current_patient = ''
+                    source = ''
+                    explanation = 'Assistenten kan inte svara på någon fråga om en patient då du varken gav den ett patient-ID eller har frågat om en patient tidigare.'
+                else: #No ID provided, get last discussed ID from memory
                     current_patient = self.patient_ids[0]
+                    source.replace('####', current_patient)
+                    explanation = 'Du gav inget patient-ID med denna fråga därför använder assistenten informationen från den patient som diskuterats innan.'
 
-            elif current_patient in patients:
-                #The doctor has access to the patient
-                self.patient_ids.insert(0,current_patient)
-
-            elif not current_patient in patients:
-                #The doctor does not have access to the patient
-                alert_message = 'Du har ej tillgång till den patienten'
-
-            #Set the source of the information
-            source = 'All information kommer från patient ' + current_patient + 's dokument'
+            elif current_patient in patients: #ID provided and access granted
+                source.replace('####', current_patient)
+                explanation = 'Du gav ett ID och du har tillgång till den patientens information.'
+            
+            else: #ID provided, NOT granted access
+                alert_message = 'Du har inte tillgång till patient ' + current_patient + 's journal.'
+                current_patient = ''
+                source = ''
+                explanation = 'Du gav ett ID men du har inte tillgång till den patientens information, därför kan inte assistenten svara.'
 
 
         elif self.user_type == 'patient':
             #Use the patient's own ID
             current_patient = patients[0]
 
-            #Set the explanation for the response
-            source = 'All information kommer från din journal'
-
+            #Set the source and explanation for the response
+            source = 'All information kommer från din journal.'
+            explanation = 'Assistenten utgår alltid från informationen som finns tillgänglig i din egen journal.'
 
         #Get patient data related to the query
         patient_data = ''
@@ -139,5 +146,5 @@ class Chatbot:
 
         final_response = response.choices[0].message['content']
 
-        return Message(user=False, content=final_response, sources=source, patient=current_patient, alert=alert_message)
+        return Message(user=False, content=final_response, sources=source, explanation=explanation, patient=current_patient, alert=alert_message)
 

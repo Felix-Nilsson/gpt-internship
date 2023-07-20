@@ -104,7 +104,7 @@ async def chat():
             #Get list of the doctor's patients
             with open("credentials/credentials.json") as f:
                 users = json.load(f)
-                accessible_patients = users['credentials']['usernames'][result['username']]['patients']
+                accessible_patients = users['credentials']['doctors'][result['username']]['patients']
             
             assistant_message = chatbot.get_chat_response(prompt, accessible_patients)
 

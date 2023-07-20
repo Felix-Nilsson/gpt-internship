@@ -1,12 +1,10 @@
 <script>
-    import { Group, Title, Input , Button, Center, Burger, Stack, Text, Space, Divider, Flex, Paper, SimpleGrid } from '@svelteuidev/core';
+    import { Group, Title, Input , Button, Center, Burger, Stack, Text, Space, Divider, Flex, Paper, SimpleGrid, RadioGroup } from '@svelteuidev/core';
     import { scale, slide } from 'svelte/transition';
     import Conversation from "./Conversation.svelte";
     import { onMount } from 'svelte';
     import { goto } from '$app/navigation'
     import { ChevronDown, ChevronUp } from 'radix-icons-svelte';
-    import Radio from "./Radio.svelte"
-
 
     let opened = false;
     let show_settings = false;
@@ -25,14 +23,13 @@
 
 
     //Settings
-    let language_value = 0;
+    let language_value = 2;
 
     const language_options = [
-        { label: 'Enkelt', value: 0 },
-        { label: 'Vardagligt', value: 1 },
-        { label: 'Medicinskt', value: 2 }
+        { label: 'Enkelt', value: 1 },
+        { label: 'Vardagligt', value: 2 },
+        { label: 'Medicinskt', value: 3 }
     ];
-
 
 
     const handleSubmit = async (e) => {
@@ -237,37 +234,15 @@
                         <SimpleGrid  cols={2}>
                             <div>
                                 <Stack>
+                                    <Text size='md' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">Språknivå</Text>
 
-                                    <!--{#each language_options as label, value}
-                                        <Radio></Radio>
-                                    {/each}-->
-
-                                    <Radio legend='Språknivå' options={language_options}  bind:userSelected={language_value}/>
-                                    
-                                    <!--<Text size='xs' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5"></Text>-->
-                                    
+                                    <Text size='xs' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">
+                                        <RadioGroup value={language_value} items={language_options} color='red' size='sm' direction='column' spacing='xs' labelDirection='left'/>
+                                    </Text>
                                 </Stack>
                             </div>
-                            
-                            <!--<div>
-                                <Stack>
-                                    <Text size='md' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">Chattyp</Text>
-                                    {#if context['chat_type'] == 'patient'}
-                                    <Radio>
-                                        <Text size='sm' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">Patientassistent</Text>
-                                    </Radio>
-                                    {/if}
-                                    {#if context['chat_type'] == 'doctor' || context['chat_type'] == 'intranet' }
-                                    <Radio>
-                                        <Text size='sm' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">Läkarassistent</Text>
-                                    </Radio>
-                                    <Radio>
-                                        <Text size='sm' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">Intranätsassistent</Text>
-                                    </Radio>
-                                    {/if}
-                                    <Radio><Text size='sm' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">Internetassistent</Text></Radio>
-                                </Stack>
-                            </div>-->
+
+                            <!-- To add more settings, add a div with whatever buttons we want -->
                             
                         </SimpleGrid>
                     </Paper>

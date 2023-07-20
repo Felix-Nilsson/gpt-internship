@@ -1,9 +1,11 @@
 <script>
-    import { Group, Title, Input , Button, Center, Burger, Stack, Text, Space, Divider, Flex } from '@svelteuidev/core';
+    import { Group, Title, Input , Button, Center, Burger, Stack, Text, Space, Divider, Flex, Paper, SimpleGrid } from '@svelteuidev/core';
+    import { scale, slide } from 'svelte/transition';
     import Conversation from "./Conversation.svelte";
     import { onMount } from 'svelte';
     import { goto } from '$app/navigation'
-    import Icon from '@iconify/svelte';
+    import { ChevronDown, ChevronUp } from 'radix-icons-svelte';
+    import Radio from "./Radio.svelte"
 
 
     let opened = false;
@@ -20,6 +22,18 @@
 
     let update_conversation;
     let new_message_load_animation;
+
+
+    //Settings
+    let language_value = 0;
+
+    const language_options = [
+        { label: 'Enkelt', value: 0 },
+        { label: 'Vardagligt', value: 1 },
+        { label: 'Medicinskt', value: 2 }
+    ];
+
+
 
     const handleSubmit = async (e) => {
 
@@ -197,20 +211,70 @@
 <Center>
     <div class="settings">
         <Center>
-            <Button variant="subtle" size="xl" compact ripple>
-                <Flex justify="center" direction="column" override={{ gap: 0 }}>
-                    <Center>
-                        <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M3.13523 8.84197C3.3241 9.04343 3.64052 9.05363 3.84197 8.86477L7.5 5.43536L11.158 8.86477C11.3595 9.05363 11.6759 9.04343 11.8648 8.84197C12.0536 8.64051 12.0434 8.32409 11.842 8.13523L7.84197 4.38523C7.64964 4.20492 7.35036 4.20492 7.15803 4.38523L3.15803 8.13523C2.95657 8.32409 2.94637 8.64051 3.13523 8.84197Z" fill="Black" fill-rule="evenodd" clip-rule="evenodd"></path>
-                        </svg>
-                    </Center>
-                    <Center>
-                        <Text size="sm">
-                            Inställningar
-                        </Text>
-                    </Center>
-                </Flex>
-            </Button>
+            <Flex override={{ gap: 0 }} direction="column" align="center">
+                <!--Settings button-->
+                <Button on:click={() => (show_settings = !show_settings)} color="white" size="xl" compact ripple>
+                    <Flex justify="center" direction="column" override={{ gap: 0 }}>
+                        <Center>
+                            {#if show_settings == true}
+                            <ChevronDown color="black"/>
+                            {:else}
+                            <ChevronUp color="black"/>
+                            {/if}
+                        </Center>
+                        <Center>
+                            <Text size='sm' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">
+                                Inställningar
+                            </Text>
+                        </Center>
+                    </Flex>
+                </Button>
+
+                <!--Settings content-->
+                {#if show_settings == true}
+                <div class="settings-window" in:scale={{delay:0}}>
+                    <Paper>
+                        <SimpleGrid  cols={2}>
+                            <div>
+                                <Stack>
+
+                                    <!--{#each language_options as label, value}
+                                        <Radio></Radio>
+                                    {/each}-->
+
+                                    <Radio legend='Språknivå' options={language_options}  bind:userSelected={language_value}/>
+                                    
+                                    <!--<Text size='xs' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5"></Text>-->
+                                    
+                                </Stack>
+                            </div>
+                            
+                            <!--<div>
+                                <Stack>
+                                    <Text size='md' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">Chattyp</Text>
+                                    {#if context['chat_type'] == 'patient'}
+                                    <Radio>
+                                        <Text size='sm' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">Patientassistent</Text>
+                                    </Radio>
+                                    {/if}
+                                    {#if context['chat_type'] == 'doctor' || context['chat_type'] == 'intranet' }
+                                    <Radio>
+                                        <Text size='sm' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">Läkarassistent</Text>
+                                    </Radio>
+                                    <Radio>
+                                        <Text size='sm' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">Intranätsassistent</Text>
+                                    </Radio>
+                                    {/if}
+                                    <Radio><Text size='sm' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">Internetassistent</Text></Radio>
+                                </Stack>
+                            </div>-->
+                            
+                        </SimpleGrid>
+                    </Paper>
+                </div>
+                {/if}
+            </Flex>
+            
         </Center>
     </div>
 </Center>
@@ -289,8 +353,15 @@
         position: absolute; 
         margin: 85px; 
         bottom: 0; 
-        max-height:800px; 
-        width: 600px;
+        height: fit-content; 
+        width: 602px;
+    }
+
+    .settings-window {
+        max-height: 340px;
+        height: fit-content;
+        width: calc(602px - 2*10px - 2*15px);
+        padding: 15px;
     }
     
     .header {

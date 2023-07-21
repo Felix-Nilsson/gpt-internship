@@ -1,13 +1,11 @@
 <script>
-    import { Group, Title, Input , Button, Center, Burger, Stack, Text, Space, Divider, Flex, Paper, SimpleGrid, RadioGroup } from '@svelteuidev/core';
-    import { scale, slide } from 'svelte/transition';
+    import { Group, Title, Input , Button, Center, Burger, Stack, Text, Space, Divider } from '@svelteuidev/core';
     import Conversation from "./Conversation.svelte";
+    import Settings from "./Settings.svelte";
     import { onMount } from 'svelte';
     import { goto } from '$app/navigation'
-    import { ChevronDown, ChevronUp } from 'radix-icons-svelte';
 
     let opened = false;
-    let show_settings = false;
     let input = "";
 
     let current_credentials = {'username': ''};
@@ -20,16 +18,6 @@
 
     let update_conversation;
     let new_message_load_animation;
-
-
-    //Settings
-    let language_value = 2;
-
-    const language_options = [
-        { label: 'Enkelt', value: 1 },
-        { label: 'Vardagligt', value: 2 },
-        { label: 'Medicinskt', value: 3 }
-    ];
 
 
     const handleSubmit = async (e) => {
@@ -55,7 +43,7 @@
         await fetchContext();
 	}
 
-    //We only have chat-type setting, but more will come
+
     async function fetchContext() {
         const response = await fetch("http://localhost:5001/context");
 
@@ -84,10 +72,11 @@
     // Call the function to fetch the credentials when needed
     onMount(fetchCredentials);
 
-    // Could be done to be flexible, but don't know if it is worth it currently
+    
+    
     async function goto_internet() {
         await fetch("http://localhost:5001/context", {
-            method: "PUT",
+            method: "POST",
             body: JSON.stringify({'chat_type': 'internet'}),
             headers: {"Content-type": "application/json; charset=UTF-8"}
         });
@@ -204,57 +193,8 @@
 </div>
 
 
-<!--Settings menu-->
-<Center>
-    <div class="settings">
-        <Center>
-            <Flex override={{ gap: 0 }} direction="column" align="center">
-                <!--Settings button-->
-                <Button on:click={() => (show_settings = !show_settings)} color="white" size="xl" compact ripple>
-                    <Flex justify="center" direction="column" override={{ gap: 0 }}>
-                        <Center>
-                            {#if show_settings == true}
-                            <ChevronDown color="black"/>
-                            {:else}
-                            <ChevronUp color="black"/>
-                            {/if}
-                        </Center>
-                        <Center>
-                            <Text size='sm' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">
-                                Inställningar
-                            </Text>
-                        </Center>
-                    </Flex>
-                </Button>
-
-                <!--Settings content-->
-                {#if show_settings == true}
-                <div class="settings-window" in:scale={{delay:0}}>
-                    <Paper>
-                        <SimpleGrid  cols={2}>
-                            <div>
-                                <Stack>
-                                    <Text size='md' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">Språknivå</Text>
-
-                                    <Text size='xs' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">
-                                        <RadioGroup value={language_value} items={language_options} color='red' size='sm' direction='column' spacing='xs' labelDirection='left'/>
-                                    </Text>
-                                </Stack>
-                            </div>
-
-                            <!-- To add more settings, add a div with whatever buttons we want -->
-                            
-                        </SimpleGrid>
-                    </Paper>
-                </div>
-                {/if}
-            </Flex>
-            
-        </Center>
-    </div>
-</Center>
-
-
+<!--Settings-->
+<Settings></Settings>
 
 
 
@@ -323,22 +263,6 @@
 
 <style>
 
-    .settings {
-        background: transparent; 
-        position: absolute; 
-        margin: 85px; 
-        bottom: 0; 
-        height: fit-content; 
-        width: 602px;
-    }
-
-    .settings-window {
-        max-height: 340px;
-        height: fit-content;
-        width: calc(602px - 2*10px - 2*15px);
-        padding: 15px;
-    }
-    
     .header {
         position: fixed;
         background: white;

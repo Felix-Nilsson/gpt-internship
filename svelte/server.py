@@ -18,10 +18,16 @@ CORS(app)
 #Default to internet chatbot
 chatbot = InternetCB()
 
-context = {
+#Do not change this! It is used to reset context
+CLEAN_CONTEXT = {
     'chat_type': 'internet',
+    'settings': {},
     #...
 }
+
+#This is the context that we use
+context = CLEAN_CONTEXT.copy()
+
 
 conversation = {
     'last_updated': 0,
@@ -35,10 +41,6 @@ result = {
     'username': "None"
 }
 
-
-@app.route("/")
-def base():
-    return 'Sahlgrenska AI Hjälp "backend"'
 
 def _new_chatbot(chat_type):
     global chatbot
@@ -64,23 +66,56 @@ def _new_chatbot(chat_type):
         chatbot = InternetCB()
     
     #Reset the context
-    context = {
-        'chat_type': chat_type,
-        #...
-    }
+    context = CLEAN_CONTEXT.copy()
+
+
+
+@app.route("/")
+def base():
+    return 'Sahlgrenska AI Hjälp "backend"'
 
 
 
 # CONTEXT OF THE CHAT
-@app.route("/context", methods=['GET', 'PUT'])
+@app.route("/context", methods=['GET', 'POST', 'PUT', 'DELETE'])
 async def chat_context():
     global context
 
-    if request.method == 'PUT':
-        context['chat_type'] = request.get_json()['chat_type'] 
-    
+    # NEW CLEAN CHAT
+    if request.method == 'POST':
+
+        new_context = request.get_json()
+
+        #Apply new chat type
+        if new_context.get('chat_type') != None:
+            context['chat_type'] = new_context.get('chat_type')
+
+        #Apply new settings
+        if new_context.get('settings') != None:
+            context['settings'] = new_context.get('settings')
+
         #Change to chatbot of current type
         _new_chatbot(context['chat_type'])
+
+
+    # UPDATE CONTEXT WITHOUT NEW CHAT
+    elif request.method == 'PUT':
+
+        new_context = request.get_json()
+
+        #Apply new chat type
+        if new_context.get('chat_type') != None:
+            context['chat_type'] = new_context.get('chat_type')
+
+        #Apply new settings
+        if new_context.get('settings') != None:
+            context['settings'] = new_context.get('settings')
+    
+
+    # ONLY CLEAR CONTEXT
+    elif request.method == 'DELETE':
+        context = CLEAN_CONTEXT.copy()
+    
 
     return context
 
@@ -113,7 +148,7 @@ async def chat():
             assistant_message = chatbot.get_chat_response(prompt)
 
         else: #internet
-            assistant_message = chatbot.get_chat_response(prompt)
+            assistant_message = chatbot.get_chat_response(prompt, context['settings'])
 
         #The prompt/query is the same independently of the type of response we want
         user_message = Message(user=True, content=prompt)

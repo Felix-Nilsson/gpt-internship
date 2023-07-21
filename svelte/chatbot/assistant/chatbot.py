@@ -37,10 +37,11 @@ class Chatbot:
 
 
     def get_chat_response(self,query: str, patients: list[str], remember=True, model='gpt-3.5-turbo-0613'):
-        """Takes a query and a list of patients whose information the doctor can access, returns a response to the query (plus some additional information).
+        """Takes a query and a list of patients whose information the doctor can access, returns a Message containing all relevant information.
         
         :param query: The query/prompt.
         :param patients: If doctor list of accessible patients, if patient list of only patient ID.
+        :param remember: If the bot should remember the conversation.
 
         :return: Message with all needed information, check message.py in utils for more information.
         """

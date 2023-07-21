@@ -8,7 +8,7 @@
         console.log("Setting assistant type to " + type + " and resetting any ongoing chats")
 
         await fetch("http://localhost:5001/context", {
-            method: "PUT",
+            method: "POST",
             body: JSON.stringify({'chat_type': type}),
             headers: {"Content-type": "application/json; charset=UTF-8"}
         });

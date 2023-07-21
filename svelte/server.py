@@ -86,16 +86,11 @@ async def chat_context():
 
         new_context = request.get_json()
 
-        #Apply new chat type
-        if new_context.get('chat_type') != None:
-            context['chat_type'] = new_context.get('chat_type')
-
-        #Apply new settings
-        if new_context.get('settings') != None:
-            context['settings'] = new_context.get('settings')
-
         #Change to chatbot of current type
-        _new_chatbot(context['chat_type'])
+        _new_chatbot(new_context['chat_type'])
+
+        #Apply new chat type
+        context['chat_type'] = new_context.get('chat_type')
 
 
     # UPDATE CONTEXT WITHOUT NEW CHAT

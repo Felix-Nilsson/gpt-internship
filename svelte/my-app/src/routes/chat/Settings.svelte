@@ -49,11 +49,10 @@
                 }
             };
 
-            context['settings'] = {
-                'language_level': language_value,
-                'chosen_tools': chosen_tools
-            };
+            context['settings']['chosen_tools'] = chosen_tools;
         }
+
+        context['settings']['language_level'] = language_value;
 
         context['chat_type'] = chat_type
 

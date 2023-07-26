@@ -1,17 +1,32 @@
 import json
+import sys
+import os
+import yaml
 
-json_data = {"observation": [
-    {
-      "patient_id": 123123,
-      "aktivitet_id": 12345678,
-      "begrepp": "diagnos",
-      "kod": "J189 Pneumoni, ospecificerad",
-      "värde": "primär",
-      "startdatum": "2020-03-28",
-      "slutdatum": "2020-03-30"
-    }
-  ]}
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
-json_string = json.dumps(json_data).replace('"', '\\"')
+from db.chroma import query_db
 
-print(json_string)
+
+def preprocess():
+    json_data = query_db(
+        query="Vad var min observerade diagnos?",
+        id="123123",
+        name='patientrecords'
+    )
+
+    #todo: currently selects only best, maybe add functionality for top n
+    json_data = json_data["documents"][0][0]
+
+    json_string = json.dumps(json_data).replace('"', '\\"')
+
+    with open("promptfoo/promptfooconfig.yaml","r") as f:
+        doc = yaml.safe_load(f)
+    
+    doc["tests"][0]["vars"]["background"] = json_string
+    
+    with open("promptfoo/promptfooconfig.yaml", 'w') as f:
+        yaml.dump(doc, f)
+
+
+preprocess()

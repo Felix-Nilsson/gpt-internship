@@ -1,14 +1,32 @@
-# This configuration runs each prompt through a series of example inputs and checks if they meet requirements.
-
-prompts: [prompts.txt]
-providers: [openai:gpt-3.5-turbo-0613]
-
+prompts:
+- prompts.txt
+providers:
+- openai:gpt-3.5-turbo-0613
 tests:
-  - description: This a simulated question from a patient
-    vars:
-      id: 123213
-      input: Vad var min observerade diagnos?
-      background: "{\"observation\": [{\"patient_id\": 123123, \"aktivitet_id\": 12345678, \"begrepp\": \"diagnos\", \"kod\": \"J189 Pneumoni, ospecificerad\", \"v\u00e4rde\": \"prim\u00e4r\", \"startdatum\": \"2020-03-28\", \"slutdatum\": \"2020-03-30\"}]}"
-    assert:
-      - type: llm-rubric
-        value: Innehåller pneumoni  
+- assert:
+  - type: llm-rubric
+    value: "Inneh\xE5ller pneumoni"
+  description: This a simulated question from a patient
+  vars:
+    background: '\"{''patient_id'': 123123, ''aktivitet_id'': 59492, ''aktivitettyp'':
+      ''slutanteckning, l\u00e4kare'', ''v\u00e5rdgivare'': ''August B. Carlsson'',
+      ''v\u00e5rdgivarekategori'': ''L\u00c4K'', ''v\u00e5rdgivaretel'': ''031-123456'',
+      ''f\u00f6rvaltning'': ''SU'', ''verksamhet'': ''Medicinalavdelning X'', ''plats'':
+      ''Avdelning 357 Medicin \u00d6stra'', ''startdatum'': ''2020-03-28'', ''slutdatum'':
+      ''2020-03-30'', ''huvuddiagnos'': ''J189 Pneumoni, ospecificerad'', ''anamnes'':
+      ''feber, hosta och l\u00e5gt blodtryck'', ''socialt'': ''pension\u00e4r, tidigare
+      industriarbetare'', ''tidigare_sjukdomar'': ''Kolecystekomerad 2010. Tidigare
+      r\u00f6kare.'', ''nuvarande_sjukdomar'': ''Hypertoni. Atros. Dyspepsi.'', ''aktuellt'':
+      ''Inkommer med tv\u00e5 dagars anamnes p\u00e5 feber och hosta. Hypoton och
+      f\u00f6rh\u00f6jd andningsfrekvens vid inkomst. CABR 2. Lungrtg med h\u00f6gersidiga
+      infiltrat. CRP 270.'', ''sammanfattning'': ''Initieras p\u00e5 bensylpc 3gx3
+      och st\u00f6tdos Nebcina tillsammans med v\u00e4tska. Initial syrgaskr\u00e4vande.
+      F\u00f6rb\u00e4ttras p\u00e5 inslagen behandling. Feberfri sedan 29/3, syrgas
+      avvecklas. CRP mer \u00e4n halverad 30/3. \u00d6vers\u00e4tts samma dag p\u00e5
+      peroral behandling med fenoximetylpc'', ''bed\u00f6mning'': ''Bakteriell pneumoni.
+      Oklart agens, blododlingar negativa. Svarar bra p\u00e5 bensylpc'', ''planering'':
+      ''Fortsatt behandling med antibiotika i totalt 7 dagar till och me 4/3. Initieras
+      p\u00e5 fenoxmetylpc x 3 vid hemkomst.'', ''fr\u00e5n_plats'': ''HEM'', ''till_plats'':
+      ''HEM''}\"'
+    id: 123213
+    input: Vad var min observerade diagnos?

@@ -1,0 +1,14 @@
+# This configuration runs each prompt through a series of example inputs and checks if they meet requirements.
+
+prompts: [prompts.txt]
+providers: [openai:gpt-3.5-turbo-0613]
+
+tests:
+  - description: This a simulated question from a patient
+    vars:
+      id: 123213
+      input: Vad var min observerade diagnos?
+      background: "{\"observation\": [{\"patient_id\": 123123, \"aktivitet_id\": 12345678, \"begrepp\": \"diagnos\", \"kod\": \"J189 Pneumoni, ospecificerad\", \"v\u00e4rde\": \"prim\u00e4r\", \"startdatum\": \"2020-03-28\", \"slutdatum\": \"2020-03-30\"}]}"
+    assert:
+      - type: llm-rubric
+        value: Innehåller pneumoni  

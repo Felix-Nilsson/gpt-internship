@@ -30,3 +30,62 @@ tests:
       ''HEM''}\"'
     id: 123213
     input: Vad var min observerade diagnos?
+- assert:
+  - type: llm-rubric
+    value: "Innehåller paracetamol och ibuprofen"
+  description: This a simulated question from a patient
+  vars:
+    background: '{
+      "patient_id": 112200,
+      "aktivitet_id": 99887766,
+      "läkemedel": "Smärtstillande",
+      "substans": "Paracetamol",
+      "kategori": "Analgetika",
+      "atc_kod": "N02BE01",
+      "beredningsform": "Tablett",
+      "dosering": "500 mg vid behov, max 4 gånger dagligen",
+      "styrka": "500",
+      "styrka_enhet": "mg",
+      "vårdgivare": "Eva Eriksson",
+      "vårdgivarekategori": "LÄK",
+      "vårdgivaretel": "08-112200",
+      "verksamhet": "Ortopedimottagning",
+      "förmån": "Y",
+      "förskrivningsdatum": "2023-06-01",
+      "giltigt_till_och_med": "2023-06-08",
+      "senast_uttag": "-",
+      "tidigast_uttag_inom_förmån": "2023-06-01",
+      "förskriven_mängd": 40,
+      "senast_uttagen_mängd": 0,
+      "återstående_mängd": 40,
+      "uttag_antal": 0,
+      "uttag_kvar": 0
+    },
+    {
+      "patient_id": 112200,
+      "aktivitet_id": 876,
+      "läkemedel": "Antiinflammatoriskt",
+      "substans": "Ibuprofen",
+      "kategori": "Antiinflammatoriska och antireumatiska medel",
+      "atc_kod": "M01AE01",
+      "beredningsform": "Tablett",
+      "dosering": "400 mg vid behov, max 3 gånger dagligen",
+      "styrka": "400",
+      "styrka_enhet": "mg",
+      "vårdgivare": "Eva Eriksson",
+      "vårdgivarekategori": "LÄK",
+      "vårdgivaretel": "08-112200",
+      "verksamhet": "Ortopedimottagning",
+      "förmån": "Y",
+      "förskrivningsdatum": "2023-06-01",
+      "giltigt_till_och_med": "2023-06-08",
+      "senast_uttag": "-",
+      "tidigast_uttag_inom_förmån": "2023-06-01",
+      "förskriven_mängd": 30,
+      "senast_uttagen_mängd": 0,
+      "återstående_mängd": 30,
+      "uttag_antal": 0,
+      "uttag_kvar": 0
+    }'
+    id: 112200
+    input: Vilka läkemedel tar patienten?

@@ -10,15 +10,16 @@ from db.chroma import query_db
 
 def preprocess():
     json_data = query_db(
-        query="Vad var min observerade diagnos?",
-        id="123123",
+        query="Vad är orsaken bakom hjärtinfarkten som patienten upplevde?",
+        id="789012",
         name='patientrecords'
     )
 
     #todo: currently selects only best, maybe add functionality for top n
-    json_data = json_data["documents"][0][0]
+    return json_data["documents"]
 
-    json_string = json.dumps(json_data).replace('"', '\\"')
+
+    """json_string = json.dumps(json_data).replace('"', '\\"')
 
     with open("promptfoo/promptfooconfig.yaml","r") as f:
         doc = yaml.safe_load(f)
@@ -26,7 +27,7 @@ def preprocess():
     doc["tests"][0]["vars"]["background"] = json_string
     
     with open("promptfoo/promptfooconfig.yaml", 'w') as f:
-        yaml.dump(doc, f)
+        yaml.dump(doc, f)"""
 
 
-preprocess()
+print(preprocess())

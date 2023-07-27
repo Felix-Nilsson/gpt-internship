@@ -143,7 +143,7 @@ tests:
     value: "Innehåller rökning"
   description: This a simulated question from a patient
   vars:
-    background: "'patient_id': 789012, 'aktivitet_id': 98712345, 'aktivitettyp': 'slutanteckning, läkare', 'vårdgivare': 'Eva Johansson', 'vårdgivarekategori': 'LÄK', 'vårdgivaretel': '08-789012', 'förvaltning': 'SU', 'verksamhet': 'Kardiologiavdelning', 'plats': 'Avdelning 303 Hjärtmedicin', 'startdatum': '2023-08-15', 'slutdatum': '2023-08-20', 'huvuddiagnos': 'I21.9 Akut hjärtinfarkt, ospecificerad', 'anamnes': 'Patienten sökte vård på grund av bröstsmärta och andfåddhet.', 'socialt': 'Arbetar som lärare och är rökare.', 'tidigare_sjukdomar': '-', 'nuvarande_sjukdomar': '-', 'aktuellt': 'Patienten inkom med bröstsmärta och andfåddhet. Klinisk undersökning och EKG bekräftade diagnosen akut hjärtinfarkt. Behandling med trombolys och blodförtunnande medel inleddes.', 'sammanfattning': 'Patienten har diagnostiserats med akut hjärtinfarkt. Behandlingen inkluderar trombolys och blodförtunnande medel.', 'bedömning': 'Akut hjärtinfarkt', 'planering': 'Fortsatt behandling med trombolys och blodförtunnande medel. Uppföljning och livsstilsråd om rökstopp planeras.', 'från_plats': 'HEM', 'till_plats': 'HEM'}{'patient_id': 789012, 'aktivitet_id': 98712346, 'aktivitettyp': 'vård- och läkemedelsberättelse', 'vårdgivare': 'Eva Johansson', 'vårdgivarekategori': 'LÄK', 'vårdgivaretel': '08-789012', 'förvaltning': 'SU', 'verksamhet': 'Kardiologiavdelning', 'plats': 'Avdelning 303 Hjärtmedicin', 'startdatum': '2023-08-15', 'slutdatum': '2023-08-20', 'orsak': 'Du sökte vård på grund av bröstsmärta och andfåddhet.', 'läkemedelsberättelse': 'Du behandlades på avdelningen med trombolys och blodförtunnande medel för att behandla akut hjärtinfarkt.', 'planering': 'Du kommer fortsätta behandling med trombolys och blodförtunnande medel. En uppföljning och rådgivning om rökstopp är planerad.'}\nUID:20230626T080000Z-65432198@calendar.example.com\nDTSTART:20230815T080000Z\nDTEND:20230820T080000Z\nSUMMARY:Blodprov\nLOCATION:Avdelning 303 Hjärtmedicin\nDESCRIPTION:Patient 789012, Aktivitet 65432198, Diagnos: I21.9 Akut \nhjärtinfarkt, ospecificerad, Värde: Primär\n', [{'patient_id': 789012, 'aktivitet_id': '789', 'aktivitet_kod': 'J', 'aktivitet_typ': 'Uppföljning', 'vårdgivare': 'Eva Johansson', 'vårdgivarekategori': 'LÄK', 'startdatum': '2023-08-25', 'slutdatum': '-', 'uppföljningsbesök': 'Kardiologiavdelning', 'orsak': 'Uppföljning av akut hjärtinfarkt', 'status': 'Planerad'}]{'patient_id': 789012, 'akvititet_id': 953, 'läkemedel': 'Atorvastatin', 'substans': 'Atorvastatin', 'kategori': 'Lipidsänkande medel', 'atc_kod': 'C10AA05', 'beredningsform': 'Tablett', 'dosering': '40 mg en gång dagligen', 'styrka': '40', 'styrka_enhet': 'mg', 'vårdgivare': 'Eva Johansson', 'vårdgivarekategori': 'LÄK', 'vårdgivaretel': '08-789012', 'verksamhet': 'Kardiologiavdelning', 'förmån': 'Y', 'förskrivningsdatum': '2023-08-16', 'giltigt_till_och_med': '2024-08-16', 'senast_uttag': '-', 'tidigast_uttag_inom_förmån': '2023-08-16', 'förskriven_mängd': 30, 'senast_uttagen_mängd': 0, 'återstående_mängd': 30, 'uttag_antal': 1, 'uttag_kvar': 1}"
+    background: "{'patient_id': 789012, 'aktivitet_id': 98712345, 'aktivitettyp': 'slutanteckning, läkare', 'vårdgivare': 'Eva Johansson', 'vårdgivarekategori': 'LÄK', 'vårdgivaretel': '08-789012', 'förvaltning': 'SU', 'verksamhet': 'Kardiologiavdelning', 'plats': 'Avdelning 303 Hjärtmedicin', 'startdatum': '2023-08-15', 'slutdatum': '2023-08-20', 'huvuddiagnos': 'I21.9 Akut hjärtinfarkt, ospecificerad', 'anamnes': 'Patienten sökte vård på grund av bröstsmärta och andfåddhet.', 'socialt': 'Arbetar som lärare och är rökare.', 'tidigare_sjukdomar': '-', 'nuvarande_sjukdomar': '-', 'aktuellt': 'Patienten inkom med bröstsmärta och andfåddhet. Klinisk undersökning och EKG bekräftade diagnosen akut hjärtinfarkt. Behandling med trombolys och blodförtunnande medel inleddes.', 'sammanfattning': 'Patienten har diagnostiserats med akut hjärtinfarkt. Behandlingen inkluderar trombolys och blodförtunnande medel.', 'bedömning': 'Akut hjärtinfarkt', 'planering': 'Fortsatt behandling med trombolys och blodförtunnande medel. Uppföljning och livsstilsråd om rökstopp planeras.', 'från_plats': 'HEM', 'till_plats': 'HEM'}"
     id: 789012
     input: Vad är orsaken bakom hjärtinfarkten som patienten upplevde?
 
@@ -161,13 +161,7 @@ tests:
     value: "Innehåller 21 juni 2023"
   description: This a simulated question from a patient
   vars:
-    background: " UID:2345678901
-                  DTSTART:20230621T080000
-                  DTEND:20230621T090000
-                  SUMMARY:Laboratorieanalyser
-                  DESCRIPTION:Patienten ska genomgå laboratorieanalyser för att bedöma 
-                  allmän hälsa och identifiera eventuella underliggande faktorer.
-                  LOCATION:Kliniskt laboratorium"
+    background: " UID:2345678901 DTSTART:20230621T080000 DTEND:20230621T090000 SUMMARY:Laboratorieanalyser DESCRIPTION:Patienten ska genomgå laboratorieanalyser för att bedöma  allmän hälsa och identifiera eventuella underliggande faktorer. LOCATION:Kliniskt laboratorium"
     id: 987321
     input: När ska patienten genomgå laboratorieanalyser?
 
@@ -176,13 +170,7 @@ tests:
     value: "Innehåller 29 juni"
   description: This a simulated question from a patient
   vars:
-    background: " UID:20230629T090000Z-4
-                  SUMMARY:Spirometri
-                  DTSTART:20230629T090000Z
-                  DTEND:20230629T100000Z
-                  DESCRIPTION:Patienten ska genomgå spirometri för att bedöma lungfunktionen 
-                  och utesluta eventuella underliggande lungsjukdomar.
-                  LOCATION:Lungfunktionslaboratoriet"
+    background: "UID:20230629T090000Z-4 SUMMARY:Spirometri DTSTART:20230629T090000Z DTEND:20230629T100000Z DESCRIPTION:Patienten ska genomgå spirometri för att bedöma lungfunktionen  och utesluta eventuella underliggande lungsjukdomar. LOCATION:Lungfunktionslaboratoriet"
     id: 123123
     input: Vilken dag ska patienten undergå spirometri?
   

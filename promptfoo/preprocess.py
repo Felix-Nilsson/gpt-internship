@@ -16,7 +16,7 @@ def preprocess():
     )
 
     #todo: currently selects only best, maybe add functionality for top n
-    return json_data["documents"]
+    return json_data["documents"][0][0]
 
 
     """json_string = json.dumps(json_data).replace('"', '\\"')

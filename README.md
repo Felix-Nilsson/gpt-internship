@@ -31,8 +31,8 @@ Sahlgrenska AI Hjälp is designed primarily with swedish in mind.
 </p>
 
 
-## Table of Contents 
-- [Table of Contents](#table-of-contents)
+## 📚 Table of Contents 
+- [📚 Table of Contents](#table-of-contents)
 - [📋 Description](#-description)
 - [🚀 Getting Started](#-getting-started)
   - [Dependencies](#dependencies)

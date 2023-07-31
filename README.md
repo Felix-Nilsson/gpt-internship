@@ -20,7 +20,7 @@ Sahlgrenska AI Hjälp is a set of chatbots designed to assist medical staff and 
 The backend is made in python and flask, using GPT-3.5 Turbo and text-embedding-ada-002 from the OpenAI API.
 The Frontend is made with SvelteKit.
 
-This is one of three projects produced as part of AI Swedens "GPT Summer Internship" for the summer of 2023, and was a collaboration between AI Sweden and Sahlgrenska University Hospital in Gothenburg.
+This is one of three projects produced as part of AI Swedens "GPT Summer Internship" for the summer of 2023, and was a collaboration between AI Sweden and Sahlgrenska University Hospital in Gothenburg. It serves as a proof of concept for using LLMs in a healthcare context.
 
 Sahlgrenska AI Hjälp is designed primarily with swedish in mind.
 

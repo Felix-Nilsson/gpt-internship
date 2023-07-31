@@ -32,7 +32,7 @@ Sahlgrenska AI Hjälp is designed primarily with swedish in mind.
 
 
 ## 📚 Table of Contents 
-- [📚 Table of Contents](#table-of-contents)
+- [📚 Table of Contents](#-table-of-contents)
 - [📋 Description](#-description)
 - [🚀 Getting Started](#-getting-started)
   - [Dependencies](#dependencies)
@@ -109,38 +109,18 @@ Note:
 
 
 ## 🧪 Testing
-Testing applications that use LLMs can be difficult, and we are in the process of trying out different metrics and test cases to see what gives the best results.
-Currently, there is only a small handcrafted dataset consisting of queries made by our different fictional doctors, and reference responses that Sahlgrenska AI Hjälp should match.
-We check the likeness between these reference responses and the candidate response generated during the test. The candidate responses are generated in two ways:
-
-* Negative: Without access to background information, this is to check that Sahlgrenska AI Hjälp does not hallucinate a fictious answer. It should basically answer "I don't know".
-* Positive: With access, to see that the information is used and the likeness it high.
-
-This is done with the following metrics, and the latest scores are presented bellow:
-* [Cosine Similarity](https://en.wikipedia.org/wiki/Cosine_similarity), using [embedded](https://platform.openai.com/docs/guides/embeddings/what-are-embeddings) versions of reference and candidate answers
-* [BLEU score](https://en.wikipedia.org/wiki/BLEU)
-* GPT Testing: We prompt GPT to itself judge whether the generated candidate answer provides the same information as the reference answers.
+Recently, we swapped from a locally developed test suite to [promptfoo](https://promptfoo.dev/docs/intro/), an open source solution to systematically test prompts. It makes prompt testing easily accessible through a web interface and offers for example integration with git actions, which we intend to explore more at a later state.
 
 <p align="center">
-  <img src="Project_assistant/tests/results/plots/barplot_tot.png" />
+  <img src="img/promptfoo.png" />
 </p>
 
+To run testing with promptfoo,
+- `cd gpt-internship/promptfoo`
+- `npx promptfoo eval`
 
-
-In particular, the BLEU scoring and Embedded Similarity are most similar since for any test $x$ we have $x \in [0,1]$, whereas GPT tests have $x \in \{0,1\}$. With this in mind we present the variance in the tests:
-
-<p align="center">
-  <img src="Project_assistant/tests/results/plots/boxplot_avg.png" />
-</p>
-
-To run the tests for yourself run the following python script with the same positioning of the terminal as before:
-```
-python3 Project_assistant/tests/test.py
-```
-To run individiual tests or disable generation of plots, please edit the file ```test.py``` accordingly.
-
-Resulting data and plots are stored in the directories ```tests/results/data``` & ```tests/results/plots```.
-
+And if you want to access the tests through the web interface, also run:
+- `npx promptfoo view`
 
 ## ✍️ Authors
 [Henrik Johansson](https://github.com/henkejson)

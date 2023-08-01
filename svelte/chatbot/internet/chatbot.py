@@ -24,8 +24,9 @@ class Chatbot:
             return_messages=True
         )
 
-    def get_chat_response(self, query, settings={}):
+    def get_chat_response(self, query: str, settings: dict):
         """Takes a query and a dictionary containing relevant settings, returns a Message containing all relevant information.
+        (Internet)
         
         :param query: The query/prompt.
         :param settings: Settings for the chatbot (e.g. What tools it can use or the complexity of the language).
@@ -34,8 +35,6 @@ class Chatbot:
         """
 
         #Adapt language level from settings
-        #language_level_sys_message = 'Assistent svarar alltid så att ett barn ska kunna förstå'
-
         if settings['language_level'] == 'easy':
             language_level_sys_message = 'Du svarar alltid så att ett barn ska kunna förstå, med en snäll ton.'
         elif settings['language_level'] == 'complex':

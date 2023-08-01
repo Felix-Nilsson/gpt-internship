@@ -36,7 +36,7 @@ class Chatbot:
 
 
 
-    def get_chat_response(self,query: str, patients: list[str], remember=True, model='gpt-3.5-turbo-0613'):
+    def get_chat_response(self,query: str, settings: dict, patients: list[str], remember=True, model='gpt-3.5-turbo-0613'):
         """Takes a query and a list of patients whose information the doctor can access, returns a Message containing all relevant information.
         
         :param query: The query/prompt.
@@ -53,10 +53,19 @@ class Chatbot:
         explanation = None
         alert_message = None
 
+        #Adapt language level from settings
+        if settings['language_level'] == 'easy':
+            language_level_sys_message = 'Du svarar alltid så att ett barn ska kunna förstå, med en snäll ton.'
+        elif settings['language_level'] == 'complex':
+            language_level_sys_message = 'Du svarar alltid kort och koncist med en formell stil.'
+        else: #Anything other than easy or complex => normal (the default)
+            language_level_sys_message = 'Du svarar alltid med en trevlig ton och förtydligar allt så att en person som är opåläst om sjukvård ska kunna förstå.'
+
         #System messages to describe what the gpt is supposed to do
         sys_message_doctor = f'''
         Du är en AI-assistent för läkare på ett sjukhus.
         Du svarar alltid kort och koncist, inte längre än 2 meningar.
+        {language_level_sys_message}
         
         Ifall meddelandet ber om information om en specifik patient, använd informationen avgränsad av tre understreck.
         Ifall det inte finns någon information avgränsad av tre understreck, Svara med "Jag har inte tillräckligt med information"
@@ -65,6 +74,7 @@ class Chatbot:
         sys_message_patient = f'''
         Du är en AI-assistent för en patient på ett sjukhus.
         Du svarar alltid kort och koncist, inte längre än 2 meningar.
+        {language_level_sys_message}
         Du får använda informationen avgränsad av tre understreck.
         '''
         

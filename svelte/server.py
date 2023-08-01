@@ -126,7 +126,7 @@ async def chat():
 
         #Get a response to the prompt
         if context['chat_type'] == 'patient':
-            assistant_message = chatbot.get_chat_response(prompt, [result['username'][1:]])
+            assistant_message = chatbot.get_chat_response(prompt, context['settings'], [result['username'][1:]])
             
         elif context['chat_type'] == 'doctor':
             #Get list of the doctor's patients
@@ -134,7 +134,7 @@ async def chat():
                 users = json.load(f)
                 accessible_patients = users['credentials']['doctors'][result['username']]['patients']
             
-            assistant_message = chatbot.get_chat_response(prompt, accessible_patients)
+            assistant_message = chatbot.get_chat_response(prompt, context['settings'], accessible_patients)
 
 
         elif context['chat_type'] == 'intranet':

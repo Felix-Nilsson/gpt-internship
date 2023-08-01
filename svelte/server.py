@@ -138,7 +138,7 @@ async def chat():
 
 
         elif context['chat_type'] == 'intranet':
-            assistant_message = chatbot.get_chat_response(prompt)
+            assistant_message = chatbot.get_chat_response(prompt, context['settings'])
 
         else: #internet
             assistant_message = chatbot.get_chat_response(prompt, context['settings'])

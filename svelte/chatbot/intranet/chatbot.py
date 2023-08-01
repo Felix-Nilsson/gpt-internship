@@ -16,23 +16,37 @@ class Chatbot:
         self.memory = [{'role':'system', 'content': ""}]
 
 
-    def get_chat_response(self,query: str, remember=True, model='gpt-3.5-turbo-0613'):
+    def get_chat_response(self,query: str, settings: dict, remember=True, model='gpt-3.5-turbo-0613'):
         """Takes a query, returns a Message containing all relevant information.
+        (Intranet)
         
         :param query: The query/prompt.
+        :param settings: Settings for the chatbot (e.g. how complex/formal language the bot should use)
         :param remember: If the bot should remember the conversation.
 
         :return: Message with all needed information, check message.py in utils for more information.
         """
 
+        #Adapt language level from settings
+        if settings['language_level'] == 'easy':
+            language_level_sys_message = 'Du svarar alltid så att ett barn ska kunna förstå, med en snäll ton.'
+        elif settings['language_level'] == 'complex':
+            language_level_sys_message = 'Du svarar alltid kort och koncist med en formell stil.'
+        else: #Anything other than easy or complex => normal (the default)
+            language_level_sys_message = 'Du svarar alltid med en trevlig ton och förtydligar allt så att en person som är opåläst om sjukvård ska kunna förstå.'
         
+        explanation = f'''Enligt inställningarna ska assistenten svara med språknivå "{settings['language_level']}".'''
+
+
+
         #Get patient data related to the query
         data = query_db_doc(query=query, name="docs")
 
         #Context/System message to describe what the gpt is supposed to do
         context = f'''
         Du är en AI-assistent som ska svara på frågor.
-        Du svarar alltid kort och koncist, inte längre än 2 meningar.
+        Du svarar alltid kortare än 2 meningar.
+        {language_level_sys_message}
         Säg gärna vilken fil du hittade informationen i.
         Du får endast använda informationen som är avgränsad med tre understreck.
         Använd bara informationen som är avgränsad med tre understreck.
@@ -68,4 +82,4 @@ class Chatbot:
 
         
 
-        return Message(user=False, content=finished_response)
+        return Message(user=False, content=finished_response, explanation=explanation)

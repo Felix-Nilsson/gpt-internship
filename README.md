@@ -122,6 +122,13 @@ To run testing with promptfoo,
 And if you want to access the tests through the web interface, also run:
 - `npx promptfoo view`
 
+The tests are currently designed to test the quality of answers, not **retrieval**, and as such the test cases are already supplied with the best chunk as background information.
+It may be interesting to test both retrieval and answer quality, but since retrieval is currently handled by our Chroma database we elected to focus on the testing of the prompts.
+
+---
+
+The details of each test can be found in the file `gpt-internship/promptfoo/promptfooconfig.yaml`. Currently whether a test passes is determined by `llm-rubric` which means that a seperate LLM instance will observe some condition and pass judgement whether the condition was fulfilled. 
+
 ## ✍️ Authors
 [Henrik Johansson](https://github.com/henkejson)
 

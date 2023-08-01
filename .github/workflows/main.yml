@@ -9,6 +9,8 @@ jobs:
   evaluate:
     runs-on: ubuntu-latest
 
+    steps:
+
       # This step will actually run the before/after evaluation
       - name: Run promptfoo evaluation
         uses: typpo/promptfoo-action@v1

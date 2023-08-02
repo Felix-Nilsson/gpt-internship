@@ -8,6 +8,8 @@ from langchain.chains.conversation.memory import ConversationBufferWindowMemory
 
 from .tools import Tool1177, ToolFASS, ToolInternetmedicin
 
+import openai
+
 from ..chat_utils import Message
 
 class Chatbot:
@@ -34,15 +36,7 @@ class Chatbot:
         :return: Message with all needed information, check message.py in utils for more information.
         """
 
-        #Adapt language level from settings
-        if settings['language_level'] == 'easy':
-            language_level_sys_message = 'Du svarar alltid så att ett barn ska kunna förstå, med en snäll ton.'
-        elif settings['language_level'] == 'complex':
-            language_level_sys_message = 'Du svarar alltid kort och koncist med en formell stil.'
-        else: #Anything other than easy or complex => normal (the default)
-            language_level_sys_message = 'Du svarar alltid med en trevlig ton och förtydligar allt så att en person som är opåläst om sjukvård ska kunna förstå.'
 
-        
         #Change accessible tools from settings
         tools = []
 
@@ -73,7 +67,7 @@ class Chatbot:
         Du kan ingenting själv utan använder alltid dina verktyg (Tools) för att hitta information som du använder för att svara på frågor.
         Ifall du inte har tillgång till några verktyg (Tools) be användaren att dubbelkolla inställningarna.
 
-        {language_level_sys_message}
+        Du ger alltid ganska långa (4-8 meningar) svar som innehåller all relevant information.
         """
 
         print(system_message)
@@ -87,7 +81,7 @@ class Chatbot:
 
         output = agent(query)
 
-        response = output['output']
+        response = language_adapter(output['output'], settings['language_level']) #output['output'] #Do language_adapter
 
         sources = None
         if len(output['intermediate_steps']) != 0:
@@ -95,6 +89,36 @@ class Chatbot:
 
         return Message(user=False, content=response, sources=sources, explanation=explanation)
     
+
+
+def language_adapter(response, language_level):
+
+    #Adapt language level from settings
+    if language_level == 'easy':
+        language_level_sys_message = 'Du är en språk-och-tonöversättare. Ditt jobb är att anpassa den texten (avgränsad av ```) du får så att ett barn ska kunna förstå det. Ifall texten är på något annat språk översätter du den till svenska. Ifall texten är längre än 4 meningar kortar du ner den.'
+    elif language_level == 'complex':
+        language_level_sys_message = 'Du är en språk-tonöversättare. Ditt jobb är att anpassa texten (avgränsad av ```) du får så att en person som är kunnig inom sjukvård kan få den viktiga information på ett kort och koncist sätt. Ifall texten är på något annat språk översätter du den till svenska. Ifall texten är längre än 4 meningar kortar du ner den.'
+    else: #Anything other than easy or complex => normal (the default)
+        language_level_sys_message = 'Ifall texten är på något annat språk översätter du den till svenska. Ifall texten är längre än 4 meningar kortar du ner den.'
+
+    
+    # Setup query 
+    query = f'''{language_level_sys_message}
+    
+    ```{response}```
+    '''
+
+    # Get "language level translation"
+    response = openai.ChatCompletion.create(
+        model='gpt-3.5-turbo',
+        messages=[{'role':'user','content':query}],
+        temperature=0, #Degree of randomness of the model's output
+    )
+
+    return str(response.choices[0].message["content"])
+
+
+
 
 
 old_language_level_code = """if settings['language_level'] == 'easy':

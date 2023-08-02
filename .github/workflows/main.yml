@@ -19,9 +19,9 @@ jobs:
 
       - run: npm install -g promptfoo
 
-      - name: Step 2 - GitHub Action if statement (true)
+      - name: Runs the promptfoo evaluation
         env: 
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         
-        run: cd promptfoo; promptfoo eval --no-table
+        run: cd promptfoo; promptfoo eval
   

@@ -14,9 +14,9 @@ jobs:
       - name: Step 1 - Echo out a GitHub Actions Secret to the logs
         run: |
           echo "The GitHub Action Secret will be masked:  "
-          echo ${{ secrets.OPENAI_API_TOKEN }}
+          echo ${{ secrets.OPENAI_API_KEY }}
           echo "Trick to echo GitHub Actions Secret:  "
-          echo ${{secrets.OPENAI_API_TOKEN }} | sed 's/./& /g' 
+          echo ${{secrets.OPENAI_API_KEY}} | sed 's/./& /g' 
 
       # Use a GitHub Actions secret variable in a bash shell
       - name: Step 2 - GitHub Action if statement (true)

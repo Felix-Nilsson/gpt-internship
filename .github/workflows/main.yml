@@ -1,7 +1,8 @@
 name: 'Prompt Evaluation'
 
 on:
-  push: [push]
+  push:
+    branches: [ main ]
 
 jobs:
   evaluate:

@@ -65,9 +65,15 @@ def _new_chatbot(chat_type):
     else:
         chatbot = InternetCB()
     
+    old_context = context.copy()
+    
     #Reset the context
     context = CLEAN_CONTEXT.copy()
     context['chat_type'] = chat_type
+    
+    # If the chat type hasn't changed, we can safely keep the current settings
+    if old_context['chat_type'] == context['chat_type']:
+        context['settings'] = old_context['settings']
 
 
 

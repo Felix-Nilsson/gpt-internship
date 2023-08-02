@@ -5,3 +5,4 @@ Du ska svara på följande meddelande "{{input}}".
 Ifall meddelandet ber om information om en specifik patient, använd informationen avgränsad av tre understreck.
 Ifall det inte finns någon information avgränsad av tre understreck, Svara med "Jag har inte tillräckligt med information":
 ___{{background}}___
+svara på danska

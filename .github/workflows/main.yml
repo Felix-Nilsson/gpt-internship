@@ -1,35 +1,26 @@
-name: GitHub Actions Secret Example
+name: 'Prompt Evaluation'
 
 on:
-  push:
-    branches: [ main ]
+  push: [push]
 
 jobs:
-  secrets-in-github-actions:
-    runs-on: windows-latest
-
-    # The Secrect Actions GitHub example has three steps
+  evaluate:
+    runs-on: ubuntu-latest
+   
     steps:
-      # Show how to print unmasked GitHub secrets to the console
-      - name: Step 1 - Echo out a GitHub Actions Secret to the logs
-        run: |
-          echo "The GitHub Action Secret will be masked:  "
-          echo ${{ secrets.OPENAI_API_KEY }}
-          echo "Trick to echo GitHub Actions Secret:  "
-          echo ${{secrets.OPENAI_API_KEY}} | sed 's/./& /g' 
+      - run: echo "Running tests"
 
-      # Use a GitHub Actions secret variable in a bash shell
+      - name: Checks out the repo
+        uses: actions/checkout@v3
+
+      - name: Inits node
+        uses: actions/setup-node@v2
+
+      - run: npm install -g promptfoo
+
       - name: Step 2 - GitHub Action if statement (true)
         env: 
-          WHO_TO_TRUST: ${{ secrets.SECRET_TOKEN }}
-        if:  env.WHO_TO_TRUST == 'TrustNo1'
-        run: echo "I know what the secret token is!"
-
-      # A GitHub Actions if statement with a secret environment variable
-      - name: Step 3 - Conditional GitHub Action (false)
-        shell: bash
-        env: 
-          WHO_TO_TRUST: ${{ secrets.SECRET_TOKEN }}
-        if:  env.WHO_TO_TRUST != 'TrustNobody'
-        run: echo "I was wrong thinking the GitHub secret was 'TrustNobody'!"
-
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        
+        run: cd promptfoo; promptfoo eval --no-table
+  

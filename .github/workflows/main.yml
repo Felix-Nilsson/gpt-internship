@@ -9,9 +9,9 @@ on:
 jobs:
   evaluate:
     runs-on: ubuntu-latest
-    permissions:
+    #permissions:
       # This permission is used to post comments on Pull Requests
-      pull-requests: write
+    #  pull-requests: write
     steps:
       # This cache is optional, but you'll save money and time by setting it up!
       - name: Set up promptfoo cache

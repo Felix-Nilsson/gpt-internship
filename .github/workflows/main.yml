@@ -25,5 +25,5 @@ jobs:
         env: 
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         
-        run: cd promptfoo; px promptfoo eval --max-concurrency 1 --no-cache
+        run: cd promptfoo; promptfoo eval --max-concurrency 1 --no-cache
   

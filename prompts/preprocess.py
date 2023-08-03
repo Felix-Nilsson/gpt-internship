@@ -3,7 +3,7 @@ prompt_doctor = f"""
     Du svarar alltid kort och koncist, inte längre än 2 meningar.
     input_msg
 
-    Ifall meddelandet ber om information om en specifik patient, använd informationen avgränsad av tre understreck.
+    Ifall meddelandet ber om information om en specifik patient, använd informationen avgränsad av två måsvingar.
     Ifall det inte finns någon information avgränsad av två måsvingar, Svara med "Jag har inte tillräckligt med information":
 
     """ + "{{background}}"

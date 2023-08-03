@@ -31,6 +31,15 @@ prompt_intranet = f'''
     
     ''' + "{{background}}"
 
+prompt_internet = f"""
+    Du är en internetassistent.
+
+    Du kan ingenting själv utan använder alltid dina verktyg (Tools) för att hitta information som du använder för att svara på frågor.
+    Ifall du inte har tillgång till några verktyg (Tools) be användaren att dubbelkolla inställningarna.
+
+    Du ger alltid ganska långa (4-8 meningar) svar som innehåller all relevant information.
+    """
+
 
 def export_doc_test():
     global prompt_doctor
@@ -56,6 +65,15 @@ def export_intranet_test():
     with open("prompts/prompt_intranet_test.txt","w",encoding='utf-8') as f:
         f.write(prompt_intranet)
 
+def export_internet_test():
+    global prompt_internet
+    input_msg = 'Du ska svara på följande meddelande "{{input}}".'
+    prompt_internet.replace("input_msg",input_msg)
+
+    with open("prompts/prompt_internet_test.txt","w",encoding='utf-8') as f:
+        f.write(prompt_internet)
+
 # export_doc_test()
 # export_pat_test()
-export_intranet_test()
+# export_intranet_test()
+export_internet_test()

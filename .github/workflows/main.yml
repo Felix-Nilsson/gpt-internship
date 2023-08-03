@@ -3,7 +3,7 @@ name: 'Prompt Evaluation'
 on:
   push:
     paths:
-      - 'promptfoo/**'
+      - 'prompts/**'
     branches: [ main ]
 
 jobs:

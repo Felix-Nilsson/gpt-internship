@@ -43,8 +43,8 @@ prompt_internet = f"""
 
 def export_doc_test():
     global prompt_doctor
-    input = 'Du ska svara på följande meddelande "{{input}}".'
-    prompt_doctor.replace("input",input)
+    input_msg = 'Du ska svara på följande meddelande "{{input}}".'
+    prompt_doctor = prompt_doctor.replace("input_msg",input_msg)
 
     with open("prompts/prompt_doctor_test.txt","w",encoding='utf-8') as f:
         f.write(prompt_doctor)
@@ -74,7 +74,7 @@ def export_internet_test():
         f.write(prompt_internet)
 
 
-# export_doc_test()
+export_doc_test()
 # export_pat_test()
 # export_intranet_test()
 # export_internet_test()

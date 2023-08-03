@@ -13,7 +13,7 @@ prompt_patient = f"""
     Du svarar alltid kort och koncist, inte längre än 2 meningar.
     input_msg
 
-    Ifall meddelandet ber om information om en specifik patient, använd informationen avgränsad av tre understreck.
+    Ifall meddelandet ber om information om en specifik patient, använd informationen avgränsad av två måsvingar.
     Ifall det inte finns någon information avgränsad av två måsvingar, Svara med "Jag har inte tillräckligt med information":
 
     """ + "{{background}}"
@@ -24,7 +24,7 @@ prompt_intranet = f'''
     input_msg
 
     Säg gärna vilken fil du hittade informationen i.
-    Du får endast använda informationen som är avgränsad med tre understreck.
+    Du får endast använda informationen som är avgränsad med två måsvingar.
     Använd bara informationen som är avgränsad med två måsvingar.
     Om du inte hittar svaret i informationen svarar du att du inte har tillgång till informationen.
 
@@ -52,7 +52,7 @@ def export_doc_test():
 def export_pat_test():
     global prompt_patient
     input_msg = 'Du ska svara på följande meddelande "{{input}}".'
-    prompt_patient.replace("input_msg",input_msg)
+    prompt_patient = prompt_patient.replace("input_msg",input_msg)
 
     with open("prompts/prompt_patient_test.txt","w",encoding='utf-8') as f:
         f.write(prompt_patient)
@@ -60,7 +60,7 @@ def export_pat_test():
 def export_intranet_test():
     global prompt_intranet
     input_msg = 'Du ska svara på följande meddelande "{{input}}".'
-    prompt_intranet.replace("input_msg",input_msg)
+    prompt_intranet = prompt_intranet.replace("input_msg",input_msg)
 
     with open("prompts/prompt_intranet_test.txt","w",encoding='utf-8') as f:
         f.write(prompt_intranet)
@@ -68,13 +68,13 @@ def export_intranet_test():
 def export_internet_test():
     global prompt_internet
     input_msg = 'Du ska svara på följande meddelande "{{input}}".'
-    prompt_internet.replace("input_msg",input_msg)
+    prompt_internet = prompt_internet.replace("input_msg",input_msg)
 
     with open("prompts/prompt_internet_test.txt","w",encoding='utf-8') as f:
         f.write(prompt_internet)
 
 
-export_doc_test()
+# export_doc_test()
 # export_pat_test()
 # export_intranet_test()
 # export_internet_test()

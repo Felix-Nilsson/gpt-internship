@@ -1,5 +1,5 @@
 prompts:
-- prompts.txt
+- ../prompts/prompt_doctor_test.txt
 providers:
 - openai:gpt-4
 tests:

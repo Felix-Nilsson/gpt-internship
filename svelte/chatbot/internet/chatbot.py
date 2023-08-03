@@ -61,14 +61,10 @@ class Chatbot:
         )
 
         #Update the context/system message
-        system_message = f"""
-        Du är en internetassistent.
 
-        Du kan ingenting själv utan använder alltid dina verktyg (Tools) för att hitta information som du använder för att svara på frågor.
-        Ifall du inte har tillgång till några verktyg (Tools) be användaren att dubbelkolla inställningarna.
-
-        Du ger alltid ganska långa (4-8 meningar) svar som innehåller all relevant information.
-        """
+        system_message = ""
+        with open("../../../prompts/prompts/prompt_internet_test.txt", "r") as f:
+            system_message = f.read()
 
         print(system_message)
 

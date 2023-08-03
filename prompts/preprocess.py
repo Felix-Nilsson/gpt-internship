@@ -73,6 +73,12 @@ def export_internet_test():
     with open("prompts/prompt_internet_test.txt","w",encoding='utf-8') as f:
         f.write(prompt_internet)
 
+def import_internet_test():
+    prompt = ""
+    with open("prompts/prompt_internet_test.txt","r",encoding='utf-8') as f:
+        prompt = f.read()
+    return prompt
+
 
 # export_doc_test()
 # export_pat_test()

@@ -54,6 +54,12 @@
                 
             }
 
+            //Parse AI message for link formatting
+            for (let i = 1; i < messages.length; i += 2){
+                let parsed_message = splitTextWithLinks(messages[i]['content']);
+                messages[i]['content'] = parsed_message;
+            }
+
             //Scroll
             await tick();
             scrollToBottom(element);
@@ -104,6 +110,37 @@
     onMount(fetchContext);
 
 
+    // This function splits text into text and links
+    function splitTextWithLinks(text) {
+        const regex = /\[(.*?)\]\((.*?)\)/;
+        const resultArray = [];
+        let startIndex = 0;
+        let match;
+
+        while ((match = text.slice(startIndex).match(regex)) !== null) {
+            const fullMatch = match[0];
+            const linkText = match[1];
+            const linkURL = match[2];
+
+            const textBeforeLink = text.slice(startIndex, startIndex + match.index);
+            if (textBeforeLink) {
+            resultArray.push({'type': 'text', 'content': textBeforeLink});
+            }
+
+            resultArray.push({'type': 'link', 'linktext': linkText, 'linkurl': linkURL})
+
+            startIndex += match.index + fullMatch.length;
+        }
+
+        const remainingText = text.slice(startIndex);
+        if (remainingText) {
+            resultArray.push({'type': 'text', 'content': remainingText});
+        }
+
+        return resultArray;
+    }
+
+
 </script>
 
 <!-- CHAT -->
@@ -126,10 +163,17 @@
                         <Flex justify="right"> 
                             <div class="chat-offset"></div>
                             <AIBubble>
-                                {message['content']}
+                                <!--Manages links in text-->
+                                {#each message['content'] as message_part, i}
+                                    {#if message_part['type'] == 'text'}
+                                        {message_part['content']}
+                                    {:else}
+                                        <a href={message_part['linkurl']} target="_blank" rel="noopener noreferrer">{message_part["linktext"]}</a>
+                                    {/if}
+                                {/each}
 
                                 <!--Responsibility text-->
-                                {#if context['type'] == "doctor"}
+                                {#if context['chat_type'] == "doctor"}
                                     <Space h="xs" />
                                     <Center> 
                                         <Text

@@ -95,11 +95,11 @@ def language_adapter(response, language_level):
 
     #Adapt language level from settings
     if language_level == 'easy':
-        language_level_sys_message = 'Du är en språk-och-tonöversättare. Ditt jobb är att anpassa den texten (avgränsad av ```) du får så att ett barn ska kunna förstå det. Ifall texten är på något annat språk översätter du den till svenska. Ifall texten är längre än 4 meningar kortar du ner den.'
+        language_level_sys_message = 'Du är en språk-och-tonöversättare. Ditt jobb är att anpassa den texten (avgränsad av ```) du får så att ett barn ska kunna förstå det. Ifall texten är på något annat språk översätter du den till svenska. Ifall texten är längre än 4 meningar kortar du ner den. Du ändrar inga länkar i texten.'
     elif language_level == 'complex':
-        language_level_sys_message = 'Du är en språk-tonöversättare. Ditt jobb är att anpassa texten (avgränsad av ```) du får så att en person som är kunnig inom sjukvård kan få den viktiga information på ett kort och koncist sätt. Ifall texten är på något annat språk översätter du den till svenska. Ifall texten är längre än 4 meningar kortar du ner den.'
+        language_level_sys_message = 'Du är en språk-tonöversättare. Ditt jobb är att anpassa texten (avgränsad av ```) du får så att en person som är kunnig inom sjukvård kan få den viktiga information på ett kort och koncist sätt. Ifall texten är på något annat språk översätter du den till svenska. Ifall texten är längre än 4 meningar kortar du ner den. Du ändrar inga länkar i texten.'
     else: #Anything other than easy or complex => normal (the default)
-        language_level_sys_message = 'Ifall texten är på något annat språk översätter du den till svenska. Ifall texten är längre än 4 meningar kortar du ner den.'
+        language_level_sys_message = 'Ifall texten är på något annat språk översätter du den till svenska. Ifall texten är längre än 4 meningar kortar du ner den. Du ändrar inga länkar i texten.'
 
     
     # Setup query 
@@ -117,22 +117,3 @@ def language_adapter(response, language_level):
 
     return str(response.choices[0].message["content"])
 
-
-
-
-
-old_language_level_code = """if settings['language_level'] == 'easy':
-            language_level_sys_message = 'Assistent svarar alltid med snäll ton och enkelt språk, så att ett barn ska kunna förstå.'
-elif settings['language_level'] == 'complex':
-    language_level_sys_message = 'Assistent svarar alltid kort och koncist med en formell stil.'
-else: #Anything other than easy or complex => normal
-    language_level_sys_message = 'Assistent svarar alltid med en trevlig ton och förtydligar allt så att en person som är opåläst om sjukvård ska kunna förstå.'"""
-
-old_system_message = f"""Assistent är en 'large language model' skapad för att hjälpa läkare och patienter att hitta information.
-        
-Assistent svarar alltid på svenska, oavsett vilket språk användaren använder.
-
-Assistent vet ingenting själv och använder därför alltid bara de verktyg som Assistent har tillgång till.
-Ifall Assistent inte skulle ha tillgång till några verktyg alls, ber Assistent användaren att dubbelkolla inställningarna så att det finns verktyg för Assistent att använda.
-
-"""#{language_level_sys_message}

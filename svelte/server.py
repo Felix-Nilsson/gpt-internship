@@ -15,8 +15,10 @@ from chatbot.chat_utils import Message
 app = Flask(__name__)
 CORS(app)
 
-#Default to internet chatbot
-chatbot = InternetCB()
+doctorbot = AssistantCB('doctor')
+patientbot = AssistantCB('patient')
+intranetbot = IntranetCB()
+internetbot = InternetCB()
 
 #Do not change this! It is used to reset context
 CLEAN_CONTEXT = {
@@ -30,7 +32,7 @@ context = CLEAN_CONTEXT.copy()
 
 
 conversation = {
-    'last_updated': 0,
+    'last_updated': time.time(),
     'messages': [
         #This list should be filled up by Message elements (the class will construct them correctly)
     ]
@@ -43,9 +45,12 @@ result = {
 
 
 def _new_chatbot(chat_type):
-    global chatbot
     global context
     global conversation
+    global doctorbot
+    global patientbot
+    global intranetbot
+    global internetbot
 
     #New conversation
     conversation = {
@@ -55,15 +60,10 @@ def _new_chatbot(chat_type):
         ]
     }
 
-    #Set the correct chatbot
-    if chat_type == "patient":
-        chatbot = AssistantCB("patient")
-    elif chat_type == "doctor":
-        chatbot = AssistantCB("doctor")
-    elif chat_type == "intranet":
-        chatbot = IntranetCB()
-    else:
-        chatbot = InternetCB()
+    doctorbot = AssistantCB('doctor')
+    patientbot = AssistantCB('patient')
+    intranetbot = IntranetCB()
+    internetbot = InternetCB()
     
     old_context = context.copy()
     
@@ -132,7 +132,7 @@ async def chat():
 
         #Get a response to the prompt
         if context['chat_type'] == 'patient':
-            assistant_message = chatbot.get_chat_response(prompt, context['settings'], [result['username'][1:]])
+            assistant_message = patientbot.get_chat_response(prompt, context['settings'], [result['username'][1:]])
             
         elif context['chat_type'] == 'doctor':
             #Get list of the doctor's patients
@@ -140,14 +140,14 @@ async def chat():
                 users = json.load(f)
                 accessible_patients = users['credentials']['doctors'][result['username']]['patients']
             
-            assistant_message = chatbot.get_chat_response(prompt, context['settings'], accessible_patients)
+            assistant_message = doctorbot.get_chat_response(prompt, context['settings'], accessible_patients)
 
 
         elif context['chat_type'] == 'intranet':
-            assistant_message = chatbot.get_chat_response(prompt, context['settings'])
+            assistant_message = intranetbot.get_chat_response(prompt, context['settings'])
 
         else: #internet
-            assistant_message = chatbot.get_chat_response(prompt, context['settings'])
+            assistant_message = internetbot.get_chat_response(prompt, context['settings'])
 
         #The prompt/query is the same independently of the type of response we want
         user_message = Message(user=True, content=prompt)

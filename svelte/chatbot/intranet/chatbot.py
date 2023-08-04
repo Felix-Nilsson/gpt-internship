@@ -56,8 +56,6 @@ class Chatbot:
         system_message = system_message.replace('Du ska svara på följande meddelande "{{input}}".', language_level_sys_message)
         # Add data relevant to the query to the system message
         system_message = system_message.replace('background', str(data))
-
-        print(system_message)
         
         if remember:
             messages = self.memory

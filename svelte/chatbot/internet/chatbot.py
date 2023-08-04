@@ -72,7 +72,7 @@ class Chatbot:
 
         #Update the context/system message
         system_message = ""
-        with open(file_path, "r") as f:
+        with open(file_path, "r", encoding='utf-8') as f:
             system_message = f.read()
 
         new_prompt = agent.agent.create_prompt(

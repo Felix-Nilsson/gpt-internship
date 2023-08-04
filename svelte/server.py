@@ -15,71 +15,115 @@ from chatbot.chat_utils import Message
 app = Flask(__name__)
 CORS(app)
 
-doctorbot = AssistantCB('doctor')
-patientbot = AssistantCB('patient')
-intranetbot = IntranetCB()
-internetbot = InternetCB()
 
-#Do not change this! It is used to reset context
-CLEAN_CONTEXT = {
-    'chat_type': 'internet',
-    'settings': {},
-    #...
-}
-
-#This is the context that we use
-context = CLEAN_CONTEXT.copy()
-
-
-conversation = {
-    'last_updated': time.time(),
-    'messages': [
-        #This list should be filled up by Message elements (the class will construct them correctly)
-    ]
-}
-
-result = {
-    'success': "False", 
-    'username': "None"
-}
-
-
-def _new_chatbot(chat_type):
-    global context
-    global conversation
-    global doctorbot
-    global patientbot
-    global intranetbot
-    global internetbot
-
-    #New conversation
-    conversation = {
+combo = {
+    'conversation': {
         'last_updated': time.time(),
         'messages': [
-            #This list should be filled up by Message elements (the class will construct them correctly)
+            # This list should be filled up by Message elements (the class will construct them correctly)
         ]
+    },
+    'settings': {
+        # Settings depend on what chat-version is used, e.g.
+        #'tools' : ['1177', 'FASS', 'internetmedicin']
+        #'lang' : 'sv' or 'en' 
+        #'tone' : 'simple' or 'formal'
+    },
+    'login': {
+        'success': False,
+        'login_as': 'None',     #'doctor' or 'patient'
+        'username': 'None'
     }
+}
 
-    doctorbot = AssistantCB('doctor')
-    patientbot = AssistantCB('patient')
-    intranetbot = IntranetCB()
-    internetbot = InternetCB()
+
+# Chat handler
+@app.route("/combo/chat", methods=['GET', 'PUT', 'DELETE'])
+async def combo_chat():
+
+    # Generate response to query
+    if request.method == 'PUT':
+        
+        # Information needed in the request:
+        request_template = {
+            'query': '',        # User query
+            'chat_type': '',    # Which chatbot, i.e. internet, intranet, doctor or patient
+            'settings': {
+                #This includes any settings for the current chat
+            }
+        }
+
+
+
+
+    # Reset chat
+    elif request.method == 'DELETE':
+        pass
+
     
-    old_context = context.copy()
+    return combo['conversation']
+
+# Settings handler
+@app.route("/combo/settings", methods=['GET', 'PUT', 'DELETE'])
+async def combo_settings():
+    global combo
+
+    # Update settings
+    if request.method == 'PUT':
+        new_settings = request.get_json()
+
+        combo['settings'] = new_settings # TODO CHECK
+
+    # Reset settings
+    elif request.method == 'DELETE':
+        combo['settings'] = {}
+
     
-    #Reset the context
-    context = CLEAN_CONTEXT.copy()
-    context['chat_type'] = chat_type
+    return combo['settings']
+
+
+# Authentication handler (GET is used to check auth status)
+@app.route("/combo/login", methods=['GET', 'PUT', 'DELETE'])
+async def combo_login():
+    global combo
+
+    # Attempt login
+    if request.method == 'PUT':
+
+        # Get information from the request
+        username = request.get_json()['username']
+        password = request.get_json()['password']
+        login_as = request.get_json()['login_as'] # This is either 'doctor' or 'patient'
+
+        #Check if credentials exist in the "database"
+        with open("credentials/credentials.json") as f:
+            users = json.load(f)
+
+            # Find user credentials of the correct type (doctor or patient)
+            users = users['credentials']['login_as' + 's']
+            
+            if username in users:
+                ref_password = users[username]["password"]
+                
+                # converting password and reference password to arrays of bytes
+                pw_bytes = password.encode('utf-8')
+                ref_bytes = ref_password.encode('utf-8')
+
+                if bcrypt.checkpw(pw_bytes, ref_bytes):
+                    combo['login']["success"] = True
+                    combo['login']["username"] = username
+                    combo['login']["login_as"] = login_as
+
+    # Logout (reset)
+    elif request.method == 'DELETE':
+        combo['login'] = {
+            'success': False,
+            'login_as': 'None',
+            'username': 'None'
+        }
+
     
-    # If the chat type hasn't changed, we can safely keep the current settings
-    if old_context['chat_type'] == context['chat_type']:
-        context['settings'] = old_context['settings']
-
-
-
-@app.route("/")
-def base():
-    return 'Sahlgrenska AI Hjälp "backend"'
+    return combo['login']
 
 
 

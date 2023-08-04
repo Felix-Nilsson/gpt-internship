@@ -33,40 +33,43 @@ class Chatbot:
         elif settings['language_level'] == 'complex':
             language_level_sys_message = 'Du svarar alltid kort och koncist med en formell stil.'
         else: #Anything other than easy or complex => normal (the default)
-            language_level_sys_message = 'Du svarar alltid med en trevlig ton och förtydligar allt så att en person som är opåläst om sjukvård ska kunna förstå.'
+            language_level_sys_message = 'Du svarar alltid koncist och tydligt, med en konversionell ton'
         
         explanation = f'''Enligt inställningarna ska assistenten svara med språknivå "{settings['language_level']}".'''
-
 
 
         #Get patient data related to the query
         data = query_db_doc(query=query, name="docs")
 
-        #Context/System message to describe what the gpt is supposed to do
-        context = f'''
-        Du är en AI-assistent som ska svara på frågor.
-        Du svarar alltid kortare än 2 meningar.
-        {language_level_sys_message}
-        Säg gärna vilken fil du hittade informationen i.
-        Du får endast använda informationen som är avgränsad med tre understreck.
-        Använd bara informationen som är avgränsad med tre understreck.
-        Om du inte hittar svaret i informationen svarar du att du inte har tillgång till informationen.
 
-        ___{data}___
-        '''
+        # Path to the system message/system prompt file
+        current_script_path = os.path.abspath(__file__)
+        parent_directory = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(current_script_path))))
+        file_path = os.path.join(parent_directory, 'prompts', 'prompts', 'prompt_intranet_test.txt')
+
+        # Get the system message from the file
+        system_message = ""
+        with open(file_path, "r", encoding='utf-8') as f:
+            system_message = f.read()
+
+        # Replace unnecessary line with language level setting
+        system_message = system_message.replace('Du ska svara på följande meddelande "{{input}}".', language_level_sys_message)
+        # Add data relevant to the query to the system message
+        system_message = system_message.replace('background', str(data))
+
+        print(system_message)
         
-        
-        if not remember:
-            #Reset conversation memory
-            messages = [{'role':'system', 'content': context}]
-        else:
+        if remember:
             messages = self.memory
-        #Update the context with relevant information for every question
+        else:
+            # Reset memory
+            messages = [{'role':'system', 'content': system_message}]
+
         
+        # Update the system message
+        messages[0] = {'role':'system', 'content': system_message}
 
-        messages[0] = {'role':'system', 'content': context}
-
-        #Add the query to the conversation memory
+        # Add the query to the conversation memory
         messages.append({'role':'user','content':query})
 
         response = openai.ChatCompletion.create(
@@ -75,11 +78,10 @@ class Chatbot:
             temperature=0, #Degree of randomness of the model's output
         )
 
-        #Add the response to the conversation memory
+        # Add the response to the conversation memory
         messages.append({'role':'assistant','content':response.choices[0].message["content"]})
 
         finished_response = f'''{response.choices[0].message["content"]}'''
 
-        
 
         return Message(user=False, content=finished_response, explanation=explanation)

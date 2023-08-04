@@ -61,7 +61,7 @@ def make_db_patients():
 
             chunks = []
 
-            with open(file_path, 'r') as f:
+            with open(file_path, 'r', encoding='utf-8') as f:
                
                 if filetype == "patientdata.json":
                     json_obj = json.load(f)

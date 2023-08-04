@@ -60,13 +60,20 @@ class Chatbot:
             memory=self.conversational_memory
         )
 
+
+        # Absolute path of this file
+        current_script_path = os.path.abspath(__file__)
+
+        # GPT-Internship folder (shared parent folder)
+        parent_directory = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(current_script_path))))
+
+        # Path to the prompt/system message file
+        file_path = os.path.join(parent_directory, 'prompts', 'prompts', 'prompt_internet_test.txt')
+
         #Update the context/system message
-
         system_message = ""
-        with open("../../../prompts/prompts/prompt_internet_test.txt", "r") as f:
+        with open(file_path, "r") as f:
             system_message = f.read()
-
-        print(system_message)
 
         new_prompt = agent.agent.create_prompt(
             system_message=system_message,

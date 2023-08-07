@@ -1,9 +1,11 @@
 class Message():
-    def __init__(self, user: bool, content: str, sources:str = None, explanation:str = None, patient:str = None, alert: str = None):
+    def __init__(self, role:str, content:str, chat_type:str = None, settings:dict = None, sources:str = None, explanation:str = None, patient:str = None, alert:str = None):
         """Create a message
         
-        :param user: User or AI (True == User, False == AI)     [Required]
+        :param role: 'user' or 'assistant'                      [Required]
         :param content: The message                             [Required]
+        :param chat_type: Choice of chatbot                     [Optional]
+        :param settings: Settings for the message               [Optional]
         :param sources: Sources, web pages or files             [Optional]
         :param explanations: Explanation/Thought process?       [Optional]
         :param patient: The patient discussed in the message    [Optional]
@@ -11,8 +13,10 @@ class Message():
         """
 
         self.message = {
-            'user': user,
+            'role': role,
             'content': content,
+            'chat_type': chat_type,
+            'settings': settings,
             'sources': sources,
             'explanation': explanation,
             'patient': patient,
@@ -22,13 +26,19 @@ class Message():
     def get(self):
         return self.message
     
-    def set(self, user:bool = None, content:str = None, sources:str = None, explanation:str = None, patient:str = None, alert: str = None):
+    def set(self, role:str = None, content:str = None, chat_type:str = None, settings:dict = None, sources:str = None, explanation:str = None, patient:str = None, alert: str = None):
 
-        if user != None:
-            self.message['user'] = user
+        if role != None:
+            self.message['role'] = role
         
         if content != None:
             self.message['content'] = content
+
+        if chat_type != None:
+            self.message['chat_type'] = chat_type
+
+        if settings != None:
+            self.message['settings'] = settings
         
         if sources != None:
             self.message['sources'] = sources

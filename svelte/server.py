@@ -36,10 +36,16 @@ combo = {
     }
 }
 
+doctorbot = AssistantCB('doctor')
+patientbot = AssistantCB('patient')
+intranetbot = IntranetCB()
+internetbot = InternetCB()
+
 
 # Chat handler
 @app.route("/combo/chat", methods=['GET', 'PUT', 'DELETE'])
 async def combo_chat():
+    global combo
 
     # Generate response to query
     if request.method == 'PUT':
@@ -49,12 +55,50 @@ async def combo_chat():
             'query': '',        # User query
             'chat_type': '',    # Which chatbot, i.e. internet, intranet, doctor or patient
             'settings': {
-                #This includes any settings for the current chat
+                # This includes any settings for the current chat
             }
         }
 
+        # Get all needed information from the request body
+        req = request.get_json()
+        query = req['query']
+        chat_type = req['chat_type']
+        settings = req['settings']
 
+        # Add the query to the conversation
+        user_message = Message(role='user', content=query)
+        combo['conversation']['messages'].append(user_message.get())
 
+        # Generate a response to the request
+        if chat_type == 'doctor':
+            assistant_message = doctorbot.get_chat_response(query=query, settings=settings, patients=[combo['login']['username'][1:]])
+
+        elif chat_type == 'patient':
+            # Get list of the doctor's patients
+            with open("credentials/credentials.json") as f:
+                users = json.load(f)
+                accessible_patients = users['credentials']['doctors'][result['username']]['patients']
+            
+            assistant_message = patientbot.get_chat_response(query=query, settings=settings, patients=accessible_patients)
+        
+        elif chat_type == 'intranet':
+            assistant_message = intranetbot.get_chat_response(query=query, settings=settings)
+
+        elif chat_type == 'internet':
+            assistant_message = internetbot.get_chat_response(query=query, settings=settings)
+        
+        else:
+            raise Exception('Incorrect chat_type')
+
+        #The prompt/query is the same independently of the type of response we want
+        user_message = Message(role='user', content=query)
+
+        assistant_message.set(chat_type=chat_type, settings=settings)
+
+        # Add the new messages and update the conversation
+        combo['conversation']['messages'].append(user_message.get())
+        combo['conversation']['messages'].append(assistant_message.get())
+        combo['conversation']['last_updated'] = time.time()
 
     # Reset chat
     elif request.method == 'DELETE':
@@ -127,6 +171,58 @@ async def combo_login():
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#Do not change this! It is used to reset context
+CLEAN_CONTEXT = {
+    'chat_type': 'internet',
+    'settings': {},
+    #...
+}
+#This is the context that we use
+context = CLEAN_CONTEXT.copy()
+
+conversation = {
+    'last_updated': time.time(),
+    'messages': [
+        #This list should be filled up by Message elements (the class will construct them correctly)
+    ]
+}
+
+result = {
+    'success': "False", 
+    'username': "None"
+}
+
+def _new_chatbot(chat_type):
+    global context
+    global conversation
+    global doctorbot
+    global patientbot
+    global intranetbot
+    global internetbot
+
+    #New conversation
+    conversation = {
+        'last_updated': time.time(),
+        'messages': [
+            #This list should be filled up by Message elements (the class will construct them correctly)
+        ]
+    }
+
 # CONTEXT OF THE CHAT
 @app.route("/context", methods=['GET', 'POST', 'PUT', 'DELETE'])
 async def chat_context():
@@ -161,7 +257,6 @@ async def chat_context():
     
 
     return context
-
 
 
 @app.route("/chat", methods=['GET', 'PUT', 'DELETE'])

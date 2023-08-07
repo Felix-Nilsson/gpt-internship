@@ -12,10 +12,6 @@ class Chatbot:
 # ! Do not forget to set the environment variable !
         openai.api_key = os.getenv('OPENAI_API_KEY')
 
-        # Conversation memory
-        self.memory = [{'role':'system', 'content': ""}]
-
-
 
     def get_system_message(self):
         # Path to the system message/system prompt file
@@ -41,13 +37,14 @@ class Chatbot:
             return 'Du svarar alltid koncist och tydligt, med en konversionell ton'
 
 
-    def get_chat_response(self,query: str, settings: dict, remember=True, model='gpt-3.5-turbo-0613'):
-        """Takes a query, returns a Message containing all relevant information.
+    def get_chat_response(self, messages: list, settings: dict, remember=True, model='gpt-3.5-turbo-0613'):
+        """Takes a list of messages, returns a Message containing all relevant information.
         (Intranet)
         
-        :param query: The query/prompt.
+        :param messages: The full conversation including the latest query
         :param settings: Settings for the chatbot (e.g. how complex/formal language the bot should use)
         :param remember: If the bot should remember the conversation.
+        :param model: Model to be used
 
         :return: Message with all needed information, check message.py in utils for more information.
         """
@@ -64,22 +61,22 @@ class Chatbot:
 
 
         # Get data related to the query
-        data = query_db_doc(query=query, name="docs")
+        data = query_db_doc(query=messages[-1]['content'], name="docs")
 
         # Add relevant data to the query to the system message
         system_message = system_message.replace('background', str(data))
         
-        if remember:
-            messages = self.memory
-        else:
-            # Reset memory
-            messages = [{'role':'system', 'content': system_message}]
-        
-        # Update the system message with relevant information for every question
-        messages[0] = {'role':'system', 'content': system_message}
+        # Create local instance of memory and set system message (with relevant information for the question)
+        memory = [{'role':'system', 'content': system_message}]
 
-        # Add the query to the conversation memory
-        messages.append({'role':'user','content':query})
+        # Add the conversation until now to the memory (should include the latest query)
+        if remember:
+            for message in messages:
+                memory.append({'role': message['role'], 
+                               'content': message['content']}) 
+        else:
+            # Reset memory TODO should not be necessary anymore
+            memory = [{'role':'system', 'content': system_message}]
 
         # Get a response from the model
         response = openai.ChatCompletion.create(
@@ -88,11 +85,8 @@ class Chatbot:
             temperature=0, #Degree of randomness of the model's output
         )
 
-        # Add the response to the conversation memory
-        messages.append({'role':'assistant','content':response.choices[0].message["content"]})
-
         # Setup for the final Message object
         finished_response = response.choices[0].message['content']
         explanation = f'''Enligt inställningarna ska assistenten svara med språknivå "{settings['language_level']}".'''
 
-        return Message(user=False, content=finished_response, explanation=explanation)
+        return Message(role='assistant', content=finished_response, explanation=explanation)

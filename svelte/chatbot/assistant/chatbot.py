@@ -64,13 +64,15 @@ class Chatbot:
             return 'Du svarar alltid koncist och tydligt, med en konversionell ton'
 
 
-    def get_chat_response(self,messages: list , settings: dict, patients: list[str], remember=True, model='gpt-3.5-turbo-0613'):
+    def get_chat_response(self, messages: list , settings: dict, patients: list[str], remember=True, model='gpt-3.5-turbo-0613'):
         """Takes a list of messages and a list of patients whose information the doctor can access, returns a response to the last query.
         (Doctor / Patient)
 
         :param messages: The full conversation including the latest query
+        :param settings: Settings for the chatbot (e.g. how complex/formal language the bot should use)
         :param patients: If doctor list of accessible patients, if patient list of only patient ID.
         :param remember: If the bot should remember the conversation.
+        :param model: Model to be used
 
         :return: Message with all needed information, check message.py in utils for more information.
         """
@@ -85,7 +87,7 @@ class Chatbot:
 
         if self.user_type == 'doctor':
             #Find patient ID in the query
-            current_patient = self.find_patient_id(messages[-1])
+            current_patient = self.find_patient_id(messages[-1]['content'])
         
             if current_patient == None:
 
@@ -131,16 +133,14 @@ class Chatbot:
         # Get patient data related to the query
         patient_data = ''
         if current_patient != '' and current_patient != None:
-            patient_data = query_db(query=messages[-1],id=current_patient,name='patientrecords')
+            patient_data = query_db(query=messages[-1]['content'],id=current_patient,name='patientrecords')
             patient_data = ' '.join(patient_data['documents'][0])
 
         # Update the system message with relevant patient information
         system_message = system_message.replace('background', patient_data)
 
-        memory = []
-
-        # Update the system message with relevant information for every question
-        memory[0] = {'role':'system', 'content': system_message}
+        # Create local instance of memory and set system message (with relevant information for the question)
+        memory = [{'role':'system', 'content': system_message}]
 
         # Add the conversation until now to the memory (should include the latest query)
         if remember:

@@ -1,0 +1,12 @@
+flask[async]
+flask_cors
+bcrypt
+pyyaml
+openai
+chromadb==0.3.29
+langchain
+pypdf2
+tiktoken
+nltk
+print_color
+duckduckgo-search

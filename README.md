@@ -26,6 +26,11 @@ Sahlgrenska AI Hjälp is designed primarily with swedish in mind.
 
 🔗 [Link to blog]( https://my.ai.se/projects/287)
 
+As part of the project we also were tasked with writing a set of guidelines 
+(in swedish).
+
+📒 [Guidelines](img/gpt_internship_guidelines-1.pdf)
+
 <p align="center">
   <img src="img/dialoguenew.png" />
 </p>
@@ -72,9 +77,7 @@ They were however made to be similar in structure to real documents, with guidan
   
 * To run the web interface, you need to install ```npm``` and run the ```npm install``` command in the directory ```gpt-internship/svelte/my-app```.
   
-* To run the server backend, you need to install ```flask``` as well as ```flask-cors``` and ```bcrypt```.
-
-* Possibly need to install some miscellaneous libraries python libaries like ```pandas```, ```PyPDF2``` or ```SciPy```.
+* To install the python packages, please run ```pip install -r requirements.txt``` in the directory ```gpt-internship/```
 
 ### Initializing the Database
 The project uses a vector database from [Chroma](https://docs.trychroma.com/) for efficient document retrieval. If you are running the project for the first time you need to initialize it and can do so with the following command from the ```gpt-internship``` directory.

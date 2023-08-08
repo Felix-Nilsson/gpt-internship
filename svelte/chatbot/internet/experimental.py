@@ -58,6 +58,17 @@ class Chatbot:
         Om det är oklart, be om förtydling.
         '''
         
+
+        # TODO ADD A PARAMETER WHERE THE ASSISTANT PROVIDES REASONING FOR THE CHOICE OF TOOL AND SEARCH QUERY,
+        #       THIS WAY WE SHOULD BE ABLE TO GET A PROPER STEP-BY-STEP EXPLANATION !!!!
+
+        """# TILL EXEMPEL 
+        'explanation': {
+                        'type': 'string',
+                        'description': 'En stegvis beskrivning av assistentens tankegång och val av sökord.'
+                        }
+        """
+
         functions = [
             {
                 'name': '1177',

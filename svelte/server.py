@@ -160,6 +160,9 @@ async def combo_login():
 
     # Logout (reset)
     elif request.method == 'DELETE':
+
+        #TODO Reset conversation
+
         combo['login'] = {
             'success': False,
             'login_as': 'None',

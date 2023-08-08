@@ -120,10 +120,17 @@ class Chatbot:
             temperature=0, #Degree of randomness of the model's output
         )
 
-        memory.append({'role': 'assistant', 
-                       'content': response.choices[0].message['content']})
 
+        # This instance of memory will not be used anymore so ..
+        if response.choices[0].message['content'] != None:
+            memory.append({'role': 'assistant', 'content': response.choices[0].message['content']})
+        elif response.choices[0].message['function_call'] != None:
+            memory.append({'role': 'assistant', 'content': response.choices[0].message['function_call']})
         pretty_print_conversation(memory)
+
+
+        # TODO - This will need modification so that we only add the last (finished) reponse
+        # i.e. we need a loop that goes until the chatbot is happy and has given its final response, then return that
 
         # Setup for the final Message object
         finished_response = response['choices'][0]['message']
@@ -162,7 +169,7 @@ test = Chatbot()
 
 test_response = test.get_chat_response([{'role':'user', 'content':'Berätta om borrelia'}], {})
 
-print('FINISHED REPONSE: ')
+print('FINAL REPONSE: ')
 print(test_response.get()['content'])
 
 # TODO, LOOP, CHECK IF RESPONSE IS FUNCTION CALL, CALL THE FUNCTION, PROFIT

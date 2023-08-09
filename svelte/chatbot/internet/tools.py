@@ -1,43 +1,20 @@
 from langchain.tools import BaseTool
 from duckduckgo_search import DDGS
 
-class Tool1177(BaseTool):
-    name = "1177.se"
-    description = "Använd detta verktyg när du behöver svara på frågor om sjukdomar eller skador"
+def search_1177(query):
+    query += " site:1177.se"
+    return _ddg_search(search_query=query)
+    
+def search_FASS(query):
+    query += " site:fass.se"
+    return _ddg_search(search_query=query)
 
-    def _run(self, query):
-        query += " site:1177.se"
-        return _ddg_search(search_query=query)
-
-    def _arun(self, query):
-        return NotImplementedError("This tool does not support async")
-
-
-class ToolFASS(BaseTool):
-    name = "FASS.se"
-    description = "Använd detta verktyg när du behöver svara på frågor om läkermedel, till exempel biverkningar, dosering eller tillgång"
-
-    def _run(self, query):
-        query += " site:fass.se"
-        return _ddg_search(search_query=query)
-
-    def _arun(self, query):
-        return NotImplementedError("This tool does not support async")
+def search_internetmedicin(query):
+    query += " site:internetmedicin.se"
+    return _ddg_search(search_query=query)
 
 
-class ToolInternetmedicin(BaseTool):
-    name = "internetmedicin.se"
-    description = "Använd detta verktyg när du behöver information om ICD-koder för skador eller sjukdomar"
-
-    def _run(self, query):
-        query += " site:internetmedicin.se"
-        return _ddg_search(search_query=query)
-
-    def _arun(self, query):
-        return NotImplementedError("This tool does not support async")
-
-
-def _ddg_search(search_query: str, num_results=5) -> list[dict[str, str]]:
+def _ddg_search(search_query: str, num_results=3) -> list[dict[str, str]]:
     """Run query through DuckDuckGo and return metadata.
 
     Args:
@@ -75,3 +52,42 @@ def _ddg_search(search_query: str, num_results=5) -> list[dict[str, str]]:
             if len(formatted_results) == num_results:
                 break
     return formatted_results
+
+
+
+
+
+'''class Tool1177(BaseTool):
+    name = "1177.se"
+    description = "Använd detta verktyg när du behöver svara på frågor om sjukdomar eller skador"
+
+    def _run(self, query):
+        query += " site:1177.se"
+        return _ddg_search(search_query=query)
+
+    def _arun(self, query):
+        return NotImplementedError("This tool does not support async")
+
+
+class ToolFASS(BaseTool):
+    name = "FASS.se"
+    description = "Använd detta verktyg när du behöver svara på frågor om läkermedel, till exempel biverkningar, dosering eller tillgång"
+
+    def _run(self, query):
+        query += " site:fass.se"
+        return _ddg_search(search_query=query)
+
+    def _arun(self, query):
+        return NotImplementedError("This tool does not support async")
+
+
+class ToolInternetmedicin(BaseTool):
+    name = "internetmedicin.se"
+    description = "Använd detta verktyg när du behöver information om ICD-koder för skador eller sjukdomar"
+
+    def _run(self, query):
+        query += " site:internetmedicin.se"
+        return _ddg_search(search_query=query)
+
+    def _arun(self, query):
+        return NotImplementedError("This tool does not support async")'''

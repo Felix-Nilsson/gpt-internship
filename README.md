@@ -29,7 +29,7 @@ Sahlgrenska AI Hjälp is designed primarily with swedish in mind.
 As part of the project we also were tasked with writing a set of guidelines 
 (in swedish).
 
-📒 [Guidelines](img/gpt_internship_guidelines-1.pdf)
+⚖️ [Guidelines](img/gpt_internship_guidelines.pdf)
 
 <p align="center">
   <img src="img/dialoguenew.png" />

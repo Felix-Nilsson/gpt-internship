@@ -16,7 +16,7 @@ class Chatbot:
     def __init__(self):
         OpenAI.api_key = os.getenv("OPENAI_API_KEY")
 
-        self.llm = ChatOpenAI(temperature=0, model_name="gpt-3.5-turbo")
+        self.llm = ChatOpenAI(temperature=0, model_name='gpt-4-0613')
 
         self.conversational_memory = ConversationBufferWindowMemory(
             memory_key='chat_history',

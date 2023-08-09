@@ -41,7 +41,7 @@ class Chatbot:
             return 'Du svarar alltid koncist och tydligt, med en konversionell ton'
 
 
-    def get_chat_response(self,query: str, settings: dict, remember=True, model='gpt-3.5-turbo-0613'):
+    def get_chat_response(self,query: str, settings: dict, remember=True, model='gpt-4-0613'):
         """Takes a query, returns a Message containing all relevant information.
         (Intranet)
         

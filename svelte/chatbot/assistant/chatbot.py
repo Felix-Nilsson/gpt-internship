@@ -64,7 +64,7 @@ class Chatbot:
             return 'Du svarar alltid koncist och tydligt, med en konversionell ton'
 
 
-    def get_chat_response(self,query: str, settings: dict, patients: list[str], remember=True, model='gpt-3.5-turbo-0613'):
+    def get_chat_response(self,query: str, settings: dict, patients: list[str], remember=True, model='gpt-4-0613'):
         """Takes a query and a list of patients whose information the doctor can access, returns a Message containing all relevant information.
         (Doctor / Patient)
 

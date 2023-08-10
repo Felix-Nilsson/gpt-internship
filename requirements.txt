@@ -10,3 +10,4 @@ tiktoken
 nltk
 print_color
 duckduckgo-search
+promptfoo

@@ -226,5 +226,5 @@ def print_db_summary():
 
 #if we open the database here, database initialization may break, please use only functions :-)
 
-#Eg dont do:
+#Eg remove things like this before initing:
 #print(get_collection("docs").peek())

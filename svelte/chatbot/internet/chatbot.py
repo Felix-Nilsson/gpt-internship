@@ -10,7 +10,7 @@ from .tools import Tool1177, ToolFASS, ToolInternetmedicin
 
 import openai
 
-from ..chat_utils import Message
+from ..message import Message
 
 class Chatbot:
     def __init__(self):

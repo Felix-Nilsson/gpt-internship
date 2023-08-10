@@ -5,7 +5,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(
 
 from db.chroma import query_db_doc
 
-from ..chat_utils import Message
+from ..message import Message
 
 class Chatbot:
     def __init__(self):

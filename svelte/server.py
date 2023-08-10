@@ -9,8 +9,9 @@ from yaml.loader import SafeLoader
 from chatbot.assistant.chatbot import Chatbot as AssistantCB
 from chatbot.internet.chatbot import Chatbot as InternetCB
 from chatbot.intranet.chatbot import Chatbot as IntranetCB
+from chatbot.internet.experimental import Chatbot as InternetExp
 
-from chatbot.chat_utils import Message
+from chatbot.message import Message
 
 app = Flask(__name__)
 CORS(app)
@@ -20,7 +21,7 @@ combo = {
     'conversation': {
         'last_updated': time.time(),
         'messages': [
-            # This list should be filled up by chat_message(s) (use chat_utils chat_message() to create)
+            # This list should be filled up by Messages (use Message() to create)
         ]
     },
     'settings': {
@@ -40,15 +41,21 @@ doctorbot = AssistantCB('doctor')
 patientbot = AssistantCB('patient')
 intranetbot = IntranetCB()
 internetbot = InternetCB()
-
+internetExperimental = InternetExp()
 
 # Chat handler
 @app.route("/combo/chat", methods=['GET', 'PUT', 'DELETE'])
 async def combo_chat():
     global combo
 
+    if request.method == 'GET':
+
+        #Check if we want to continue response generation (if we are waiting for function results)
+        if combo['conversation']['messages'][-1].get_external()['function_call'] != None:
+            pass
+
     # Generate response to query
-    if request.method == 'PUT':
+    elif request.method == 'PUT':
         
         # Information needed in the request:
         request_template = {
@@ -67,11 +74,11 @@ async def combo_chat():
 
         # Add the query to the conversation
         user_message = Message(role='user', content=query)
-        combo['conversation']['messages'].append(user_message.get())
+        combo['conversation']['messages'].append(user_message)
 
         # Generate a response to the request
         if chat_type == 'doctor':
-            assistant_message = doctorbot.get_chat_response(query=query, settings=settings, patients=[combo['login']['username'][1:]])
+            assistant_message = doctorbot.get_chat_response(messages=combo['conversation'], settings=settings, patients=[combo['login']['username'][1:]])
 
         elif chat_type == 'patient':
             # Get list of the doctor's patients
@@ -79,13 +86,13 @@ async def combo_chat():
                 users = json.load(f)
                 accessible_patients = users['credentials']['doctors'][result['username']]['patients']
             
-            assistant_message = patientbot.get_chat_response(query=query, settings=settings, patients=accessible_patients)
+            assistant_message = patientbot.get_chat_response(messages=combo['conversation'], settings=settings, patients=accessible_patients)
         
         elif chat_type == 'intranet':
-            assistant_message = intranetbot.get_chat_response(query=query, settings=settings)
+            assistant_message = intranetbot.get_chat_response(messages=combo['conversation'], settings=settings)
 
         elif chat_type == 'internet':
-            assistant_message = internetbot.get_chat_response(query=query, settings=settings)
+            assistant_message = internetExperimental.start_chat(messages=combo['conversation'], settings=settings)
         
         else:
             raise Exception('Incorrect chat_type')
@@ -96,8 +103,8 @@ async def combo_chat():
         assistant_message.set(chat_type=chat_type, settings=settings)
 
         # Add the new messages and update the conversation
-        combo['conversation']['messages'].append(user_message.get())
-        combo['conversation']['messages'].append(assistant_message.get())
+        combo['conversation']['messages'].append(user_message.get_external())
+        combo['conversation']['messages'].append(assistant_message.get_external())
         combo['conversation']['last_updated'] = time.time()
 
     # Reset chat

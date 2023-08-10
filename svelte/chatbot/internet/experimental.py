@@ -4,98 +4,28 @@ import openai
 import json
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))))
 
-from db.chroma import query_db_doc
-
-from svelte.chatbot.chat_utils import chat_message, frontend_message
 from termcolor import colored
 
+from svelte.chatbot.message import Message
 from svelte.chatbot.internet.tools import search_1177, search_FASS, search_internetmedicin, get_functions
 
 
 class Chatbot:
     def __init__(self):
-# ! Do not forget to set the environment variable !
+        # ! Do not forget to set the environment variable !
         openai.api_key = os.getenv('OPENAI_API_KEY')
 
-        self.memory = []
+        self.memory:list[Message] = [] # List of Messages
         self.settings = {}
 
 
-    def get_system_message(self):
-        # Path to the system message/system prompt file
-        current_script_path = os.path.abspath(__file__)
-        parent_directory = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(current_script_path))))
-        file_path = os.path.join(parent_directory, 'prompts', 'prompts', 'prompt_internet_test.txt')
-
-        # Get the system message from the file
-        system_message = ""
-        with open(file_path, "r", encoding='utf-8') as f:
-            system_message = f.read()
-        
-        return system_message
-
-
-
-    def get_chat_response(self):
-
-        # Get a response from the model
-        response = openai.ChatCompletion.create(
-            model='gpt-3.5-turbo-0613',
-            messages=self.memory,
-            functions=get_functions(),
-            function_call='auto',
-            temperature=0, #Degree of randomness of the model's output
-        )
-        # Final response or function call?
-        finish_reason = response['choices'][0]['finish_reason']
-        
-        #TODO use response['usage']['prompt_tokens'] to limit the length of the local memory
-        # (How do we keep the conversation in server at a reasonable length?)
-
-        # Assistant wants to call a function
-        if finish_reason == 'function_call':
-            message = response['choices'][0]['message']
-            function_to_call = message['function_call']['name']
-            function_arguments = json.loads(message['function_call']['arguments'])
-            
-            self.memory.append(chat_message(role='assistant', content=None, function_call=message['function_call'], finish_reason='function_call'))
-            
-            return_thought = f'''{function_arguments['explanation']} \nSök {function_to_call} efter {function_arguments['search_query']}'''
-
-            # Return the last message in the memory
-            return chat_message(role='assistant', content=return_thought, function_call=message['function_call'], finish_reason='function_call')
-
-        # Assistant is done
-        elif finish_reason == 'stop':
-            
-            final_response = str(response['choices'][0]['message']['content'])
-
-            # Sources
-            sources = []
-            
-            for message in messages:
-                if message['role'] == 'function':
-                    sources.append(message)
-                elif message["role"] == "assistant" and message.get("function_call"):
-                    message['function_call'] = dict(message['function_call'])
-                    sources.append(message)
-
-
-            # Done, return
-            return frontend_message(role='assistant', content=final_response, final=True, chat_type='internet', settings=settings, sources=sources)
-        
-        else:
-            raise Exception('Something went wrong :(')
-
-
     def start_chat(self, messages: list, settings: dict):
-        """Takes a list of messages, returns a Message containing all relevant information.
-        (Intranet)
+        """Takes the current conversation, including the latest query, returns a response
         
         :param messages: The full conversation including the latest query
         :param settings: Settings for the chatbot (e.g. how complex/formal language the bot should use)
 
-        :return: Message with all needed information, check message.py in utils for more information.
+        :return: Message with all needed information, check message.py for more information.
         """
 
         # Get the system message!
@@ -118,20 +48,22 @@ class Chatbot:
         self.settings = settings.copy()
 
         # Add the system message to the beginning of the messages list
-        self.memory.insert(0, chat_message(role='system', content=system_message, function_call=None, finish_reason=None))
+        self.memory.insert(0, Message(role='system', content=system_message))
 
-        return self.get_chat_response()
+        pretty_print_conversation(self.memory)
+
+        return self._get_chat_response()
 
 
 
     def continue_chat(self):
 
         if self.memory == []:
-            raise Exception('Cannot continue chat! It was never started.')
+            raise Exception('Cannot continue chat! It was never started. (Call start_chat() for each new user query)')
         
-        function_call = self.memory[-1]['function_call']
+        function_call = self.memory[-1].get_internal()['function_call']
         function_to_call = function_call['name']
-        function_arguments = json.loads(function_call['arguments'])
+        function_arguments = function_call['formatted_arguments']
 
         search_response = ''
 
@@ -142,14 +74,105 @@ class Chatbot:
         elif function_to_call == 'internetmedicin':
             search_response = search_internetmedicin(function_arguments['search_query'])
         
-        self.memory.append(chat_message(role='function', content=str(search_response), function_call=None, finish_reason=None))
+        self.memory.append(Message(role='assistant', content='Resultat från sökning: \n' + str(search_response), function_call=None))
 
-        return self.get_chat_response()
+        # Print the progress
+        pretty_print_message(self.memory[-1])
+
+        return self._get_chat_response()
         
+
+    def get_system_message(self):
+        # Path to the system message/system prompt file
+        current_script_path = os.path.abspath(__file__)
+        parent_directory = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(current_script_path))))
+        file_path = os.path.join(parent_directory, 'prompts', 'prompts', 'prompt_internet_test.txt')
+
+        # Get the system message from the file
+        system_message = ""
+        with open(file_path, "r", encoding='utf-8') as f:
+            system_message = f.read()
+
+        return Message(role='system', content=system_message)
+
+
+    def _get_chat_response(self):
+
+        messages = []
+
+        for message in self.memory:
+            messages.append(message.get_internal())
+
+        # Get a response from the model
+        response = openai.ChatCompletion.create(
+            model='gpt-3.5-turbo-0613',
+            messages=messages,
+            functions=get_functions(),
+            function_call='auto',
+            temperature=0, #Degree of randomness of the model's output
+        )
+
+        # Final response or function call?
+        finish_reason = response['choices'][0]['finish_reason']
+
+        #response_message = Message(role='assistant', content=response['choices'][0]['content'])
+        #wrapped_response_msg = message_wrapper(message=response_message, chat_type='internet', finish_reason=finish_reason, settings=self.settings)
+
+        
+        
+        #TODO use response['usage']['prompt_tokens'] to limit the length of the local memory
+        # (How do we keep the conversation in server at a reasonable length?)
+
+        # Assistant wants to call a function
+        if finish_reason == 'function_call':
+            message = response['choices'][0]['message']
+            #function_to_call = message['function_call']['name']
+            #function_arguments = json.loads(message['function_call']['arguments'])
+            
+            ret_message = Message(role='assistant', content=None, function_call=message['function_call'], final=False, chat_type='internet', settings=self.settings)
+
+            # Add the message to the memory, it will be used when continue_chat() is called
+            self.memory.append(ret_message)
+
+            # Print the progress
+            pretty_print_message(self.memory[-1])
+            
+            #TODO !!!! FORMAT THE EXPLANATION IN THE FRONTEND !!!!
+            #return_thought = f'''{function_arguments['explanation']} \nSök {function_to_call} efter {function_arguments['search_query']}'''
+
+            return ret_message
+
+        # Assistant is done
+        elif finish_reason == 'stop':
+            
+            final_response = str(response['choices'][0]['message']['content'])
+
+            # Sources
+            sources = []
+            
+            for message in self.memory:
+                if message.get_internal()['role'] == 'function':
+                    sources.append(message)
+                elif message.get_internal()["role"] == "assistant" and message.get_internal().get("function_call"):
+                    message.get_internal()['function_call'] = dict(message.get_internal()['function_call'])
+                    sources.append(message)
+
+            # Done, return
+            ret_message = Message(role='assistant', content=final_response, final=True, chat_type='internet', settings=self.settings, sources=sources)
+            
+            # Print the progress
+            pretty_print_message(ret_message)
+
+            return ret_message
+        
+        else:
+            raise Exception('Something went wrong :(')
+
 
 
 # Avoid these two, are only to print the conversation
-def pretty_print_message(message):
+def pretty_print_message(message:Message):
+
     role_to_color = {
         "system": "red",
         "user": "green",
@@ -157,27 +180,37 @@ def pretty_print_message(message):
         "function": "magenta",
     }
 
-    if message["role"] == "system":
-            print(colored(f"system: {message['content']}\n", role_to_color["system"]))
+    role = message.get_internal()['role']
+    content = message.get_internal()['content']
+    color = role_to_color[role]
 
-    elif message["role"] == "user":
-        print(colored(f"user: {message['content']}\n", role_to_color["user"]))
-
-    elif message["role"] == "assistant" and message.get("function_call"):
-
-        function_to_call = message['function_call']['name']
-        function_arguments = json.loads(message['function_call']['arguments'])
+    # System message
+    if role == 'system':
+        print(colored(f"system: {content}\n", color))
         
-        print(colored(f'thought: {function_arguments["explanation"]} \ncall function: {function_to_call}(search_query="{function_arguments["search_query"]}")\n', role_to_color["assistant"]))
+    # User message
+    elif role == 'user':
+        print(colored(f"system: {content}\n", color))
 
-    elif message["role"] == "assistant" and not message.get("function_call"):
-        print(colored(f"assistant: {message['content']}\n", role_to_color["assistant"]))
+    # Assistant message (normal)
+    elif role == 'assistant' and not message.get_internal().get('function_call'):
+        print(colored(f"system: {content}\n", color))
+            
+    # Assistant message (function call)
+    elif role == 'assistant' and message.get_internal().get('function_call'):
+        function_to_call = message.get_internal()['function_call']['name']
+        search_query = message.get_internal()['function_call']['formatted_arguments']['search_query']
+        explanation = message.get_internal()['function_call']['formatted_arguments']['explanation']
+        
+        print(colored(f'thought: {explanation} \ncall function: {function_to_call}(search_query="{search_query}")\n', color))
 
-    elif message["role"] == "function":
-        content = eval(message['content'])
-        pretty_sources = json.dumps(content, indent=2)
+    # Function message (result from search)
+    elif role == "function":
+        # Some formatting
+        content = eval(message.get_internal()['content'])
+        pretty_sources = json.dumps(content, indent=2) 
 
-        print(colored(f"{message['name']}() -> {pretty_sources}\n", role_to_color["function"]))
+        print(colored(f"function -> {pretty_sources}\n", role_to_color["function"]))
 
 def pretty_print_conversation(messages):
     for message in messages:
@@ -187,4 +220,12 @@ def pretty_print_conversation(messages):
 
 test = Chatbot()
 
-test_response = test.get_chat_response([{'role':'user', 'content':'Berätta om borrelia'}], {})
+first_res = test.start_chat([Message(role='user', content='Berätta om borrelia')], {})
+
+if first_res.get_internal().get('function_call'):
+    second_res = test.continue_chat()
+
+
+
+
+

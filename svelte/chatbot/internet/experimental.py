@@ -6,16 +6,19 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(
 
 from db.chroma import query_db_doc
 
-from svelte.chatbot.chat_utils import Message
+from svelte.chatbot.chat_utils import chat_message, frontend_message
 from termcolor import colored
 
-from svelte.chatbot.internet.tools import search_1177, search_FASS, search_internetmedicin
+from svelte.chatbot.internet.tools import search_1177, search_FASS, search_internetmedicin, get_functions
 
 
 class Chatbot:
     def __init__(self):
 # ! Do not forget to set the environment variable !
         openai.api_key = os.getenv('OPENAI_API_KEY')
+
+        self.memory = []
+        self.settings = {}
 
 
     def get_system_message(self):
@@ -33,14 +36,64 @@ class Chatbot:
 
 
 
-    def get_chat_response(self, messages: list, settings: dict, remember=True, model='gpt-3.5-turbo-0613'):
+    def get_chat_response(self):
+
+        # Get a response from the model
+        response = openai.ChatCompletion.create(
+            model='gpt-3.5-turbo-0613',
+            messages=self.memory,
+            functions=get_functions(),
+            function_call='auto',
+            temperature=0, #Degree of randomness of the model's output
+        )
+        # Final response or function call?
+        finish_reason = response['choices'][0]['finish_reason']
+        
+        #TODO use response['usage']['prompt_tokens'] to limit the length of the local memory
+        # (How do we keep the conversation in server at a reasonable length?)
+
+        # Assistant wants to call a function
+        if finish_reason == 'function_call':
+            message = response['choices'][0]['message']
+            function_to_call = message['function_call']['name']
+            function_arguments = json.loads(message['function_call']['arguments'])
+            
+            self.memory.append(chat_message(role='assistant', content=None, function_call=message['function_call'], finish_reason='function_call'))
+            
+            return_thought = f'''{function_arguments['explanation']} \nSök {function_to_call} efter {function_arguments['search_query']}'''
+
+            # Return the last message in the memory
+            return chat_message(role='assistant', content=return_thought, function_call=message['function_call'], finish_reason='function_call')
+
+        # Assistant is done
+        elif finish_reason == 'stop':
+            
+            final_response = str(response['choices'][0]['message']['content'])
+
+            # Sources
+            sources = []
+            
+            for message in messages:
+                if message['role'] == 'function':
+                    sources.append(message)
+                elif message["role"] == "assistant" and message.get("function_call"):
+                    message['function_call'] = dict(message['function_call'])
+                    sources.append(message)
+
+
+            # Done, return
+            return frontend_message(role='assistant', content=final_response, final=True, chat_type='internet', settings=settings, sources=sources)
+        
+        else:
+            raise Exception('Something went wrong :(')
+
+
+    def start_chat(self, messages: list, settings: dict):
         """Takes a list of messages, returns a Message containing all relevant information.
         (Intranet)
         
         :param messages: The full conversation including the latest query
         :param settings: Settings for the chatbot (e.g. how complex/formal language the bot should use)
-        :param remember: If the bot should remember the conversation.
-        :param model: Model to be used
 
         :return: Message with all needed information, check message.py in utils for more information.
         """
@@ -59,154 +112,40 @@ class Chatbot:
         Du svarar på frågor från både läkare och patienter om symtom, sjukdomar, medicin och liknande.
         Du använder bara informationen som du får från de funktioner du har tillgång till.
         Om det är oklart, be om förtydling.'''
+
+        # Reset memory and settings for this message
+        self.memory = messages.copy()
+        self.settings = settings.copy()
+
+        # Add the system message to the beginning of the messages list
+        self.memory.insert(0, chat_message(role='system', content=system_message, function_call=None, finish_reason=None))
+
+        return self.get_chat_response()
+
+
+
+    def continue_chat(self):
+
+        if self.memory == []:
+            raise Exception('Cannot continue chat! It was never started.')
         
+        function_call = self.memory[-1]['function_call']
+        function_to_call = function_call['name']
+        function_arguments = json.loads(function_call['arguments'])
 
-        # This is used as a parameter to the functions and asks gpt to provide reasoning for the choice of function and search term.
-        explanation_param = {
-            'type': 'string',
-            'description': 'Detaljerad beskrivning av tankegången från användarens fråga till varför funktionen bör kallas.'
-        }
+        search_response = ''
 
-        functions = [
-            {
-                'name': '1177',
-                'description': 'Använd detta verktyg när du behöver svara på frågor om sjukdomar eller skador.',
-                'parameters': {
-                    'type': 'object',
-                    'properties': {
-                        'search_query': {
-                        'type': 'string',
-                        'description': 'Sökord för att hitta information om, till exempel, en sjukdom eller en skada.'
-                        },
-                        'explanation': explanation_param
-                    },
-                    'required': ['search_query', 'explanation']
-                }
-            },
-            {
-                'name': 'FASS',
-                'description': 'Använd detta verktyg när du behöver svara på frågor om läkermedel, till exempel biverkningar, dosering eller tillgång.',
-                'parameters': {
-                    'type': 'object',
-                    'properties': {
-                        'search_query': {
-                            'type': 'string',
-                            'description': 'Sökord för att hitta information om, till exempel, läkemedel.'
-                        },
-                        'explanation': explanation_param
-                    },
-                    'required': ['search_query', 'explanation']
-                }
-            },
-            {
-                'name': 'internetmedicin',
-                'description': 'Använd detta verktyg när du behöver information om ICD-koder för skador eller sjukdomar.',
-                'parameters': {
-                    'type': 'object',
-                    'properties': {
-                        'search_query': {
-                            'type': 'string',
-                            'description': 'ICD-kod.'
-                        },
-                        'explanation': explanation_param
-                    },
-                    'required': ['search_query', 'explanation']
-                }
-            }
-        ]
+        if function_to_call == '1177':
+            search_response = search_1177(function_arguments['search_query'])
+        elif function_to_call == 'FASS':
+            search_response = search_FASS(function_arguments['search_query'])
+        elif function_to_call == 'internetmedicin':
+            search_response = search_internetmedicin(function_arguments['search_query'])
+        
+        self.memory.append(chat_message(role='function', content=str(search_response), function_call=None, finish_reason=None))
 
-        # Add the system message to the beginning of the messages list, (should be enough with the insert row)
-        if messages[0]['role'] != 'system':
-            messages.insert(0, {'role':'system', 'content': system_message})
-        else:
-            messages[0] = {'role':'system', 'content': system_message}
-
-        # Print the conversation up until now
-        pretty_print_conversation(messages=messages)
-
-        max_iterations = 10
-        for i in range(0,max_iterations):
-
-            # Get a response from the model
-            response = openai.ChatCompletion.create(
-                model=model,
-                messages=messages,
-                functions=functions,
-                function_call='auto',
-                temperature=0, #Degree of randomness of the model's output
-            )
-            # Final response or function call?
-            finish_reason = response['choices'][0]['finish_reason']
-            
-
-            #TODO use response['usage']['prompt_tokens'] to limit the length of the local memory
-            # (How do we keep the conversation in server at a reasonable length?)
-
-            # Assistant wants to call a function
-            if finish_reason == 'function_call':
-                message = response['choices'][0]['message']
-                function_to_call = message['function_call']['name']
-                function_arguments = json.loads(message['function_call']['arguments'])
-
-                messages.append(
-                    {
-                        'role': 'assistant', 
-                        'content': None,
-                        'function_call': message['function_call']
-                    }
-                )
-                
-                # Print the conversation in beautiful colors
-                pretty_print_message(messages[-1])
-
-                search_response = ''
-
-                if function_to_call == '1177':
-                    search_response = search_1177(function_arguments['search_query'])
-                elif function_to_call == 'FASS':
-                    search_response = search_FASS(function_arguments['search_query'])
-                elif function_to_call == 'internetmedicin':
-                    search_response = search_internetmedicin(function_arguments['search_query'])
-                
-                messages.append({'role': 'function', 'name': function_to_call, 'content': str(search_response)})
-                
-                # Print the conversation in beautiful colors
-                pretty_print_message(messages[-1])
-
-                # Continue the loop
-                continue
-                
-            # Assistant is done
-            elif finish_reason == 'stop':
-                
-                final_response = str(response['choices'][0]['message']['content'])
-
-                messages.append({'role': 'assistant', 'content': final_response})
-                
-                # Print the conversation in beautiful colors
-                pretty_print_message(messages[-1])
-
-                #for message in messages:
-                    #print(message, '\n')
-
-                # Sources
-                sources = []
-                
-                for message in messages:
-                    if message['role'] == 'function':
-                        sources.append(message)
-                    elif message["role"] == "assistant" and message.get("function_call"):
-                        message['function_call'] = dict(message['function_call'])
-                        sources.append(message)
-
-
-                # Done, return
-                return Message(role='assistant', content=final_response, chat_type='internet', settings=settings, sources=sources)
-            
-            else:
-                raise Exception('Something went wrong :(')
-
-
+        return self.get_chat_response()
+        
 
 
 # Avoid these two, are only to print the conversation

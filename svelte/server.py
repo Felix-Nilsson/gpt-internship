@@ -20,7 +20,7 @@ combo = {
     'conversation': {
         'last_updated': time.time(),
         'messages': [
-            # This list should be filled up by Message elements (the class will construct them correctly)
+            # This list should be filled up by chat_message(s) (use chat_utils chat_message() to create)
         ]
     },
     'settings': {

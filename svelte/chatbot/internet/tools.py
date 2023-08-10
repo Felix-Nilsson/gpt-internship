@@ -1,6 +1,66 @@
 from langchain.tools import BaseTool
 from duckduckgo_search import DDGS
 
+
+def get_functions():
+    # This is used as a parameter to the functions and asks gpt to provide reasoning for the choice of function and search term.
+    explanation_param = {
+        'type': 'string',
+        'description': 'Detaljerad beskrivning av tankegången från användarens fråga till varför funktionen bör kallas.'
+    }
+
+    functions = [
+        {
+            'name': '1177',
+            'description': 'Använd detta verktyg när du behöver svara på frågor om sjukdomar eller skador.',
+            'parameters': {
+                'type': 'object',
+                'properties': {
+                    'search_query': {
+                    'type': 'string',
+                    'description': 'Sökord för att hitta information om, till exempel, en sjukdom eller en skada.'
+                    },
+                    'explanation': explanation_param
+                },
+                'required': ['search_query', 'explanation']
+            }
+        },
+        {
+            'name': 'FASS',
+            'description': 'Använd detta verktyg när du behöver svara på frågor om läkermedel, till exempel biverkningar, dosering eller tillgång.',
+            'parameters': {
+                'type': 'object',
+                'properties': {
+                    'search_query': {
+                        'type': 'string',
+                        'description': 'Sökord för att hitta information om, till exempel, läkemedel.'
+                    },
+                    'explanation': explanation_param
+                },
+                'required': ['search_query', 'explanation']
+            }
+        },
+        {
+            'name': 'internetmedicin',
+            'description': 'Använd detta verktyg när du behöver information om ICD-koder för skador eller sjukdomar.',
+            'parameters': {
+                'type': 'object',
+                'properties': {
+                    'search_query': {
+                        'type': 'string',
+                        'description': 'ICD-kod.'
+                    },
+                    'explanation': explanation_param
+                },
+                'required': ['search_query', 'explanation']
+            }
+        }
+    ]
+
+    return functions
+
+
+
 def search_1177(query):
     query += " site:1177.se"
     return _ddg_search(search_query=query)

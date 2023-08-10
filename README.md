@@ -77,23 +77,23 @@ They were however made to be similar in structure to real documents, with guidan
   
 * To run the web interface, you need to install ```npm``` and ```node```. If you dont already have these you can download them in the following way:
 
-1. First install ```nvm```, the **node version manager** for example in the following way:
+   First install ```nvm```, the **node version manager** for example in the following way:
 
-```curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash```
+  ```curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash```
 
-2. Make sure it is installed properly, for example by checking:
-   
-```nvm --version```
+   Please restart your terminal, and to make sure it is installed properly, for example check:
+    
+  ```nvm --version```
 
-3. Finally install ```node```:
+   Finally install ```node```:
 
-```nvm install node```
+  ```nvm install node```
 
-You can verify that it worked by running:
+  You can verify that it worked by running:
 
-```node --version```
+  ```node --version```
 
-```npm --version ```
+  ```npm --version ```
 
 * To install the python packages, please run ```pip install -r requirements.txt``` in the directory ```gpt-internship/```
 

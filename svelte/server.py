@@ -9,7 +9,6 @@ from yaml.loader import SafeLoader
 from chatbot.assistant.chatbot import Chatbot as AssistantCB
 from chatbot.internet.chatbot import Chatbot as InternetCB
 from chatbot.intranet.chatbot import Chatbot as IntranetCB
-from chatbot.internet.experimental import Chatbot as InternetExp
 
 from chatbot.message import Message
 
@@ -41,7 +40,6 @@ doctorbot = AssistantCB('doctor')
 patientbot = AssistantCB('patient')
 intranetbot = IntranetCB()
 internetbot = InternetCB()
-internetExperimental = InternetExp()
 
 # Chat handler
 @app.route("/combo/chat", methods=['GET', 'PUT', 'DELETE'])
@@ -92,7 +90,7 @@ async def combo_chat():
             assistant_message = intranetbot.get_chat_response(messages=combo['conversation'], settings=settings)
 
         elif chat_type == 'internet':
-            assistant_message = internetExperimental.start_chat(messages=combo['conversation'], settings=settings)
+            assistant_message = internetbot.start_chat(messages=combo['conversation'], settings=settings)
         
         else:
             raise Exception('Incorrect chat_type')

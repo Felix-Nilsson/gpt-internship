@@ -123,7 +123,7 @@ To run the frontend,
 - `npm install`
 - `npm run dev -- --open` (Run the Svelte app)
 
-    (`--open` opens the page in the browser automatically and can be ommitted.)
+    (`--open` opens the page in the browser automatically and can be omitted.)
 
 Note:
 - The frontend should run on localhost:5000 and the backend on localhost:5001.

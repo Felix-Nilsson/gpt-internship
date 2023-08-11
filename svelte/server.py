@@ -23,12 +23,6 @@ combo = {
             # This list should be filled up by Messages (use Message() to create)
         ]
     },
-    'settings': {
-        # Settings depend on what chat-version is used, e.g.
-        #'tools' : ['1177', 'FASS', 'internetmedicin']
-        #'lang' : 'sv' or 'en' 
-        #'tone' : 'simple' or 'formal'
-    },
     'login': {
         'success': False,
         'login_as': 'None',     #'doctor' or 'patient'
@@ -42,7 +36,7 @@ intranetbot = IntranetCB()
 internetbot = InternetCB()
 
 # Chat handler
-@app.route("/combo/chat", methods=['GET', 'PUT', 'DELETE'])
+@app.route("/chat", methods=['GET', 'PUT', 'DELETE'])
 async def combo_chat():
     global combo
 
@@ -85,7 +79,7 @@ async def combo_chat():
             # Get list of the doctor's patients
             with open("credentials/credentials.json") as f:
                 users = json.load(f)
-                accessible_patients = users['credentials']['doctors'][result['username']]['patients']
+                accessible_patients = users['credentials']['doctors'][combo['login']['username']]['patients']
             
             assistant_message = patientbot.get_chat_response(messages=combo['conversation'], settings=settings, patients=accessible_patients)
         
@@ -115,27 +109,9 @@ async def combo_chat():
     
     return combo['conversation']
 
-# Settings handler
-@app.route("/combo/settings", methods=['GET', 'PUT', 'DELETE'])
-async def combo_settings():
-    global combo
-
-    # Update settings
-    if request.method == 'PUT':
-        new_settings = request.get_json()
-
-        combo['settings'] = new_settings # TODO CHECK
-
-    # Reset settings
-    elif request.method == 'DELETE':
-        combo['settings'] = {}
-
-    
-    return combo['settings']
-
 
 # Authentication handler (GET is used to check auth status)
-@app.route("/combo/login", methods=['GET', 'PUT', 'DELETE'])
+@app.route("/credentials", methods=['GET', 'PUT', 'DELETE'])
 async def combo_login():
     global combo
 
@@ -179,189 +155,3 @@ async def combo_login():
 
     
     return combo['login']
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#Do not change this! It is used to reset context
-CLEAN_CONTEXT = {
-    'chat_type': 'internet',
-    'settings': {},
-    #...
-}
-#This is the context that we use
-context = CLEAN_CONTEXT.copy()
-
-conversation = {
-    'last_updated': time.time(),
-    'messages': [
-        #This list should be filled up by Message elements (the class will construct them correctly)
-    ]
-}
-
-result = {
-    'success': "False", 
-    'username': "None"
-}
-
-def _new_chatbot(chat_type):
-    global context
-    global conversation
-    global doctorbot
-    global patientbot
-    global intranetbot
-    global internetbot
-
-    #New conversation
-    conversation = {
-        'last_updated': time.time(),
-        'messages': [
-            #This list should be filled up by Message elements (the class will construct them correctly)
-        ]
-    }
-
-# CONTEXT OF THE CHAT
-@app.route("/context", methods=['GET', 'POST', 'PUT', 'DELETE'])
-async def chat_context():
-    global context
-
-    # NEW CLEAN CHAT
-    if request.method == 'POST':
-
-        new_context = request.get_json()
-
-        #Change to chatbot of current type
-        _new_chatbot(new_context['chat_type'])
-
-
-    # UPDATE CONTEXT WITHOUT NEW CHAT
-    elif request.method == 'PUT':
-
-        new_context = request.get_json()
-
-        #Apply new chat type
-        if new_context.get('chat_type') != None:
-            context['chat_type'] = new_context.get('chat_type')
-
-        #Apply new settings
-        if new_context.get('settings') != None:
-            context['settings'] = new_context.get('settings')
-    
-
-    # ONLY CLEAR CONTEXT
-    elif request.method == 'DELETE':
-        context = CLEAN_CONTEXT.copy()
-    
-
-    return context
-
-
-@app.route("/chat", methods=['GET', 'PUT', 'DELETE'])
-async def chat():
-    global chatbot
-    global conversation
-    
-    if request.method == 'PUT':
-        #Get the prompt from the PUT body
-        prompt = request.get_json()['prompt']
-
-
-        #Get a response to the prompt
-        if context['chat_type'] == 'patient':
-            assistant_message = patientbot.get_chat_response(prompt, context['settings'], [result['username'][1:]])
-            
-        elif context['chat_type'] == 'doctor':
-            #Get list of the doctor's patients
-            with open("credentials/credentials.json") as f:
-                users = json.load(f)
-                accessible_patients = users['credentials']['doctors'][result['username']]['patients']
-            
-            assistant_message = doctorbot.get_chat_response(prompt, context['settings'], accessible_patients)
-
-
-        elif context['chat_type'] == 'intranet':
-            assistant_message = intranetbot.get_chat_response(prompt, context['settings'])
-
-        else: #internet
-            assistant_message = internetbot.get_chat_response(prompt, context['settings'])
-
-        #The prompt/query is the same independently of the type of response we want
-        user_message = Message(user=True, content=prompt)
-
-        # Add the new messages and update the conversation
-        conversation['messages'].append(user_message.get())
-        conversation['messages'].append(assistant_message.get())
-        conversation['last_updated'] = time.time()
-        
-    elif request.method == 'DELETE':
-        #New chatbot to clear its memory
-        _new_chatbot(context['chat_type'])
-
-    
-
-    return conversation
-
-
-
-
-@app.route("/credentials", methods=['GET', 'PUT', 'DELETE'])
-async def creds():
-    global result
-
-    #Attempt login
-    if request.method == 'PUT':
-
-        #If the login is not successful, it is unsuccessful, indeed
-        result["username"] = None
-        result["success"] = False
-
-        #Get username and password from the input
-        username = request.get_json()['username']
-        candidate_password = request.get_json()['password']
-
-        #Check if credentials exist in the "database"
-        with open("credentials/credentials.json") as f:
-            users = json.load(f)
-
-            #Chat-type dependant login
-            if context['chat_type'] == 'patient':
-                users = users['credentials']['patients']
-            elif context['chat_type'] == 'doctor' or context['chat_type'] == 'intranet':
-                users = users['credentials']['doctors']
-            else:
-                users = {}
-            
-            if username in users:
-                reference_password = users[username]["password"]
-                
-                # converting password to array of bytes
-                bytes = candidate_password.encode('utf-8')
-
-                if bcrypt.checkpw(bytes,reference_password.encode('utf-8')):
-                    result["username"] = username
-                    result["success"] = True
-
-    #Logout
-    elif request.method == 'DELETE':
-        result["username"] = None
-        result["success"] = False
-    
-    return result
-
-
-if __name__ == "__main__":
-    app.run(debug=True, use_reloader=False, port=5001)

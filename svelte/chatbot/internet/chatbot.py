@@ -1,122 +1,183 @@
+import sys
 import os
-
-from langchain.agents import AgentType
-from langchain.llms import OpenAI 
-from langchain.chat_models import ChatOpenAI
-from langchain.agents import initialize_agent
-from langchain.chains.conversation.memory import ConversationBufferWindowMemory
-
-from .tools import Tool1177, ToolFASS, ToolInternetmedicin
-
 import openai
+import json
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))))
 
-from ..message import Message
+from svelte.chatbot.message import Message, pretty_print_conversation, pretty_print_message
+from svelte.chatbot.internet.tools import search_1177, search_FASS, search_internetmedicin, get_functions
+
 
 class Chatbot:
     def __init__(self):
-        OpenAI.api_key = os.getenv("OPENAI_API_KEY")
+        # ! Do not forget to set the environment variable !
+        openai.api_key = os.getenv('OPENAI_API_KEY')
 
-        self.llm = ChatOpenAI(temperature=0, model_name="gpt-3.5-turbo")
+        self.memory:list[Message] = [] # List of Messages
+        self.settings = {}
 
-        self.conversational_memory = ConversationBufferWindowMemory(
-            memory_key='chat_history',
-            input_key='input',
-            output_key='output',
-            k=5, #Remember 5 messages back
-            return_messages=True
-        )
 
-    def get_chat_response(self, query: str, settings: dict):
-        """Takes a query and a dictionary containing relevant settings, returns a Message containing all relevant information.
-        (Internet)
+    def start_chat(self, messages: list, settings: dict):
+        """Takes the current conversation, including the latest query, returns a response
         
-        :param query: The query/prompt.
-        :param settings: Settings for the chatbot (e.g. What tools it can use or the complexity of the language).
+        :param messages: The full conversation including the latest query
+        :param settings: Settings for the chatbot (e.g. how complex/formal language the bot should use)
 
-        :return: Message with all needed information, check message.py in utils for more information.
+        :return: Message with all needed information, check message.py for more information.
         """
 
+        # Get the system message!
+        #system_message = self.get_system_message()
+        
+        # Remove unnecessary line
+        #system_message = system_message.replace('Du ska svara på följande meddelande "{{input}}".', '')
 
-        #Change accessible tools from settings
-        tools = []
+        # Add relevant data to the query to the system message
+        #system_message = system_message.replace('background', str(data))
 
-        if "1177.se" in settings['chosen_tools']:
-            tools.append(Tool1177())
-        if "FASS.se" in settings['chosen_tools']:
-            tools.append(ToolFASS())
-        if "internetmedicin.se" in settings['chosen_tools']:
-            tools.append(ToolInternetmedicin())
+        
+        system_message = f'''Du är en "conversational AI".
+        Du svarar på frågor från både läkare och patienter om symtom, sjukdomar, medicin och liknande.
+        Du använder bara informationen som du får från de funktioner du har tillgång till.
+        Om det är oklart, be om förtydling.'''
 
-        explanation = f'''Enligt inställningarna ska assistenten svara med språknivå "{settings['language_level']}" och har tillgång till källorna {settings['chosen_tools']}'''
+        # Reset memory and settings for this message
+        self.memory = messages.copy()
+        self.settings = settings.copy()
 
-        agent = initialize_agent(
-            tools=tools, 
-            llm=self.llm, 
-            agent=AgentType.CHAT_CONVERSATIONAL_REACT_DESCRIPTION, 
-            verbose=True, 
-            return_intermediate_steps=True,
-            max_iterations = 3, 
-            early_stopping_method="generate",
-            memory=self.conversational_memory
-        )
+        # Add the system message to the beginning of the messages list
+        self.memory.insert(0, Message(role='system', content=system_message))
+
+        if len(self.memory) < 3:
+            pretty_print_conversation(self.memory)
+
+        return self._get_chat_response()
 
 
-        # Absolute path of this file
+
+    def continue_chat(self):
+
+        if self.memory == []:
+            raise Exception('Cannot continue chat! It was never started. (Call start_chat() for each new user query)')
+        
+        function_call = self.memory[-1].get()['function_call']
+        function_to_call = function_call['name']
+        function_arguments = function_call['arguments']
+
+        search_response = ''
+
+        if function_to_call == '1177':
+            search_response = search_1177(function_arguments['search_query'])
+        elif function_to_call == 'FASS':
+            search_response = search_FASS(function_arguments['search_query'])
+        elif function_to_call == 'internetmedicin':
+            search_response = search_internetmedicin(function_arguments['search_query'])
+        
+        self.memory.append(Message(role='assistant', content='SEARCH_RESULT' + str(search_response), function_call=None))
+
+        # Print the progress
+        pretty_print_message(self.memory[-1])
+
+        return self._get_chat_response()
+        
+
+    def get_system_message(self):
+        # Path to the system message/system prompt file
         current_script_path = os.path.abspath(__file__)
-
-        # GPT-Internship folder (shared parent folder)
         parent_directory = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(current_script_path))))
-
-        # Path to the prompt/system message file
         file_path = os.path.join(parent_directory, 'prompts', 'prompts', 'prompt_internet_test.txt')
 
-        #Update the context/system message
+        # Get the system message from the file
         system_message = ""
         with open(file_path, "r", encoding='utf-8') as f:
             system_message = f.read()
 
-        new_prompt = agent.agent.create_prompt(
-            system_message=system_message,
-            tools=tools
+        return Message(role='system', content=system_message)
+
+
+    def _get_chat_response(self):
+
+        messages = []
+
+        for message in self.memory:
+            #print(message.openai_format())
+            messages.append(message.openai_format())
+
+        
+
+        # Get a response from the model
+        response = openai.ChatCompletion.create(
+            model='gpt-3.5-turbo-0613',
+            messages=messages,
+            functions=get_functions(),
+            function_call='auto',
+            temperature=0, #Degree of randomness of the model's output
         )
 
-        agent.agent.llm_chain.prompt = new_prompt
+        # Final response or function call?
+        finish_reason = response['choices'][0]['finish_reason']
 
-        output = agent(query)
+        #response_message = Message(role='assistant', content=response['choices'][0]['content'])
+        #wrapped_response_msg = message_wrapper(message=response_message, chat_type='internet', finish_reason=finish_reason, settings=self.settings)
 
-        response = language_adapter(output['output'], settings['language_level']) #output['output'] #Do language_adapter
+        
+        
+        #TODO use response['usage']['prompt_tokens'] to limit the length of the local memory
+        # (How do we keep the conversation in server at a reasonable length?)
 
-        sources = None
-        if len(output['intermediate_steps']) != 0:
-            sources = output['intermediate_steps'][0]
+        # Assistant wants to call a function
+        if finish_reason == 'function_call':
+            message = response['choices'][0]['message']
+            
+            ret_message = Message(role='assistant', content=None, function_call=message['function_call'], final=False, chat_type='internet', settings=self.settings)
 
-        return Message(user=False, content=response, sources=sources, explanation=explanation)
-    
+            # Add the message to the memory, it will be used when continue_chat() is called
+            self.memory.append(ret_message)
+
+            # Print the progress
+            pretty_print_message(self.memory[-1])
+            
+            #TODO !!!! FORMAT THE EXPLANATION IN THE FRONTEND !!!!
+            #return_thought = f'''{function_arguments['explanation']} \nSök {function_to_call} efter {function_arguments['search_query']}'''
+
+            return ret_message
+
+        # Assistant is done
+        elif finish_reason == 'stop':
+            
+            final_response = str(response['choices'][0]['message']['content'])
+
+            # Sources
+            sources = []
+            
+            for message in self.memory:
+                if message.get()['role'] == 'function':
+                    sources.append(message)
+                elif message.get()["role"] == "assistant" and message.get().get("function_call"):
+                    message.get()['function_call'] = dict(message.get()['function_call'])
+                    sources.append(message)
+
+            # Done, return
+            ret_message = Message(role='assistant', content=final_response, final=True, chat_type='internet', settings=self.settings, sources=sources)
+            
+            # Print the progress
+            pretty_print_message(ret_message)
+
+            return ret_message
+        
+        else:
+            raise Exception('Something went wrong :(')
 
 
-def language_adapter(response, language_level):
+# TODO REMOVE THIS
+#test = Chatbot()
 
-    #Adapt language level from settings
-    if language_level == 'easy':
-        language_level_sys_message = 'Du är en språk-och-tonöversättare. Ditt jobb är att anpassa den texten (avgränsad av ```) du får så att ett barn ska kunna förstå det. Ifall texten är på något annat språk översätter du den till svenska. Ifall texten är längre än 4 meningar kortar du ner den. Du ändrar inga länkar i texten.'
-    elif language_level == 'complex':
-        language_level_sys_message = 'Du är en språk-tonöversättare. Ditt jobb är att anpassa texten (avgränsad av ```) du får så att en person som är kunnig inom sjukvård kan få den viktiga information på ett kort och koncist sätt. Ifall texten är på något annat språk översätter du den till svenska. Ifall texten är längre än 4 meningar kortar du ner den. Du ändrar inga länkar i texten.'
-    else: #Anything other than easy or complex => normal (the default)
-        language_level_sys_message = 'Ifall texten är på något annat språk översätter du den till svenska. Ifall texten är längre än 4 meningar kortar du ner den. Du ändrar inga länkar i texten.'
+#first_res = test.start_chat([Message(role='user', content='Berätta om borrelia')], {})
 
-    
-    # Setup query 
-    query = f'''{language_level_sys_message}
-    
-    ```{response}```
-    '''
+#if first_res.get().get('function_call'):
+    #second_res = test.continue_chat()
 
-    # Get "language level translation"
-    response = openai.ChatCompletion.create(
-        model='gpt-3.5-turbo',
-        messages=[{'role':'user','content':query}],
-        temperature=0, #Degree of randomness of the model's output
-    )
 
-    return str(response.choices[0].message["content"])
+
+
 

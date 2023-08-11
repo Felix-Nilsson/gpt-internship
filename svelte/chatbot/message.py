@@ -1,4 +1,5 @@
 import json
+from termcolor import colored
 
 class Message():
     def __init__(self, role:str, 
@@ -102,9 +103,60 @@ class Message():
             self.message['additional_info']['alert'] = alert
 
 
+# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ PRINT MESSAGES /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+
+# Avoid these two, are only to print the conversation
+def pretty_print_message(message:Message):
+
+    color = {
+        "system": "red",
+        "user": "green",
+        "assistant": "blue",
+        "thought": "cyan",
+        "function": "magenta",
+    }
+
+    msg = message.get()
+    role = msg['role']
+    content = str(msg['content'])
+
+    # System message
+    if role == 'system':
+        print(colored(f"system: {content} \n", color['system']))
+        
+    # User message
+    elif role == 'user':
+        print(colored(f"user: {content} \n", color['user']))
+
+    # Assistant message (function call)
+    elif role == 'assistant' and msg.get('function_call'):
+        function_to_call = msg['function_call']['name']
+        search_query = msg['function_call']['arguments']['search_query']
+        explanation = msg['function_call']['arguments']['explanation']
+        
+        print(colored(f'thought: {explanation} \ncall function: {function_to_call}(search_query="{search_query}") \n', color['thought']))
+
+    # Result from search
+    elif role == "assistant" and ('SEARCH_RESULT' in content):
+        # Some formatting
+        content = content.replace('SEARCH_RESULT','')
+        content = eval(content)
+        pretty_sources = json.dumps(content, indent=2) 
+
+        print(colored(f"function -> {pretty_sources} \n", color["function"]))
+    
+    # Assistant message (normal)
+    elif role == 'assistant':
+        print(colored(f"assistant: {content} \n", color['assistant']))
+
+def pretty_print_conversation(messages):
+    for message in messages:
+        pretty_print_message(message=message)
 
 
-# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\  MESSAGE TEMPLATES /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+
+
+# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ MESSAGE TEMPLATES /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
 
 # INTERNAL MESSAGES THAT ARE USED WITH OPENAI API (in messages/memory)
 # Question from user

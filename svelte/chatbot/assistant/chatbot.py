@@ -64,7 +64,7 @@ class Chatbot:
             return 'Du svarar alltid koncist och tydligt, med en konversionell ton'
 
 
-    def get_chat_response(self, messages: list , settings: dict, patients: list[str], remember=True, model='gpt-3.5-turbo-0613'):
+    def get_chat_response(self, messages: list , settings: dict, patients: list[str], model='gpt-3.5-turbo-0613'):
         """Takes a list of messages and a list of patients whose information the doctor can access, returns a response to the last query.
         (Doctor / Patient)
 
@@ -139,23 +139,16 @@ class Chatbot:
         # Update the system message with relevant patient information
         system_message = system_message.replace('background', patient_data)
 
-        # Create local instance of memory and set system message (with relevant information for the question)
-        memory = [{'role':'system', 'content': system_message}]
 
-        # Add the conversation until now to the memory (should include the latest query)
-        if remember:
-            for message in messages:
-                memory.append({'role': message['role'], 
-                               'content': message['content']}) 
-        else:
-            # Reset memory TODO should not be necessary anymore
-            memory = [{'role':'system', 'content': system_message}]
+        # Create local instance of memory and set system message (with relevant information for the question)
+        memory = messages.copy()
+        memory.insert(0, Message(role='system', content=system_message))
 
 
         # Get a response from the model
         response = openai.ChatCompletion.create(
             model=model,
-            messages=messages,
+            messages=memory,
             temperature=0, #Degree of randomness of the model's output
         )
         

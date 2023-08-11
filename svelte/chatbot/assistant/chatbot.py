@@ -6,7 +6,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(
 
 from db.chroma import query_db
 
-from ..message import Message
+from svelte.chatbot.message import Message
 
 class Chatbot:
     def __init__(self, user_type):
@@ -164,5 +164,16 @@ class Chatbot:
 
         final_response = response.choices[0].message['content']
 
-        return Message(role='assistant', content=final_response, chat_type=self.user_type, settings=settings, sources=source, explanation=explanation, patient=current_patient, alert=alert_message)
+        return Message(
+                role='assistant', 
+                content=final_response, 
+                final=True, 
+                chat_type=self.user_type, 
+                settings=settings, 
+                sources=source, 
+                explanation=explanation, 
+                patient=current_patient, 
+                alert=alert_message
+            )
+    
 

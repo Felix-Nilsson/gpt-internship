@@ -50,7 +50,8 @@ class Chatbot:
         # Add the system message to the beginning of the messages list
         self.memory.insert(0, Message(role='system', content=system_message))
 
-        pretty_print_conversation(self.memory)
+        if len(self.memory) < 3:
+            pretty_print_conversation(self.memory)
 
         return self._get_chat_response()
 
@@ -61,9 +62,9 @@ class Chatbot:
         if self.memory == []:
             raise Exception('Cannot continue chat! It was never started. (Call start_chat() for each new user query)')
         
-        function_call = self.memory[-1].get_internal()['function_call']
+        function_call = self.memory[-1].get()['function_call']
         function_to_call = function_call['name']
-        function_arguments = function_call['formatted_arguments']
+        function_arguments = function_call['arguments']
 
         search_response = ''
 
@@ -74,7 +75,7 @@ class Chatbot:
         elif function_to_call == 'internetmedicin':
             search_response = search_internetmedicin(function_arguments['search_query'])
         
-        self.memory.append(Message(role='assistant', content='Resultat från sökning: \n' + str(search_response), function_call=None))
+        self.memory.append(Message(role='assistant', content='SEARCH_RESULT' + str(search_response), function_call=None))
 
         # Print the progress
         pretty_print_message(self.memory[-1])
@@ -101,7 +102,10 @@ class Chatbot:
         messages = []
 
         for message in self.memory:
-            messages.append(message.get_internal())
+            #print(message.openai_format())
+            messages.append(message.openai_format())
+
+        
 
         # Get a response from the model
         response = openai.ChatCompletion.create(
@@ -126,8 +130,6 @@ class Chatbot:
         # Assistant wants to call a function
         if finish_reason == 'function_call':
             message = response['choices'][0]['message']
-            #function_to_call = message['function_call']['name']
-            #function_arguments = json.loads(message['function_call']['arguments'])
             
             ret_message = Message(role='assistant', content=None, function_call=message['function_call'], final=False, chat_type='internet', settings=self.settings)
 
@@ -151,10 +153,10 @@ class Chatbot:
             sources = []
             
             for message in self.memory:
-                if message.get_internal()['role'] == 'function':
+                if message.get()['role'] == 'function':
                     sources.append(message)
-                elif message.get_internal()["role"] == "assistant" and message.get_internal().get("function_call"):
-                    message.get_internal()['function_call'] = dict(message.get_internal()['function_call'])
+                elif message.get()["role"] == "assistant" and message.get().get("function_call"):
+                    message.get()['function_call'] = dict(message.get()['function_call'])
                     sources.append(message)
 
             # Done, return
@@ -173,44 +175,46 @@ class Chatbot:
 # Avoid these two, are only to print the conversation
 def pretty_print_message(message:Message):
 
-    role_to_color = {
+    color = {
         "system": "red",
         "user": "green",
         "assistant": "blue",
+        "thought": "cyan",
         "function": "magenta",
     }
 
-    role = message.get_internal()['role']
-    content = message.get_internal()['content']
-    color = role_to_color[role]
+    msg = message.get()
+    role = msg['role']
+    content = str(msg['content'])
 
     # System message
     if role == 'system':
-        print(colored(f"system: {content}\n", color))
+        print(colored(f"system: {content} \n", color['system']))
         
     # User message
     elif role == 'user':
-        print(colored(f"system: {content}\n", color))
+        print(colored(f"user: {content} \n", color['user']))
 
-    # Assistant message (normal)
-    elif role == 'assistant' and not message.get_internal().get('function_call'):
-        print(colored(f"system: {content}\n", color))
-            
     # Assistant message (function call)
-    elif role == 'assistant' and message.get_internal().get('function_call'):
-        function_to_call = message.get_internal()['function_call']['name']
-        search_query = message.get_internal()['function_call']['formatted_arguments']['search_query']
-        explanation = message.get_internal()['function_call']['formatted_arguments']['explanation']
+    elif role == 'assistant' and msg.get('function_call'):
+        function_to_call = msg['function_call']['name']
+        search_query = msg['function_call']['arguments']['search_query']
+        explanation = msg['function_call']['arguments']['explanation']
         
-        print(colored(f'thought: {explanation} \ncall function: {function_to_call}(search_query="{search_query}")\n', color))
+        print(colored(f'thought: {explanation} \ncall function: {function_to_call}(search_query="{search_query}") \n', color['thought']))
 
-    # Function message (result from search)
-    elif role == "function":
+    # Result from search
+    elif role == "assistant" and ('SEARCH_RESULT' in content):
         # Some formatting
-        content = eval(message.get_internal()['content'])
+        content = content.replace('SEARCH_RESULT','')
+        content = eval(content)
         pretty_sources = json.dumps(content, indent=2) 
 
-        print(colored(f"function -> {pretty_sources}\n", role_to_color["function"]))
+        print(colored(f"function -> {pretty_sources} \n", color["function"]))
+    
+    # Assistant message (normal)
+    elif role == 'assistant':
+        print(colored(f"assistant: {content} \n", color['assistant']))
 
 def pretty_print_conversation(messages):
     for message in messages:
@@ -222,7 +226,7 @@ test = Chatbot()
 
 first_res = test.start_chat([Message(role='user', content='Berätta om borrelia')], {})
 
-if first_res.get_internal().get('function_call'):
+if first_res.get().get('function_call'):
     second_res = test.continue_chat()
 
 

@@ -38,13 +38,9 @@ class Message():
             }
         }
 
-        # Fix the arguments (otherwise they are in some weird OpenAI-dict type)
-        if function_call != None and function_call.get('arguments'):
-            self.message['function_call']['formatted_arguments'] = json.loads(function_call['arguments'])
 
-
-    def get_internal(self):
-        """Get Message that can be used with OpenAI API
+    def openai_format(self):
+        """Get Message (copy) that can be used with OpenAI API
         """
         # OpenAI API is pretty picky
         
@@ -55,14 +51,26 @@ class Message():
 
         if message['function_call'] == None:
             message.pop('function_call')
+        
+        # Fix the arguments, openai only accepts them as a string??
+        elif message['function_call'] != None and message['function_call'].get('arguments'):
+            if type(message['function_call']['arguments']) != str:
+                message['function_call']['arguments'] = json.dumps(message['function_call']['arguments'])
 
         return message
 
 
-    def get_external(self):
-        """Get Message with additional information"""
+    def get(self):
+        """Get Message (copy) with additional information"""
 
-        return self.message.copy()
+        message = self.message.copy()
+        
+        # Fix the arguments (For this they need to be dict)
+        if message['function_call'] != None and message['function_call'].get('arguments'):
+            if type(message['function_call']['arguments']) == str:
+                message['function_call']['arguments'] = json.loads(message['function_call']['arguments'])
+            
+        return message
     
     def set(self, role:str = None, 
             content:str = None, function_call:dict = None, 

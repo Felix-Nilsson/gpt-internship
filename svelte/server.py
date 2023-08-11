@@ -103,8 +103,8 @@ async def combo_chat():
         assistant_message.set(chat_type=chat_type, settings=settings)
 
         # Add the new messages and update the conversation
-        combo['conversation']['messages'].append(user_message.get_external())
-        combo['conversation']['messages'].append(assistant_message.get_external())
+        combo['conversation']['messages'].append(user_message.get())
+        combo['conversation']['messages'].append(assistant_message.get())
         combo['conversation']['last_updated'] = time.time()
 
     # Reset chat

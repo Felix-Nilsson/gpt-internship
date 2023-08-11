@@ -1,7 +1,6 @@
 import sys
 import os
 import openai
-import json
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))))
 
 from svelte.chatbot.message import Message, pretty_print_conversation, pretty_print_message

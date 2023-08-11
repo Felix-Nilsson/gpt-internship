@@ -5,12 +5,13 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(
 
 from db.chroma import query_db_doc
 
-from ..message import Message
+from svelte.chatbot.message import Message
 
 class Chatbot:
     def __init__(self):
 # ! Do not forget to set the environment variable !
         openai.api_key = os.getenv('OPENAI_API_KEY')
+
 
 
     def get_system_message(self):
@@ -37,7 +38,7 @@ class Chatbot:
             return 'Du svarar alltid koncist och tydligt, med en konversionell ton'
 
 
-    def get_chat_response(self, messages: list, settings: dict, remember=True, model='gpt-3.5-turbo-0613'):
+    def get_chat_response(self, messages: list, settings: dict, model='gpt-3.5-turbo-0613'):
         """Takes a list of messages, returns a Message containing all relevant information.
         (Intranet)
         
@@ -67,26 +68,27 @@ class Chatbot:
         system_message = system_message.replace('background', str(data))
         
         # Create local instance of memory and set system message (with relevant information for the question)
-        memory = [{'role':'system', 'content': system_message}]
+        memory = messages.copy()
+        memory.insert(0, Message(role='system', content=system_message))
 
-        # Add the conversation until now to the memory (should include the latest query)
-        if remember:
-            for message in messages:
-                memory.append({'role': message['role'], 
-                               'content': message['content']}) 
-        else:
-            # Reset memory TODO should not be necessary anymore
-            memory = [{'role':'system', 'content': system_message}]
 
         # Get a response from the model
         response = openai.ChatCompletion.create(
             model=model,
-            messages=messages,
+            messages=memory,
             temperature=0, #Degree of randomness of the model's output
         )
 
         # Setup for the final Message object
-        finished_response = response.choices[0].message['content']
+        final_response = response.choices[0].message['content']
         explanation = f'''Enligt inställningarna ska assistenten svara med språknivå "{settings['language_level']}".'''
 
-        return Message(role='assistant', content=finished_response, explanation=explanation)
+        return Message(
+            role='assistant',
+            content=final_response,
+            final=True,
+            chat_type='intranet',
+            settings=settings,
+            explanation=explanation
+        )
+    #Message(role='assistant', content=finished_response, explanation=explanation)

@@ -62,7 +62,10 @@ class Message():
 
 
     def get(self):
-        """Get Message (copy) with additional information"""
+        """Get complete Message (copy) 
+        
+        [Use .openai_format() when requesting response from the OpenAI API]
+        """
 
         message = self.message.copy()
         

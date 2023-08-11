@@ -49,8 +49,11 @@ async def combo_chat():
     if request.method == 'GET':
 
         #Check if we want to continue response generation (if we are waiting for function results)
-        if combo['conversation']['messages'][-1].get_external()['function_call'] != None:
-            pass
+        if combo['conversation']['messages'][-1].get().get('function_call'):
+            assistant_message = internetbot.continue_chat()
+
+            combo['conversation']['messages'].append(assistant_message.get())
+            combo['conversation']['last_updated'] = time.time()
 
     # Generate response to query
     elif request.method == 'PUT':
@@ -90,6 +93,8 @@ async def combo_chat():
             assistant_message = intranetbot.get_chat_response(messages=combo['conversation'], settings=settings)
 
         elif chat_type == 'internet':
+            
+            #Start process of getting a response
             assistant_message = internetbot.start_chat(messages=combo['conversation'], settings=settings)
         
         else:
@@ -97,8 +102,6 @@ async def combo_chat():
 
         #The prompt/query is the same independently of the type of response we want
         user_message = Message(role='user', content=query)
-
-        assistant_message.set(chat_type=chat_type, settings=settings)
 
         # Add the new messages and update the conversation
         combo['conversation']['messages'].append(user_message.get())

@@ -43,16 +43,6 @@
         await fetchContext();
 	}
 
-
-    async function fetchContext() {
-        const response = await fetch("http://localhost:5001/context");
-
-        context = await response.json();
-    }
-
-    onMount(fetchContext);
-
-
     //Attempt login
     async function fetchCredentials() {
         try {

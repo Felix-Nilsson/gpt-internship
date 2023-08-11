@@ -5,14 +5,8 @@
 
     async function set_assistant(type) {
 
-        console.log("Setting assistant type to " + type + " and resetting any ongoing chats")
+        console.log("Routing to chat: " + type)
 
-        await fetch("http://localhost:5001/context", {
-            method: "POST",
-            body: JSON.stringify({'chat_type': type}),
-            headers: {"Content-type": "application/json; charset=UTF-8"}
-        });
-        
         if (type == "internet"){
             goto("/chat")
         } else {

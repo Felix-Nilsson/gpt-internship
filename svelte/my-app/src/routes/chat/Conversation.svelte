@@ -38,6 +38,8 @@
         if (new_time > last_fetched){
             
             last_fetched = new_time;
+            
+            console.log(data); // TODO TODO !!!     CONTINUE HERE     !!! TODO TODO
 
             let conversation = data['messages'];
 

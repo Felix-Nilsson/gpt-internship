@@ -1,3 +1,4 @@
+import json
 import sys
 import os
 import openai
@@ -99,10 +100,8 @@ class Chatbot:
         messages = []
 
         for message in self.memory:
-            #print(message.openai_format())
             messages.append(message.openai_format())
 
-        
 
         # Get a response from the model
         response = openai.ChatCompletion.create(
@@ -143,17 +142,21 @@ class Chatbot:
             final_response = str(response['choices'][0]['message']['content'])
 
             # Sources
-            sources = []
+            #sources = []
             
-            for message in self.memory:
-                if message.get()['role'] == 'function':
-                    sources.append(message)
-                elif message.get()["role"] == "assistant" and message.get().get("function_call"):
-                    message.get()['function_call'] = dict(message.get()['function_call'])
-                    sources.append(message)
+            # If the answer before the final response contains search results (from a function) add to the return message as sources
+            #if self.memory[-1].get()['role'] == 'assistant':
+            #    print('Step 1')
+            #    content = self.memory[-1].get()['content']
+            #    if content != None and 'SEARCH_RESULT' in content:
+            #        print('Step 2')
+            #        pass
+            #        content = self.memory[-1].get()['content'].replace('SEARCH_RESULT','')
+            #        content = eval(content)
+            #        sources.append(json.dumps(content))
 
             # Done, return
-            ret_message = Message(role='assistant', content=final_response, final=True, chat_type='internet', settings=self.settings, sources=sources)
+            ret_message = Message(role='assistant', content=final_response, final=True, chat_type='internet', settings=self.settings) #, sources=sources)
             
             # Print the progress
             pretty_print_message(ret_message)

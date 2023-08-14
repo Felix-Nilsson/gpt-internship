@@ -116,10 +116,6 @@ class Chatbot:
         # Final response or function call?
         finish_reason = response['choices'][0]['finish_reason']
 
-        #response_message = Message(role='assistant', content=response['choices'][0]['content'])
-        #wrapped_response_msg = message_wrapper(message=response_message, chat_type='internet', finish_reason=finish_reason, settings=self.settings)
-
-        
         
         #TODO use response['usage']['prompt_tokens'] to limit the length of the local memory
         # (How do we keep the conversation in server at a reasonable length?)
@@ -162,21 +158,10 @@ class Chatbot:
             # Print the progress
             pretty_print_message(ret_message)
 
+            # Reset memory
+            self.memory = []
+
             return ret_message
         
         else:
             raise Exception('Something went wrong :(')
-
-
-# TODO REMOVE THIS
-#test = Chatbot()
-
-#first_res = test.start_chat([Message(role='user', content='Berätta om borrelia')], {})
-
-#if first_res.get().get('function_call'):
-    #second_res = test.continue_chat()
-
-
-
-
-

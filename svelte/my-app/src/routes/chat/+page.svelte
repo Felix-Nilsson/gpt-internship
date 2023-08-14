@@ -8,42 +8,35 @@
     let opened = false;
     let input = "";
 
-    let current_credentials = {'username': ''};
-    let context = {};
+    let current_credentials = {
+            'success': false,
+            'login_as': 'None',
+            'username': 'None'
+        };
+
+    let settings = {};
 
     //Backend should be running on port 5001
     const DATA_URL = 'http://localhost:5001/chat';
 
     const CREDENTIALS_URL = 'http://localhost:5001/credentials'
 
+    let get_response;
     let update_conversation;
-    let new_message_load_animation;
 
-
+    
     const handleSubmit = async (e) => {
 
         //data contains the input
         let data = new FormData(e.target);
-
-        new_message_load_animation(data.get('prompt'));
-
+        
         //Clear input
         input = '';
-
-        //Send a update request. The backend will generate a response and update the conversation.
-        await fetch(DATA_URL, {
-            method: "PUT",
-            body: JSON.stringify({'prompt': data.get('prompt')}),
-            headers: {"Content-type": "application/json; charset=UTF-8"}
-        });
-
-		//Start looking for a response
-		await update_conversation();
-
-        await fetchContext();
+        
+        await get_response(data.get('prompt'), settings);
 	}
 
-    //Attempt login
+    // Ensure that the user has logged in
     async function fetchCredentials() {
         try {
             let response = await fetch(CREDENTIALS_URL);
@@ -59,24 +52,6 @@
         }
     }
 
-    // Call the function to fetch the credentials when needed
-    onMount(fetchCredentials);
-
-    
-    
-    async function goto_internet() {
-        await fetch("http://localhost:5001/context", {
-            method: "POST",
-            body: JSON.stringify({'chat_type': 'internet'}),
-            headers: {"Content-type": "application/json; charset=UTF-8"}
-        });
-
-        //This is a bit of a hack, but it works (reloads the page after we change chat-type)
-        goto('/').then(
-            () => goto('/chat')
-        );
-    }
-
     async function logout() {
         await fetch(CREDENTIALS_URL, {
             method: "DELETE",
@@ -87,18 +62,17 @@
     async function clear_backend() {
         await fetch(DATA_URL, {method: "DELETE"});
         await update_conversation();
-        await fetchContext();
     }
 
-    async function get_curr_conv() {
-        await update_conversation();
-    }
+    // Call the function to fetch the credentials when needed
+    onMount(fetchCredentials, clear_backend);
 
 </script>
 
 
 <!--Conversation-->
-<Conversation bind:check_for_messages={update_conversation} bind:new_message_loading={new_message_load_animation}></Conversation>
+<Conversation bind:get_response={get_response} bind:get_conversation={update_conversation}></Conversation>
+
 
 <!--Burger menu-->
 {#if opened}
@@ -132,11 +106,11 @@
 
 
 
-        <div style="position: absolute; bottom: 110px">
-            <Button on:click={goto_internet} variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} ripple disabled={(context['chat_type'] == 'internet') ? true : false}>
+        <!--<div style="position: absolute; bottom: 110px">
+            <Button on:click={goto_internet} variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} ripple disabled={(current_credentials['login'] == 'internet') ? true : false}>
                 Internetassistent
             </Button>
-        </div>
+        </div>-->
         
         {#if current_credentials['success']}
             <!-- Logout button -->
@@ -150,7 +124,7 @@
 
         <!-- TODO TODO TODO TODO      Probably remove this, as it is just for convenience when testing     -->
         <div style="position: absolute; bottom: 5px">
-            <Button type="button" on:click={get_curr_conv} variant='subtle' color='cyan' size='xs' ripple>uppdatera</Button>
+            <Button type="button" on:click={update_conversation} variant='subtle' color='cyan' size='xs' ripple>uppdatera</Button>
         </div>
     </Stack>
 </div>
@@ -184,7 +158,7 @@
 
 
 <!--Settings-->
-<Settings></Settings>
+<Settings bind:settings={settings} bind:login_as={current_credentials['login_as']}></Settings>
 
 
 
@@ -213,15 +187,11 @@
         variant='gradient' 
         gradient={{from: 'blue', to: 'red', deg: 45}}
         order={1}>
-            {#if context["chat_type"] == "patient"}
+            {#if current_credentials["login_as"] == "patient"}
                 Patientassistent
-            {:else if context["chat_type"] == "doctor"}
+            {:else if current_credentials["login_as"] == "doctor"}
                 Läkarassistent
-            {:else if context["chat_type"] == "intranet"}
-                Intranätsassistent
-            {:else}
-                Internetassistent
-            {/if}
+            {/if} 
         </Title>
     </div>
 

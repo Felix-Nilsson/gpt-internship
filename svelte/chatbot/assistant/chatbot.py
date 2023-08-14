@@ -68,7 +68,7 @@ class Chatbot:
         """Takes a list of messages and a list of patients whose information the doctor can access, returns a response to the last query.
         (Doctor / Patient)
 
-        :param messages: The full conversation including the latest query
+        :param messages: The full conversation including the latest query (as Messages)
         :param settings: Settings for the chatbot (e.g. how complex/formal language the bot should use)
         :param patients: If doctor list of accessible patients, if patient list of only patient ID.
         :param remember: If the bot should remember the conversation.
@@ -84,10 +84,9 @@ class Chatbot:
         explanation = None
         alert_message = None
 
-
         if self.user_type == 'doctor':
             #Find patient ID in the query
-            current_patient = self.find_patient_id(messages[-1]['content'])
+            current_patient = self.find_patient_id(messages[-1].get()['content'])
         
             if current_patient == None:
 
@@ -133,7 +132,7 @@ class Chatbot:
         # Get patient data related to the query
         patient_data = ''
         if current_patient != '' and current_patient != None:
-            patient_data = query_db(query=messages[-1]['content'],id=current_patient,name='patientrecords')
+            patient_data = query_db(query=messages[-1].get()['content'],id=current_patient,name='patientrecords')
             patient_data = ' '.join(patient_data['documents'][0])
 
         # Update the system message with relevant patient information
@@ -141,9 +140,10 @@ class Chatbot:
 
 
         # Create local instance of memory and set system message (with relevant information for the question)
-        memory = messages.copy()
-        memory.insert(0, Message(role='system', content=system_message))
-
+        memory = []
+        memory.append(Message(role='system', content=system_message).openai_format())
+        for message in messages:
+            memory.append(message.openai_format())
 
         # Get a response from the model
         response = openai.ChatCompletion.create(

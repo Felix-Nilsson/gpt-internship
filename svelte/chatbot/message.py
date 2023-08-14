@@ -41,7 +41,7 @@ class Message():
 
 
     def openai_format(self):
-        """Get Message (copy) that can be used with OpenAI API
+        """Get Message as dict (copy) that can be used with OpenAI API
         """
         # OpenAI API is pretty picky
         
@@ -62,7 +62,7 @@ class Message():
 
 
     def get(self):
-        """Get complete Message (copy) 
+        """Get complete Message as dict (copy) 
         
         [Use .openai_format() when requesting response from the OpenAI API]
         """

@@ -1,5 +1,5 @@
 <script>
-    import { Stack, Flex, Box, Button, Text, Paper, Overlay, Title, Space, Loader, Center, Tabs, Divider, Alert } from '@svelteuidev/core';
+    import { Stack, Flex, Box, Button, Text, Paper, Overlay, Title, Space, Loader, Center, Tabs, Divider, Alert, exception } from '@svelteuidev/core';
     import UserBubble from './UserBubble.svelte';
     import AIBubble from './AIBubble.svelte';
     import { onMount, tick } from 'svelte';
@@ -15,40 +15,78 @@
     let show_modal = false;
     let element;
 
-    onMount(() => scrollToBottom(element))
 
-    const scrollToBottom = async (node) => {
-        node.scroll({ top: node.scrollHeight, behavior: 'smooth' })
+    // Get a generated response to the query
+    export async function get_response(query, settings) {
+        console.log('input to get_response: ' + query + ", " + settings)
+
+        new_message_loading(query);
+
+        //Send a update request. The backend will generate a response and update the conversation.
+        const response = await fetch(DATA_URL, {
+            method: "PUT",
+            body: JSON.stringify({'query': query, 'settings': settings}),
+            headers: {"Content-type": "application/json; charset=UTF-8"}
+        });
+        const data = await response.json();
+
+        console.log(data);
+
+        let conversation = data['messages'].slice();
+        
+        console.log(conversation);
+
+        await manage_response(conversation);
     }
 
-    const timer = ms => new Promise(res => setTimeout(res,ms))
+    // Update the front-end conversation to match the one in the backend
+    // (is also used when the internet-bot wants to call a function)
+    export async function get_conversation() {
 
-    //Get the conversation from the backend and update the frontend, force forces an overwrite of the current values even if the backend values are the same
-    async function check_for_messages(_depth = 0) {
-
-        console.log('Checking for response...')
-
-        //Get the latest version of the conversation from the backend
-        const response = await fetch(DATA_URL);
+        // Send a get request
+        const response = await fetch(DATA_URL, {
+            method: "GET",
+        });
         const data = await response.json();
-        
-        let new_time = data['last_updated'];
-        
-        //If the conversation has been updated since we last checked, update local copy
-        if (new_time > last_fetched){
-            
-            last_fetched = new_time;
-            
-            console.log(data); // TODO TODO !!!     CONTINUE HERE     !!! TODO TODO
 
-            let conversation = data['messages'];
+        console.log(data);
 
-            loading = false;
-            messages = conversation;
+        let conversation = data['messages'].slice();
+
+        console.log(conversation);
+
+        await manage_response(conversation);
+    }
+
+    // This function manages the conversation after a generation or get request to the backend
+    async function manage_response(conversation) {
+
+        console.log('manage_response: ' + conversation);
+
+        if (conversation.length == 0) {
+            throw new Error("manage_response: Empty conversation!");
+        }
+
+        if (conversation[conversation.length - 1]['additional_info']['final'] == false) {
+            // wants to call function, continue
+
+
+            // Show progress in loading message
+            let function_call = conversation[-1]['function_call']
+            let function_to_call = function_call['name']
+            let function_arguments = function_call['arguments']
+            new_message_loading(query, 
+                "" + function_arguments['explanation'] + "\nSök " + function_to_call + " efter " + function_arguments['search_query'])
+
+            // let ai continue
+            await get_conversation();
+
+        } else {
+            // Final response to the query
 
             //Do alert
             if (messages.length != 0) {
-                if (messages.slice(-1)[0]['alert'] != null) {
+                if (messages[-1]['additional_info']['alert'] != null) {
                     show_alert = true;
                 } else {
                     show_alert = false;
@@ -62,33 +100,40 @@
                 messages[i]['content'] = parsed_message;
             }
 
+            //Remove loading message and update displayed conversation (messages)
+            loading = false;
+            messages = conversation;
+
             //Scroll
             await tick();
             scrollToBottom(element);
         }
-        else {
-            //_depth is just to stop the function from ever falling into a never-ending recursion, only checks 5 times
-            if (_depth < 5) {
-                await timer(5000) //Wait 5 seconds before trying again
-                console.log('No response found, trying again... (' + (_depth + 1) + '/5)')
-                check_for_messages(_depth = _depth + 1);
-            }
-        }
+    }
+
+    // Auto scroll on load
+    onMount(() => scrollToBottom(element))
+
+    // SCROLL TO THE BOTTOM OF THE CONVERSATION
+    const scrollToBottom = async (node) => {
+        node.scroll({ top: node.scrollHeight, behavior: 'smooth' })
     }
 
     //LOADING NEW RESPONSE
     let loading = false;
-    let new_temp_message = "";
+    let temp_query = "";
+    let temp_response = "";
 
-    async function new_message_loading(query) {
-        new_temp_message = query;
+    async function new_message_loading(query, loading_response="") {
+        if (query != "") {
+            temp_query = query;
+        }
+        if (loading_response != "") {
+            temp_response = loading_response;
+        }
         loading = true;
         await tick();
         scrollToBottom(element);
     }
-
-    export { check_for_messages , new_message_loading };
-
 
     //MODAL FOR EXPLANATION/SOURCES
     let modal_message;
@@ -98,18 +143,6 @@
 
         show_modal = true;
     }
-
-
-    //CONTEXT
-    let context = {};
-
-    async function fetchContext() {
-        const response = await fetch("http://localhost:5001/context");
-
-        context = await response.json();
-    }
-
-    onMount(fetchContext);
 
 
     // This function splits text into text and links
@@ -154,7 +187,7 @@
                 {#each messages as message, i}
 
                     <!--User bubble-->
-                    {#if (message['user'])} 
+                    {#if (message['role'] == 'user')} 
                         <Flex justify="left">
                             <UserBubble>{message['content']}</UserBubble>
                             <div class="chat-offset"></div>
@@ -175,6 +208,8 @@
                                 {/each}
 
                                 <!--Responsibility text-->
+                                
+                                <!-- TODO FIX 
                                 {#if context['chat_type'] == "doctor"}
                                     <Space h="xs" />
                                     <Center> 
@@ -185,7 +220,7 @@
                                                 *OBS* Du bär alltid ansvaret mot patienten
                                         </Text>
                                     </Center>
-                                {/if}
+                                {/if} -->
                             </AIBubble>
 
                             <!--Modal button-->
@@ -199,13 +234,13 @@
             <!--Loading response-->
             {#if loading}
                 <Flex justify="left">
-                    <UserBubble>{new_temp_message}</UserBubble>
+                    <UserBubble>{temp_query}</UserBubble>
                     <div class="chat-offset"></div>
                 </Flex>
                 <Space h="lg"/>
                 <Flex justify="right">
                     <div class="chat-offset"></div>
-                    <AIBubble><Loader variant='dots' color='orange'/></AIBubble>
+                    <AIBubble>{temp_response}<Loader variant='dots' color='orange'/></AIBubble>
                     <div style="width: 33px; "></div>
                 </Flex>
                 <Space h="lg"/>

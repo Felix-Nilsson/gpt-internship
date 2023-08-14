@@ -7,17 +7,8 @@
 
         console.log("Routing to chat: " + type)
 
-        if (type == "internet"){
-            goto("/chat")
-        } else {
-            goto("/login")
-        }
-            
+        goto("/login?login_as=" + type);
     }
-
-
-
-
 
 </script>
 
@@ -35,15 +26,6 @@
         <!--Doctor assistant button-->
         <Button on:click={() => set_assistant("doctor")} variant='gradient' gradient={{from: 'teal', to: 'blue', deg: 60}} radius="lg" size="xl" ripple>
             Läkarassistent
-        </Button>
-
-        <!--Intranet button-->
-        <Button on:click={() => set_assistant("intranet")} variant='gradient' gradient={{from: 'teal', to: 'blue', deg: 60}} radius="lg" size="xl" ripple>
-            Intranät
-        </Button>
-        <!--Internet button-->
-        <Button on:click={() => set_assistant("internet")} variant='gradient' gradient={{from: 'teal', to: 'blue', deg: 60}} radius="lg" size="xl" ripple>
-            Internet
         </Button>
     </Group>
 </div>

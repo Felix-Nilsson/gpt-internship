@@ -2,10 +2,19 @@
     import { Input, Space, Title, Group, Button, Stack } from '@svelteuidev/core';
     import { LockClosed, Person } from 'radix-icons-svelte';
     import { goto } from '$app/navigation'
+    import { onMount } from 'svelte';
     
     const timer = ms => new Promise(res => setTimeout(res,ms))
     let login_result = false;
     
+    let type = '';
+
+    function get_type_from_url_params() {
+        const urlParams = new URLSearchParams(window.location.search)
+        type = urlParams.get('login_as')
+    }
+
+    onMount(get_type_from_url_params)
 
     const handleSubmit = async (e) => {
 
@@ -15,7 +24,7 @@
         const response = await fetch("http://localhost:5001/credentials", {
             mode:"cors",
             method: "PUT",
-            body: JSON.stringify({'username': input.get("usernamefield"), "password": input.get("passwordfield")}),
+            body: JSON.stringify({'username': input.get("usernamefield"), "password": input.get("passwordfield"), "login_as": type}),
             headers: {"Content-type": "application/json; charset=UTF-8"}
         });
 
@@ -26,7 +35,7 @@
 
         if (login_result == true){
             console.log("Login successful")
-            goto("/chat")
+            goto("/chat");
         } else {
             console.log("Wrong username/password")
         }

@@ -2,7 +2,8 @@ prompts:
 - ../prompts/prompts/prompt_doctor_test.txt
 - ../prompts/prompts/prompt_patient_test.txt
 providers:
-- openai:gpt-3.5-turbo-0613
+#- openai:gpt-3.5-turbo-0613
+- openai:gpt-4
 tests:
 - assert:
   - type: llm-rubric
@@ -80,7 +81,7 @@ tests:
     {'patient_id': 789012, 'akvititet_id': 953, 'läkemedel': 'Atorvastatin', 'substans': 'Atorvastatin', 'kategori': 'Lipidsänkande medel', 'atc_kod': 'C10AA05', 'beredningsform': 'Tablett', 'dosering': '40 mg en gång dagligen', 'styrka': '40', 'styrka_enhet': 'mg', 'vårdgivare': 'Eva Johansson', 'vårdgivarekategori': 'LÄK', 'vårdgivaretel': '08-789012', 'verksamhet': 'Kardiologiavdelning', 'förmån': 'Y', 'förskrivningsdatum': '2023-08-16', 'giltigt_till_och_med': '2024-08-16', 'senast_uttag': '-', 'tidigast_uttag_inom_förmån': '2023-08-16', 'förskriven_mängd': 30, 'senast_uttagen_mängd': 0, 'återstående_mängd': 30, 'uttag_antal': 1, 'uttag_kvar': 1}\n
     [{'patient_id': 789012, 'aktivitet_id': '789', 'aktivitet_kod': 'J', 'aktivitet_typ': 'Uppföljning', 'vårdgivare': 'Eva Johansson', 'vårdgivarekategori': 'LÄK', 'startdatum': '2023-08-25', 'slutdatum': '-', 'uppföljningsbesök': 'Kardiologiavdelning', 'orsak': 'Uppföljning av akut hjärtinfarkt', 'status': 'Planerad'}]"
     id: 789012
-    input: Vad är orsaken bakom hjärtinfarkten som patienten upplevde?
+    input: Vilken del av patientens livsstil kan ha orsakat hens hjärtinfarkt?
 
 - assert:
   - type: llm-rubric
@@ -106,7 +107,7 @@ tests:
     \nUID:4567890123\nDTSTART:20230628T090000\nDTEND:20230628T100000\nSUMMARY:Uppföljning av fraktur\nDESCRIPTION:En uppföljande röntgenundersökning kommer att genomföras för \natt övervaka frakturläkning och bedöma behandlingens framsteg.\nLOCATION:Radiologiavdelningen\n
     \nUID:3456789012\nDTSTART:20230622T100000\nDTEND:20230622T110000\nSUMMARY:Smärtbedömning\nDESCRIPTION:En smärtbedömning kommer att utföras för att bedöma patientens \nsmärtintensitet och smärtupplevelse.\nLOCATION:Smärtklinik\n"
     id: 987321
-    input: När ska patienten genomgå laboratorieanalyser?
+    input: När ska patienten genomgå laboratorieanalyser? Var så specifik som möjligt
 
 - assert:
   - type: llm-rubric

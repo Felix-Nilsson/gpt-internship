@@ -33,7 +33,7 @@
         console.log(data);
 
         let conversation = data['messages'].slice();
-        
+
         console.log(conversation);
 
         await manage_response(conversation);
@@ -51,7 +51,8 @@
 
         console.log(data);
 
-        let conversation = data['messages'].slice();
+        let conversation = []
+        conversation = data['messages'].slice();
 
         console.log(conversation);
 
@@ -64,7 +65,12 @@
         console.log('manage_response: ' + conversation);
 
         if (conversation.length == 0) {
-            throw new Error("manage_response: Empty conversation!");
+            messages = [];
+
+            //Scroll
+            await tick();
+            scrollToBottom(element);
+            return
         }
 
         if (conversation[conversation.length - 1]['additional_info']['final'] == false) {

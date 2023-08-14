@@ -53,7 +53,7 @@
     }
 
     async function logout() {
-        clear_backend();
+        // Logout
         await fetch(CREDENTIALS_URL, {
             method: "DELETE",
         });

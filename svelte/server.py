@@ -62,8 +62,6 @@ async def combo_chat():
         # Get all needed information from the request body
         req = request.get_json()
 
-        print("REQUEST:", req)
-
         query = req['query']
         settings = req['settings']
 
@@ -153,14 +151,18 @@ async def combo_login():
     # Logout (reset)
     elif request.method == 'DELETE':
 
-        #TODO Reset conversation
-
-        combo['login'] = {
-            'success': False,
-            'login_as': 'None',
-            'username': 'None'
+        # Reset everything
+        combo = {
+            'messages': [
+                # This list should be filled up by Messages (use Message() to create)
+            ],
+            'login': {
+                'success': False,
+                'login_as': 'None',     #'doctor' or 'patient'
+                'username': 'None'
+            },
+            'last_updated': time.time()
         }
-
     
     return combo['login']
 

@@ -62,14 +62,16 @@ class Chatbot:
 
 
         # Get data related to the query
-        data = query_db_doc(query=messages[-1]['content'], name="docs")
+        data = query_db_doc(query=messages[-1].get()['content'], name="docs")
 
         # Add relevant data to the query to the system message
         system_message = system_message.replace('background', str(data))
         
         # Create local instance of memory and set system message (with relevant information for the question)
-        memory = messages.copy()
-        memory.insert(0, Message(role='system', content=system_message))
+        memory = []
+        memory.append(Message(role='system', content=system_message).openai_format())
+        for message in messages:
+            memory.append(message.openai_format())
 
 
         # Get a response from the model

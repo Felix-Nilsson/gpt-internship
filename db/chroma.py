@@ -228,15 +228,3 @@ def print_db_summary():
 
 # - Eg remove things like this before initing:
 # - print(get_collection("docs").peek())
-
-s = query_db(
-     query = "Vad bedömde läkaren Eva Karlsson att patienten upplevde för sjukdom?",
-     id = "112244",
-     name = "patientrecords",
-     n_results = 5 
-    )["documents"]
-
-json_formatted_str = json.dumps(s, indent=2, ensure_ascii=False)
-
-
-print(json_formatted_str)

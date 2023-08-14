@@ -15,9 +15,11 @@
     let show_modal = false;
     let element;
 
+    let current_query = '';
 
     // Get a generated response to the query
     export async function get_response(query, settings) {
+        current_query = query;
         console.log('input to get_response: ' + query + ", " + settings)
 
         new_message_loading(query);
@@ -78,10 +80,10 @@
 
 
             // Show progress in loading message
-            let function_call = conversation[-1]['function_call']
+            let function_call = conversation[conversation.length - 1]['function_call']
             let function_to_call = function_call['name']
             let function_arguments = function_call['arguments']
-            new_message_loading(query, 
+            new_message_loading(current_query, 
                 "" + function_arguments['explanation'] + "\nSök " + function_to_call + " efter " + function_arguments['search_query'])
 
             // let ai continue
@@ -90,9 +92,13 @@
         } else {
             // Final response to the query
 
+            //Remove loading message and update displayed conversation (messages)
+            loading = false;
+            messages = conversation;
+
             //Do alert
             if (messages.length != 0) {
-                if (messages[-1]['additional_info']['alert'] != null) {
+                if (messages[messages.length - 1]['additional_info']['alert'] != null) {
                     show_alert = true;
                 } else {
                     show_alert = false;
@@ -106,9 +112,7 @@
                 messages[i]['content'] = parsed_message;
             }
 
-            //Remove loading message and update displayed conversation (messages)
-            loading = false;
-            messages = conversation;
+            
 
             //Scroll
             await tick();

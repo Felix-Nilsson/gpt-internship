@@ -20,7 +20,7 @@
         align="left" 
         size='lg'
         weight='normal'
-        style="word-wrap: break-word; line-height: 1.5;">
+        style="white-space: pre-line; word-wrap: break-word; line-height: 1.5;">
             <div bind:this={thisObj}>
                 <slot />
             </div>

@@ -20,7 +20,6 @@
     // Get a generated response to the query
     export async function get_response(query, settings) {
         current_query = query;
-        console.log('input to get_response: ' + query + ", " + settings)
 
         new_message_loading(query);
 
@@ -31,12 +30,7 @@
             headers: {"Content-type": "application/json; charset=UTF-8"}
         });
         const data = await response.json();
-
-        console.log(data);
-
         let conversation = data['messages'].slice();
-
-        console.log(conversation);
 
         await manage_response(conversation);
     }
@@ -51,20 +45,14 @@
         });
         const data = await response.json();
 
-        console.log(data);
-
         let conversation = []
         conversation = data['messages'].slice();
-
-        console.log(conversation);
 
         await manage_response(conversation);
     }
 
     // This function manages the conversation after a generation or get request to the backend
     async function manage_response(conversation) {
-
-        console.log('manage_response: ' + conversation);
 
         if (conversation.length == 0) {
             messages = [];
@@ -84,7 +72,7 @@
             let function_to_call = function_call['name']
             let function_arguments = function_call['arguments']
             new_message_loading(current_query, 
-                "" + function_arguments['explanation'] + "\nSök " + function_to_call + " efter " + function_arguments['search_query'])
+                "" + function_arguments['explanation'] + "\nSöker efter " + function_arguments['search_query'] + " på " + function_to_call + ".se")
 
             // let ai continue
             await get_conversation();
@@ -94,25 +82,18 @@
 
             //Remove loading message and update displayed conversation (messages)
             loading = false;
+            temp_query = "";
+            temp_response = "";
             messages = conversation;
 
             //Do alert
-            if (messages.length != 0) {
+            /*if (messages.length != 0) {
                 if (messages[messages.length - 1]['additional_info']['alert'] != null) {
                     show_alert = true;
                 } else {
                     show_alert = false;
                 }
-                
-            }
-
-            //Parse AI message for link formatting
-            for (let i = 1; i < messages.length; i += 2){
-                let parsed_message = splitTextWithLinks(messages[i]['content']);
-                messages[i]['content'] = parsed_message;
-            }
-
-            
+            }*/
 
             //Scroll
             await tick();
@@ -205,17 +186,20 @@
 
                     <!--AI bubble-->
                     {:else}
+                        {#if (message['content'] != null)}
                         <Flex justify="right"> 
                             <div class="chat-offset"></div>
                             <AIBubble>
+
                                 <!--Manages links in text-->
-                                {#each message['content'] as message_part, i}
+                                {#each splitTextWithLinks(message['content']) as message_part, i}
                                     {#if message_part['type'] == 'text'}
                                         {message_part['content']}
                                     {:else}
                                         <a href={message_part['linkurl']} target="_blank" rel="noopener noreferrer">{message_part["linktext"]}</a>
                                     {/if}
                                 {/each}
+                                    
 
                                 <!--Responsibility text-->
                                 
@@ -236,6 +220,7 @@
                             <!--Modal button-->
                             <Button on:click={() => modalButtonPressed(i)} variant='subtle' radius="sm" size="xs" ripple> ? </Button>
                         </Flex>
+                        {/if}
                     {/if}
                     <Space h="lg"/>
                 {/each}
@@ -250,7 +235,18 @@
                 <Space h="lg"/>
                 <Flex justify="right">
                     <div class="chat-offset"></div>
-                    <AIBubble>{temp_response}<Loader variant='dots' color='orange'/></AIBubble>
+                    <AIBubble>
+                        {#if temp_response != ""}
+                            <Loader variant='dots' color='orange'/>    
+                            <Space h="xs" />
+                            <Center> 
+                                {temp_response}
+                            </Center>
+                            
+                        {:else}
+                            <Loader variant='dots' color='orange'/>
+                        {/if}
+                    </AIBubble>
                     <div style="width: 33px; "></div>
                 </Flex>
                 <Space h="lg"/>

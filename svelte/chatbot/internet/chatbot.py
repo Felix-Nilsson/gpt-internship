@@ -116,7 +116,7 @@ class Chatbot:
 
         
         #TODO use response['usage']['prompt_tokens'] to limit the length of the local memory
-        # (How do we keep the conversation in server at a reasonable length?)
+        # (TO ensure that the conversation is kept at a reasonable length to not pass the token limit)
 
         # Assistant wants to call a function
         if finish_reason == 'function_call':
@@ -129,9 +129,6 @@ class Chatbot:
 
             # Print the progress
             pretty_print_message(self.memory[-1])
-            
-            #TODO !!!! FORMAT THE EXPLANATION IN THE FRONTEND !!!!
-            #return_thought = f'''{function_arguments['explanation']} \nSök {function_to_call} efter {function_arguments['search_query']}'''
 
             return ret_message
 
@@ -145,10 +142,8 @@ class Chatbot:
             
             # If the answer before the final response contains search results (from a function) add to the return message as sources
             if self.memory[-1].get()['role'] == 'assistant':
-            #    print('Step 1')
                 content = self.memory[-1].get()['content']
                 if content != None and 'SEARCH_RESULT' in content:
-            #        print('Step 2')
                     content = self.memory[-1].get()['content'].replace('SEARCH_RESULT','')
                     content = eval(content)
                     sources = json.dumps(content)

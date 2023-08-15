@@ -145,15 +145,16 @@ class Chatbot:
         for message in messages:
             memory.append(message.openai_format())
 
+
         # Get a response from the model
         response = openai.ChatCompletion.create(
             model=model,
             messages=memory,
             temperature=0, #Degree of randomness of the model's output
         )
-        
-        # Set the explanation for the response
-        #TODO explanation = thought_process
+
+        #TODO use response['usage']['prompt_tokens'] to limit the length of the local memory
+        # (TO ensure that the conversation is kept at a reasonable length to not pass the token limit)
 
         final_response = response.choices[0].message['content']
 

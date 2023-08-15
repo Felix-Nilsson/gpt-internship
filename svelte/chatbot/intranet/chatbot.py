@@ -81,6 +81,9 @@ class Chatbot:
             temperature=0, #Degree of randomness of the model's output
         )
 
+        #TODO use response['usage']['prompt_tokens'] to limit the length of the local memory
+        # (TO ensure that the conversation is kept at a reasonable length to not pass the token limit)
+
         # Setup for the final Message object
         final_response = response.choices[0].message['content']
         explanation = f'''Enligt inställningarna ska assistenten svara med språknivå "{settings['language_level']}".'''

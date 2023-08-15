@@ -7,7 +7,6 @@
 
     const DATA_URL = 'http://localhost:5001/chat'
 
-    let last_fetched = 1;
     let messages = [];
     //let explanations = [];
     let show_alert = false;
@@ -336,11 +335,11 @@
                 </Tabs.Tab>
 
                 <!-- EXPLANATION TAB -->
-                {#if modal_message['explanation'] != null}
+                {#if modal_message['additional_info']['explanation'] != null}
                     <Tabs.Tab label='Förklarning' color='orange'>
                         <Center>
                             <Text style="line-height: 1.5;">
-                                {modal_message['explanation']}
+                                {modal_message['additional_info']['explanation']}
                             </Text>
                         </Center>
                     </Tabs.Tab>
@@ -351,14 +350,14 @@
             </Tabs>
 
             <!-- CURRENTLY DISCUSSED PATIENT -->
-            {#if modal_message['patient'] != null}
+            {#if modal_message['additional_info']['patient'] != null}
                 <Divider size='sm' color='#E9ECEF'/>
                 <Center> 
                     <Text
                         size='sm'
                         weight='semibold'
                         style="line-height: 1.5;">
-                            Patient: {modal_message['patient']}
+                            Patient: {modal_message['additional_info']['patient']}
                     </Text>
                 </Center>
             {/if}

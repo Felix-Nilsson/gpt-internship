@@ -85,8 +85,6 @@
 
     <Stack align="center" spacing="lg">
 
-        <Space h={20}/>
-
         <div style="width: 160px;">
             <Text size='xs' align='left' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">
                 <h1>{(current_credentials['success'] == true) ? 'Välkommen,' : ' '}</h1>

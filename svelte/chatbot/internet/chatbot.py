@@ -140,21 +140,20 @@ class Chatbot:
             final_response = str(response['choices'][0]['message']['content'])
 
             # Sources
-            #sources = []
+            sources = []
             
             # If the answer before the final response contains search results (from a function) add to the return message as sources
-            #if self.memory[-1].get()['role'] == 'assistant':
+            if self.memory[-1].get()['role'] == 'assistant':
             #    print('Step 1')
-            #    content = self.memory[-1].get()['content']
-            #    if content != None and 'SEARCH_RESULT' in content:
+                content = self.memory[-1].get()['content']
+                if content != None and 'SEARCH_RESULT' in content:
             #        print('Step 2')
-            #        pass
-            #        content = self.memory[-1].get()['content'].replace('SEARCH_RESULT','')
-            #        content = eval(content)
-            #        sources.append(json.dumps(content))
+                    content = self.memory[-1].get()['content'].replace('SEARCH_RESULT','')
+                    content = eval(content)
+                    sources = json.dumps(content)
 
             # Done, return
-            ret_message = Message(role='assistant', content=final_response, final=True, chat_type='internet', settings=self.settings) #, sources=sources)
+            ret_message = Message(role='assistant', content=final_response, final=True, chat_type='internet', settings=self.settings, sources=sources)
             
             # Print the progress
             pretty_print_message(ret_message)

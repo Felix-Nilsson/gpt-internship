@@ -128,9 +128,12 @@
 
     //MODAL FOR EXPLANATION/SOURCES
     let modal_message;
+    let modal_sources = [];
 
     async function modalButtonPressed(message_id) {
-        modal_message = messages[message_id]
+        
+        modal_message = messages[message_id];
+        modal_sources = JSON.parse(modal_message['additional_info']['sources'])
 
         show_modal = true;
     }
@@ -279,7 +282,7 @@
                 <!-- SOURCES TAB -->
                 <Tabs.Tab label='Källor' color='red'>
                     <!--No source-->
-                    {#if modal_message['sources'] == null}
+                    {#if modal_sources == null}
                         <Center>
                             <Text style="line-height: 1.5;">
                                 Inga externa källor användes. Svaret är baserat på antingen intern data (t.ex. en patients journal) eller från chatbotens träning. Mer information om intern data kommer (nog) så småningom.
@@ -287,17 +290,17 @@
                         </Center>
 
                     <!--String source-->
-                    {:else if typeof modal_message['sources'] == 'string'}
+                    {:else if typeof modal_sources == 'string'}
                         <Center>
                             <Text style="line-height: 1.5;">
-                                {modal_message['sources']}
+                                {modal_sources}
                             </Text>
                         </Center>
 
                     <!--Formatted source with links-->
                     {:else}
                         <Stack spacing="xs">
-                            {#each modal_message['sources'][1] as source}
+                            {#each modal_sources as source}
                                 <Text>
                                     <b>{source["title"]}</b> &nbsp;
                                     <a href={source["link"]} target="_blank" rel="noopener noreferrer">{source["link"]}</a>

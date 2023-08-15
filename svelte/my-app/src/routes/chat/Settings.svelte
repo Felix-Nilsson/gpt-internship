@@ -1,16 +1,14 @@
 <script>
-    import { Button, Center, Stack, Text, Flex, Paper, SimpleGrid, RadioGroup, Switch, Space } from '@svelteuidev/core';
+    import { Button, Center, Stack, Text, Flex, Paper, SimpleGrid, RadioGroup, Switch, Space, Divider, ActionIcon } from '@svelteuidev/core';
     import { onMount, tick } from 'svelte';
     import { scale, slide } from 'svelte/transition';
-    import { ChevronDown, ChevronUp } from 'radix-icons-svelte';
+    import { Gear } from 'radix-icons-svelte';
 
     export let login_as = ''; // Set this from parent
     export let settings = {}; // Bind to this so parent can access it
     
-    
-
-
-    let show_settings = false;
+    // Change this to false if we do not want settings to be open by default
+    let show_settings = true;
 
     //Chatbot choice
     let chatbot_value;
@@ -91,141 +89,118 @@
 
 </script>
 
-
-<!--Settings menu-->
-<Center>
-    <div class="settings">
-        <Center>
-            <Flex override={{ gap: 0 }} direction="column" align="center">
-                
-                <!--Settings content-->
-                {#if show_settings == true}
-                <div class="settings-window" in:scale={{delay:0}}>
-                    <Paper shadow="xl" override={{ paddingLeft: 20, paddingRight: 20, paddingTop: 0 }}>
-                        <Stack>
-
-                            <!--Close settings button-->
-                            <Center>
-                                <Button on:click={settings_button} color="white" size="xl" compact ripple>
-                                    <Flex justify="center" direction="column" override={{ gap: 0 }}>
-                                        <Center><ChevronDown color="black"/></Center>
-                                        <Center>
-                                            <Text size='sm' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">
-                                                Inställningar
-                                            </Text>
-                                        </Center>
-                                    </Flex>
-                                </Button>
-                            </Center>
-
-                            <!-- Individual settings -->
-                            <SimpleGrid  cols={2}>
-
-                                <!-- Chatbot choice -->
-                                <div>
-                                    <Stack>
-                                        <Text size='md' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">Val av chat</Text>
-    
-                                        <Text size='xs' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">
-                                            <RadioGroup bind:value={chatbot_value} items={chatbot_options} color='orange' size='sm' direction='column' spacing='xs' labelDirection='left'/>
-                                        </Text>
-                                    </Stack>
-                                </div>
+<!-- SETTINGS BUTTON -->
+<div class="settings-button">
+    <ActionIcon variant='transparent' size={40} color='red' on:click={settings_button}>
+        <Gear size={35}/>
+    </ActionIcon>
+</div>
 
 
-                                <!-- Language level settings -->
-                                <div>
-                                    <Stack>
-                                        <Text size='md' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">Språknivå</Text>
-    
-                                        <Text size='xs' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">
-                                            <RadioGroup bind:value={language_value} items={language_options} color='orange' size='sm' direction='column' spacing='xs' labelDirection='left'/>
-                                        </Text>
-                                    </Stack>
-                                </div>
+<!-- SETTINGS PANEL -->
+{#if show_settings}
+<div class="settings-menu"> 
 
-
-                                <!-- Internet tool setting -->
-                                <div>
-                                    <Stack>
-                                        <Text size='md' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">Källor (internet)</Text>
-                                        
-                                        <Text size='xs' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">
-                                            <Stack spacing="xs">
-                                                {#each tool_options as {label,checked}}
-                                                <Switch {checked} 
-                                                    on:change={() => checked = !checked}
-                                                    label={label}
-                                                    color="orange"
-                                                />
-                                                {/each}
-                                            </Stack>
-                                        </Text>
-                                    </Stack>
-                                </div>
-    
-                                <!-- To add more settings, add a div with whatever buttons we want -->
-                                
-
-
-                            </SimpleGrid>
-
-                            <!-- Apply settings button -->
-                            <div>
-                                <Flex justify="right">
-                                    <!-- Behövs bara ifall det faktiskt stämmer
-                                    <Center>
-                                        <Text size='xs' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">*När du tillämpar nollställs botens minne*</Text>
-                                    </Center>
-                                    <Space w={20} ></Space> -->
-                                    <Button on:click={updateSettings} variant='subtle' color='orange' ripple>Tillämpa</Button>
-                                </Flex>
-                                
-                            </div>
-                        </Stack>
-                        
-                    </Paper>
-                </div>
-
-                {:else}
-
-                <!--Open settings button-->
-                <Button on:click={settings_button} color="white" size="xl" compact ripple>
-                    <Flex justify="center" direction="column" override={{ gap: 0 }}>
-                        <Center><ChevronUp color="black"/></Center>
-                        <Center>
-                            <Text size='sm' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">
-                                Inställningar
-                            </Text>
-                        </Center>
-                    </Flex>
-                </Button>
-
-                {/if}
-
-            </Flex>
-        </Center>
+    <div style="position:absolute; top:0; left:0; bottom:80px; height:100vh">
+        <Divider orientation='vertical'/>
     </div>
-</Center>
+
+    <Stack align="center" spacing="lg">
+
+        <Space h={20}/>
+
+        <div style="width: 160px;">
+            <Text size='xs' align='left' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">
+                Inställningar
+            </Text>
+        </div>
+
+        <!-- Individual settings -->
+        <SimpleGrid  cols={1}>
+
+            <!-- Chatbot choice -->
+            <div>
+                <Stack>
+                    <Text size='md' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">Val av chat</Text>
+
+                    <Text size='xs' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">
+                        <RadioGroup bind:value={chatbot_value} items={chatbot_options} color='orange' size='sm' direction='column' spacing='xs' labelDirection='left'/>
+                    </Text>
+                </Stack>
+            </div>
 
 
+            <!-- Language level settings -->
+            <div>
+                <Stack>
+                    <Text size='md' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">Språknivå</Text>
+
+                    <Text size='xs' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">
+                        <RadioGroup bind:value={language_value} items={language_options} color='orange' size='sm' direction='column' spacing='xs' labelDirection='left'/>
+                    </Text>
+                </Stack>
+            </div>
+
+
+            <!-- Internet tool setting -->
+            <div>
+                <Stack>
+                    <Text size='md' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">Källor (internet)</Text>
+                    
+                    <Text size='xs' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">
+                        <Stack spacing="xs">
+                            {#each tool_options as {label,checked}}
+                            <Switch {checked} 
+                                on:change={() => checked = !checked}
+                                label={label}
+                                color="orange"
+                            />
+                            {/each}
+                        </Stack>
+                    </Text>
+                </Stack>
+            </div>
+
+            <!-- To add more settings, add a div with whatever buttons we want -->
+            
+
+        </SimpleGrid>
+
+        <!-- Apply settings button -->
+        <div>
+            <Flex justify="right">
+                <!-- Behövs bara ifall det faktiskt stämmer
+                <Center>
+                    <Text size='xs' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">*När du tillämpar nollställs botens minne*</Text>
+                </Center>
+                <Space w={20} ></Space> -->
+                <Button on:click={updateSettings} variant='subtle' color='orange' ripple>Tillämpa</Button>
+            </Flex>
+            
+        </div>
+
+
+    </Stack>
+</div>
+{/if}
 
 
 <style>
 
-    .settings {
-        background: transparent; 
-        position: absolute; 
-        margin: 85px; 
-        bottom: 0; 
-        height: fit-content; 
-        width: 600px;
+    .settings-button {
+        position: fixed;
+        right: 30px;
+        top: 20px;
+        z-index: 10;
     }
 
-    .settings-window {
-        max-height: 80vh;
-        height: fit-content;
-        width: 600px;
+    .settings-menu {
+        background: white;
+        position: fixed; 
+        top: 80px; 
+        right: 0;  
+        bottom: 80px;
+        width: 200px;
     }
 
 </style>

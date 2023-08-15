@@ -92,7 +92,7 @@
                 <h1>{(current_credentials['success'] == true) ? 'Välkommen,' : ' '}</h1>
                 <h3>{(current_credentials['success'] == true) ? current_credentials['username'] : ' '}</h3>
 
-                <h2 id="about">Om</h2>
+                <h2 id="about">Om applikationen</h2>
                 <p>Ett första försök att bygga en chatt-bot för läkare och patienter med GPT modeller, gjort i sammarbete mellan AI-Sweden och Sahlgrenska Universitetssjukhus under GPT Summer Internship 2023.</p>
                 <p>Skapat av:</p>
                 <ul>
@@ -105,13 +105,6 @@
             </Text>
         </div>
 
-
-
-        <!--<div style="position: absolute; bottom: 110px">
-            <Button on:click={goto_internet} variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} ripple disabled={(current_credentials['login'] == 'internet') ? true : false}>
-                Internetassistent
-            </Button>
-        </div>-->
         
         {#if current_credentials['success']}
             <!-- Logout button -->
@@ -247,7 +240,7 @@
 
     .header-title {
         position: fixed;
-        right: 30px;
+        right: 90px;
         top: 15px;
         width: 400px;
     }
@@ -260,6 +253,7 @@
         left: 0; 
         right: 0; 
         height: 80px;
+        z-index: 11;
     }
 
     .burger-menu {

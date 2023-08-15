@@ -27,19 +27,17 @@ class Chatbot:
         """
 
         # Get the system message!
-        #system_message = self.get_system_message()
+        system_message = self.get_system_message()
         
-        # Remove unnecessary line
-        #system_message = system_message.replace('Du ska svara på följande meddelande "{{input}}".', '')
-
-        # Add relevant data to the query to the system message
-        #system_message = system_message.replace('background', str(data))
+        # Remove unnecessary lines
+        system_message = system_message.replace('Du ska svara på följande meddelande "{{input}}".', '')
+        system_message = system_message.replace('background', '')
 
         
-        system_message = f'''Du är en "conversational AI".
-        Du svarar på frågor från både läkare och patienter om symtom, sjukdomar, medicin och liknande.
-        Du använder bara informationen som du får från de funktioner du har tillgång till.
-        Om det är oklart, be om förtydling.'''
+        #system_message = f'''Du är en "conversational AI".
+        #Du svarar på frågor från både läkare och patienter om symtom, sjukdomar, medicin och liknande.
+        #Du använder bara informationen som du får från de funktioner du har tillgång till.
+        #Om det är oklart, be om förtydling.'''
 
         # Reset memory and settings for this message
         self.memory = messages.copy()
@@ -92,7 +90,7 @@ class Chatbot:
         with open(file_path, "r", encoding='utf-8') as f:
             system_message = f.read()
 
-        return Message(role='system', content=system_message)
+        return system_message
 
 
     def _get_chat_response(self):

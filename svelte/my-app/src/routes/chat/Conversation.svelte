@@ -11,11 +11,13 @@
     let messages = [];
     //let explanations = [];
     let show_alert = false;
-    //let alert_message = null;
     let show_modal = false;
     let element;
 
     let current_query = '';
+
+    // Timer
+    const timer = ms => new Promise(res => setTimeout(res,ms))
 
     // Get a generated response to the query
     export async function get_response(query, settings) {
@@ -86,18 +88,21 @@
             temp_response = "";
             messages = conversation;
 
-            //Do alert
-            /*if (messages.length != 0) {
-                if (messages[messages.length - 1]['additional_info']['alert'] != null) {
-                    show_alert = true;
-                } else {
-                    show_alert = false;
-                }
-            }*/
-
             //Scroll
             await tick();
             scrollToBottom(element);
+
+            //Do alert
+            if (messages.length != 0) {
+                if (messages[messages.length - 1]['additional_info']['alert'] != null) {
+                    // Show alert, wait a few seconds, hide it again
+                    show_alert = true;
+                    await timer(5000);
+                    show_alert = false;
+                } else {
+                    show_alert = false;
+                }
+            }
         }
     }
 
@@ -281,8 +286,8 @@
 <!-- ALERT POPUP -->
 {#if show_alert}
     <div class="alert-area">
-        <Alert icon={InfoCircled}  title="OBS!" variant="light" color="red" withCloseButton closeButtonLabel="Stäng Varninig">
-            {messages.slice(-1)[0]['alert']}
+        <Alert icon={InfoCircled}  title="OBS!" variant="light" color="red">
+            {messages[messages.length - 1]['additional_info']['alert']}
         </Alert>
     </div>
 {/if}
@@ -398,10 +403,11 @@
 
     .alert-area {
         position: fixed;
-        top: 90px;
-        right: 50px;
+        bottom: 90px;
+        left: 220px;
         max-height: 200px;
         width: max-content;
+        z-index: 1000;
     }
 
 

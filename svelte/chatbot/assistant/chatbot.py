@@ -104,7 +104,7 @@ class Chatbot:
                 explanation = 'Du gav ett ID och har tillgång till patientens information.'
             
             else: #ID provided, NOT granted access
-                alert_message = 'Du har inte tillgång till patient ' + current_patient + 's journal.'
+                alert_message = 'Du har inte tillgång till patient ' + current_patient + "'s journal."
                 current_patient = ''
                 source = 'Inga källor har använts'
                 explanation = 'Du gav ett ID men du har inte tillgång till den patientens information, därför kan inte assistenten svara.'

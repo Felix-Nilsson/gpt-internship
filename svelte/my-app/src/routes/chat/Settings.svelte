@@ -75,6 +75,7 @@
         timer(1000).then(() => {show_settings_updated = false;})
     }
 
+    // Timer
     const timer = ms => new Promise(res => setTimeout(res,ms))
 
     // IF WE DO NOT WAIT BEFORE UPDATING SETTINGS ON MOUNT WE LOOSE IMPORTANT INFO

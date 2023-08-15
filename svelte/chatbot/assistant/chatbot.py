@@ -100,6 +100,7 @@ class Chatbot:
                     explanation = 'Du gav inget patient-ID med denna fråga därför använder assistenten informationen från den patient som diskuterats innan.'
 
             elif current_patient in patients: #ID provided and access granted
+                self.patient_id_memory.append(current_patient)
                 source = 'All information kommer från patient ' + current_patient + 's dokument.'
                 explanation = 'Du gav ett ID och har tillgång till patientens information.'
             

@@ -198,6 +198,22 @@
                             <div class="chat-offset"></div>
                             <AIBubble>
 
+                                <Space h="xs" />
+                                <Text
+                                    size='md'
+                                    weight='semibold'
+                                    style="line-height: 1.5;">
+                                        {#if message['additional_info']['chat_type'] == 'doctor'}
+                                        Läkarassistent:
+                                        {:else if message['additional_info']['chat_type'] == 'patient'}
+                                        Patientassistent:
+                                        {:else if message['additional_info']['chat_type'] == 'intranet'}
+                                        Intranätsassistent:
+                                        {:else if message['additional_info']['chat_type'] == 'internet'}
+                                        Internetassistent:
+                                        {/if}
+                                </Text>
+
                                 <!--Manages links in text-->
                                 {#each splitTextWithLinks(message['content']) as message_part, i}
                                     {#if message_part['type'] == 'text'}

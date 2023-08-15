@@ -138,7 +138,10 @@
         
         modal_message = messages[message_id];
         if (modal_message['additional_info']['chat_type'] == 'internet') {
-            modal_sources = JSON.parse(modal_message['additional_info']['sources'])
+            // Go through and add all sources
+            modal_message['additional_info']['sources'].forEach(source => {
+                modal_sources.push(source)
+            });
         } else {
             modal_sources = modal_message['additional_info']['sources']
         }

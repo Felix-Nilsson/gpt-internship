@@ -15,6 +15,7 @@ class Chatbot:
 
         self.memory:list[Message] = [] # List of Messages
         self.settings = {}
+        self.sources = []
 
 
     def start_chat(self, messages: list, settings: dict):
@@ -42,6 +43,9 @@ class Chatbot:
         # Reset memory and settings for this message
         self.memory = messages.copy()
         self.settings = settings.copy()
+
+        # Reset sources
+        self.sources = []
 
         # Add the system message to the beginning of the messages list
         self.memory.insert(0, Message(role='system', content=system_message))
@@ -71,6 +75,11 @@ class Chatbot:
             search_response = search_FASS(function_arguments['search_query'])
         elif function_to_call == 'internetmedicin':
             search_response = search_internetmedicin(function_arguments['search_query'])
+
+        # Add sources to sources
+        if type(search_response) == list:
+            for source in search_response:
+                self.sources.append(source)
         
         self.memory.append(Message(role='assistant', content='SEARCH_RESULT' + str(search_response), function_call=None))
 
@@ -137,19 +146,8 @@ class Chatbot:
             
             final_response = str(response['choices'][0]['message']['content'])
 
-            # Sources
-            sources = []
-            
-            # If the answer before the final response contains search results (from a function) add to the return message as sources
-            if self.memory[-1].get()['role'] == 'assistant':
-                content = self.memory[-1].get()['content']
-                if content != None and 'SEARCH_RESULT' in content:
-                    content = self.memory[-1].get()['content'].replace('SEARCH_RESULT','')
-                    content = eval(content)
-                    sources = json.dumps(content)
-
             # Done, return
-            ret_message = Message(role='assistant', content=final_response, final=True, chat_type='internet', settings=self.settings, sources=sources)
+            ret_message = Message(role='assistant', content=final_response, final=True, chat_type='internet', settings=self.settings, sources=self.sources)
             
             # Print the progress
             pretty_print_message(ret_message)

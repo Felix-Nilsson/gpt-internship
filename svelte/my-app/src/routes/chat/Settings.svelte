@@ -9,6 +9,7 @@
     
     // Change this to false if we do not want settings to be open by default
     let show_settings = true;
+    let show_settings_updated = false;
 
     //Chatbot choice
     let chatbot_value;
@@ -45,6 +46,7 @@
 
     // Runs on page load and when settings are applied
     function updateSettings() {
+        show_settings_updated = true;
 
         // Setup chatbot setting
         if (chatbot_value == null) {
@@ -69,6 +71,8 @@
         settings['language_level'] = language_value;
         settings['chosen_tools'] = chosen_tools;
         settings['chatbot_type'] = chatbot_value;
+
+        timer(1000).then(() => {show_settings_updated = false;})
     }
 
     const timer = ms => new Promise(res => setTimeout(res,ms))
@@ -81,10 +85,10 @@
         updateSettings()
     }
 
-    function settings_button() {
+    async function settings_button() {
         updateSettings()
 
-        show_settings = !show_settings
+        show_settings = !show_settings;
     }
 
 </script>
@@ -169,15 +173,16 @@
 
         <!-- Apply settings button -->
         <div style="position: absolute; bottom: 30px">
-            <Flex justify="right">
-                <!-- Behövs bara ifall det faktiskt stämmer
-                <Center>
-                    <Text size='xs' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">*När du tillämpar nollställs botens minne*</Text>
-                </Center>
-                <Space w={20} ></Space> -->
+            <Flex justify="center">
                 <Button on:click={updateSettings} variant='gradient' gradient={{from: 'cyan', to: 'blue', deg: 45}} ripple>Tillämpa</Button>
             </Flex>
-            
+            {#if show_settings_updated}
+                <Text size='xs' weight='semibold' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">
+                Inställnigar tillämpas!
+                </Text>
+            {:else}
+            <Space h={18}> </Space>
+            {/if}
         </div>
 
 

@@ -202,7 +202,7 @@
                             <div class="chat-offset"></div>
                             <AIBubble>
 
-                                <Space h="xs" />
+                                
                                 <Text
                                     size='md'
                                     weight='semibold'

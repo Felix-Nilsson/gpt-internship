@@ -133,7 +133,11 @@
     async function modalButtonPressed(message_id) {
         
         modal_message = messages[message_id];
-        modal_sources = JSON.parse(modal_message['additional_info']['sources'])
+        if (modal_message['additional_info']['chat_type'] == 'internet') {
+            modal_sources = JSON.parse(modal_message['additional_info']['sources'])
+        } else {
+            modal_sources = modal_message['additional_info']['sources']
+        }
 
         show_modal = true;
     }
@@ -205,9 +209,7 @@
                                     
 
                                 <!--Responsibility text-->
-                                
-                                <!-- TODO FIX 
-                                {#if context['chat_type'] == "doctor"}
+                                {#if message['additional_info']['chat_type'] == 'doctor'}
                                     <Space h="xs" />
                                     <Center> 
                                         <Text
@@ -217,7 +219,7 @@
                                                 *OBS* Du bär alltid ansvaret mot patienten
                                         </Text>
                                     </Center>
-                                {/if} -->
+                                {/if}
                             </AIBubble>
 
                             <!--Modal button-->

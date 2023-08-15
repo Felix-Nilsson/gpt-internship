@@ -10,7 +10,7 @@ class Message():
                  alert:str = None):
         """Create a Message
         
-        :param role:            Message role, 'system', 'user', 'assistant' or 'function'
+        :param role:            Message role, 'system', 'user' or 'assistant'
         :param content:         Content, e.g. a question, a response or function results
         :param function_call:   Information about function that the assistant wants to call
         

@@ -46,8 +46,9 @@ class Chatbot:
         # Add the system message to the beginning of the messages list
         self.memory.insert(0, Message(role='system', content=system_message))
 
-        if len(self.memory) < 3:
-            pretty_print_conversation(self.memory)
+        if len(self.memory):
+            #Print the system message and the latest query
+            pretty_print_conversation([self.memory[0], self.memory[-1]])
 
         return self._get_chat_response()
 

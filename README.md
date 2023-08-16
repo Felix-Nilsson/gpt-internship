@@ -32,7 +32,7 @@ As part of the project we also were tasked with writing a set of guidelines
 ⚖️ [Guidelines](img/gpt_internship_guidelines.pdf)
 
 <p align="center">
-  <img src="img/dialoguenew.png" />
+  <img src="img/Chatting.png" />
 </p>
 
 

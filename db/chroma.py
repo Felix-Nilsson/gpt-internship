@@ -144,7 +144,7 @@ def make_db_docs():
     print("--- Collection Complete!: 'docs' ---")
 
 
-def query_db_doc(query: str,  name: str, n_results: int = 2):
+def query_db_doc(query: str,  name: str, n_results: int = 5):
     collection = get_collection(name)
     ans = collection.query(
         query_texts= query,
@@ -226,5 +226,5 @@ def print_db_summary():
 
 #if we open the database here, database initialization may break, please use only functions :-)
 
-#Eg dont do:
-#print(get_collection("docs").peek())
+# - Eg remove things like this before initing:
+# - print(get_collection("docs").peek())

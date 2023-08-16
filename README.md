@@ -24,7 +24,12 @@ This is one of three projects produced as part of AI Swedens "GPT Summer Interns
 
 Sahlgrenska AI Hjälp is designed primarily with swedish in mind.
 
-🔗 [Link to blog]( https://my.ai.se/projects/287)
+🔗 [Link to blog](https://my.ai.se/projects/287)
+
+As part of the project we also were tasked with writing a set of guidelines 
+(in swedish).
+
+⚖️ [Guidelines](img/gpt_internship_guidelines.pdf)
 
 <p align="center">
   <img src="img/dialoguenew.png" />
@@ -47,13 +52,13 @@ Sahlgrenska AI Hjälp is designed primarily with swedish in mind.
 
 ## 📋 Description
 
-Sahlgrenska AI Hjälp is designed with two users in mind:
+Sahlgrenska AI Hjälp is designed with three users in mind:
 
 * Medical Staff: doctors, nurses
 * Patients, caretakers of patients
 * Anonymous Users
-  
-Currently these come in the form of just doctors and patients, with the difference being that a patient has access to a single directory of documents, their own, whereas doctors can access a list of patients documents. In addition to this doctors can use a chatbot which has access administrative documents, like contact information and roles within different departments.
+
+Medical staff (currently just doctors) and patients require a login, with the difference being that a patient has access to a single directory of documents, their own, whereas doctors can access a list of patients documents. In addition to this doctors can use a chatbot which has access administrative documents, like contact information and roles within different departments.
 
 The anonymous users can access a single chatbot, designed to take general health questions and find information on selected websites using agents from LangChain.
 
@@ -70,11 +75,27 @@ They were however made to be similar in structure to real documents, with guidan
 
 * You need to store your API key to OpenAI under the environment variable ```OPENAI_API_KEY```.
   
-* To run the web interface, you need to install ```npm``` and run the ```npm install``` command in the directory ```gpt-internship/svelte/my-app```.
-  
-* To run the server backend, you need to install ```flask``` as well as ```flask-cors``` and ```bcrypt```.
+* To run the web interface, you need to install ```npm``` and ```node```. If you dont already have these you can download them in the following way:
 
-* Possibly need to install some miscellaneous libraries python libaries like ```pandas```, ```PyPDF2``` or ```SciPy```.
+   First install ```nvm```, the **node version manager** for example in the following way:
+
+  ```curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash```
+
+   Please restart your terminal, and to make sure it is installed properly, for example check:
+    
+  ```nvm --version```
+
+   Finally install ```node```:
+
+  ```nvm install node```
+
+  You can verify that it worked by running:
+
+  ```node --version```
+
+  ```npm --version ```
+
+* To install the python packages, please run ```pip install -r requirements.txt``` in the directory ```gpt-internship/```
 
 ### Initializing the Database
 The project uses a vector database from [Chroma](https://docs.trychroma.com/) for efficient document retrieval. If you are running the project for the first time you need to initialize it and can do so with the following command from the ```gpt-internship``` directory.
@@ -102,7 +123,7 @@ To run the frontend,
 - `npm install`
 - `npm run dev -- --open` (Run the Svelte app)
 
-    (`--open` opens the page in the browser automatically and can be ommitted.)
+    (`--open` opens the page in the browser automatically and can be omitted.)
 
 Note:
 - The frontend should run on localhost:5000 and the backend on localhost:5001.

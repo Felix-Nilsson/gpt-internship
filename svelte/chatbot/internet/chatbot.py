@@ -103,7 +103,7 @@ class Chatbot:
         return system_message
 
 
-    def _get_chat_response(self):
+    def _get_chat_response(self, model='gpt-4'):
 
         messages = []
 
@@ -113,7 +113,7 @@ class Chatbot:
 
         # Get a response from the model
         response = openai.ChatCompletion.create(
-            model='gpt-3.5-turbo-0613',
+            model=model,
             messages=messages,
             functions=get_functions(),
             function_call='auto',

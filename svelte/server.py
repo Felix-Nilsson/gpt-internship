@@ -150,8 +150,17 @@ async def combo_login():
 
     # Logout (reset)
     elif request.method == 'DELETE':
+        global doctorbot
+        global patientbot
+        global intranetbot
+        global internetbot
 
         # Reset everything
+        doctorbot = AssistantCB('doctor')
+        patientbot = AssistantCB('patient')
+        intranetbot = IntranetCB()
+        internetbot = InternetCB()
+
         combo = {
             'messages': [
                 # This list should be filled up by Messages (use Message() to create)

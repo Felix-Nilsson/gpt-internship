@@ -91,7 +91,7 @@
                 <h3>{(current_credentials['success'] == true) ? current_credentials['username'] : ' '}</h3>
 
                 <h2 id="about">Om applikationen</h2>
-                <p>Ett första försök att bygga en chatt-bot för läkare och patienter med GPT modeller, gjort i sammarbete mellan AI-Sweden och Sahlgrenska Universitetssjukhus under GPT Summer Internship 2023.</p>
+                <p>Ett första försök att bygga en chatt-bot för läkare och patienter med GPT modeller, gjort i sammarbete mellan AI-Sweden och VGR under GPT Summer Internship 2023.</p>
                 <p>Skapat av:</p>
                 <ul>
                     <li>Henrik Johansson</li>
@@ -201,7 +201,7 @@
             variant='gradient' 
             gradient={{from: 'blue', to: 'red', deg: 45}}
             order={1}>
-                Sahlgrenska AI Hjälp 
+                Medicinsk AI-Hjälp 
             </Title>
         </Button>
     </div>

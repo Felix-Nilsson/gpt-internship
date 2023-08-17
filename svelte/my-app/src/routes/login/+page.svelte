@@ -50,7 +50,7 @@
 
         <Button href='/' color=white>
             <Title order={1} variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="font-size: 5rem; line-height: 1.5">
-                Sahlgrenska AI Hjälp
+                Medicinsk AI-Hjälp
             </Title>
         </Button>
 

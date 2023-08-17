@@ -103,7 +103,7 @@ class Chatbot:
         return system_message
 
 
-    def _get_chat_response(self, model='gpt-4'):
+    def _get_chat_response(self, model='gpt-3.5-turbo-0613'):
 
         messages = []
 

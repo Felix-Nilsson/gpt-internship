@@ -22,8 +22,8 @@ combo = {
     ],
     'login': {
         'success': False,
-        'login_as': 'None',     #'doctor' or 'patient'
-        'username': 'None'
+        'login_as': None,   #'doctor' or 'patient'
+        'username': None
     },
     'last_updated': time.time()
 }
@@ -99,7 +99,7 @@ async def combo_chat():
 
     # Reset chat
     elif request.method == 'DELETE':
-        combo['messages'] = []
+        _reset_chat()
 
     
     # Returnable conversation, need to change from Message objects to dict/json
@@ -144,37 +144,42 @@ async def combo_login():
                 ref_bytes = ref_password.encode('utf-8')
 
                 if bcrypt.checkpw(pw_bytes, ref_bytes):
+                    # Reset chat on login for safety's sake
+                    _reset_chat()
+
                     combo['login']["success"] = True
                     combo['login']["username"] = username
                     combo['login']["login_as"] = login_as
+    
 
     # Logout (reset)
     elif request.method == 'DELETE':
-        global doctorbot
-        global patientbot
-        global intranetbot
-        global internetbot
+        _reset_chat()
 
-        # Reset everything
-        doctorbot = AssistantCB('doctor')
-        patientbot = AssistantCB('patient')
-        intranetbot = IntranetCB()
-        internetbot = InternetCB()
-
-        combo = {
-            'messages': [
-                # This list should be filled up by Messages (use Message() to create)
-            ],
-            'login': {
-                'success': False,
-                'login_as': 'None',     #'doctor' or 'patient'
-                'username': 'None'
-            },
-            'last_updated': time.time()
+        combo['login'] = {
+            'success': False,
+            'login_as': None,
+            'username': None
         }
     
     return combo['login']
 
+
+def _reset_chat():
+    global doctorbot
+    global patientbot
+    global intranetbot
+    global internetbot
+    global combo
+
+    # Reset everything
+    doctorbot = AssistantCB('doctor')
+    patientbot = AssistantCB('patient')
+    intranetbot = IntranetCB()
+    internetbot = InternetCB()
+
+    combo['messages'] = []
+    combo['last_updated'] = time.time()
 
 
 if __name__ == "__main__":

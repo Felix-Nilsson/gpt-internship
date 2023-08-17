@@ -15,19 +15,22 @@ from chatbot.message import Message
 app = Flask(__name__)
 CORS(app)
 
+# Memory / list of messages
+messages = [
+    # This list should be filled up by Messages (use Message() to create)
+]
 
-combo = {
-    'messages': [
-        # This list should be filled up by Messages (use Message() to create)
-    ],
-    'login': {
-        'success': False,
-        'login_as': None,   #'doctor' or 'patient'
-        'username': None
-    },
-    'last_updated': time.time()
+# To keep track of when the messages were updated
+last_updated = time.time()
+
+# Login details
+login = {
+    'success': False,
+    'login_as': None,   # 'doctor' or 'patient'
+    'username': None
 }
 
+# Chatbots
 doctorbot = AssistantCB('doctor')
 patientbot = AssistantCB('patient')
 intranetbot = IntranetCB()
@@ -35,27 +38,29 @@ internetbot = InternetCB()
 
 # Chat handler
 @app.route("/chat", methods=['GET', 'PUT', 'DELETE'])
-async def combo_chat():
-    global combo
+async def handle_chat():
+    global messages
+    global login
+    global last_updated
 
     if request.method == 'GET':
 
         #Check if we want to continue response generation (if we are waiting for function results)
-        if combo['messages'] != [] and combo['messages'][-1].get().get('function_call'):
+        if messages != [] and messages[-1].get().get('function_call'):
             assistant_message = internetbot.continue_chat()
 
-            combo['messages'].append(assistant_message)
-            combo['last_updated'] = time.time()
+            messages.append(assistant_message)
+            last_updated = time.time()
 
     # Generate response to query
     elif request.method == 'PUT':
         
         # Information needed in the request:
         request_template = {
-            'query': '',        # User query
+            'query': '',            # User query
             'settings': {
-                'chatbot_type': '',# Which chatbot, i.e. internet, intranet, doctor or patient
-                # This includes any settings for the current chat
+                'chatbot_type': '', # Which chatbot, i.e. internet, intranet, doctor or patient
+                # Plus any more settings
             }
         }
 
@@ -67,49 +72,49 @@ async def combo_chat():
 
         # Add the query to the conversation
         user_message = Message(role='user', content=query)
-        combo['messages'].append(user_message)
+        messages.append(user_message)
 
         # Generate a response to the request
         if settings['chatbot_type'] == 'doctor':
             # Get list of the doctor's patients
             with open("credentials/credentials.json") as f:
                 users = json.load(f)
-                accessible_patients = users['credentials']['doctors'][combo['login']['username']]['patients']
+                accessible_patients = users['credentials']['doctors'][login['username']]['patients']
             
-            assistant_message = doctorbot.get_chat_response(messages=combo['messages'], settings=settings, patients=accessible_patients)
+            assistant_message = doctorbot.get_chat_response(messages=messages, settings=settings, patients=accessible_patients)
 
         elif settings['chatbot_type'] == 'patient':
-            assistant_message = patientbot.get_chat_response(messages=combo['messages'], settings=settings, patients=[combo['login']['username'][1:]])
+            assistant_message = patientbot.get_chat_response(messages=messages, settings=settings, patients=[login['username'][1:]])
         
         elif settings['chatbot_type'] == 'intranet':
-            assistant_message = intranetbot.get_chat_response(messages=combo['messages'], settings=settings)
+            assistant_message = intranetbot.get_chat_response(messages=messages, settings=settings)
 
         elif settings['chatbot_type'] == 'internet':
             
             #Start process of getting a response
-            assistant_message = internetbot.start_chat(messages=combo['messages'], settings=settings)
+            assistant_message = internetbot.start_chat(messages=messages, settings=settings)
         
         else:
             raise Exception('Incorrect chat_type')
 
 
         # Add the new reponse and update the conversation
-        combo['messages'].append(assistant_message)
-        combo['last_updated'] = time.time()
+        messages.append(assistant_message)
+        last_updated = time.time()
 
     # Reset chat
     elif request.method == 'DELETE':
         _reset_chat()
 
     
-    # Returnable conversation, need to change from Message objects to dict/json
+    # Returnable conversation, need to change from Message objects to dict, to json
     conversation = {
-        'last_updated': combo['last_updated'],
+        'last_updated': last_updated,
         'messages': []
     }
     
-    if combo['messages'] != []:
-        for message in combo['messages']:
+    if messages != []:
+        for message in messages:
             conversation['messages'].append(message.get())
 
     return json.dumps(conversation)
@@ -117,8 +122,8 @@ async def combo_chat():
 
 # Authentication handler (GET is used to check auth status)
 @app.route("/credentials", methods=['GET', 'PUT', 'DELETE'])
-async def combo_login():
-    global combo
+async def handle_login():
+    global login
 
     # Attempt login
     if request.method == 'PUT':
@@ -147,22 +152,22 @@ async def combo_login():
                     # Reset chat on login for safety's sake
                     _reset_chat()
 
-                    combo['login']["success"] = True
-                    combo['login']["username"] = username
-                    combo['login']["login_as"] = login_as
+                    login["success"] = True
+                    login["username"] = username
+                    login["login_as"] = login_as
     
 
     # Logout (reset)
     elif request.method == 'DELETE':
         _reset_chat()
 
-        combo['login'] = {
+        login = {
             'success': False,
             'login_as': None,
             'username': None
         }
     
-    return combo['login']
+    return login
 
 
 def _reset_chat():
@@ -170,7 +175,8 @@ def _reset_chat():
     global patientbot
     global intranetbot
     global internetbot
-    global combo
+    global messages
+    global last_updated
 
     # Reset everything
     doctorbot = AssistantCB('doctor')
@@ -178,8 +184,8 @@ def _reset_chat():
     intranetbot = IntranetCB()
     internetbot = InternetCB()
 
-    combo['messages'] = []
-    combo['last_updated'] = time.time()
+    messages = []
+    last_updated = time.time()
 
 
 if __name__ == "__main__":

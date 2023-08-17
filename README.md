@@ -1,4 +1,4 @@
-<h1 align= center>Sahlgrenska AI Hjälp</h1>
+<h1 align= center>Medicinsk AI-Hjälp</h1>
 
 
 
@@ -15,14 +15,14 @@
 </p>
 
 
-Sahlgrenska AI Hjälp is a set of chatbots designed to assist medical staff and patients in finding medical information which for example are stored in journals or calendars, or in administrative documents or even on the internet. They are all accessed through a single web interface.
+Medicinsk AI-Hjälp is a set of chatbots designed to assist medical staff and patients in finding medical information which for example are stored in journals or calendars, or in administrative documents or even on the internet. They are all accessed through a single web interface.
 
 The backend is made in python and flask, using GPT-3.5 Turbo and text-embedding-ada-002 from the OpenAI API.
 The Frontend is made with SvelteKit.
 
-This is one of three projects produced as part of AI Swedens "GPT Summer Internship" for the summer of 2023, and was a collaboration between AI Sweden and Sahlgrenska University Hospital in Gothenburg. It serves as a proof of concept for using LLMs in a healthcare context.
+This is one of three projects produced as part of AI Sweden's "GPT Summer Internship" for the summer of 2023, and was a collaboration between AI Sweden and VGR (Sahlgrenska University Hospital) in Gothenburg. It serves as a proof of concept for using LLMs in a healthcare context.
 
-Sahlgrenska AI Hjälp is designed primarily with swedish in mind.
+Medicinsk AI-Hjälp is designed primarily with swedish in mind.
 
 🔗 [Link to blog](https://my.ai.se/projects/287)
 
@@ -52,7 +52,7 @@ As part of the project we also were tasked with writing a set of guidelines
 
 ## 📋 Description
 
-Sahlgrenska AI Hjälp is designed with three users in mind:
+Medicinsk AI-Hjälp is designed with three users in mind:
 
 * Medical Staff: doctors, nurses
 * Patients, caretakers of patients

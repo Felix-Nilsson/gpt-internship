@@ -106,11 +106,11 @@
 {#if show_settings}
 <div class="settings-menu"> 
 
-    <div style="position:absolute; top:0; left:0; bottom:80px; height:100vh">
+    <div style="position:absolute; top:0; left:0; height:100vh">
         <Divider orientation='vertical'/>
     </div>
 
-    <Stack align="center" spacing="lg">
+    <Stack align="center" spacing={0}>
 
         <div style="width: 160px;">
             <Text size='md' align='left' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">
@@ -119,61 +119,62 @@
         </div>
 
         <!-- Individual settings -->
-        <SimpleGrid  cols={1}>
+        <div style="height: calc(100vh - 290px); overflow: auto;">
+            <SimpleGrid  cols={1}>
 
-            <!-- Chatbot choice -->
-            <div>
-                <Stack>
-                    <Text size='md' weight='semibold' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">
-                        Val av chat
-                    </Text>
+                <!-- Chatbot choice -->
+                <div>
+                    <Stack>
+                        <Text size='md' weight='semibold' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">
+                            Val av chat
+                        </Text>
 
-                    <Text size='sm' weight='semibold' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">
-                        <RadioGroup bind:value={chatbot_value} items={chatbot_options} color='cyan' size='sm' direction='column' spacing='xs' labelDirection='left'/>
-                    </Text>
-                </Stack>
-            </div>
-
-
-            <!-- Language level settings -->
-            <div>
-                <Stack>
-                    <Text size='md' weight='semibold' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">Språknivå</Text>
-
-                    <Text size='xs' weight='semibold' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">
-                        <RadioGroup bind:value={language_value} items={language_options} color='cyan' size='sm' direction='column' spacing='xs' labelDirection='left'/>
-                    </Text>
-                </Stack>
-            </div>
+                        <Text size='sm' weight='semibold' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">
+                            <RadioGroup bind:value={chatbot_value} items={chatbot_options} color='cyan' size='sm' direction='column' spacing='xs' labelDirection='left'/>
+                        </Text>
+                    </Stack>
+                </div>
 
 
-            <!-- Internet tool setting -->
-            <div>
-                <Stack>
-                    <Text size='md' weight='semibold' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">Källor (internet)</Text>
-                    
-                    <Text size='xs' weight='semibold' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">
-                        <Stack spacing="xs">
-                            {#each tool_options as {label,checked}}
-                            <Switch {checked} 
-                                on:change={() => checked = !checked}
-                                label={label}
-                                color="cyan"
-                            />
-                            {/each}
-                        </Stack>
-                    </Text>
-                </Stack>
-            </div>
+                <!-- Language level settings -->
+                <div>
+                    <Stack>
+                        <Text size='md' weight='semibold' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">Språknivå</Text>
 
-            <!-- To add more settings, add a div with whatever buttons we want -->
-            
+                        <Text size='xs' weight='semibold' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">
+                            <RadioGroup bind:value={language_value} items={language_options} color='cyan' size='sm' direction='column' spacing='xs' labelDirection='left'/>
+                        </Text>
+                    </Stack>
+                </div>
 
-        </SimpleGrid>
 
+                <!-- Internet tool setting -->
+                <div>
+                    <Stack>
+                        <Text size='md' weight='semibold' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">Källor (internet)</Text>
+                        
+                        <Text size='xs' weight='semibold' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">
+                            <Stack spacing="xs">
+                                {#each tool_options as {label,checked}}
+                                <Switch {checked} 
+                                    on:change={() => checked = !checked}
+                                    label={label}
+                                    color="cyan"
+                                />
+                                {/each}
+                            </Stack>
+                        </Text>
+                    </Stack>
+                </div>
+
+                <!-- To add more settings, add a div with whatever buttons we want -->
+                
+
+            </SimpleGrid>
+        </div>
 
         <!-- Apply settings button -->
-        <div style="position: absolute; bottom: 30px">
+        <div style="position: absolute; bottom: 10px">
             <Flex justify="center">
                 <Button on:click={updateSettings} variant='gradient' gradient={{from: 'cyan', to: 'blue', deg: 45}} ripple>Tillämpa</Button>
             </Flex>

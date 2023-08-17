@@ -17,7 +17,7 @@
 
 Medicinsk AI-Hjälp is a set of chatbots designed to assist medical staff and patients in finding medical information which for example are stored in journals or calendars, or in administrative documents or even on the internet. They are all accessed through a single web interface.
 
-The backend is made in python and flask, using GPT-3.5 Turbo and text-embedding-ada-002 from the OpenAI API.
+The backend is made in python and flask, using GPT-3.5 Turbo/GPT-4 and text-embedding-ada-002 from the OpenAI API.
 The Frontend is made with SvelteKit.
 
 This is one of three projects produced as part of AI Sweden's "GPT Summer Internship" for the summer of 2023, and was a collaboration between AI Sweden and VGR (Sahlgrenska University Hospital) in Gothenburg. It serves as a proof of concept for using LLMs in a healthcare context.

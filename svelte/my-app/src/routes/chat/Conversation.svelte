@@ -132,11 +132,12 @@
 
     //MODAL FOR EXPLANATION/SOURCES
     let modal_message;
-    let modal_sources = [];
+    let modal_sources;
 
     async function modalButtonPressed(message_id) {
-        
+        modal_sources = [];
         modal_message = messages[message_id];
+        
         if (modal_message['additional_info']['chat_type'] == 'internet') {
             // Go through and add all sources
             modal_message['additional_info']['sources'].forEach(source => {

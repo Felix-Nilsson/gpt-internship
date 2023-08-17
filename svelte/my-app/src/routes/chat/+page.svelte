@@ -85,12 +85,12 @@
 
     <Stack align="center" spacing="lg">
 
-        <div style="width: 160px;">
+        <div style="width: 160px; height: calc(100vh - 250px); overflow: auto;">
             <Text size='xs' align='left' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">
-                <h1>{(current_credentials['success'] == true) ? 'Välkommen,' : ' '}</h1>
-                <h3>{(current_credentials['success'] == true) ? current_credentials['username'] : ' '}</h3>
+                <h2>{(current_credentials['success'] == true) ? 'Välkommen,' : ' '}</h2>
+                <h4>{(current_credentials['success'] == true) ? current_credentials['username'] : ' '}</h4>
 
-                <h2 id="about">Om applikationen</h2>
+                <h3 id="about">Om applikationen</h3>
                 <p>Ett första försök att bygga en chatt-bot för läkare och patienter med GPT modeller, gjort i sammarbete mellan AI-Sweden och Sahlgrenska Universitetssjukhus under GPT Summer Internship 2023.</p>
                 <p>Skapat av:</p>
                 <ul>
@@ -106,7 +106,7 @@
         
         {#if current_credentials['success']}
             <!-- Logout button -->
-            <div style="position: absolute; bottom: 50px">
+            <div style="position: absolute; bottom: 40px">
                 <Button type="button" on:click={logout} variant='outline' color='cyan' ripple>
                     Logga ut
                 </Button>

@@ -3,7 +3,7 @@
 
 
 <p align="center">
-  <img src="img/SAH.png" />
+  <img src="img/MAIH.png" />
 </p>
 
 <p align="center">
@@ -52,15 +52,21 @@ As part of the project we also were tasked with writing a set of guidelines
 
 ## 📋 Description
 
-Medicinsk AI-Hjälp is designed with three users in mind:
+Medicinsk AI-Hjälp is designed with two users in mind:
 
 * Medical Staff: doctors, nurses
 * Patients, caretakers of patients
-* Anonymous Users
 
-Medical staff (currently just doctors) and patients require a login, with the difference being that a patient has access to a single directory of documents, their own, whereas doctors can access a list of patients documents. In addition to this doctors can use a chatbot which has access administrative documents, like contact information and roles within different departments.
+Both kinds of users are required to login to use the service.
+When logged in they can access some of the available chat-bots depending on their role.
+Medical staff (mainly focused towards doctors at this time) can access the chat-bots:
+- "Doctor's assistant", that can help them find information about specific patients.
+- "Intranet assistant", that can help them find information, such as contact information, etc. that exists on an intranet.
+- "Internet assistant", that can help them find information about deceases, injuries or medicines from trusted sources, such as [1177.se](https://www.1177.se), [FASS.se](https://www.fass.se) and [Internetmedicin.se](https://internetmedicin.se).
 
-The anonymous users can access a single chatbot, designed to take general health questions and find information on selected websites using agents from LangChain.
+Patients can access the chat-bots:
+- "Patient assistant", similar to the "Doctor's assistant" with the only difference being that patients can only access their own medical records.
+- "Internet assistant", the same as for medical staff.
 
 ---
 

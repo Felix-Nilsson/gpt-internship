@@ -5,11 +5,11 @@ import yaml
 
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
-from db.chroma import query_db
+from db.chroma import query_db_with_id
 
 
 def preprocess():
-    json_data = query_db(
+    json_data = query_db_with_id(
         query="Vad är orsaken bakom hjärtinfarkten som patienten upplevde?",
         id="789012",
         name='patientrecords'

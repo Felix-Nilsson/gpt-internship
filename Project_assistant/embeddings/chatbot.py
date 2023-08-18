@@ -7,7 +7,7 @@ import json
 import re
 
 
-from db.chroma import query_db
+from db.chroma import query_db_with_id
 
 
 class Chatbot:
@@ -54,7 +54,7 @@ class Chatbot:
         #Get patient data related to the query
         patient_data = ""
         if self.patient_ids != []:
-            patient_data = query_db(query=query,id=self.patient_ids[0],name="patientrecords")
+            patient_data = query_db_with_id(query=query,id=self.patient_ids[0],name="patientrecords")
             #patient_data = return_best_record(query, self.patient_ids[0])
             patient_data = " ".join(patient_data["documents"][0])
 

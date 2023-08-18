@@ -4,7 +4,7 @@ import openai
 import re
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))))
 
-from db.chroma import query_db
+from db.chroma import query_db_with_id
 
 from svelte.chatbot.message import Message
 
@@ -133,7 +133,7 @@ class Chatbot:
         # Get patient data related to the query
         patient_data = ''
         if current_patient != '' and current_patient != None:
-            patient_data = query_db(query=messages[-1].get()['content'],id=current_patient,name='patientrecords')
+            patient_data = query_db_with_id(query=messages[-1].get()['content'],id=current_patient,name='patientrecords')
             patient_data = ' '.join(patient_data['documents'][0])
 
         # Update the system message with relevant patient information

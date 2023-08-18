@@ -2,7 +2,7 @@ import chromadb
 from chromadb.config import Settings
 from chromadb.utils import embedding_functions
 
-from langchain.text_splitter import NLTKTextSplitter
+from langchain.text_splitter import NLTKTextSplitter, RecursiveCharacterTextSplitter
 
 import sys
 import os
@@ -123,11 +123,18 @@ def make_db_docs():
     for j,d in enumerate(dirs):
         print(f"[{j+1}/{n}] 'docs': {d} processing ...", end="\r")
         pdf = pdf_to_plaintext(d)
-        text_splitter = NLTKTextSplitter()
+        #text_splitter = NLTKTextSplitter()
+        text_splitter = RecursiveCharacterTextSplitter(
+            chunk_size = 200,
+            chunk_overlap  = 20,
+            length_function = num_tokens_from_string,
+            add_start_index = True,
+        )
         chunks = text_splitter.split_text(pdf)
+        formatted_filename = d.split("/")[-1]
 
         for i, chunk in enumerate(chunks):
-                        formatted_filename = d.split("/")[-1]
+                        
                         collection.add(
                             documents=[str(chunk)],
                             metadatas=[
@@ -223,6 +230,7 @@ def print_db_summary():
     root_directory = Path('db/storage')
     s = sum(f.stat().st_size for f in root_directory.glob('**/*') if f.is_file())
     print(f"Size: ~{round(s/10**6,2)} MB")
+
 
 #if we open the database here, database initialization may break, please use only functions :-)
 

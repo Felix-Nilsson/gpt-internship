@@ -4,6 +4,7 @@ bcrypt
 pyyaml
 openai
 chromadb==0.3.29
+langchain
 pypdf2
 tiktoken
 nltk

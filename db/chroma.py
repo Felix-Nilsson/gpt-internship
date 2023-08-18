@@ -151,7 +151,8 @@ def make_db_docs():
     print("--- Collection Complete!: 'docs' ---")
 
 
-def query_db_doc(query: str,  name: str, n_results: int = 2):
+def query_db_doc(query: str,  name: str, n_results: int = 5):
+
     collection = get_collection(name)
     ans = collection.query(
         query_texts= query,

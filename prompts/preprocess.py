@@ -72,7 +72,7 @@ def export_internet_test():
         f.write(prompt_internet)
 
 
-export_doc_test()
-export_pat_test()
-export_intranet_test()
-export_internet_test()
+#export_doc_test()
+#export_pat_test()
+#export_intranet_test()
+#export_internet_test()

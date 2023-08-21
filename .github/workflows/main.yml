@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'prompts/**'
+      - 'promptfoo/**'
     branches: [ main ]
 
 jobs:

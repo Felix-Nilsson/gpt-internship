@@ -41,7 +41,7 @@ tests:
     \nUID:4567890123\nSUMMARY:Ekokardiografi\nDTSTART:20230626T140000\nDTEND:20230626T150000\nDESCRIPTION:Ekokardiografi för att undersöka hjärtats struktur och \nfunktion.\nLOCATION:Kardiologi Södra, Avdelning 303\n
     \nUID:1234567890\nSUMMARY:EKG\nDTSTART:20230620T080000\nDTEND:20230620T090000\nDESCRIPTION:EKG-test för att undersöka hjärtats elektriska aktivitet.\nLOCATION:Kardiologi Södra, Avdelning 303\n"
     id: 654321
-    input: Har patienten fått hjärtinfarkt?
+    input: Har patienten fått hjärtinfarkt? Var så specifik som möjligt.
 
 - assert:
   - type: llm-rubric

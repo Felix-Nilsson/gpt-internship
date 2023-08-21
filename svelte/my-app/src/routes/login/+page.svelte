@@ -1,8 +1,9 @@
 <script>
-    import { Input, Space, Title, Group, Button, Stack } from '@svelteuidev/core';
+    import { Input, Space, Title, Group, Button, Stack, Text } from '@svelteuidev/core';
     import { LockClosed, Person } from 'radix-icons-svelte';
     import { goto } from '$app/navigation'
     import { onMount } from 'svelte';
+    
     
     const timer = ms => new Promise(res => setTimeout(res,ms))
     let login_result = false;
@@ -55,10 +56,17 @@
         </Button>
 
         <Space h=lg/>
-
+    
         <form on:submit|preventDefault={handleSubmit}>
             <Stack spacing="lg">
 
+                <Title
+                order={2} 
+                style="font-size: 3rem; line-height: 1.5"
+                weight="thin"
+                >
+                    Välkommen! Du loggar in som {#if type == "doctor"} läkare {:else} patient {/if}
+                </Title>
                 <Input 
                     icon={Person} 
                     placeholder="Användarnamn"
@@ -76,16 +84,29 @@
                     size="xl"
                 />
 
+                
                 <Button 
                     variant='gradient' 
                     gradient={{from: 'teal', to: 'blue', deg: 60}} 
-                    radius="lg" size="xl" 
+                    radius="lg" size="lg" 
                     ripple 
                     type="submit"
+                    fullSize
                 >
                     Skicka
                 </Button>
-                
+                <Text 
+                    on:click={() => goto("/")} 
+                    color='grey' 
+                    underline 
+                    align="center" 
+                    style="cursor:pointer; line-height: 1.5;"
+                >
+                    
+                    Tillbaka till hemskärmen
+                    
+                </Text>
+
             </Stack>
         </form>
     </Group>

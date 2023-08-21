@@ -109,7 +109,7 @@ The project uses a vector database from [Chroma](https://docs.trychroma.com/) fo
 ```
 python3 -c "from db.chroma import make_db_docs as d; d()"; 
 python3 -c "from db.chroma import make_db_patients as d; d()";
-python3 -c "from db.chroma import print_db_summary as d; d()"
+python3 -c "from db.chroma import print_db_summary as d; d()";
 ```
 If the commands executed correctly, the summary should state that the database is ~3 MB
 (Since the database is persistent, this only needs to be done once or if the documents are updated)

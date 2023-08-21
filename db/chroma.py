@@ -50,14 +50,18 @@ def make_db_patients():
     
     collection = get_collection("patientrecords")
     
-    dirs = [ f.path for f in os.scandir("patientrecords") if f.is_dir() ]
-    dirs = [d.replace("\\", "/").split("/")[1] for d in dirs]
+    dirs = [f.path for f in os.scandir("data/patient_records") if f.is_dir() ]
+    #print(dirs)
+    dirs = [d.replace("\\", "/") for d in dirs]
+
+    
 
     n = len(dirs)
     for j, d in enumerate(dirs):
         print(f"[{j+1}/{n}] 'patientrecords': {d} processing ...", end="\r")
+
         for filetype in ["patientdata.json","patientcalendar.ics"]:
-            file_path = f"patientrecords/{d}/{filetype}"
+            file_path = f"{d}/{filetype}"
 
             chunks = []
 
@@ -115,7 +119,7 @@ def make_db_docs():
     print("--- Making new Collection: 'docs' ---")
     collection = get_collection("docs")
     
-    dirs = [ f.path for f in os.scandir("Project3_intranet/data/records") ]
+    dirs = [ f.path for f in os.scandir("data/intranet_records") ]
     dirs = [d.replace("\\", "/") for d in dirs]
 
     n = len(dirs)

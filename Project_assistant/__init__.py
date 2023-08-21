@@ -1,1 +1,0 @@
-#Init file for the Project_assistant "package"

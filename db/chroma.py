@@ -46,6 +46,8 @@ def get_client():
 
 
 def make_db_patients():
+    """Creates a vector database that stores medical records of patients by scanning the folder of medical records."""
+
     print("--- Making new Collection: 'patientrecords' ---")
     
     collection = get_collection("patientrecords")
@@ -114,6 +116,8 @@ def make_db_patients():
       
         
 def make_db_docs():
+    """Creates a vector database for the intranet by scanning through the intranet folder."""
+
     nltk.download("punkt") ## this should be inactive if punkt has been downloaded
 
     print("--- Making new Collection: 'docs' ---")
@@ -219,6 +223,8 @@ def get_mean_chunk_size(name:str):
     return s/n
 
 def print_db_summary():
+    """Gives you a summary of the collections you have with info like size of collections aswell as biggest and mean chunk size."""
+
     print("Database summary:")
     for c in get_client().list_collections():
         name = c.name

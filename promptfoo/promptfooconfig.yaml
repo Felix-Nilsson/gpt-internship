@@ -1,6 +1,5 @@
 prompts:
-- ../prompts/prompts/prompt_doctor_test.txt
-- ../prompts/prompts/prompt_patient_test.txt
+- ../prompts/prompts/prompt_doctor.txt
 providers:
 - openai:gpt-3.5-turbo-0613
 #- openai:gpt-4
@@ -8,7 +7,7 @@ tests:
 - assert:
   - type: llm-rubric
     value: "Innehåller pneumoni"
-  description: This a simulated question from a patient
+  description: This a simulated question from a doctor
   vars:
     background: "{'patient_id': 123123, 'aktivitet_id': 59492, 'aktivitettyp': 'slutanteckning, läkare', 'vårdgivare': 'August B. Carlsson', 'vårdgivarekategori': 'LÄK', 'vårdgivaretel': '031-123456', 'förvaltning': 'SU', 'verksamhet': 'Medicinalavdelning X', 'plats': 'Avdelning 357 Medicin Östra', 'startdatum': '2020-03-28', 'slutdatum': '2020-03-30', 'huvuddiagnos': 'J189 Pneumoni, ospecificerad', 'anamnes': 'feber, hosta och lågt blodtryck', 'socialt': 'pensionär, tidigare industriarbetare', 'tidigare_sjukdomar': 'Kolecystekomerad 2010. Tidigare rökare.', 'nuvarande_sjukdomar': 'Hypertoni. Atros. Dyspepsi.', 'aktuellt': 'Inkommer med två dagars anamnes på feber och hosta. Hypoton och förhöjd andningsfrekvens vid inkomst. CABR 2. Lungrtg med högersidiga infiltrat. CRP 270.', 'sammanfattning': 'Initieras på bensylpc 3gx3 och stötdos Nebcina tillsammans med vätska. Initial syrgaskrävande. Förbättras på inslagen behandling. Feberfri sedan 29/3, syrgas avvecklas. CRP mer än halverad 30/3. Översätts samma dag på peroral behandling med fenoximetylpc', 'bedömning': 'Bakteriell pneumoni. Oklart agens, blododlingar negativa. Svarar bra på bensylpc', 'planering': 'Fortsatt behandling med antibiotika i totalt 7 dagar till och me 4/3. Initieras på fenoxmetylpc x 3 vid hemkomst.', 'från_plats': 'HEM', 'till_plats': 'HEM'}\n
     \nUID:20230626T080000Z-1\nSUMMARY:Lungröntgen\nDTSTART:20230626T080000Z\nDTEND:20230626T090000Z\nDESCRIPTION:Patienten ska genomgå en lungröntgen för att bedöma \nbehandlingsresponsen och övervaka infiltraten i lungorna.\nLOCATION:Radiologiavdelningen\n
@@ -16,12 +15,12 @@ tests:
     {'patient_id': 123123, 'aktivitet_id': 59493, 'aktivitettyp': 'vård- och läkemedelsberättelse', 'vårdgivare': 'August B. Carlsson', 'vårdgivarekategori': 'LÄK', 'vårdgivaretel': '031-123456', 'förvaltning': 'SU', 'verksamhet': 'Medicinalavdelning X', 'plats': 'Avdelning 357 Medicin Östra', 'startdatum': '2020-03-28', 'slutdatum': '2020-03-30', 'orsak': 'Du sökte vård med anledning av feber, hosta och trötthet sedan två dagar. Du fick behandling med antibiotika i blodet och mådde snart bättre på detta.', 'läkemedelsberättelse': 'Du behandlades på avdelningen med bensylpenicillin i blodet och mådde efter någon dags behandling bättre.', 'planering': 'Du ska fortsätta med antibiotika i tablettform (fenoxmetylpenicillin) morgon, middag och kväll i ytterligare fyra dagar till och med söndag 3/4. Du kommer bli uppringd av läkare om ca två veckor.'}\n
     \nUID:20230627T100000Z-2\nSUMMARY:Blododlingar\nDTSTART:20230627T100000Z\nDTEND:20230627T110000Z\nDESCRIPTION:Patienten ska genomgå blododlingar för att undersöka \nförekomsten av bakteriell infektion i blodet.\nLOCATION:Laboratoriet\n"
     id: 123213
-    input: Vad var min observerade diagnos?
+    input: Vad var patientens observerade diagnos?
 
 - assert:
   - type: llm-rubric
     value: "Innehåller paracetamol och ibuprofen"
-  description: This a simulated question from a patient
+  description: This a simulated question from a doctor
   vars:
     background: "{'patient_id': 112200, 'aktivitet_id': 876, 'läkemedel': 'Antiinflammatoriskt', 'substans': 'Ibuprofen', 'kategori': 'Antiinflammatoriska och antireumatiska medel', 'atc_kod': 'M01AE01', 'beredningsform': 'Tablett', 'dosering': '400 mg vid behov, max 3 gånger dagligen', 'styrka': '400', 'styrka_enhet': 'mg', 'vårdgivare': 'Eva Eriksson', 'vårdgivarekategori': 'LÄK', 'vårdgivaretel': '08-112200', 'verksamhet': 'Ortopedimottagning', 'förmån': 'Y', 'förskrivningsdatum': '2023-06-01', 'giltigt_till_och_med': '2023-06-08', 'senast_uttag': '-', 'tidigast_uttag_inom_förmån': '2023-06-01', 'förskriven_mängd': 30, 'senast_uttagen_mängd': 0, 'återstående_mängd': 30, 'uttag_antal': 0, 'uttag_kvar': 0}\n
     {'patient_id': 112200, 'aktivitet_id': 99887766, 'läkemedel': 'Smärtstillande', 'substans': 'Paracetamol', 'kategori': 'Analgetika', 'atc_kod': 'N02BE01', 'beredningsform': 'Tablett', 'dosering': '500 mg vid behov, max 4 gånger dagligen', 'styrka': '500', 'styrka_enhet': 'mg', 'vårdgivare': 'Eva Eriksson', 'vårdgivarekategori': 'LÄK', 'vårdgivaretel': '08-112200', 'verksamhet': 'Ortopedimottagning', 'förmån': 'Y', 'förskrivningsdatum': '2023-06-01', 'giltigt_till_och_med': '2023-06-08', 'senast_uttag': '-', 'tidigast_uttag_inom_förmån': '2023-06-01', 'förskriven_mängd': 40, 'senast_uttagen_mängd': 0, 'återstående_mängd': 40, 'uttag_antal': 0, 'uttag_kvar': 0}\n
@@ -34,7 +33,7 @@ tests:
 - assert:
   - type: llm-rubric
     value: "Innehåller akut transmural hjärtinfarkt"
-  description: This a simulated question from a patient
+  description: This a simulated question from a doctor
   vars:
     background: "{'patient_id': 654321, 'aktivitet_id': 11223344, 'aktivitettyp': 'slutanteckning, läkare', 'vårdgivare': 'Maria Andersson', 'vårdgivarekategori': 'LÄK', 'vårdgivaretel': '08-654321', 'förvaltning': 'SU', 'verksamhet': 'Kardiologi', 'plats': 'Avdelning 303 Kardiologi Södra', 'startdatum': '2023-06-19', 'slutdatum': '2023-06-28', 'huvuddiagnos': 'I21 Akut transmural hjärtinfarkt', 'anamnes': 'Patienten sökte akutvård på grund av bröstsmärta och andnöd. EKG visade tecken på hjärtinfarkt, och patienten har bekräftad diagnos av akut transmural hjärtinfarkt.', 'socialt': 'Arbetar som lärare och är gift med två barn.', 'tidigare_sjukdomar': '-', 'nuvarande_sjukdomar': '-', 'aktuellt': 'Patienten har genomgått en slutenvårdsvistelse för akut transmural hjärtinfarkt. Behandling med simvastatin har ordinerats för att kontrollera patientens lipidnivåer och minska risken för framtida hjärt-kärlhändelser.', 'sammanfattning': 'Patienten har diagnostiserats med akut transmural hjärtinfarkt och har genomgått slutenvårdsvistelse. Simvastatin har förskrivits för att sänka lipidnivåerna.', 'bedömning': 'Akut transmural hjärtinfarkt', 'planering': 'Fortsatt uppföljning av hjärtinfarkt och lipidnivåer. Patienten ska även få råd om hjärt- och kärlhälsa samt livsstilsförändringar för att minska risken för framtida händelser.', 'från_plats': 'AKUTEN', 'till_plats': 'HEM'}\n
     [{'patient_id': 654321, 'aktivitet_id': 98765432, 'begrepp': 'diagnos', 'kod': 'I21 Akut transmural hjärtinfarkt', 'värde': 'primär', 'startdatum': '2023-06-19', 'slutdatum': '2023-06-28'}, {'patient_id': 654321, 'aktivitet_id': 23456789, 'begrepp': 'orsak', 'kod': 'RÖK', 'värde': '-', 'startdatum': '2023-06-19', 'slutdatum': '2023-06-28'}]\n
@@ -47,7 +46,7 @@ tests:
 - assert:
   - type: llm-rubric
     value: "Innehåller Maria Eriksson"
-  description: This a simulated question from a patient
+  description: This a simulated question from a doctor
   vars:
     background: "{'patient_id': 112255, 'aktivitet_id': 59497, 'aktivitettyp': 'vård- och läkemedelsberättelse', 'vårdgivare': 'Maria Eriksson', 'vårdgivarekategori': 'LÄK', 'vårdgivaretel': '08-112255', 'förvaltning': 'SU', 'verksamhet': 'Onkologiskt centrum', 'plats': 'Strålningsavdelningen', 'startdatum': '2023-12-05', 'slutdatum': '2023-12-20', 'orsak': 'Du sökte vård på grund av hög stråldos vid en olycka på en kärnkraftsanläggning.', 'läkemedelsberättelse': 'Du behandlas med strålbehandling och får läkemedlet Filgrastim för att stödja benmärgen under behandlingen.', 'planering': 'Du kommer fortsätta med strålbehandling och användning av Filgrastim för att stödja benmärgen. Ditt tillstånd kommer att följas upp regelbundet.'}\n
     \nUID:87654321\nSUMMARY:Orsak till tillstånd\nDESCRIPTION:Strålningsbehandling är den identifierade orsaken till patientens tillstånd.\nDTSTART;VALUE=DATE:20231205\nDTEND;VALUE=DATE:20231221\n
@@ -60,7 +59,7 @@ tests:
 - assert:
   - type: llm-rubric
     value: "Innehåller 10 september 2023"
-  description: This a simulated question from a patient
+  description: This a simulated question from a doctor
   vars:
     background: "{'patient_id': 112299, 'aktivitet_id': 59495, 'aktivitettyp': 'vård- och läkemedelsberättelse', 'vårdgivare': 'Emma Johnson', 'vårdgivarekategori': 'LÄK', 'förvaltning': 'SU', 'verksamhet': 'Ortopedi', 'plats': 'Avdelning 101 Kirurgi Södra', 'startdatum': '2023-09-10', 'slutdatum': '2023-09-20', 'orsak': 'Du sökte vård på grund av ryggsmärta och en synlig avvikande ryggform.', 'läkemedelsberättelse': 'Du fick behandling med smärtstillande läkemedel för att hantera ryggsmärtan under din sjukhusvistelse.', 'planering': 'Din skolios kommer övervakas och vid behov vidtas åtgärder för att hantera symptomen.'}
     {'patient_id': 112299, 'aktivitet_id': 59494, 'aktivitettyp': 'slutanteckning, läkare', 'vårdgivare': 'Emma Johnson', 'vårdgivarekategori': 'LÄK', 'förvaltning': 'SU', 'verksamhet': 'Ortopedi', 'plats': 'Avdelning 101 Kirurgi Södra', 'startdatum': '2023-09-10', 'slutdatum': '2023-09-20', 'huvuddiagnos': 'M41.9 Skolios, ospecificerad', 'anamnes': 'Patienten har besvärats av ryggsmärta och en avvikande ryggform.', 'socialt': 'Studerar på gymnasiet och är aktiv inom dans.', 'tidigare_sjukdomar': '-', 'nuvarande_sjukdomar': '-', 'aktuellt': 'Patienten sökte vård på grund av ryggsmärta och en synlig avvikande ryggform. Utifrån klinisk undersökning och röntgenbilder bekräftades diagnosen skolios. Planen är att övervaka ryggkurvan och vid behov vidta ytterligare åtgärder för att hantera symptomen.', 'sammanfattning': 'Patienten har diagnostiserats med skolios, vilket resulterar i ryggsmärta och en avvikande ryggform. Nuvarande behandling fokuserar på övervakning av ryggkurvan och symptomhantering.', 'bedömning': 'Skolios', 'planering': 'Övervakning av ryggkurvan och vid behov vidta ytterligare åtgärder för symptomhantering.'}
@@ -73,7 +72,7 @@ tests:
 - assert:
   - type: llm-rubric
     value: "Innehåller rökning"
-  description: This a simulated question from a patient
+  description: This a simulated question from a doctor
   vars:
     background: "{'patient_id': 789012, 'aktivitet_id': 98712345, 'aktivitettyp': 'slutanteckning, läkare', 'vårdgivare': 'Eva Johansson', 'vårdgivarekategori': 'LÄK', 'vårdgivaretel': '08-789012', 'förvaltning': 'SU', 'verksamhet': 'Kardiologiavdelning', 'plats': 'Avdelning 303 Hjärtmedicin', 'startdatum': '2023-08-15', 'slutdatum': '2023-08-20', 'huvuddiagnos': 'I21.9 Akut hjärtinfarkt, ospecificerad', 'anamnes': 'Patienten sökte vård på grund av bröstsmärta och andfåddhet.', 'socialt': 'Arbetar som lärare och är rökare.', 'tidigare_sjukdomar': '-', 'nuvarande_sjukdomar': '-', 'aktuellt': 'Patienten inkom med bröstsmärta och andfåddhet. Klinisk undersökning och EKG bekräftade diagnosen akut hjärtinfarkt. Behandling med trombolys och blodförtunnande medel inleddes.', 'sammanfattning': 'Patienten har diagnostiserats med akut hjärtinfarkt. Behandlingen inkluderar trombolys och blodförtunnande medel.', 'bedömning': 'Akut hjärtinfarkt', 'planering': 'Fortsatt behandling med trombolys och blodförtunnande medel. Uppföljning och livsstilsråd om rökstopp planeras.', 'från_plats': 'HEM', 'till_plats': 'HEM'}\n
     {'patient_id': 789012, 'aktivitet_id': 98712346, 'aktivitettyp': 'vård- och läkemedelsberättelse', 'vårdgivare': 'Eva Johansson', 'vårdgivarekategori': 'LÄK', 'vårdgivaretel': '08-789012', 'förvaltning': 'SU', 'verksamhet': 'Kardiologiavdelning', 'plats': 'Avdelning 303 Hjärtmedicin', 'startdatum': '2023-08-15', 'slutdatum': '2023-08-20', 'orsak': 'Du sökte vård på grund av bröstsmärta och andfåddhet.', 'läkemedelsberättelse': 'Du behandlades på avdelningen med trombolys och blodförtunnande medel för att behandla akut hjärtinfarkt.', 'planering': 'Du kommer fortsätta behandling med trombolys och blodförtunnande medel. En uppföljning och rådgivning om rökstopp är planerad.'}\n
@@ -86,7 +85,7 @@ tests:
 - assert:
   - type: llm-rubric
     value: "Innehåller jobbtitel, antal barn och relationsstatus"
-  description: This a simulated question from a patient
+  description: This a simulated question from a doctor
   vars:
     background: "{'patient_id': 654322, 'aktivitet_id': 11223355, 'aktivitettyp': 'slutanteckning, läkare', 'vårdgivare': 'Eva Karlsson', 'vårdgivarekategori': 'LÄK', 'vårdgivaretel': '08-654321', 'förvaltning': 'SU', 'verksamhet': 'Kardiologi', 'plats': 'Avdelning 101 Kardiologi', 'startdatum': '2023-07-10', 'slutdatum': '2023-07-17', 'huvuddiagnos': 'I25.2 Gamla hjärtinfarkter', 'anamnes': 'Patienten har tidigare genomgått en hjärtinfarkt och söker nu vård på grund av bröstsmärta och andfåddhet.', 'socialt': 'Arbetar som revisor och är ogift utan barn.', 'tidigare_sjukdomar': 'Tidigare hjärtinfarkt', 'nuvarande_sjukdomar': '-', 'aktuellt': 'Patienten sökte vård på grund av bröstsmärta och andfåddhet. Klinisk undersökning och diagnostiska tester visade på förekomst av gamla hjärtinfarkter. Behandling med medicinering och rådgivning om livsstilsförändringar inleddes.', 'sammanfattning': 'Patienten har gamla hjärtinfarkter och söker vård på grund av bröstsmärta och andfåddhet. Behandling inkluderar medicinering och rådgivning om livsstilsförändringar.', 'bedömning': 'Gamla hjärtinfarkter', 'planering': 'Fortsatt behandling med medicinering och rådgivning om livsstilsförändringar. Uppföljning av patientens hjärtstatus planeras om sex månader.', 'från_plats': 'HEM', 'till_plats': 'HEM'}\n
     {'patient_id': 654322, 'aktivitet_id': 11223366, 'aktivitettyp': 'vård- och läkemedelsberättelse', 'vårdgivare': 'Eva Karlsson', 'vårdgivarekategori': 'LÄK', 'vårdgivaretel': '08-654321', 'förvaltning': 'SU', 'verksamhet': 'Kardiologi', 'plats': 'Avdelning 101 Kardiologi', 'startdatum': '2023-07-10', 'slutdatum': '2023-07-17', 'orsak': 'Du sökte vård på grund av bröstsmärta och andfåddhet.', 'läkemedelsberättelse': 'Du behandlades på avdelningen med medicinen Simvastatin för att kontrollera dina lipidnivåer och minska risken för ytterligare hjärtinfarkter.', 'planering': 'Du kommer fortsätta behandling med medicinen Simvastatin och få rådgivning om livsstilsförändringar för att förbättra din hälsa.', 'från_plats': 'HEM', 'till_plats': 'HEM'}\n
@@ -99,7 +98,7 @@ tests:
 - assert:
   - type: llm-rubric
     value: "Innehåller 21 juni 2023"
-  description: This a simulated question from a patient
+  description: This a simulated question from a doctor
   vars:
     background: "\nUID:2345678901\nDTSTART:20230621T080000\nDTEND:20230621T090000\nSUMMARY:Laboratorieanalyser\nDESCRIPTION:Patienten ska genomgå laboratorieanalyser för att bedöma \nallmän hälsa och identifiera eventuella underliggande faktorer.\nLOCATION:Kliniskt laboratorium\n
     \nUID:1234567890\nDTSTART:20230620T090000\nDTEND:20230620T100000\nSUMMARY:Röntgen av nedre benskaftet\nDESCRIPTION:Patienten kommer att genomgå en röntgenundersökning för att \nbedöma frakturens omfattning och läge.\nLOCATION:Radiologiavdelningen\n
@@ -112,7 +111,7 @@ tests:
 - assert:
   - type: llm-rubric
     value: "Innehåller 29 juni"
-  description: This a simulated question from a patient
+  description: This a simulated question from a doctor
   vars:
     background: "\nUID:20230629T090000Z-4\nSUMMARY:Spirometri\nDTSTART:20230629T090000Z\nDTEND:20230629T100000Z\nDESCRIPTION:Patienten ska genomgå spirometri för att bedöma lungfunktionen \noch utesluta eventuella underliggande lungsjukdomar.\nLOCATION:Lungfunktionslaboratoriet\n
     \nUID:20230626T080000Z-1\nSUMMARY:Lungröntgen\nDTSTART:20230626T080000Z\nDTEND:20230626T090000Z\nDESCRIPTION:Patienten ska genomgå en lungröntgen för att bedöma \nbehandlingsresponsen och övervaka infiltraten i lungorna.\nLOCATION:Radiologiavdelningen\n
@@ -125,7 +124,7 @@ tests:
 - assert:
   - type: llm-rubric
     value: "Innehåller hjärtsvikt"
-  description: This a simulated question from a patient
+  description: This a simulated question from a doctor
   vars:
     background: "{'patient_id': 112244, 'aktivitet_id': 99001122, 'aktivitettyp': 'slutanteckning, läkare', 'vårdgivare': 'Eva Svensson', 'vårdgivarekategori': 'LÄK', 'vårdgivaretel': '08-112244', 'förvaltning': 'SU', 'verksamhet': 'Kirurgi', 'plats': 'Avdelning 105', 'startdatum': '2023-10-01', 'slutdatum': '2023-10-10', 'huvuddiagnos': 'I50.9 Hjärtsvikt, ospecificerad', 'anamnes': 'Patienten rapporterar andfåddhet och trötthet vid ansträngning.', 'socialt': 'Arbetar som ingenjör och bor ensam.', 'tidigare_sjukdomar': '-', 'nuvarande_sjukdomar': '-', 'aktuellt': 'Patienten inkom med andfåddhet och trötthet vid ansträngning. Klinisk undersökning och hjärtundersökning bekräftade diagnosen hjärtsvikt. Behandling med Metoprolol inleddes för att förbättra hjärtfunktionen.', 'sammanfattning': 'Patienten har diagnostiserats med hjärtsvikt och behandlas med Metoprolol för att förbättra hjärtfunktionen.', 'bedömning': 'Hjärtsvikt', 'planering': 'Fortsatt behandling med Metoprolol och regelbundna uppföljningar av hjärtfunktionen.', 'från_plats': 'AKUTEN', 'till_plats': 'AVDELNING'}\n
     {'patient_id': 112244, 'aktivitet_id': 99001123, 'aktivitettyp': 'vård- och läkemedelsberättelse', 'vårdgivare': 'Eva Svensson', 'vårdgivarekategori': 'LÄK', 'vårdgivaretel': '08-112244', 'förvaltning': 'SU', 'verksamhet': 'Kirurgi', 'plats': 'Avdelning 105', 'startdatum': '2023-10-01', 'slutdatum': '2023-10-10', 'orsak': 'Du sökte vård på grund av andfåddhet och trötthet vid ansträngning.', 'läkemedelsberättelse': 'Du behandlas på avdelningen med läkemedlet Metoprolol för att förbättra hjärtfunktionen.', 'planering': 'Du kommer fortsätta behandlingen med Metoprolol och genomgå regelbundna uppföljningar av hjärtfunktionen.'}\n

@@ -18,7 +18,7 @@ class Chatbot:
         # Path to the system message/system prompt file
         current_script_path = os.path.abspath(__file__)
         parent_directory = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(current_script_path))))
-        file_path = os.path.join(parent_directory, 'prompts', 'prompts', 'prompt_intranet_test.txt')
+        file_path = os.path.join(parent_directory, 'prompts', 'prompts', 'prompt_intranet.txt')
 
         # Get the system message from the file
         system_message = ""

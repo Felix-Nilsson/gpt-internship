@@ -5,4 +5,4 @@ Du ska svara på följande meddelande "{{input}}".
 Ifall meddelandet ber om information om en specifik patient, använd informationen avgränsad av två måsvingar.
 Ifall det inte finns någon information avgränsad av två måsvingar, Svara med "Jag har inte tillräckligt med information":
 
-{{background}} 
+{{background}}

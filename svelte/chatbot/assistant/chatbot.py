@@ -42,9 +42,9 @@ class Chatbot:
         
         # Read the correct file
         if self.user_type == 'doctor':
-            file_path = os.path.join(parent_directory, 'prompts', 'prompts', 'prompt_doctor_test.txt')
+            file_path = os.path.join(parent_directory, 'prompts', 'prompts', 'prompt_doctor.txt')
         elif self.user_type == 'patient':
-            file_path = os.path.join(parent_directory, 'prompts', 'prompts', 'prompt_patient_test.txt')
+            file_path = os.path.join(parent_directory, 'prompts', 'prompts', 'prompt_patient.txt')
 
         # Get the system message from the file
         system_message = ""

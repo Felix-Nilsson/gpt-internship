@@ -22,7 +22,6 @@ input_msg
 
 Säg gärna vilken fil du hittade informationen i.
 Du får endast använda informationen som är avgränsad med två måsvingar.
-Använd bara informationen som är avgränsad med två måsvingar.
 Om du inte hittar svaret i informationen svarar du att du inte har tillgång till informationen.
 
 
@@ -34,6 +33,9 @@ Du kan ingenting själv utan använder alltid dina verktyg (Tools) för att hitt
 Ifall du inte har tillgång till några verktyg (Tools) be användaren att dubbelkolla inställningarna.
 
 Du ger alltid ganska långa (4-8 meningar) svar som innehåller all relevant information.
+
+Skriv alltid med vilka källor du använt, t.ex:
+[titel](URL)
 """
 
 
@@ -42,7 +44,7 @@ def export_doc_test():
     input_msg = 'Du ska svara på följande meddelande "{{input}}".'
     prompt_doctor = prompt_doctor.replace("input_msg",input_msg)
 
-    with open("prompts/prompt_doctor_test.txt","w",encoding='utf-8') as f:
+    with open("prompts/prompt_doctor.txt","w",encoding='utf-8') as f:
         f.write(prompt_doctor)
 
 def export_pat_test():
@@ -50,7 +52,7 @@ def export_pat_test():
     input_msg = 'Du ska svara på följande meddelande "{{input}}".'
     prompt_patient = prompt_patient.replace("input_msg",input_msg)
 
-    with open("prompts/prompt_patient_test.txt","w",encoding='utf-8') as f:
+    with open("prompts/prompt_patient.txt","w",encoding='utf-8') as f:
         f.write(prompt_patient)
 
 def export_intranet_test():
@@ -58,7 +60,7 @@ def export_intranet_test():
     input_msg = 'Du ska svara på följande meddelande "{{input}}".'
     prompt_intranet = prompt_intranet.replace("input_msg",input_msg)
 
-    with open("prompts/prompt_intranet_test.txt","w",encoding='utf-8') as f:
+    with open("prompts/prompt_intranet.txt","w",encoding='utf-8') as f:
         f.write(prompt_intranet)
 
 def export_internet_test():
@@ -66,18 +68,11 @@ def export_internet_test():
     input_msg = 'Du ska svara på följande meddelande "{{input}}".'
     prompt_internet = prompt_internet.replace("input_msg",input_msg)
 
-    with open("prompts/prompt_internet_test.txt","w",encoding='utf-8') as f:
+    with open("prompts/prompt_internet.txt","w",encoding='utf-8') as f:
         f.write(prompt_internet)
 
-#Should not be needed anymore
-def import_internet_test():
-    prompt = ""
-    with open("prompts/prompt_internet_test.txt","r",encoding='utf-8') as f:
-        prompt = f.read()
-    return prompt
 
-
-#export_doc_test()
-#export_pat_test()
-#export_intranet_test()
-#export_internet_test()
+export_doc_test()
+export_pat_test()
+export_intranet_test()
+export_internet_test()

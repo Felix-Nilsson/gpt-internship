@@ -1,13 +1,14 @@
 <script>
-    import { Group, Title, Input , Button, Center, Burger, Stack, Text, Paper, Divider } from '@svelteuidev/core';
+    import { Group, Title, Input , Button, Center, Burger, Stack, Text, Paper, Divider, ActionIcon, Flex } from '@svelteuidev/core';
     import { scale, slide } from 'svelte/transition';
     import Conversation from "./Conversation.svelte";
     import Settings from "./Settings.svelte";
     import { onMount } from 'svelte';
     import { goto } from '$app/navigation'
+    import { Trash } from 'radix-icons-svelte';
 
     let current_chat = [] // messages of the current chat
-    let all_chats = [[{'content': 'blablbalbabla'}], [{'content': 'bloloblblboblo'}]] // array containing all chats
+    let all_chats = [[{'content': 'blablbalbabla'}], [{'content': 'bloloblblboblonsdjgdsglsjlgsglbslgsbligsfilgl'}]] // array containing all chats
 
     let opened = true;
     let input = "";
@@ -72,6 +73,38 @@
     // Call the function to fetch the credentials when needed
     onMount(fetchCredentials, clear_backend);
 
+    const CHATS_URL = 'http://localhost:5001/all-chats';
+
+    async function new_chat() {
+        const response = await fetch(CHATS_URL, {
+            method: "POST"
+        });
+        const data = await response.json();
+        all_chats = data;
+    }
+
+
+    async function change_current_chat(chat_index) {
+        const response = await fetch(CHATS_URL, {
+            method: "PUT",
+            body: JSON.stringify({'new_id': chat_index}),
+            headers: {"Content-type": "application/json; charset=UTF-8"}
+        });
+        const data = await response.json();
+        all_chats = data;
+    }
+
+    async function delete_chat(chat_index) {
+        const response = await fetch(CHATS_URL, {
+            method: "PATCH",
+            body: JSON.stringify({'delete_id': chat_index}),
+            headers: {"Content-type": "application/json; charset=UTF-8"}
+        });
+        const data = await response.json();
+        all_chats = data;
+    }
+
+
 </script>
 
 
@@ -87,15 +120,30 @@
         <Divider orientation='vertical'/>
     </div>
 
-    <Stack align="center" spacing="lg">
+    <Stack align="center" spacing="md">
 
+        <Button fullSize on:click={new_chat} variant='gradient' gradient={{from: 'teal', to: 'blue', deg: 45}} ripple>Ny Chat</Button>
 
         <!-- TODO ADD CHATS -->
-        {#each all_chats as chat}
-        <Paper>
-            {chat[chat.length - 1]['content']}
-        </Paper>
+        {#each all_chats as chat, i}
+        <Flex gap={0} style="align: center;">
+            <Button on:click={() => change_current_chat(i)} 
+                size={40} 
+                fullSize 
+                variant='subtle'
+                style="max-width: 160px; overflow: hidden; align-items: left;"
+                ripple>
+                {#if chat.length > 0}
+                {String(chat[chat.length - 1]['content']).slice(0, 15) + '...'}
+                {/if}
+            </Button>
+            
+            <ActionIcon on:click={() => delete_chat(i)} size={40}>
+                <Trash/>
+            </ActionIcon>
+        </Flex>
         {/each}
+
 
 
         {#if current_credentials['success']}
@@ -124,7 +172,6 @@
                 <form autocomplete="off" on:submit|preventDefault={handleSubmit}>
                     <Center>
                         <Group spacing="lg" direction="row">
-                            <Button type="button" on:click={clear_backend} variant='gradient' gradient={{from: 'teal', to: 'blue', deg: 45}} ripple>Ny Chat</Button>
                             <Input 
                                 name="prompt"
                                 bind:value={input}
@@ -252,6 +299,7 @@
         background: white;
         position: fixed; 
         top: 80px; 
+        padding: 20px;
         left: 0;  
         bottom: 0px;
         width: 200px;

@@ -39,7 +39,6 @@
 
         if (login_result == true){
             console.log("Login successful")
-            console.log(input.get("usernamefield") + " " + input.get("passwordfield"))
             goto("/chat");
         } else {
             login_invalid = true;

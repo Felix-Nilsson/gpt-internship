@@ -18,6 +18,9 @@ messages = [
     # This list should be filled up by Messages (use Message() to create)
 ]
 
+all_chats = [[]]
+
+
 # To keep track of when the messages were updated
 last_updated = time.time()
 
@@ -176,6 +179,39 @@ async def handle_login():
         }
     
     return login
+
+
+
+@app.route("/all-chats", methods=['GET', 'POST', 'PATCH'])
+async def handle_all_chats():
+    global all_chats
+    global messages
+
+    # CREATE NEW CHAT
+    if request.method == 'POST':
+        new_chat = []
+        all_chats.insert(0, new_chat)
+        messages = all_chats[0]
+
+    # CHANGE CURRENT CHAT
+    elif request.method == 'PUT':
+        req = request.get_json()
+        new_id = req['new_id']
+        # TODO ensure that new_id < len(message)
+        messages = all_chats[new_id]
+
+    # DELETE SPECIFIC CHAT
+    elif request.method == 'PATCH':
+        req = request.get_json()
+        delete_id = req['delete_id']
+
+        all_chats.pop(delete_id)
+
+
+    return all_chats
+
+
+
 
 
 def _reset_chat():

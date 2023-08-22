@@ -104,7 +104,7 @@
 
 <!-- SETTINGS PANEL -->
 {#if show_settings}
-<div class="settings-menu"> 
+<div class="settings-menu" transition:slide={{ duration: 350, axis: 'x' }}>
 
     <div style="position:absolute; top:0; left:0; height:100vh">
         <Divider orientation='vertical'/>
@@ -199,7 +199,7 @@
         position: fixed;
         right: 30px;
         top: 20px;
-        z-index: 10;
+        z-index: 12;
     }
 
     .settings-menu {
@@ -207,8 +207,10 @@
         position: fixed; 
         top: 80px; 
         right: 0;  
-        bottom: 80px;
+        bottom: 0;
         width: 200px;
+        overflow: hidden;
+        z-index: 12;
     }
 
 </style>

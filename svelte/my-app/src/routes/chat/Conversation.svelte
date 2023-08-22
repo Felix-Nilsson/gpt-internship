@@ -4,6 +4,7 @@
     import AIBubble from './AIBubble.svelte';
     import { onMount, tick } from 'svelte';
     import { InfoCircled } from 'radix-icons-svelte';
+    import { scale } from 'svelte/transition';
 
     const DATA_URL = 'http://localhost:5001/chat'
 
@@ -299,9 +300,9 @@
 <!-- MODAL -->
 {#if show_modal}
     <Box>
-        <Overlay on:click={() => (show_modal = false)} opacity={0.5} color='black' zIndex=4/>
+        <Overlay on:click={() => (show_modal = false)} opacity={0.5} color='black' zIndex=100/>
     </Box>
-    <div class="modal">
+    <div class="modal" transition:scale={{ duration: 350 }}>
         <Paper style="position:relative; z-index: 5; max-height: 80vh; overflow:scroll;" shadow="md" color="white">
             <Tabs grow>
 
@@ -400,7 +401,7 @@
         left: 15vw; 
         width: 70vw; 
         max-height: 80vh; 
-        z-index: 5; 
+        z-index: 101; 
         padding: 25px
     }
 

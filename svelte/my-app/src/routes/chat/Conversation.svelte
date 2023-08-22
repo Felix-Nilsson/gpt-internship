@@ -7,7 +7,7 @@
 
     const DATA_URL = 'http://localhost:5001/chat'
 
-    let messages = [];
+    export let messages = [];
     //let explanations = [];
     let show_alert = false;
     let show_modal = false;

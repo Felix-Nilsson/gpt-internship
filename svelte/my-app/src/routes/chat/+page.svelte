@@ -1,11 +1,15 @@
 <script>
     import { Group, Title, Input , Button, Center, Burger, Stack, Text, Space, Divider } from '@svelteuidev/core';
+    import { scale, slide } from 'svelte/transition';
     import Conversation from "./Conversation.svelte";
     import Settings from "./Settings.svelte";
     import { onMount } from 'svelte';
     import { goto } from '$app/navigation'
 
-    let opened = false;
+    let current_chat = [] // messages of the current chat
+    let all_chats = [] // array containing all chats
+
+    let opened = true;
     let input = "";
 
     let current_credentials = {
@@ -72,12 +76,12 @@
 
 
 <!--Conversation-->
-<Conversation bind:get_response={get_response} bind:get_conversation={update_conversation}></Conversation>
+<Conversation bind:messages={current_chat} bind:get_response={get_response} bind:get_conversation={update_conversation}></Conversation>
 
 
 <!--Burger menu-->
 {#if opened}
-<div class="burger-menu"> 
+<div class="burger-menu" transition:slide={{ duration: 350, axis: 'x' }}> 
 
     <div style="position:absolute; top:0; right:0; height:100vh">
         <Divider orientation='vertical'/>
@@ -85,25 +89,11 @@
 
     <Stack align="center" spacing="lg">
 
-        <div style="width: 160px; height: calc(100vh - 250px); overflow: auto;">
-            <Text size='xs' align='left' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">
-                <h2>{(current_credentials['success'] == true) ? 'Välkommen,' : ' '}</h2>
-                <h4>{(current_credentials['success'] == true) ? current_credentials['username'] : ' '}</h4>
 
-                <h3 id="about">Om applikationen</h3>
-                <p>Ett första försök att bygga en chatt-bot för läkare och patienter med GPT modeller, gjort i sammarbete mellan AI-Sweden och VGR (Sahlgrenska Universitetssjukhus) under GPT Summer Internship 2023.</p>
-                <p>Skapat av:</p>
-                <ul>
-                    <li>Henrik Johansson</li>
-                    <li>Oskar Pauli</li>
-                    <li>Felix Nilsson</li>
-                </ul>
-                <p>🔗 <a href="https://my.ai.se/projects/287">Projektsida</a></p>
-                <p>📝 Note: Ingen av den patientdata som används är äkta, allt har generats specifikt för detta projektet.</p>
-            </Text>
-        </div>
+        <!-- TODO ADD CHATS -->
 
-        
+
+
         {#if current_credentials['success']}
             <!-- Logout button -->
             <div style="position: absolute; bottom: 40px">
@@ -256,13 +246,13 @@
 
     .burger-menu {
         background: white;
-        /*background: rgb(34,193,195);*/
-        /*background: linear-gradient(45deg, rgba(34,193,195,1) 0%, rgba(0,80,200,1) 50%, rgba(34,193,195,1) 100%);*/
         position: fixed; 
         top: 80px; 
         left: 0;  
-        bottom: 80px;
+        bottom: 0px;
         width: 200px;
+        overflow: hidden;
+        z-index: 12;
     }
 
 

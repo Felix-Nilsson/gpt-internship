@@ -208,6 +208,7 @@
         top: 80px; 
         right: 0;  
         bottom: 0;
+        padding: 20px;
         width: 200px;
         overflow: hidden;
         z-index: 12;

@@ -78,12 +78,12 @@ def make_db_patients():
                         chunks += json_obj["journal"]
                     
                     for i, chunk in enumerate(chunks):
-
+                        id = d.split("/")[-1]
                         collection.add(
                             documents=[str(chunk)],
                             metadatas=[
                                 {
-                                    "patient":str(d), 
+                                    "patient":id, 
                                     "type":"json", 
                                     "chunk_size": num_tokens_from_string(str(chunk)),
                                     "chunk_index":i 

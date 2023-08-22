@@ -9,6 +9,8 @@
     let login_result = false;
     
     let type = '';
+    
+    let login_invalid = false;
 
     function get_type_from_url_params() {
         const urlParams = new URLSearchParams(window.location.search)
@@ -18,6 +20,7 @@
     onMount(get_type_from_url_params)
 
     const handleSubmit = async (e) => {
+        login_invalid = false;
 
         //get the input from the fields
         let input = new FormData(e.target);
@@ -36,8 +39,10 @@
 
         if (login_result == true){
             console.log("Login successful")
+            console.log(input.get("usernamefield") + " " + input.get("passwordfield"))
             goto("/chat");
         } else {
+            login_invalid = true;
             console.log("Wrong username/password")
         }
         
@@ -54,25 +59,34 @@
                 Medicinsk AI-Hjälp
             </Title>
         </Button>
-
         <Space h=lg/>
+        <Title
+                order={2} 
+                style="font-size: 2rem; line-height: 1.5"
+                weight="thin"
+                color="gray"
+                >
+                    Välkommen! Du loggar in som {#if type == "doctor"} läkare {:else} patient {/if}
+        </Title>
+
+       
     
         <form on:submit|preventDefault={handleSubmit}>
             <Stack spacing="lg">
 
-                <Title
-                order={2} 
-                style="font-size: 3rem; line-height: 1.5"
-                weight="thin"
-                >
-                    Välkommen! Du loggar in som {#if type == "doctor"} läkare {:else} patient {/if}
-                </Title>
+                {#if login_invalid}
+                <Text color="red">Fel användarnamn eller lösenord</Text>
+                
+                {/if}
+                
                 <Input 
                     icon={Person} 
                     placeholder="Användarnamn"
                     name="usernamefield"
                     radius="lg"
                     size="xl"
+                    invalid={login_invalid}
+                    
                 />
 
                 <Input 
@@ -82,6 +96,7 @@
                     name="passwordfield"
                     radius="lg"
                     size="xl"
+                    invalid={login_invalid}
                 />
 
                 

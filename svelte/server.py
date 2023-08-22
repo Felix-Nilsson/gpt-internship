@@ -1,10 +1,8 @@
-from flask import Flask, send_from_directory, request
+from flask import Flask, request
 from flask_cors import CORS
 import time
 import json
 import bcrypt
-import yaml
-from yaml.loader import SafeLoader
 
 from chatbot.assistant.chatbot import Chatbot as AssistantCB
 from chatbot.internet.chatbot import Chatbot as InternetCB
@@ -127,6 +125,11 @@ async def handle_login():
 
     # Attempt login
     if request.method == 'PUT':
+        login = {
+            'success': False,
+            'login_as': None,
+            'username': None
+        }
 
         # Get information from the request
         req = request.get_json()
@@ -155,7 +158,12 @@ async def handle_login():
                     login["success"] = True
                     login["username"] = username
                     login["login_as"] = login_as
-    
+            else:
+                login = {
+                    'success': False,
+                    'login_as': None,
+                    'username': None
+                }
 
     # Logout (reset)
     elif request.method == 'DELETE':

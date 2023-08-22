@@ -189,6 +189,7 @@ def num_tokens_from_string(string: str, encoding_name: str ="cl100k_base") -> in
 
 #todo: if collection is huge this should be paralellized in e.g. pyspark
 def get_biggest_chunk(name:str):
+    """Helper function used in database summary. Finds biggest chunk of text in a collection."""
     collection = get_collection(name)
 
     ans = collection.get(
@@ -207,6 +208,7 @@ def get_biggest_chunk(name:str):
     return max_size,max_info
 
 def get_mean_chunk_size(name:str):
+    """Helper function used in database summary. Finds the mean chunk size of a text in a collection."""
     collection = get_collection(name)
 
     ans = collection.get(

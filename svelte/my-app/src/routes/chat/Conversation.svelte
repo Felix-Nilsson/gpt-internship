@@ -195,19 +195,20 @@
 
                     <!--User bubble-->
                     {#if (message['role'] == 'user')} 
-                        <Flex justify="left">
-                            <UserBubble>{message['content']}</UserBubble>
+                        <Flex justify="right">
                             <div class="chat-offset"></div>
+                            <UserBubble>{message['content']}</UserBubble>
                         </Flex>
 
                     <!--AI bubble-->
                     {:else}
                         {#if (message['content'] != null)}
-                        <Flex justify="right"> 
-                            <div class="chat-offset"></div>
-                            <AIBubble>
+                        <Flex justify="left"> 
 
-                                
+                            <!--Modal button-->
+                            <Button on:click={() => modalButtonPressed(i)} variant='subtle' radius="sm" size="xs" ripple> ? </Button>
+
+                            <AIBubble>
                                 <Text
                                     size='md'
                                     weight='semibold'
@@ -246,9 +247,7 @@
                                     </Center>
                                 {/if}
                             </AIBubble>
-
-                            <!--Modal button-->
-                            <Button on:click={() => modalButtonPressed(i)} variant='subtle' radius="sm" size="xs" ripple> ? </Button>
+                            <div class="chat-offset"></div>
                         </Flex>
                         {/if}
                     {/if}
@@ -258,13 +257,13 @@
 
             <!--Loading response-->
             {#if loading}
-                <Flex justify="left">
-                    <UserBubble>{temp_query}</UserBubble>
-                    <div class="chat-offset"></div>
-                </Flex>
-                <Space h="lg"/>
                 <Flex justify="right">
                     <div class="chat-offset"></div>
+                    <UserBubble>{temp_query}</UserBubble>
+                </Flex>
+                <Space h="lg"/>
+                <Flex justify="left">
+                    <div style="width: 33px; "></div>
                     <AIBubble>
                         {#if temp_response != ""}
                             <Loader variant='dots' color='orange'/>    
@@ -277,7 +276,7 @@
                             <Loader variant='dots' color='orange'/>
                         {/if}
                     </AIBubble>
-                    <div style="width: 33px; "></div>
+                    <div class="chat-offset"></div>
                 </Flex>
                 <Space h="lg"/>
             {/if}

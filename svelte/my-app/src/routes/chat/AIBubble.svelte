@@ -13,6 +13,10 @@
 </script>
 
 <Flex justify="right" gap="lg">
+    <ThemeIcon variant='gradient' gradient={{from: 'yellow', to: 'red', deg: 45}} size="xl" radius="lg">
+        <Icon icon="carbon:bot"/>
+    </ThemeIcon>
+    
     <Paper shadow="xl" radius="lg" style="max-width: 55vw">
         <Text 
         variant='gradient' 
@@ -26,10 +30,6 @@
             </div>
         </Text>
     </Paper>
-
-    <ThemeIcon variant='gradient' gradient={{from: 'yellow', to: 'red', deg: 45}} size="xl" radius="lg">
-        <Icon icon="carbon:bot"/>
-    </ThemeIcon>
 </Flex>
 
 

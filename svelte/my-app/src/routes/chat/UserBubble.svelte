@@ -13,10 +13,6 @@
 </script>
 
 <Flex gap="lg">
-    <ThemeIcon variant='gradient' gradient={{from: 'teal', to: 'blue', deg: 45}} size="xl" radius="lg">
-        <Icon icon="radix-icons:person" />
-    </ThemeIcon>
-
     <Paper shadow="xl" radius="lg" style="max-width: 55vw">
         <Text 
         variant='gradient' 
@@ -30,5 +26,9 @@
             </div>
         </Text>
     </Paper>
+
+    <ThemeIcon variant='gradient' gradient={{from: 'teal', to: 'blue', deg: 45}} size="xl" radius="lg">
+        <Icon icon="radix-icons:person" />
+    </ThemeIcon>
 </Flex>
 

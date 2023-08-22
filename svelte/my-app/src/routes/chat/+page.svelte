@@ -1,5 +1,5 @@
 <script>
-    import { Group, Title, Input , Button, Center, Burger, Stack, Text, Space, Divider } from '@svelteuidev/core';
+    import { Group, Title, Input , Button, Center, Burger, Stack, Text, Paper, Divider } from '@svelteuidev/core';
     import { scale, slide } from 'svelte/transition';
     import Conversation from "./Conversation.svelte";
     import Settings from "./Settings.svelte";
@@ -7,7 +7,7 @@
     import { goto } from '$app/navigation'
 
     let current_chat = [] // messages of the current chat
-    let all_chats = [] // array containing all chats
+    let all_chats = [[{'content': 'blablbalbabla'}], [{'content': 'bloloblblboblo'}]] // array containing all chats
 
     let opened = true;
     let input = "";
@@ -91,7 +91,11 @@
 
 
         <!-- TODO ADD CHATS -->
-
+        {#each all_chats as chat}
+        <Paper>
+            {chat[chat.length - 1]['content']}
+        </Paper>
+        {/each}
 
 
         {#if current_credentials['success']}

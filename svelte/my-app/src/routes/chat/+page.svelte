@@ -131,7 +131,8 @@
     <Stack align="center" spacing="md">
 
         <Button fullSize on:click={new_chat} variant='gradient' gradient={{from: 'teal', to: 'blue', deg: 45}} ripple>Ny Chat</Button>
-
+        
+        <div style="height: calc(100vh - 260px); overflow: auto;">
         <!-- TODO ADD CHATS -->
         {#each all_chats as chat, i}
         <Flex gap={0} style="align: center;">
@@ -139,6 +140,7 @@
                 size={40} 
                 fullSize 
                 variant='subtle'
+                color='cyan'
                 style="max-width: 160px; overflow: hidden; align-items: left;"
                 ripple>
                 {#if chat.length > 0}
@@ -146,12 +148,12 @@
                 {/if}
             </Button>
             
-            <ActionIcon on:click={() => delete_chat(i)} size={40}>
+            <ActionIcon on:click={() => delete_chat(i)} color='red' size={40}>
                 <Trash/>
             </ActionIcon>
         </Flex>
         {/each}
-
+        </div>
 
 
         {#if current_credentials['success']}

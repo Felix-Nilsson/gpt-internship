@@ -2,21 +2,15 @@ import chromadb
 from chromadb.config import Settings
 from chromadb.utils import embedding_functions
 
-from langchain.text_splitter import NLTKTextSplitter, RecursiveCharacterTextSplitter
-
 import sys
 import os
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-from utils.fileparser import pdf_to_plaintext
-
-import tiktoken
-
-import json
-import re
 import nltk
 
 from pathlib import Path
 from print_color import print as printc
+
+from db.chunking_strategies import patient, intranet
 
 def get_collection(name:str):
     client = chromadb.Client(Settings(
@@ -80,58 +74,34 @@ def make_db_patients():
     #
     #As usual we finish attach metadata tags and add to database along the way.
 
-    for j, d in enumerate(dirs):
-        print(f"[{j+1}/{n}] 'patientrecords': {d} processing ...", end="\r")
+    for j, dir in enumerate(dirs):
+        print(f"[{j+1}/{n}] 'patientrecords': {dir} processing ...", end="\r")
 
-        for filetype in ["patientdata.json","patientcalendar.ics"]:
-            file_path = f"{d}/{filetype}"
-
-            chunks = []
+        for file in ["patientdata.json","patientcalendar.ics"]:
+            file_path = f"{dir}/{file}"
 
             with open(file_path, 'r', encoding='utf-8') as f:
                 
-                if filetype == "patientdata.json":
-                    json_obj = json.load(f)
-                    chunks = [json_obj[key] for key in json_obj.keys() if key not in ["prescription", "journal"]] #splits json doc into chunks by keys, ~500 tokens
-                    if "prescription" in json_obj.keys():
-                        chunks += json_obj["prescription"]
-                    if "journal" in json_obj.keys():
-                        chunks += json_obj["journal"]
-                    
-                    for i, chunk in enumerate(chunks):
-                        id = d.split("/")[-1]
-                        collection.add(
-                            documents=[str(chunk)],
-                            metadatas=[
-                                {
-                                    "patient":id, 
-                                    "type":"json", 
-                                    "chunk_size": num_tokens_from_string(str(chunk)),
-                                    "chunk_index":i 
-                                }
-                            ],
-                            ids=[f"{d}_{i}_json"]
-                        )
-                
-                if filetype == "patientcalendar.ics":
-                    pattern = r"BEGIN:VEVENT(.*?)END:VEVENT"
-                    matches = re.findall(pattern, f.read(), re.DOTALL)
-
-                    for i,match in enumerate(matches):
-
-                        collection.add(
-                            documents=[match],
-                            metadatas=[
-                                {
-                                    "patient":str(d), 
-                                    "type":"ics",
-                                    "chunk_size": num_tokens_from_string(match), 
-                                    "chunk_index":i
-                                }
-                            ],
-                            ids=[f"{d}_{i}_ics"]
-                        )
-        printc(f"[{j+1}/{n}] 'patientrecords': {d} Done!              ", color="green")
+                if file == "patientdata.json":
+                    chunks = patient.chunk_json(f)
+                    patient.add_to_collection(
+                         chunks=chunks,
+                         collection=collection,
+                         dir=dir,
+                         filetype="json"
+                    )
+                     
+                if file == "patientcalendar.ics":
+                    chunks = patient.chunk_ics(f)
+                    patient.add_to_collection(
+                         chunks=chunks,
+                         collection=collection,
+                         dir=dir,
+                         filetype="ics"
+                    )
+        
+        
+        printc(f"[{j+1}/{n}] 'patientrecords': {dir} Done!                 ", color="green")
     print("--- Collection Complete!: 'patientrecords' ---")
 
       
@@ -145,44 +115,25 @@ def make_db_docs():
     collection = get_collection("docs")
     
     #First, we make a list of paths to all intranet pdfs and re-format them if user uses windows path style
-    dirs = [ f.path for f in os.scandir("data/intranet_records") ]
-    dirs = [d.replace("\\", "/") for d in dirs]
+    paths = [f.path for f in os.scandir("data/intranet_records") ]
+    paths = [path.replace("\\", "/") for path in paths]
     
-    n = len(dirs)
+    n = len(paths)
     
     #For every path d we open the pdf file, read its contents using our parser,
     #and split it into using a splitter from LangChain. Please note that it
     #uses some overlap to reduce unlucky split, and will therefore result in
     #some redundancy in memory.
     #As usual we finish attach metadata tags and add to database along the way.
-    for j,d in enumerate(dirs):
-        print(f"[{j+1}/{n}] 'docs': {d} processing ...", end="\r")
-        pdf = pdf_to_plaintext(d)
-        #text_splitter = NLTKTextSplitter()
-        text_splitter = RecursiveCharacterTextSplitter(
-            chunk_size = 200,
-            chunk_overlap  = 20,
-            length_function = num_tokens_from_string,
-            add_start_index = True,
+    for j,dir in enumerate(paths):
+        print(f"[{j+1}/{n}] 'docs': {dir} processing ...", end="\r")
+        chunks = intranet.chunk_pdf(dir)
+        intranet.add_to_collection(
+            chunks=chunks,
+            collection=collection,
+            dir=dir
         )
-        chunks = text_splitter.split_text(pdf)
-        formatted_filename = d.split("/")[-1]
-
-        for i, chunk in enumerate(chunks):
-                        
-                        collection.add(
-                            documents=[str(chunk)],
-                            metadatas=[
-                                {
-                                    "doc":str(formatted_filename), 
-                                    "type":"txt", 
-                                    "chunk_size": num_tokens_from_string(str(chunk)),
-                                    "chunk_index":i 
-                                }
-                            ],
-                            ids=[f"{formatted_filename}_{i}"]
-                        )
-        printc(f"[{j+1}/{n}] 'docs': {d} Done!                ", color="green")
+        printc(f"[{j+1}/{n}] 'docs': {dir} Done!                             ", color="green")
     print("--- Collection Complete!: 'docs' ---")
 
 
@@ -207,11 +158,6 @@ def query_db_with_id(query: str, id: str, name:str, n_results: int = 5):
     return ans
 
 
-def num_tokens_from_string(string: str, encoding_name: str ="cl100k_base") -> int:
-    """Returns the number of tokens in a text string."""
-    encoding = tiktoken.get_encoding(encoding_name)
-    num_tokens = len(encoding.encode(string))
-    return num_tokens
 
 
 #todo: if collection is huge this should be paralellized in e.g. pyspark
@@ -258,11 +204,6 @@ def print_db_summary():
     for c in get_client().list_collections():
         name = c.name
         collection = get_collection(name)
-
-        ans = collection.get(
-            include=["metadatas"]
-        )
-
         n = collection.count()
         m = get_biggest_chunk(name)
         mean = get_mean_chunk_size(name)

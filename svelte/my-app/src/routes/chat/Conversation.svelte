@@ -383,8 +383,8 @@
 
     .chat-area {
         position: absolute; 
-        left: 0px; 
-        right: 0px; 
+        left: 240px; 
+        right: 240px; 
         top: 0px; 
         bottom: 0px; 
         overflow: auto;
@@ -392,11 +392,11 @@
 
     .chat {
         position: relative;
-        width: 1000px;
+        width: 96%;
     }
 
     .chat-offset {
-        width: 400px;
+        width: 200px;
     }
 
     .modal {

@@ -247,7 +247,7 @@
                                 placeholder="T.ex 'Jag har feber och ont i huvudet, vad borde jag göra?'"
                                 radius="lg"
                                 size="l"
-                                style="width:20cm"
+                                style="width: calc(100vw - 680px)"
                             />
                             <Button type="submit" variant='gradient' gradient={{from: 'yellow', to: 'orange', deg: 45}} ripple>Skicka</Button>
                         </Group>

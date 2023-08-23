@@ -90,10 +90,6 @@ def make_db_patients():
 
             with open(file_path, 'r', encoding='utf-8') as f:
                 
-                # We split the medical records into chunks. The records are stored in json format so we can extract every JSON-object as a chunk.
-                # Every JSON-object has a patient-id which helps us keep track of which chunk of text belongs to which patient.
-                # Since prescription and journal contains several smaller objects, we chunk those further to keep the token size small.
-                # Chunks are added to the database with metadata, for instance patient-id, chunk size etc.
                 if filetype == "patientdata.json":
                     json_obj = json.load(f)
                     chunks = [json_obj[key] for key in json_obj.keys() if key not in ["prescription", "journal"]] #splits json doc into chunks by keys, ~500 tokens
@@ -117,8 +113,6 @@ def make_db_patients():
                             ids=[f"{d}_{i}_json"]
                         )
                 
-                # When the file is a calendar (ics-format) we can instead chunk the file by event, since every event contains a start and an end.
-                # Like before, we then add the chunks to our database with some metadata.
                 if filetype == "patientcalendar.ics":
                     pattern = r"BEGIN:VEVENT(.*?)END:VEVENT"
                     matches = re.findall(pattern, f.read(), re.DOTALL)

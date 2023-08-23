@@ -126,7 +126,7 @@ def make_db_docs():
     #some redundancy in memory.
     #As usual we finish attach metadata tags and add to database along the way.
     for j,dir in enumerate(paths):
-        print(f"[{j+1}/{n}] 'docs': {dir} processing ...", end="\r")
+        print(f"[{j+1}/{n}] 'docs': {dir[-1:-2]} processing ...", end="\r")
         chunks = intranet.chunk_pdf(dir)
         intranet.add_to_collection(
             chunks=chunks,

@@ -39,7 +39,7 @@ As part of this project we were also tasked with writing a set of guidelines (in
 - [🚀 Getting Started](#-getting-started)
   - [Dependencies](#dependencies)
   - [Initializing the Database](#initializing-the-database)
-  - [Executing program](#executing-program)
+  - [Executing the programs](#executing-the-programs)
 - [🧪 Testing](#-testing)
 - [✍️ Authors](#️-authors)
 - [🤝 Acknowledgments](#-acknowledgments)
@@ -49,7 +49,7 @@ As part of this project we were also tasked with writing a set of guidelines (in
 
 Medicinsk AI-Hjälp is designed with two users in mind:
 
-* Medical staff: doctors, nurses
+* Medical staff: doctors, nurses, etc
 * Patients, caretakers of patients
 
 Both kinds of users are required to login to use the service.
@@ -69,6 +69,9 @@ Patients can access the following chatbots:
 Documents are of imaginary patients and doctors since in practice these are very sensitive and for legal reasons cannot "leave" the hospital.
 They were however made to be similar in structure to real documents, with guidance from professionals working in the field.
 
+This is application an example of **retrieval augmentented generation** or RAG, which is a general pattern of LLM applications that fetch information to use in the prompt.
+
+[Link to article on RAG on Pinecone](https://www.pinecone.io/learn/retrieval-augmented-generation/)
 
 ## 🚀 Getting Started
 

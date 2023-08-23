@@ -1,0 +1,78 @@
+{
+    "0": [
+        {
+            "role": "user",
+            "content": "hej",
+            "function_call": null,
+            "additional_info": {
+                "final": false,
+                "chat_type": null,
+                "settings": null,
+                "sources": null,
+                "explanation": null,
+                "patient": null,
+                "alert": null
+            }
+        },
+        {
+            "role": "assistant",
+            "content": "Hej! Hur kan jag hj\u00e4lpa dig idag?",
+            "function_call": null,
+            "additional_info": {
+                "final": true,
+                "chat_type": "patient",
+                "settings": {
+                    "language_level": "normal",
+                    "chosen_tools": [
+                        "1177.se",
+                        "FASS.se",
+                        "internetmedicin.se"
+                    ],
+                    "chatbot_type": "patient"
+                },
+                "sources": "All information kommer fr\u00e5n din journal.",
+                "explanation": "Assistenten utg\u00e5r alltid fr\u00e5n informationen som finns tillg\u00e4nglig i din egen journal.",
+                "patient": "112222",
+                "alert": null
+            }
+        }
+    ],
+    "1": [
+        {
+            "role": "user",
+            "content": "hej",
+            "function_call": null,
+            "additional_info": {
+                "final": false,
+                "chat_type": null,
+                "settings": null,
+                "sources": null,
+                "explanation": null,
+                "patient": null,
+                "alert": null
+            }
+        },
+        {
+            "role": "assistant",
+            "content": "Hej! Hur kan jag hj\u00e4lpa dig idag?",
+            "function_call": null,
+            "additional_info": {
+                "final": true,
+                "chat_type": "patient",
+                "settings": {
+                    "language_level": "normal",
+                    "chosen_tools": [
+                        "1177.se",
+                        "FASS.se",
+                        "internetmedicin.se"
+                    ],
+                    "chatbot_type": "patient"
+                },
+                "sources": "All information kommer fr\u00e5n din journal.",
+                "explanation": "Assistenten utg\u00e5r alltid fr\u00e5n informationen som finns tillg\u00e4nglig i din egen journal.",
+                "patient": "112222",
+                "alert": null
+            }
+        }
+    ]
+}

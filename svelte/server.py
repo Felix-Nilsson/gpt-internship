@@ -101,10 +101,9 @@ async def handle_chat():
         last_updated = time.time()
 
     # Reset chat
-    elif request.method == 'DELETE':
+    #elif request.method == 'DELETE':
         #_reset_chat()
-        #TODO ???
-        pass
+        #TODO ? we should not need this anymore
 
     
     # Returnable conversation, need to change from Message objects to dict, to json
@@ -170,6 +169,22 @@ async def handle_login():
 
     # Logout (reset)
     elif request.method == 'DELETE':
+        # Save chat history to file
+        username = login['username']
+
+        with open(f"chat_histories/{username}.json", "w", encoding='utf-8') as f:
+
+            save_chats = {} #{'0': ['chat with index'], '1': ['chat with index 1']}
+
+            if all_chats != []:
+                for i in range(len(all_chats)):
+                    temp_chat = []
+                    for message in all_chats[i]:
+                        temp_chat.append(message.get())
+                    save_chats[i] = temp_chat.copy()
+
+            json.dump(save_chats, fp=f, indent=4)
+
         #_reset_chat()
         #TODO Save all_chats to file?
         # if we only save on logout - use this to warn users before closing the tab

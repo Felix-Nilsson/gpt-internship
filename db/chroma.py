@@ -89,7 +89,7 @@ def make_db_patients():
             chunks = []
 
             with open(file_path, 'r', encoding='utf-8') as f:
-               
+                
                 if filetype == "patientdata.json":
                     json_obj = json.load(f)
                     chunks = [json_obj[key] for key in json_obj.keys() if key not in ["prescription", "journal"]] #splits json doc into chunks by keys, ~500 tokens

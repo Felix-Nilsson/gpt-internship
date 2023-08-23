@@ -174,14 +174,13 @@
                 {#if i == chat_id}
                 <Button on:click={() => change_current_chat(i)} 
                     size={40} 
-                    fullSize 
                     variant='outline'
                     color='cyan'
-                    style="max-width: 160px; overflow: hidden; align-items: left;"
+                    style="width: 160px; padding: 5px; overflow: hidden; justify-content:left"
                     ripple>
                     {#if title == ''}
-                        Ny chat
-                    {:else if title.length > 15}
+                        (ny chat)
+                    {:else if title.length > 18}
                         {String(title).slice(0, 15) + '...'}
                     {:else}
                         {title}
@@ -190,14 +189,13 @@
                 {:else}
                 <Button on:click={() => change_current_chat(i)} 
                     size={40} 
-                    fullSize 
                     variant='subtle'
                     color='cyan'
-                    style="max-width: 160px; overflow: hidden; align-items: left;"
+                    style="width: 160px; padding: 5px; overflow: hidden; justify-content:left"
                     ripple>
                     {#if title == ''}
-                        Ny chat
-                    {:else if title.length > 15}
+                        (ny chat)
+                    {:else if title.length > 18}
                         {String(title).slice(0, 15) + '...'}
                     {:else}
                         {title}

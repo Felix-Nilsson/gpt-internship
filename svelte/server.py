@@ -14,12 +14,8 @@ app = Flask(__name__)
 CORS(app)
 
 # Memory / list of messages
-messages = [
-    # This list should be filled up by Messages (use Message() to create)
-]
-
-all_chats = [[]]
-
+all_chats = []
+chat_id = 0
 
 # To keep track of when the messages were updated
 last_updated = time.time()
@@ -40,17 +36,20 @@ internetbot = InternetCB()
 # Chat handler
 @app.route("/chat", methods=['GET', 'PUT', 'DELETE'])
 async def handle_chat():
-    global messages
+    global all_chats
+    global chat_id
     global login
     global last_updated
+
+    messages = all_chats[chat_id]
 
     if request.method == 'GET':
 
         #Check if we want to continue response generation (if we are waiting for function results)
-        if messages != [] and messages[-1].get().get('function_call'):
+        if all_chats[chat_id] != [] and all_chats[chat_id][-1].get().get('function_call'):
             assistant_message = internetbot.continue_chat()
 
-            messages.append(assistant_message)
+            all_chats[chat_id].append(assistant_message)
             last_updated = time.time()
 
     # Generate response to query
@@ -73,7 +72,7 @@ async def handle_chat():
 
         # Add the query to the conversation
         user_message = Message(role='user', content=query)
-        messages.append(user_message)
+        all_chats[chat_id].append(user_message)
 
         # Generate a response to the request
         if settings['chatbot_type'] == 'doctor':
@@ -82,25 +81,25 @@ async def handle_chat():
                 users = json.load(f)
                 accessible_patients = users['credentials']['doctors'][login['username']]['patients']
             
-            assistant_message = doctorbot.get_chat_response(messages=messages, settings=settings, patients=accessible_patients)
+            assistant_message = doctorbot.get_chat_response(messages=all_chats[chat_id], settings=settings, patients=accessible_patients)
 
         elif settings['chatbot_type'] == 'patient':
-            assistant_message = patientbot.get_chat_response(messages=messages, settings=settings, patients=[login['username'][1:]])
+            assistant_message = patientbot.get_chat_response(messages=all_chats[chat_id], settings=settings, patients=[login['username'][1:]])
         
         elif settings['chatbot_type'] == 'intranet':
-            assistant_message = intranetbot.get_chat_response(messages=messages, settings=settings)
+            assistant_message = intranetbot.get_chat_response(messages=all_chats[chat_id], settings=settings)
 
         elif settings['chatbot_type'] == 'internet':
             
             #Start process of getting a response
-            assistant_message = internetbot.start_chat(messages=messages, settings=settings)
+            assistant_message = internetbot.start_chat(messages=all_chats[chat_id], settings=settings)
         
         else:
             raise Exception('Incorrect chat_type')
 
 
         # Add the new reponse and update the conversation
-        messages.append(assistant_message)
+        all_chats[chat_id].append(assistant_message)
         last_updated = time.time()
 
     # Reset chat
@@ -114,8 +113,8 @@ async def handle_chat():
         'messages': []
     }
     
-    if messages != []:
-        for message in messages:
+    if all_chats[chat_id] != []:
+        for message in all_chats[chat_id]:
             conversation['messages'].append(message.get())
 
     return json.dumps(conversation)
@@ -180,25 +179,33 @@ async def handle_login():
     
     return login
 
-
+chat_num = 0
 
 @app.route("/all-chats", methods=['GET', 'POST', 'PATCH'])
 async def handle_all_chats():
     global all_chats
-    global messages
+    global chat_id
+    global chat_num
+
+    if request.method == 'GET':
+
+        if all_chats == []:
+            # FIRST TIME SETUP
+            all_chats = [[{'role': 'user', 'content': f'({chat_num}) hej, testar bara'}, {'role': 'assistant', 'content': 'Okej, vad bra!'}]]
+            chat_num += 1
+            chat_id = 0
 
     # CREATE NEW CHAT
     if request.method == 'POST':
-        new_chat = []
-        all_chats.insert(0, new_chat)
-        messages = all_chats[0]
+        new_chat = [{'role': 'user', 'content': f'({chat_num}) hej, testar bara'}, {'role': 'assistant', 'content': 'Okej, vad bra!'}]
+        chat_num += 1
+        all_chats.insert(0, new_chat.copy())
+        chat_id = 0
 
     # CHANGE CURRENT CHAT
     elif request.method == 'PUT':
         req = request.get_json()
-        new_id = req['new_id']
-        # TODO ensure that new_id < len(message)
-        messages = all_chats[new_id]
+        chat_id = int(req['new_id'])
 
     # DELETE SPECIFIC CHAT
     elif request.method == 'PATCH':
@@ -206,6 +213,14 @@ async def handle_all_chats():
         delete_id = req['delete_id']
 
         all_chats.pop(delete_id)
+
+        if all_chats == []:
+            new_chat = []
+            all_chats.insert(0, new_chat.copy())
+            chat_id = 0
+
+        elif delete_id == chat_id:
+            chat_id = 0
 
 
     return all_chats

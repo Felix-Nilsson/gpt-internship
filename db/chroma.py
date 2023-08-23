@@ -51,6 +51,8 @@ def make_db_patients():
     print("--- Making new Collection: 'patientrecords' ---")
     
     collection = get_collection("patientrecords")
+
+    #Start by finding every patients directory path, and re-format them if user uses windows path style
     
     dirs = [f.path for f in os.scandir("data/patient_records") if f.is_dir() ]
     #print(dirs)
@@ -59,6 +61,25 @@ def make_db_patients():
     
 
     n = len(dirs)
+
+    #For every directory d we open it and read two files:
+    #   * patientdata.json
+    #   * patientcalender.ics
+    #
+    #For the two files we need two corresponding chunking strategies
+    #   * patientdata.json: We maintain context by splitting the file into 
+    #     the smallest parts of the json file possible that still contains the 
+    #     patient ID.
+    #     Specifically the parts 'prescription' and 'journal' mentions the ID for
+    #     every element in their lists, so they get special treatment.
+    #
+    #   * patientcalender.ics: We split the document so that one chunk equals
+    #     one event in the calendar, which should also have a mention of
+    #     patient ID. Since the ICS format has no header/footer, and is just
+    #     a list of calendar events this should be a reliable strategy.
+    #
+    #As usual we attach metadata tags and add to database along the way.
+
     for j, d in enumerate(dirs):
         print(f"[{j+1}/{n}] 'patientrecords': {d} processing ...", end="\r")
 
@@ -123,11 +144,14 @@ def make_db_docs():
     print("--- Making new Collection: 'docs' ---")
     collection = get_collection("docs")
     
+    #First, we make a list of paths to all intranet pdfs and re-format them if user uses windows path style
     dirs = [ f.path for f in os.scandir("data/intranet_records") ]
     dirs = [d.replace("\\", "/") for d in dirs]
-
+    
     n = len(dirs)
     
+    #For every path d we open the file, split its contents and add the
+    #resulting chunks, with the appropriate metadata tags, into the chroma database.
     for j,d in enumerate(dirs):
         print(f"[{j+1}/{n}] 'docs': {d} processing ...", end="\r")
         pdf = pdf_to_plaintext(d)
@@ -249,3 +273,5 @@ def print_db_summary():
 
 # - Eg remove things like this before initing:
 # - print(get_collection("docs").peek())
+
+make_db_docs()

@@ -248,9 +248,9 @@
                                 placeholder="T.ex 'Jag har feber och ont i huvudet, vad borde jag göra?'"
                                 radius="lg"
                                 size="l"
-                                style="width: calc(100vw - 680px)"
+                                style="width: calc(100vw - 680px);box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.07); border-radius: 8px;"
                             />
-                            <Button type="submit" variant='gradient' gradient={{from: 'yellow', to: 'orange', deg: 45}} ripple>Skicka</Button>
+                            <Button color="teal" ripple>Skicka</Button>
                         </Group>
                     </Center>
                 </form>
@@ -354,8 +354,9 @@
     }
 
     .gradient-strip-bottom {
-        background: rgb(34,193,195);
-        background: linear-gradient(45deg, rgba(34,193,195,1) 0%, rgba(0,80,200,1) 50%, rgba(34,193,195,1) 100%);
+        /* background: rgb(34,193,195);
+        background: linear-gradient(45deg, rgba(34,193,195,1) 0%, rgba(0,80,200,1) 50%, rgba(34,193,195,1) 100%);*/
+        background: transparent;
         position: fixed; 
         bottom: 0; 
         left: 0; 
@@ -365,7 +366,7 @@
     }
 
     .burger-menu {
-        background: white;
+        background: #ffffff;
         position: fixed; 
         top: 80px; 
         padding: 20px;

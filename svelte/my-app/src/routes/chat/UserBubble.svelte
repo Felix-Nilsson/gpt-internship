@@ -13,10 +13,10 @@
 </script>
 
 <Flex gap="lg">
-    <Paper shadow="xl" radius="lg" style="max-width: 55vw">
+    <Paper shadow="xl" radius="lg" style="max-width: 55vw; background: rgb(18,183,135);
+    background: linear-gradient(45deg, rgba(18,183,135,1) 0%, rgba(34,140,229,1) 100%);">
         <Text 
-        variant='gradient' 
-        gradient={{from: 'blue', to: 'teal', deg: 45}} 
+        color="white"
         align="left" 
         size='lg'
         weight='normal'
@@ -27,7 +27,7 @@
         </Text>
     </Paper>
 
-    <ThemeIcon variant='gradient' gradient={{from: 'teal', to: 'blue', deg: 45}} size="xl" radius="lg">
+    <ThemeIcon variant='gradient' gradient={{from: 'blue', to: 'teal', deg: 45}} size="xl" radius="lg">
         <Icon icon="radix-icons:person" />
     </ThemeIcon>
 </Flex>

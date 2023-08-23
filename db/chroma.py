@@ -78,7 +78,7 @@ def make_db_patients():
     #     patient ID. Since the ICS format has no header/footer, and is just
     #     a list of calendar events this should be a reliable strategy.
     #
-    #As usual we attach metadata tags and add to database along the way.
+    #As usual we finish attach metadata tags and add to database along the way.
 
     for j, d in enumerate(dirs):
         print(f"[{j+1}/{n}] 'patientrecords': {d} processing ...", end="\r")
@@ -150,8 +150,11 @@ def make_db_docs():
     
     n = len(dirs)
     
-    #For every path d we open the file, split its contents and add the
-    #resulting chunks, with the appropriate metadata tags, into the chroma database.
+    #For every path d we open the pdf file, read its contents using our parser,
+    #and split it into using a splitter from LangChain. Please note that it
+    #uses some overlap to reduce unlucky split, and will therefore result in
+    #some redundancy in memory.
+    #As usual we finish attach metadata tags and add to database along the way.
     for j,d in enumerate(dirs):
         print(f"[{j+1}/{n}] 'docs': {d} processing ...", end="\r")
         pdf = pdf_to_plaintext(d)
@@ -273,5 +276,3 @@ def print_db_summary():
 
 # - Eg remove things like this before initing:
 # - print(get_collection("docs").peek())
-
-make_db_docs()

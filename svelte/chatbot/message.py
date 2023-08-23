@@ -106,6 +106,13 @@ class Message():
             self.message['additional_info']['alert'] = alert
 
 
+# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ DICT-TO-MESSAGE /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+
+def dict_to_Message(dictonary: dict):
+    pass
+
+
+
 # /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ PRINT MESSAGES /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
 
 # Avoid these two, are only to print the conversation

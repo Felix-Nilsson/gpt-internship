@@ -2,7 +2,7 @@
     import { Stack, Flex, Box, Button, Text, Paper, Overlay, Title, Space, Loader, Center, Tabs, Divider, Alert, exception } from '@svelteuidev/core';
     import UserBubble from './UserBubble.svelte';
     import AIBubble from './AIBubble.svelte';
-    import { onMount, tick } from 'svelte';
+    import { onMount, tick, createEventDispatcher } from 'svelte';
     import { InfoCircled } from 'radix-icons-svelte';
     import { scale } from 'svelte/transition';
 
@@ -15,6 +15,8 @@
     let element;
 
     let current_query = '';
+
+    const dispatch = createEventDispatcher();
 
     // Timer
     const timer = ms => new Promise(res => setTimeout(res,ms))
@@ -103,6 +105,11 @@
                     show_alert = false;
                 }
             }
+            
+            // dispatch update event, so main chat page can update history panel
+            dispatch('update');
+            // FIND A WAY TO CANCEL IT
+            // skicka event in till update_chats(event) kolla om nytt event -> kör
         }
     }
 

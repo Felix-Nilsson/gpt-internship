@@ -7,8 +7,11 @@
     import { goto } from '$app/navigation'
     import { Trash } from 'radix-icons-svelte';
 
-    let current_chat = [] // messages of the current chat
-    let all_chats = [[{'content': 'blablbalbabla'}], [{'content': 'bloloblblboblonsdjgdsglsjlgsglbslgsbligsfilgl'}]] // array containing all chats
+    // ID of the current chat
+    let chat_id = 0;
+    // Array with a 'title' for each chat (it's the first user query for that chat)
+    let chats_titles = [];
+    let can_create_new_chat = false;
 
     let opened = true;
     let input = "";
@@ -21,10 +24,9 @@
 
     let settings = {};
 
-    //Backend should be running on port 5001
-    const DATA_URL = 'http://localhost:5001/chat';
-
+    // Backend adresses
     const CREDENTIALS_URL = 'http://localhost:5001/credentials'
+    const CHATS_URL = 'http://localhost:5001/all-chats';
 
     let get_response;
     let update_conversation;
@@ -57,6 +59,8 @@
         }
     }
 
+    onMount(fetchCredentials);
+
     async function logout() {
         // Logout
         await fetch(CREDENTIALS_URL, {
@@ -65,41 +69,46 @@
         goto("/");
     }
 
-    async function clear_backend() {
-        await fetch(DATA_URL, {method: "DELETE"});
-        await update_conversation();
-    }
+    
 
-    // Call the function to fetch the credentials when needed
-    onMount(fetchCredentials, clear_backend, setup_chat);
-
-    const CHATS_URL = 'http://localhost:5001/all-chats';
-
-    async function setup_chat() {
+    async function setup_chats() {
         const response = await fetch(CHATS_URL, {
             method: "GET"
         });
         const data = await response.json();
-        all_chats = data;
+        chats_titles = data;
+
+        await update_conversation();
+        await check_if_can_create_new_chat(chats_titles)
     }
+
+    // Setup the chats on page load
+    onMount(setup_chats);
 
     async function new_chat() {
         const response = await fetch(CHATS_URL, {
             method: "POST"
         });
         const data = await response.json();
-        all_chats = data;
+        chats_titles = data;
+
+        await update_conversation();
+        await check_if_can_create_new_chat(chats_titles)
     }
 
 
     async function change_current_chat(chat_index) {
+        chat_id = chat_index
         const response = await fetch(CHATS_URL, {
             method: "PUT",
             body: JSON.stringify({'new_id': chat_index}),
             headers: {"Content-type": "application/json; charset=UTF-8"}
         });
         const data = await response.json();
-        all_chats = data;
+        chats_titles = data;
+
+        await update_conversation();
+        await check_if_can_create_new_chat(chats_titles)
     }
 
     async function delete_chat(chat_index) {
@@ -109,15 +118,40 @@
             headers: {"Content-type": "application/json; charset=UTF-8"}
         });
         const data = await response.json();
-        all_chats = data;
+        chats_titles = data;
+
+        await update_conversation();
+        await check_if_can_create_new_chat(chats_titles)
     }
 
+    async function event_update_chats(event) {
+        console.log('Event, updating chats')
+        const response = await fetch(CHATS_URL, {
+            method: "GET"
+        });
+        const data = await response.json();
+
+        await check_if_can_create_new_chat(chats_titles)
+
+        // Trigger a reload of the chat history pane
+        chats_titles = data
+    }
+
+    async function check_if_can_create_new_chat(chats_titles) {
+        can_create_new_chat = true
+        chats_titles.forEach(title => {
+            if (title == '') {
+                // Title is empty -> empty chat -> do not let user create new chat
+                can_create_new_chat = false                
+            }
+        });
+    }
 
 </script>
 
 
 <!--Conversation-->
-<Conversation bind:messages={current_chat} bind:get_response={get_response} bind:get_conversation={update_conversation}></Conversation>
+<Conversation on:update={event_update_chats} bind:get_response={get_response} bind:get_conversation={update_conversation}/>
 
 
 <!--Burger menu-->
@@ -130,29 +164,55 @@
 
     <Stack align="center" spacing="md">
 
-        <Button fullSize on:click={new_chat} variant='gradient' gradient={{from: 'teal', to: 'blue', deg: 45}} ripple>Ny Chat</Button>
+        <Button fullSize on:click={new_chat} variant='gradient' gradient={{from: 'teal', to: 'blue', deg: 45}} disabled={!can_create_new_chat} ripple>Ny Chat</Button>
         
         <div style="height: calc(100vh - 260px); overflow: auto;">
         <!-- TODO ADD CHATS -->
-        {#each all_chats as chat, i}
-        <Flex gap={0} style="align: center;">
-            <Button on:click={() => change_current_chat(i)} 
-                size={40} 
-                fullSize 
-                variant='subtle'
-                color='cyan'
-                style="max-width: 160px; overflow: hidden; align-items: left;"
-                ripple>
-                {#if chat.length > 0}
-                {String(chat[0]['content']).slice(0, 15) + '...'}
+        {#if chats_titles.length != 0}
+            {#each chats_titles as title, i}
+            <Flex gap={0} style="align: center;">
+                {#if i == chat_id}
+                <Button on:click={() => change_current_chat(i)} 
+                    size={40} 
+                    fullSize 
+                    variant='outline'
+                    color='cyan'
+                    style="max-width: 160px; overflow: hidden; align-items: left;"
+                    ripple>
+                    {#if title == ''}
+                        Ny chat
+                    {:else if title.length > 15}
+                        {String(title).slice(0, 15) + '...'}
+                    {:else}
+                        {title}
+                    {/if}
+                </Button>
+                {:else}
+                <Button on:click={() => change_current_chat(i)} 
+                    size={40} 
+                    fullSize 
+                    variant='subtle'
+                    color='cyan'
+                    style="max-width: 160px; overflow: hidden; align-items: left;"
+                    ripple>
+                    {#if title == ''}
+                        Ny chat
+                    {:else if title.length > 15}
+                        {String(title).slice(0, 15) + '...'}
+                    {:else}
+                        {title}
+                    {/if}
+                </Button>
                 {/if}
-            </Button>
-            
-            <ActionIcon on:click={() => delete_chat(i)} color='red' size={40}>
-                <Trash/>
-            </ActionIcon>
-        </Flex>
-        {/each}
+                
+                
+
+                <ActionIcon on:click={() => delete_chat(i)} color='red' size={40}>
+                    <Trash/>
+                </ActionIcon>
+            </Flex>
+            {/each}
+        {/if}
         </div>
 
 

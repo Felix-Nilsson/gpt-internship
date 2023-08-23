@@ -41,8 +41,6 @@ async def handle_chat():
     global login
     global last_updated
 
-    messages = all_chats[chat_id]
-
     if request.method == 'GET':
 
         #Check if we want to continue response generation (if we are waiting for function results)
@@ -104,7 +102,9 @@ async def handle_chat():
 
     # Reset chat
     elif request.method == 'DELETE':
-        _reset_chat()
+        #_reset_chat()
+        #TODO ???
+        pass
 
     
     # Returnable conversation, need to change from Message objects to dict, to json
@@ -112,7 +112,7 @@ async def handle_chat():
         'last_updated': last_updated,
         'messages': []
     }
-    
+
     if all_chats[chat_id] != []:
         for message in all_chats[chat_id]:
             conversation['messages'].append(message.get())
@@ -155,7 +155,8 @@ async def handle_login():
 
                 if bcrypt.checkpw(pw_bytes, ref_bytes):
                     # Reset chat on login for safety's sake
-                    _reset_chat()
+                    #_reset_chat()
+                    #TODO setup?, should run from the frontend component onMount
 
                     login["success"] = True
                     login["username"] = username
@@ -169,7 +170,10 @@ async def handle_login():
 
     # Logout (reset)
     elif request.method == 'DELETE':
-        _reset_chat()
+        #_reset_chat()
+        #TODO Save all_chats to file?
+        # if we only save on logout - use this to warn users before closing the tab
+        # https://svelte.dev/repl/a95db12c1b46433baac2817a0963dc93?version=4.2.0
 
         login = {
             'success': False,
@@ -179,62 +183,71 @@ async def handle_login():
     
     return login
 
-chat_num = 0
-
-@app.route("/all-chats", methods=['GET', 'POST', 'PATCH'])
+@app.route("/all-chats", methods=['GET', 'POST', 'PUT', 'PATCH'])
 async def handle_all_chats():
     global all_chats
     global chat_id
-    global chat_num
 
     if request.method == 'GET':
 
         if all_chats == []:
             # FIRST TIME SETUP
-            all_chats = [[{'role': 'user', 'content': f'({chat_num}) hej, testar bara'}, {'role': 'assistant', 'content': 'Okej, vad bra!'}]]
-            chat_num += 1
+            #print('first time setup ... reading from file')
+            all_chats = [[]] #[[Message(role='user', content='ex1 chat', final=True)], [Message(role='user', content='ex2 chat', final=True)], [Message(role='user', content='ex3 chat', final=True)]]
             chat_id = 0
 
     # CREATE NEW CHAT
-    if request.method == 'POST':
-        new_chat = [{'role': 'user', 'content': f'({chat_num}) hej, testar bara'}, {'role': 'assistant', 'content': 'Okej, vad bra!'}]
-        chat_num += 1
+    elif request.method == 'POST':
+        #print('creating new (empty) chat')
+        new_chat = []
         all_chats.insert(0, new_chat.copy())
         chat_id = 0
 
     # CHANGE CURRENT CHAT
     elif request.method == 'PUT':
         req = request.get_json()
+        #print('changing to chat with id: ' + str(req['new_id']))
         chat_id = int(req['new_id'])
 
     # DELETE SPECIFIC CHAT
     elif request.method == 'PATCH':
         req = request.get_json()
         delete_id = req['delete_id']
+        #print('deleting chat with id: ' + str(delete_id))
 
         all_chats.pop(delete_id)
 
         if all_chats == []:
+            print('deleted the last chat ... creating a new one')
             new_chat = []
             all_chats.insert(0, new_chat.copy())
             chat_id = 0
 
         elif delete_id == chat_id:
+            print('deleted active chat ... moving to the latest chat')
             chat_id = 0
 
+    # List of titles for the different chats
+    titles = []
 
-    return all_chats
+    if all_chats != []:
+        for i in range(len(all_chats)):
+            if all_chats[i] != []:
+                titles.append(all_chats[i][0].get()['content'])
+            else: 
+                titles.append('')
+
+    return titles
 
 
 
 
 
-def _reset_chat():
+"""def _reset_chat():
     global doctorbot
     global patientbot
     global intranetbot
     global internetbot
-    global messages
     global last_updated
 
     # Reset everything
@@ -243,8 +256,7 @@ def _reset_chat():
     intranetbot = IntranetCB()
     internetbot = InternetCB()
 
-    messages = []
-    last_updated = time.time()
+    last_updated = time.time()"""
 
 
 if __name__ == "__main__":

@@ -90,6 +90,7 @@
             method: "POST"
         });
         const data = await response.json();
+        chat_id = 0;
         chats_titles = data;
 
         await update_conversation();

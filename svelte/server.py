@@ -185,8 +185,7 @@ async def handle_login():
 
             json.dump(save_chats, fp=f, indent=4)
 
-        #_reset_chat()
-        #TODO Save all_chats to file?
+        # TODO 
         # if we only save on logout - use this to warn users before closing the tab
         # https://svelte.dev/repl/a95db12c1b46433baac2817a0963dc93?version=4.2.0
 

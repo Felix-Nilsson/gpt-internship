@@ -71,9 +71,17 @@
     }
 
     // Call the function to fetch the credentials when needed
-    onMount(fetchCredentials, clear_backend);
+    onMount(fetchCredentials, clear_backend, setup_chat);
 
     const CHATS_URL = 'http://localhost:5001/all-chats';
+
+    async function setup_chat() {
+        const response = await fetch(CHATS_URL, {
+            method: "GET"
+        });
+        const data = await response.json();
+        all_chats = data;
+    }
 
     async function new_chat() {
         const response = await fetch(CHATS_URL, {
@@ -134,7 +142,7 @@
                 style="max-width: 160px; overflow: hidden; align-items: left;"
                 ripple>
                 {#if chat.length > 0}
-                {String(chat[chat.length - 1]['content']).slice(0, 15) + '...'}
+                {String(chat[0]['content']).slice(0, 15) + '...'}
                 {/if}
             </Button>
             

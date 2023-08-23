@@ -108,8 +108,6 @@
             
             // dispatch update event, so main chat page can update history panel
             dispatch('update');
-            // FIND A WAY TO CANCEL IT
-            // skicka event in till update_chats(event) kolla om nytt event -> kör
         }
     }
 

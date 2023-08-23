@@ -11,15 +11,16 @@ sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from utils.fileparser import pdf_to_plaintext
 
 def num_tokens_from_string(string: str, encoding_name: str ="cl100k_base") -> int:
-    """Returns the number of tokens in a text string."""
+    """Returns the number of tokens in a text string"""
     encoding = tiktoken.get_encoding(encoding_name)
     num_tokens = len(encoding.encode(string))
     return num_tokens
 
 class patient:
     def chunk_json(f : IO[str]) -> List[str]:
+        """Splits json doc into chunks by keys, ~500 tokens"""
         json_obj = json.load(f)
-        chunks = [json_obj[key] for key in json_obj.keys() if key not in ["prescription", "journal"]] #splits json doc into chunks by keys, ~500 tokens
+        chunks = [json_obj[key] for key in json_obj.keys() if key not in ["prescription", "journal"]] 
         if "prescription" in json_obj.keys():
             chunks += json_obj["prescription"]
         if "journal" in json_obj.keys():

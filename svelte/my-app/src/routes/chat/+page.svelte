@@ -131,7 +131,7 @@
         });
         const data = await response.json();
 
-        await check_if_can_create_new_chat(chats_titles)
+        await check_if_can_create_new_chat(data)
 
         // Trigger a reload of the chat history pane
         chats_titles = data

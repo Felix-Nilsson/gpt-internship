@@ -1,5 +1,5 @@
 <script>
-    import { Button, Center, Stack, Text, Flex, Paper, SimpleGrid, RadioGroup, Switch, Space, Divider, ActionIcon } from '@svelteuidev/core';
+    import { Button, Box, Stack, Text, Flex, Paper, SimpleGrid, RadioGroup, Switch, Space, Divider, ActionIcon } from '@svelteuidev/core';
     import { onMount, tick } from 'svelte';
     import { scale, slide } from 'svelte/transition';
     import { Gear } from 'radix-icons-svelte';
@@ -96,9 +96,12 @@
 
 <!-- SETTINGS BUTTON -->
 <div class="settings-button">
-    <ActionIcon variant='transparent' size={40} color='red' on:click={settings_button}>
-        <Gear size={35}/>
-    </ActionIcon>
+    
+        <ActionIcon variant='transparent' size={60} color='gray' on:click={settings_button}
+         >
+            <Gear size={35}/>
+        </ActionIcon>
+    
 </div>
 
 
@@ -200,6 +203,10 @@
         right: 30px;
         top: 20px;
         z-index: 12;
+    }
+    .settings-button:hover {
+        background-color: #D3D3D3; /* Background color on hover */
+        border-radius: 5px;
     }
 
     .settings-menu {

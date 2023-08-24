@@ -8,7 +8,7 @@ from chatbot.assistant.chatbot import Chatbot as AssistantCB
 from chatbot.internet.chatbot import Chatbot as InternetCB
 from chatbot.intranet.chatbot import Chatbot as IntranetCB
 
-from chatbot.message import Message
+from chatbot.message import Message, dict_to_Message
 
 app = Flask(__name__)
 CORS(app)
@@ -209,18 +209,25 @@ async def handle_all_chats():
             #print('first time setup ... reading from file')
             username = login['username']
 
+            print(username)
+
             with open(f"chat_histories/{username}.json", "r", encoding='utf-8') as f:
                 json_data = f.read()
                 # Check if empty
                 if json_data:
-                    temp_dict = json.loads(json_data)
-                    for i in range(len(temp_dict)):
-                        print(temp_dict[str(i)])
-                        # EACH OBJECT IN temp_dict CONTAINS ONE CHAT
-                        # TODO
-                        # CALL THE FUNCTION dict-to-Message from message.py for each message in the chat
 
-            all_chats = [[]] #[[Message(role='user', content='ex1 chat', final=True)], [Message(role='user', content='ex2 chat', final=True)], [Message(role='user', content='ex3 chat', final=True)]]
+                    temp_dict = json.loads(json_data)
+                    chat_history = [[]] * len(temp_dict)
+
+                    for i in range(len(temp_dict)):
+                        temp_chat = temp_dict[str(i)].copy()
+                        
+                        for j in range(len(temp_chat)):
+                            temp_chat[j] = dict_to_Message(temp_dict[str(i)].copy()[j])
+                        
+                        chat_history[i] = temp_chat
+            
+            all_chats = chat_history.copy()
             chat_id = 0
 
     # CREATE NEW CHAT

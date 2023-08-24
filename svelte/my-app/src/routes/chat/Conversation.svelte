@@ -1,5 +1,5 @@
 <script>
-    import { Stack, Flex, Box, Button, Text, Paper, Overlay, Title, Space, Loader, Center, Tabs, Divider, Alert, exception } from '@svelteuidev/core';
+    import { Stack, Flex, Box, Button, Text, Paper, Overlay, Title, Space, Loader, Center, Tabs, Divider, Alert } from '@svelteuidev/core';
     import UserBubble from './UserBubble.svelte';
     import AIBubble from './AIBubble.svelte';
     import { onMount, tick, createEventDispatcher } from 'svelte';
@@ -8,11 +8,12 @@
 
     const DATA_URL = 'http://localhost:5001/chat'
 
-    export let messages = [];
-    //let explanations = [];
+    let messages = [];
     let show_alert = false;
     let show_modal = false;
     let element;
+
+    export let user_type = '';
 
     let current_query = '';
 
@@ -193,8 +194,41 @@
 <!-- CHAT -->
 <div bind:this={element} class="chat-area">
     <Space h={100}/>
-    <Stack align="center" justify="flex-start" spacing="lg">
+    <Stack align="center" justify="start" spacing="lg">
+
+        <Title 
+        style="line-height:1.5;"
+        variant='gradient' 
+        gradient={{from: 'blue', to: 'red', deg: 45}}
+        order={1}>
+            Medicinsk AI-Hjälp 
+        </Title>
+
+        <!--Chat-type indicator-->
+        <Title
+        style="line-height:1.5;"
+        color="#c0c0c0"
+        order={2}>
+            {#if user_type == "patient"}
+                Patientassistent
+            {:else if user_type == "doctor"}
+                Läkarassistent
+            {/if} 
+        </Title>
+
+        <!---->
+        <Title
+        style="line-height:1.5;"
+        color="#c0c0c0"
+        order={4}>
+            Chatbot som drivs av GPT3.5-turbo
+        </Title>
+
         <div class="chat">
+            <Divider></Divider>
+
+            <Space h={20}/>
+
             {#if messages.length != 0}
                 {#each messages as message, i}
 

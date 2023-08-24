@@ -29,6 +29,7 @@ class patient:
         return chunks
     
     def chunk_ics(f : IO[str]) -> List[str]:
+        """Function that chunks an .ics file. One chunk corresponds to one event, beggining with BEGIN:VEVENT and ending with END:VEVENT."""
         pattern = r"BEGIN:VEVENT(.*?)END:VEVENT"
         chunks = re.findall(pattern, f.read(), re.DOTALL)
         

@@ -162,6 +162,7 @@
     </ActionIcon>
 </div>
 
+
 <!--Burger menu-->
 {#if opened}
 <div class="burger-menu" transition:slide={{ duration: 350, axis: 'x' }}> 
@@ -171,8 +172,11 @@
     </div>
 
     <Stack align="center" spacing="md">
+        <!-- Leave room for the burger button -->
+        <Space h={70}/>
+
         <!-- Create new chat button-->
-        <Button fullSize on:click={new_chat} disabled={!can_create_new_chat} ripple> 💬 Ny Chat </Button>
+        <Button fullSize on:click={new_chat} disabled={!can_create_new_chat} ripple>💬 Ny Chat</Button>
         
         <!-- Chat history -->
         <div style="height: calc(100vh - 260px); overflow: auto;">
@@ -223,7 +227,7 @@
         {#if current_credentials['success']}
             <div style="position: absolute; bottom: 40px">
                 <Button type="button" on:click={logout} color='red' ripple>
-                    👋 Logga ut 
+                    👋 Logga ut
                 </Button>
             </div>
         {/if}
@@ -246,9 +250,10 @@
                                 placeholder="T.ex 'Jag har feber och ont i huvudet, vad borde jag göra?'"
                                 radius="lg"
                                 size="l"
-                                style="width: calc(100vw - 680px);box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.07); border-radius: 8px;"
-                            />
-                            <Button color="teal" ripple> <PaperPlane/> </Button>
+                                style="width: calc(100vw - 680px);box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.07); border-radius: 8px;"   
+                                >
+                            </Input>
+                            <Button color="teal" style="z-index:50000; position=relative; right:5px" ripple> <PaperPlane/> </Button>
                         </Group>
                     </Center>
                 </form>
@@ -276,13 +281,14 @@
     }
 
     .gradient-strip-bottom {
-        background: transparent;
+        background: white;
         position: fixed; 
         bottom: 0; 
         left: 0; 
         right: 0; 
         height: 80px;
         z-index: 11;
+        box-shadow:0 -20px 30px 8px white
     }
 
     .burger-menu {

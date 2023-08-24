@@ -114,7 +114,7 @@
                     style="line-height:1.5;"
                     color="cyan"
                     order={3}>
-                        Inställningar
+                        🛠️ Inställningar
                     </Title>
                 </div>
 

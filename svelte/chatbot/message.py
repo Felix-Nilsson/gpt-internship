@@ -108,9 +108,42 @@ class Message():
 
 # /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ DICT-TO-MESSAGE /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
 
-def dict_to_Message(dictonary: dict):
-    pass
+def dict_to_Message(dictionary: dict):
+    """Takes a dictionary and returns a Message
+    
+    Can be used to convert a Message back into a Message after it has been converted into a dictionary by .get()"""
 
+    new_message = Message(role=dictionary['role'], content=dictionary['content'])
+
+    if dictionary.get('function_call'):
+        new_message.set(function_call=dictionary['function_call'])
+
+    # If we do not have any additional info, return
+    if not dictionary.get('additional_info'):
+        return new_message
+
+    if dictionary['additional_info'].get('final'):
+        new_message.set(final=dictionary['additional_info']['final'])
+    
+    if dictionary['additional_info'].get('chat_type'):
+        new_message.set(chat_type=dictionary['additional_info']['chat_type'])
+
+    if dictionary['additional_info'].get('settings'):
+        new_message.set(settings=dictionary['additional_info']['settings'])
+
+    if dictionary['additional_info'].get('sources'):
+        new_message.set(sources=dictionary['additional_info']['sources'])
+    
+    if dictionary['additional_info'].get('explanation'):
+        new_message.set(explanation=dictionary['additional_info']['explanation'])
+
+    if dictionary['additional_info'].get('patient'):
+        new_message.set(patient=dictionary['additional_info']['patient'])
+
+    if dictionary['additional_info'].get('alert'):
+        new_message.set(alert=dictionary['additional_info']['alert'])
+
+    return new_message
 
 
 # /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ PRINT MESSAGES /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\

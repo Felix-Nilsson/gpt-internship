@@ -306,7 +306,7 @@
 
     <!--Clickable title-->
     <div class="header-title">
-        <Button href='/' color=transparent style="width:400px; height:50px">
+        <Button color=transparent style="width:400px; height:50px">
             <Title 
             style="
                 position:relative; 

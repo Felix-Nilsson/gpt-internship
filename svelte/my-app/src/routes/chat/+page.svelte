@@ -300,21 +300,19 @@
 
     <!--Clickable title-->
     <div class="header-title">
-        <Button color=transparent style="width:400px; height:50px">
-            <Title 
-            style="
-                position:relative; 
-                width:400px; 
-                top:-5px; 
-                font-size:40px; 
-                text-align:right; 
-                line-height:1.5"
-            variant='gradient' 
-            gradient={{from: 'blue', to: 'red', deg: 45}}
-            order={1}>
-                Medicinsk AI-Hjälp 
-            </Title>
-        </Button>
+        <Title 
+        style="
+            position:relative; 
+            width:400px; 
+            top:-5px; 
+            font-size:40px; 
+            text-align:right; 
+            line-height:1.5"
+        variant='gradient' 
+        gradient={{from: 'blue', to: 'red', deg: 45}}
+        order={1}>
+            Medicinsk AI-Hjälp 
+        </Title>
     </div>
 </div>
 

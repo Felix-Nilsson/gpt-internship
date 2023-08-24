@@ -189,6 +189,7 @@ async def handle_login():
         # if we only save on logout - use this to warn users before closing the tab
         # https://svelte.dev/repl/a95db12c1b46433baac2817a0963dc93?version=4.2.0
 
+        _reset_chat()
         login = {
             'success': False,
             'login_as': None,
@@ -209,8 +210,6 @@ async def handle_all_chats():
             #print('first time setup ... reading from file')
             username = login['username']
 
-            print(username)
-
             with open(f"chat_histories/{username}.json", "r", encoding='utf-8') as f:
                 json_data = f.read()
                 # Check if empty
@@ -227,7 +226,10 @@ async def handle_all_chats():
                         
                         chat_history[i] = temp_chat
             
-            all_chats = chat_history.copy()
+                    all_chats = chat_history.copy()
+
+                else:
+                    all_chats = [[]]
             chat_id = 0
 
     # CREATE NEW CHAT
@@ -277,11 +279,13 @@ async def handle_all_chats():
 
 
 
-"""def _reset_chat():
+def _reset_chat():
     global doctorbot
     global patientbot
     global intranetbot
     global internetbot
+    global all_chats
+    global chat_id
     global last_updated
 
     # Reset everything
@@ -290,7 +294,10 @@ async def handle_all_chats():
     intranetbot = IntranetCB()
     internetbot = InternetCB()
 
-    last_updated = time.time()"""
+    all_chats = []
+    chat_id = 0
+
+    last_updated = time.time()
 
 
 if __name__ == "__main__":

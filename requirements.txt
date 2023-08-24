@@ -10,5 +10,5 @@ tiktoken
 nltk
 print_color
 duckduckgo-search
-promptfoo
+promptfoo==9.7.2
 termcolor

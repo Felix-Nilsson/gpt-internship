@@ -97,7 +97,7 @@
 <!-- SETTINGS BUTTON -->
 <div class="settings-button">
     
-        <ActionIcon variant='transparent' size={60} color='gray' on:click={settings_button}
+        <ActionIcon variant='transparent' size={60} color='black' on:click={settings_button}
          >
             <Gear size={35}/>
         </ActionIcon>
@@ -201,11 +201,11 @@
     .settings-button {
         position: fixed;
         right: 30px;
-        top: 20px;
+        top: 5px;
         z-index: 12;
     }
     .settings-button:hover {
-        background-color: #D3D3D3; /* Background color on hover */
+        background-color: #f8f8f8;
         border-radius: 5px;
     }
 

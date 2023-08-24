@@ -273,10 +273,17 @@
 
     <!--Burger button-->
     <div class="burger-button">
-        <Burger color="blue"
-        {opened}
-        on:click={() => (opened = !opened)}
-        />
+        <ActionIcon size={60}
+       
+            on:click={() => (opened = !opened)}
+        >
+            <Burger color="black" 
+            {opened}
+           
+            
+            />
+        </ActionIcon>
+        
     </div>
 
     <!--Chat-type indicator-->
@@ -319,10 +326,6 @@
 
 
 
-
-
-
-
 <style>
 
     .header {
@@ -337,7 +340,12 @@
     .burger-button {
         position: fixed;
         left: 30px;
-        top: 20px;
+        top: 10px;
+    }
+
+    .burger-button:hover {
+        background-color: #d2d2d2;
+        border-radius: 5px;
     }
 
     .header-type {

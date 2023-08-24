@@ -69,7 +69,7 @@ async def handle_chat():
         settings = req['settings']
 
         # Add the query to the conversation
-        user_message = Message(role='user', content=query)
+        user_message = Message(role='user', content=query, final=True)
         all_chats[chat_id].append(user_message)
 
         # Generate a response to the request

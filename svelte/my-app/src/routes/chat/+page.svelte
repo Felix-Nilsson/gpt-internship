@@ -1,5 +1,5 @@
 <script>
-    import { Group, Title, Input , Button, Center, Burger, Stack, Text, Paper, Divider, ActionIcon, Flex } from '@svelteuidev/core';
+    import { Group, Title, Input , Button, Center, Burger, Stack, Text, Space, Divider, ActionIcon, Flex } from '@svelteuidev/core';
     import { scale, slide } from 'svelte/transition';
     import Conversation from "./Conversation.svelte";
     import Settings from "./Settings.svelte";
@@ -153,8 +153,14 @@
 
 
 <!--Conversation-->
-<Conversation on:update={event_update_chats} bind:get_response={get_response} bind:get_conversation={update_conversation}/>
+<Conversation on:update={event_update_chats} bind:get_response={get_response} bind:get_conversation={update_conversation} user_type={current_credentials['login_as']}/>
 
+<!--Burger button-->
+<div class="burger-button">
+    <ActionIcon size={60} on:click={() => (opened = !opened)}> 
+        <Burger color="cyan" {opened}/>
+    </ActionIcon>
+</div>
 
 <!--Burger menu-->
 {#if opened}
@@ -165,11 +171,11 @@
     </div>
 
     <Stack align="center" spacing="md">
-
+        <!-- Create new chat button-->
         <Button fullSize on:click={new_chat} disabled={!can_create_new_chat} ripple> 💬 Ny Chat </Button>
         
+        <!-- Chat history -->
         <div style="height: calc(100vh - 260px); overflow: auto;">
-        <!-- TODO ADD CHATS -->
         {#if chats_titles.length != 0}
             {#each chats_titles as title, i}
             <Flex gap={0} style="align: center;">
@@ -205,8 +211,6 @@
                 </Button>
                 {/if}
                 
-                
-
                 <ActionIcon on:click={() => delete_chat(i)} color='red' size={40}>
                     🗑️
                 </ActionIcon>
@@ -215,9 +219,8 @@
         {/if}
         </div>
 
-
+        <!-- Logout button -->
         {#if current_credentials['success']}
-            <!-- Logout button -->
             <div style="position: absolute; bottom: 40px">
                 <Button type="button" on:click={logout} color='red' ripple>
                     👋 Logga ut 
@@ -258,82 +261,13 @@
 <Settings bind:settings={settings} bind:login_as={current_credentials['login_as']}></Settings>
 
 
-
-<!--Header-->
-<div class="header">
-
-    <div style="position:absolute; bottom:0; left:0; width:100vw;">
-        <Divider style="margin:0;"/>
-    </div>
-
-    <!--Burger button-->
-    <div class="burger-button">
-        <ActionIcon size={60}
-       
-            on:click={() => (opened = !opened)}
-        >
-            <Burger color="black" 
-            {opened}
-           
-            
-            />
-        </ActionIcon>
-        
-    </div>
-
-    <!--Chat-type indicator-->
-    <div class="header-type">
-        <Title
-        style="
-            font-size:30px; 
-            text-align:left; 
-            line-height:1.5"
-        variant='gradient' 
-        gradient={{from: 'blue', to: 'red', deg: 45}}
-        order={1}>
-            {#if current_credentials["login_as"] == "patient"}
-                Patientassistent
-            {:else if current_credentials["login_as"] == "doctor"}
-                Läkarassistent
-            {/if} 
-        </Title>
-    </div>
-
-    <!--Clickable title-->
-    <div class="header-title">
-        <Title 
-        style="
-            position:relative; 
-            width:400px; 
-            top:-5px; 
-            font-size:40px; 
-            text-align:right; 
-            line-height:1.5"
-        variant='gradient' 
-        gradient={{from: 'blue', to: 'red', deg: 45}}
-        order={1}>
-            Medicinsk AI-Hjälp 
-        </Title>
-    </div>
-</div>
-
-
-
 <style>
-
-    .header {
-        position: fixed;
-        background: white;
-        left: 0;
-        right: 0;
-        top: 0;
-        height: 80px;
-    }
 
     .burger-button {
         position: fixed;
-        left: 30px;
-        top: 10px;
+        left: 20px;
+        top: 20px;
+        z-index: 13;
     }
 
     .burger-button:hover {
@@ -341,22 +275,7 @@
         border-radius: 5px;
     }
 
-    .header-type {
-        position: fixed;
-        left: 90px;
-        top: 12px;
-    }
-
-    .header-title {
-        position: fixed;
-        right: 90px;
-        top: 15px;
-        width: 400px;
-    }
-
     .gradient-strip-bottom {
-        /* background: rgb(34,193,195);
-        background: linear-gradient(45deg, rgba(34,193,195,1) 0%, rgba(0,80,200,1) 50%, rgba(34,193,195,1) 100%);*/
         background: transparent;
         position: fixed; 
         bottom: 0; 
@@ -367,12 +286,12 @@
     }
 
     .burger-menu {
-        background: #ffffff;
+        background: white;
         position: fixed; 
-        top: 80px; 
-        padding: 20px;
+        top: 0; 
         left: 0;  
-        bottom: 0px;
+        bottom: 0;
+        padding: 20px;
         width: 200px;
         overflow: hidden;
         z-index: 12;

@@ -1,5 +1,5 @@
 <script>
-    import { Stack, Text, SimpleGrid, RadioGroup, Switch, Divider, ActionIcon } from '@svelteuidev/core';
+    import { Stack, Text, SimpleGrid, RadioGroup, Switch, Divider, ActionIcon, Space, Title } from '@svelteuidev/core';
     import { onMount } from 'svelte';
     import { slide } from 'svelte/transition';
     import { Gear } from 'radix-icons-svelte';
@@ -80,15 +80,14 @@
     });
 </script>
 
-<!-- SETTINGS BUTTON -->
+<!-- Settings button -->
 <div class="settings-button">
-    <ActionIcon variant='transparent' size={60} color='black' on:click={() => {show_settings = !show_settings}}>
+    <ActionIcon variant='transparent' size={60} color='cyan' on:click={() => {show_settings = !show_settings}}>
         <Gear size={35}/>
     </ActionIcon>
 </div>
 
-
-<!-- SETTINGS PANEL -->
+<!-- Settings menu -->
 {#if show_settings}
 <div class="settings-menu" transition:slide={{ duration: 350, axis: 'x' }}>
 
@@ -97,25 +96,28 @@
     </div>
 
     <Stack align="center" spacing={0}>
-
-        <div style="width: 160px;">
-            <Text size='md' align='left' color="blue" style="line-height:1.5">
-                <h3>Inställningar</h3>
-            </Text>
-        </div>
+        <Space h={70}/>
 
         <!-- Individual settings -->
         <div style="height:calc(100vh - 180px); overflow: auto;">
-            <SimpleGrid  cols={1}>
+            <SimpleGrid  cols={1} spacing="xl">
+                <div>
+                    <Title 
+                    style="line-height:1.5;"
+                    color="cyan"
+                    order={3}>
+                        Inställningar
+                    </Title>
+                </div>
 
                 <!-- Chatbot choice -->
                 <div>
-                    <Stack>
-                        <Text size='md' weight='semibold' color="blue" style="line-height:1.5">
+                    <Stack spacing="sm">
+                        <Text size='md' weight='semibold' color="cyan" style="line-height:1.5">
                             Val av chat
                         </Text>
 
-                        <Text size='sm' weight='semibold' color="blue" style="line-height:1.5">
+                        <Text size='sm' weight='semibold' color="cyan" style="line-height:1.5">
                             <RadioGroup on:change={updateSettings} bind:value={chatbot_value} items={chatbot_options} color='cyan' size='sm' direction='column' spacing='xs' labelDirection='left'/>
                         </Text>
                     </Stack>
@@ -124,10 +126,12 @@
 
                 <!-- Language level settings -->
                 <div>
-                    <Stack>
-                        <Text size='md' weight='semibold' color="blue" style="line-height:1.5">Språknivå</Text>
+                    <Stack spacing="sm">
+                        <Text size='md' weight='semibold' color="cyan" style="line-height:1">Språknivå</Text>
+                        <Text size='sm' weight='semibold' color="cyan" style="line-height:1">(funkar inte alltid)</Text>
+                        
 
-                        <Text size='xs' weight='semibold' color="blue" style="line-height:1.5">
+                        <Text size='xs' weight='semibold' color="cyan" style="line-height:1.5">
                             <RadioGroup on:change={updateSettings} bind:value={language_value} items={language_options} color='cyan' size='sm' direction='column' spacing='xs' labelDirection='left'/>
                         </Text>
                     </Stack>
@@ -136,10 +140,10 @@
 
                 <!-- Internet tool setting -->
                 <div>
-                    <Stack>
-                        <Text size='md' weight='semibold' color="blue" style="line-height:1.5">Källor (internet)</Text>
+                    <Stack spacing="sm">
+                        <Text size='md' weight='semibold' color="cyan" style="line-height:1.5">Källor (internet)</Text>
                         
-                        <Text size='xs' weight='semibold' color="blue" style="line-height:1.5">
+                        <Text size='xs' weight='semibold' color="cyan" style="line-height:1.5">
                             <Stack spacing="xs">
                                 {#each tool_options as {label,checked}}
                                 <Switch {checked} 
@@ -171,9 +175,9 @@
 
     .settings-button {
         position: fixed;
-        right: 30px;
-        top: 5px;
-        z-index: 12;
+        right: 20px;
+        top: 20px;
+        z-index: 13;
     }
     .settings-button:hover {
         background-color: #f8f8f8;
@@ -183,7 +187,7 @@
     .settings-menu {
         background: white;
         position: fixed; 
-        top: 80px; 
+        top: 0; 
         right: 0;  
         bottom: 0;
         padding: 20px;

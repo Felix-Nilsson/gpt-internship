@@ -12,9 +12,11 @@
 
 </script>
 
+<!-- gradient={{from: 'blue', to: 'teal', deg: 45}} -->
+
 <Flex justify="right" gap="lg">
-    <ThemeIcon variant='gradient' gradient={{from: 'blue', to: 'teal', deg: 45}} size="xl" radius="lg">
-        <Icon icon="carbon:bot"/>
+    <ThemeIcon variant='outline' size="xl" radius="lg" style="linear-gradient(45deg, rgba(18,183,135,1) 0%, rgba(34,140,229,1) 100%);">
+        <Icon icon="carbon:bot" />
     </ThemeIcon>
     
     <Paper shadow="xl" radius="lg" style="max-width: 55vw">

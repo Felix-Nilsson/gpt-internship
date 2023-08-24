@@ -166,7 +166,7 @@
 
     <Stack align="center" spacing="md">
 
-        <Button fullSize on:click={new_chat} disabled={!can_create_new_chat} ripple>Ny Chat</Button>
+        <Button fullSize on:click={new_chat} disabled={!can_create_new_chat} ripple> 💬 Ny Chat </Button>
         
         <div style="height: calc(100vh - 260px); overflow: auto;">
         <!-- TODO ADD CHATS -->
@@ -208,7 +208,7 @@
                 
 
                 <ActionIcon on:click={() => delete_chat(i)} color='red' size={40}>
-                    <Trash/>
+                    🗑️
                 </ActionIcon>
             </Flex>
             {/each}
@@ -220,7 +220,7 @@
             <!-- Logout button -->
             <div style="position: absolute; bottom: 40px">
                 <Button type="button" on:click={logout} color='red' ripple>
-                    Logga ut 🙋‍♂️
+                    👋 Logga ut 
                 </Button>
             </div>
         {/if}

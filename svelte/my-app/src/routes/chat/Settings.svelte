@@ -1,8 +1,8 @@
 <script>
     import { Stack, Text, SimpleGrid, RadioGroup, Switch, Divider, ActionIcon, Space, Title } from '@svelteuidev/core';
     import { onMount } from 'svelte';
-    import { slide } from 'svelte/transition';
-    import { Gear } from 'radix-icons-svelte';
+    import { slide, fade } from 'svelte/transition';
+    import { Gear, Cross2 } from 'radix-icons-svelte';
 
     export let login_as = ''; // Set this from parent
     export let settings = {}; // Bind to this so parent can access it
@@ -81,11 +81,19 @@
 </script>
 
 <!-- Settings button -->
-<div class="settings-button">
+{#if show_settings}
+<div class="settings-button" transition:fade>
+    <ActionIcon variant='transparent' size={60} color='cyan' on:click={() => {show_settings = !show_settings}}>
+        <Cross2 size={35}/>
+    </ActionIcon>
+</div>
+{:else}
+<div class="settings-button" transition:fade>
     <ActionIcon variant='transparent' size={60} color='cyan' on:click={() => {show_settings = !show_settings}}>
         <Gear size={35}/>
     </ActionIcon>
 </div>
+{/if}
 
 <!-- Settings menu -->
 {#if show_settings}

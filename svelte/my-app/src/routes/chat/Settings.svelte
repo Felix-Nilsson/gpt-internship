@@ -1,7 +1,7 @@
 <script>
-    import { Button, Box, Stack, Text, Flex, Paper, SimpleGrid, RadioGroup, Switch, Space, Divider, ActionIcon } from '@svelteuidev/core';
-    import { onMount, tick } from 'svelte';
-    import { scale, slide } from 'svelte/transition';
+    import { Stack, Text, SimpleGrid, RadioGroup, Switch, Divider, ActionIcon } from '@svelteuidev/core';
+    import { onMount } from 'svelte';
+    import { slide } from 'svelte/transition';
     import { Gear } from 'radix-icons-svelte';
 
     export let login_as = ''; // Set this from parent
@@ -9,7 +9,6 @@
     
     // Change this to false if we do not want settings to be open by default
     let show_settings = false;
-    let show_settings_updated = false;
 
     //Chatbot choice
     let chatbot_value;
@@ -43,10 +42,8 @@
         { label: 'internetmedicin.se', checked: true }
     ];
 
-
     // Runs on page load and when settings are applied
     function updateSettings() {
-        show_settings_updated = true;
 
         // Setup chatbot setting
         if (chatbot_value == null) {
@@ -59,7 +56,6 @@
             }
         }
         
-
         let chosen_tools = [];
         
         for (const tool of tool_options) {
@@ -71,37 +67,24 @@
         settings['language_level'] = language_value;
         settings['chosen_tools'] = chosen_tools;
         settings['chatbot_type'] = chatbot_value;
-
-        timer(1000).then(() => {show_settings_updated = false;})
     }
 
     // Timer
     const timer = ms => new Promise(res => setTimeout(res,ms))
 
     // IF WE DO NOT WAIT BEFORE UPDATING SETTINGS ON MOUNT WE LOOSE IMPORTANT INFO
-    onMount(() => setupSettings(500))
-    const setupSettings = async (ms) => {
-        await timer(ms); 
+    onMount(async () => {
+        await timer(500); 
         
         updateSettings()
-    }
-
-    async function settings_button() {
-        updateSettings()
-
-        show_settings = !show_settings;
-    }
-
+    });
 </script>
 
 <!-- SETTINGS BUTTON -->
 <div class="settings-button">
-    
-        <ActionIcon variant='transparent' size={60} color='black' on:click={settings_button}
-         >
-            <Gear size={35}/>
-        </ActionIcon>
-    
+    <ActionIcon variant='transparent' size={60} color='black' on:click={() => {show_settings = !show_settings}}>
+        <Gear size={35}/>
+    </ActionIcon>
 </div>
 
 
@@ -122,7 +105,7 @@
         </div>
 
         <!-- Individual settings -->
-        <div style="height: calc(100vh - 290px); overflow: auto;">
+        <div style="height:calc(100vh - 180px); overflow: auto;">
             <SimpleGrid  cols={1}>
 
                 <!-- Chatbot choice -->
@@ -133,7 +116,7 @@
                         </Text>
 
                         <Text size='sm' weight='semibold' color="blue" style="line-height:1.5">
-                            <RadioGroup bind:value={chatbot_value} items={chatbot_options} color='cyan' size='sm' direction='column' spacing='xs' labelDirection='left'/>
+                            <RadioGroup on:change={updateSettings} bind:value={chatbot_value} items={chatbot_options} color='cyan' size='sm' direction='column' spacing='xs' labelDirection='left'/>
                         </Text>
                     </Stack>
                 </div>
@@ -145,7 +128,7 @@
                         <Text size='md' weight='semibold' color="blue" style="line-height:1.5">Språknivå</Text>
 
                         <Text size='xs' weight='semibold' color="blue" style="line-height:1.5">
-                            <RadioGroup bind:value={language_value} items={language_options} color='cyan' size='sm' direction='column' spacing='xs' labelDirection='left'/>
+                            <RadioGroup on:change={updateSettings} bind:value={language_value} items={language_options} color='cyan' size='sm' direction='column' spacing='xs' labelDirection='left'/>
                         </Text>
                     </Stack>
                 </div>
@@ -160,7 +143,12 @@
                             <Stack spacing="xs">
                                 {#each tool_options as {label,checked}}
                                 <Switch {checked} 
-                                    on:change={() => checked = !checked}
+                                    on:change={() => 
+                                            {
+                                                checked = !checked;
+                                                updateSettings();
+                                            }
+                                        }
                                     label={label}
                                     color="cyan"
                                 />
@@ -172,25 +160,8 @@
 
                 <!-- To add more settings, add a div with whatever buttons we want -->
                 
-
             </SimpleGrid>
         </div>
-
-        <!-- Apply settings button -->
-        <div style="position: absolute; bottom: 10px">
-            <Flex justify="center">
-                <Button on:click={updateSettings}  ripple>Tillämpa</Button>
-            </Flex>
-            {#if show_settings_updated}
-                <Text size='xs' weight='semibold' color="blue" style="line-height:1.5">
-                Inställnigar tillämpas!
-                </Text>
-            {:else}
-            <Space h={18}> </Space>
-            {/if}
-        </div>
-
-
     </Stack>
 </div>
 {/if}

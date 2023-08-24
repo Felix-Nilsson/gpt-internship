@@ -13,7 +13,7 @@
     let chats_titles = [];
     let can_create_new_chat = false;
 
-    let opened = true;
+    let opened = false;
     let input = "";
 
     let current_credentials = {
@@ -218,7 +218,7 @@
         {#if current_credentials['success']}
             <!-- Logout button -->
             <div style="position: absolute; bottom: 40px">
-                <Button type="button" on:click={logout} variant='outline' color='cyan' ripple>
+                <Button type="button" on:click={logout} color='red' ripple>
                     Logga ut
                 </Button>
             </div>

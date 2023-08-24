@@ -8,7 +8,7 @@
     export let settings = {}; // Bind to this so parent can access it
     
     // Change this to false if we do not want settings to be open by default
-    let show_settings = true;
+    let show_settings = false;
     let show_settings_updated = false;
 
     //Chatbot choice

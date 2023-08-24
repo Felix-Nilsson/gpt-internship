@@ -116,7 +116,7 @@
     <Stack align="center" spacing={0}>
 
         <div style="width: 160px;">
-            <Text size='md' align='left' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">
+            <Text size='md' align='left' color="blue" style="line-height:1.5">
                 <h3>Inställningar</h3>
             </Text>
         </div>
@@ -128,11 +128,11 @@
                 <!-- Chatbot choice -->
                 <div>
                     <Stack>
-                        <Text size='md' weight='semibold' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">
+                        <Text size='md' weight='semibold' color="blue" style="line-height:1.5">
                             Val av chat
                         </Text>
 
-                        <Text size='sm' weight='semibold' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">
+                        <Text size='sm' weight='semibold' color="blue" style="line-height:1.5">
                             <RadioGroup bind:value={chatbot_value} items={chatbot_options} color='cyan' size='sm' direction='column' spacing='xs' labelDirection='left'/>
                         </Text>
                     </Stack>
@@ -142,9 +142,9 @@
                 <!-- Language level settings -->
                 <div>
                     <Stack>
-                        <Text size='md' weight='semibold' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">Språknivå</Text>
+                        <Text size='md' weight='semibold' color="blue" style="line-height:1.5">Språknivå</Text>
 
-                        <Text size='xs' weight='semibold' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">
+                        <Text size='xs' weight='semibold' color="blue" style="line-height:1.5">
                             <RadioGroup bind:value={language_value} items={language_options} color='cyan' size='sm' direction='column' spacing='xs' labelDirection='left'/>
                         </Text>
                     </Stack>
@@ -154,9 +154,9 @@
                 <!-- Internet tool setting -->
                 <div>
                     <Stack>
-                        <Text size='md' weight='semibold' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">Källor (internet)</Text>
+                        <Text size='md' weight='semibold' color="blue" style="line-height:1.5">Källor (internet)</Text>
                         
-                        <Text size='xs' weight='semibold' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">
+                        <Text size='xs' weight='semibold' color="blue" style="line-height:1.5">
                             <Stack spacing="xs">
                                 {#each tool_options as {label,checked}}
                                 <Switch {checked} 
@@ -179,10 +179,10 @@
         <!-- Apply settings button -->
         <div style="position: absolute; bottom: 10px">
             <Flex justify="center">
-                <Button on:click={updateSettings} variant='gradient' gradient={{from: 'cyan', to: 'blue', deg: 45}} ripple>Tillämpa</Button>
+                <Button on:click={updateSettings}  ripple>Tillämpa</Button>
             </Flex>
             {#if show_settings_updated}
-                <Text size='xs' weight='semibold' variant='gradient' gradient={{from: 'blue', to: 'red', deg: 45}} style="line-height:1.5">
+                <Text size='xs' weight='semibold' color="blue" style="line-height:1.5">
                 Inställnigar tillämpas!
                 </Text>
             {:else}

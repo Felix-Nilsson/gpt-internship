@@ -13,14 +13,14 @@
 </script>
 
 <Flex justify="right" gap="lg">
-    <ThemeIcon variant='gradient' gradient={{from: 'yellow', to: 'red', deg: 45}} size="xl" radius="lg">
+    <ThemeIcon variant='gradient' gradient={{from: 'blue', to: 'teal', deg: 45}} size="xl" radius="lg">
         <Icon icon="carbon:bot"/>
     </ThemeIcon>
     
     <Paper shadow="xl" radius="lg" style="max-width: 55vw">
         <Text 
         variant='gradient' 
-        gradient={{from: 'red', to: 'yellow', deg: 45}} 
+        gradient={{from: 'blue', to: 'teal', deg: 45}} 
         align="left" 
         size='lg'
         weight='normal'

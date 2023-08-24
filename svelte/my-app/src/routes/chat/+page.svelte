@@ -165,7 +165,7 @@
 
     <Stack align="center" spacing="md">
 
-        <Button fullSize on:click={new_chat} variant='gradient' gradient={{from: 'teal', to: 'blue', deg: 45}} disabled={!can_create_new_chat} ripple>Ny Chat</Button>
+        <Button fullSize on:click={new_chat} disabled={!can_create_new_chat} ripple>Ny Chat</Button>
         
         <div style="height: calc(100vh - 260px); overflow: auto;">
         <!-- TODO ADD CHATS -->

@@ -1,0 +1,184 @@
+{
+    "0": [
+        {
+            "role": "user",
+            "content": "Kan du sammanfatta hur m\u00e5nga som blev smittade av borrelia de senaste 5 \u00e5ren, presentera det i en ascii-graf",
+            "function_call": null,
+            "additional_info": {
+                "final": false,
+                "chat_type": null,
+                "settings": null,
+                "sources": null,
+                "explanation": null,
+                "patient": null,
+                "alert": null
+            }
+        },
+        {
+            "role": "assistant",
+            "content": null,
+            "function_call": {
+                "name": "1177",
+                "arguments": {
+                    "search_query": "antal smittade borrelia",
+                    "explanation": "Jag beh\u00f6ver anv\u00e4nda verktyget 1177 f\u00f6r att hitta information om antalet personer som blev smittade av borrelia de senaste 5 \u00e5ren."
+                }
+            },
+            "additional_info": {
+                "final": false,
+                "chat_type": "internet",
+                "settings": {
+                    "language_level": "normal",
+                    "chosen_tools": [
+                        "1177.se",
+                        "FASS.se",
+                        "internetmedicin.se"
+                    ],
+                    "chatbot_type": "internet"
+                },
+                "sources": null,
+                "explanation": null,
+                "patient": null,
+                "alert": null
+            }
+        },
+        {
+            "role": "assistant",
+            "content": null,
+            "function_call": {
+                "name": "internetmedicin",
+                "arguments": {
+                    "search_query": "borrelia",
+                    "explanation": "Jag beh\u00f6ver anv\u00e4nda verktyget internetmedicin f\u00f6r att hitta information om borrelia och antalet smittade de senaste 5 \u00e5ren."
+                }
+            },
+            "additional_info": {
+                "final": false,
+                "chat_type": "internet",
+                "settings": {
+                    "language_level": "normal",
+                    "chosen_tools": [
+                        "1177.se",
+                        "FASS.se",
+                        "internetmedicin.se"
+                    ],
+                    "chatbot_type": "internet"
+                },
+                "sources": null,
+                "explanation": null,
+                "patient": null,
+                "alert": null
+            }
+        },
+        {
+            "role": "assistant",
+            "content": null,
+            "function_call": {
+                "name": "internetmedicin",
+                "arguments": {
+                    "search_query": "borrelia statistik",
+                    "explanation": "Jag beh\u00f6ver anv\u00e4nda verktyget internetmedicin f\u00f6r att hitta statistik om antalet personer som blev smittade av borrelia de senaste 5 \u00e5ren."
+                }
+            },
+            "additional_info": {
+                "final": false,
+                "chat_type": "internet",
+                "settings": {
+                    "language_level": "normal",
+                    "chosen_tools": [
+                        "1177.se",
+                        "FASS.se",
+                        "internetmedicin.se"
+                    ],
+                    "chatbot_type": "internet"
+                },
+                "sources": null,
+                "explanation": null,
+                "patient": null,
+                "alert": null
+            }
+        },
+        {
+            "role": "assistant",
+            "content": "Tyv\u00e4rr kan jag inte hitta exakt statistik om antalet personer som blev smittade av borrelia de senaste 5 \u00e5ren. Men enligt [1177](https://www.1177.se/sjukdomar--besvar/hjarna-och-nerver/infektioner-i-hjarna-och-nerver/tbe---fastingburen-hjarninflammation/) \u00e4r borrelia en sjukdom som sprids av f\u00e4stingar och kan ge olika symtom, inklusive hudutslag och influensaliknande symptom. Enligt [Internetmedicin](https://www.internetmedicin.se/behandlingsoversikter/infektion/borrelia/) \u00e4r borrelia vanligt f\u00f6rekommande i Sverige och upptr\u00e4der fr\u00e4mst mellan maj och december. Det \u00e4r viktigt att vara f\u00f6rsiktig och skydda sig mot f\u00e4stingbett f\u00f6r att minska risken f\u00f6r borreliainfektion. Om du misst\u00e4nker att du har blivit smittad av borrelia b\u00f6r du kontakta v\u00e5rden f\u00f6r vidare utredning och behandling.",
+            "function_call": null,
+            "additional_info": {
+                "final": true,
+                "chat_type": "internet",
+                "settings": {
+                    "language_level": "normal",
+                    "chosen_tools": [
+                        "1177.se",
+                        "FASS.se",
+                        "internetmedicin.se"
+                    ],
+                    "chatbot_type": "internet"
+                },
+                "sources": [
+                    {
+                        "snippet": "TBE \u00e4r en virussjukdom som sprids av f\u00e4stingar. De flesta som smittas f\u00e5r lindriga besv\u00e4r och blir friska efter n\u00e5gra dagar, men upp till en tredjedel f\u00e5r en inflammation i hj\u00e4rnan eller hj\u00e4rnhinnorna. Det finns vaccin mot TBE. H\u00e4r kan du l\u00e4sa mer om f\u00e4stingbett. En annan sjukdom som sprids via f\u00e4stingar \u00e4r borrelia.",
+                        "title": "TBE - f\u00e4stingburen hj\u00e4rninflammation - 1177",
+                        "link": "https://www.1177.se/sjukdomar--besvar/hjarna-och-nerver/infektioner-i-hjarna-och-nerver/tbe---fastingburen-hjarninflammation/"
+                    },
+                    {
+                        "snippet": "F\u00e4stingbett. F\u00e4stingar \u00e4r sm\u00e5 spindeldjur som framf\u00f6r allt finns i skog och i h\u00f6gt gr\u00e4s. De biter sig fast i huden f\u00f6r att suga blod. Ett f\u00e4stingbett ger oftast inga besv\u00e4r, men ibland kan f\u00e4stingar sprida sjukdomar som borrelia och TBE. D\u00e4rf\u00f6r \u00e4r det viktigt att ta bort en f\u00e4sting s\u00e5 fort som m\u00f6jligt. Den h\u00e4r texten finns ...",
+                        "title": "F\u00e4stingbett - 1177",
+                        "link": "https://www.1177.se/olyckor--skador/bett-stick-och-vaxter/fastingbett/"
+                    },
+                    {
+                        "snippet": "Alla allm\u00e4nfarliga sjukdomar ska smittsp\u00e5ras. Det betyder att v\u00e5rdpersonalen tillsammans med den som \u00e4r smittad f\u00f6rs\u00f6ker hitta vilka fler som kan vara smittade. Du kan l\u00e4sa mer om hur det g\u00e5r till senare i texten. Det finns ocks\u00e5 ett antal sjukdomar som m\u00e5ste smittsp\u00e5ras fast de inte r\u00e4knas som allm\u00e4nfarliga.",
+                        "title": "Smittskyddslagen - 1177",
+                        "link": "https://www.1177.se/sa-fungerar-varden/lagar-och-bestammelser/lagar-i-varden/smittskyddslagen/"
+                    },
+                    {
+                        "snippet": "BAKGRUND Borrelia burgdorferi \u00e4r en bakterie (spiroket) som sprids av f\u00e4stingar. F\u00e4stingar finns i stor m\u00e4ngd i st\u00f6rre delen av Sverige. Borreliainfektioner upptr\u00e4der huvudsakligen mellan maj och december. Efter ett f\u00e4stingbett kan lokala infektioner i huden upptr\u00e4da, vanligen erytema migrans. Andra mer s\u00e4llsynta hudmanifestationer \u00e4r akrodermatit och lymfocytom. Bakterien kan ...",
+                        "title": "Borrelia - Internetmedicin",
+                        "link": "https://www.internetmedicin.se/behandlingsoversikter/infektion/borrelia/"
+                    },
+                    {
+                        "snippet": "F\u00e4stingburen \u00e5terfallsfeber orsakas av Borrelia duttoni (\u00f6stra, centrala och s\u00f6dra Afrika) och en handfull andra borreliaarter som \u00e4r n\u00e4ra besl\u00e4ktade med denna (\u00f6vriga drabbade omr\u00e5den i v\u00e4rlden). SYMTOM och KLINISKA FYND . Lusburen \u00e5terfallsfeber Inkubationstiden \u00e4r 2-14 dagar, vanligen cirka en vecka. Sjukdomsgraden varierar.",
+                        "title": "\u00c5terfallsfeber & miyamotoiborrelia - Internetmedicin",
+                        "link": "https://www.internetmedicin.se/behandlingsoversikter/infektion/aterfallsfeber-miyamotoiborrelia/"
+                    },
+                    {
+                        "snippet": "BAKGRUND. Borrelia burgdorferi \u00e4r en bakterie (spiroket) som sprids av f\u00e4stingar. F\u00e4stingar finns i stor m\u00e4ngd i st\u00f6rre delen av Sverige. Borreliainfektioner upptr\u00e4der huvudsakligen mellan maj och december. Efter ett f\u00e4stingbett kan lokala infektioner i huden upptr\u00e4da, vanligen erytema migrans.",
+                        "title": "Borrelia - Internetmedicin",
+                        "link": "https://w3.internetmedicin.se/page.aspx?id=107"
+                    },
+                    {
+                        "snippet": "BAKGRUND Borrelia burgdorferi \u00e4r en bakterie (spiroket) som sprids av f\u00e4stingar. F\u00e4stingar finns i stor m\u00e4ngd i st\u00f6rre delen av Sverige. Borreliainfektioner upptr\u00e4der huvudsakligen mellan maj och december. Efter ett f\u00e4stingbett kan lokala infektioner i huden upptr\u00e4da, vanligen erytema migrans. Andra mer s\u00e4llsynta hudmanifestationer \u00e4r akrodermatit och lymfocytom. Bakterien kan ...",
+                        "title": "Borrelia - Internetmedicin",
+                        "link": "https://www.internetmedicin.se/behandlingsoversikter/infektion/borrelia/"
+                    },
+                    {
+                        "snippet": "BAKGRUND. Borrelia burgdorferi \u00e4r en bakterie (spiroket) som sprids av f\u00e4stingar. F\u00e4stingar finns i stor m\u00e4ngd i st\u00f6rre delen av Sverige. Borreliainfektioner upptr\u00e4der huvudsakligen mellan maj och december. Efter ett f\u00e4stingbett kan lokala infektioner i huden upptr\u00e4da, vanligen erytema migrans.",
+                        "title": "Borrelia - Internetmedicin",
+                        "link": "https://w3.internetmedicin.se/page.aspx?id=107"
+                    },
+                    {
+                        "snippet": "F\u00e4stingburen \u00e5terfallsfeber orsakas av Borrelia duttoni (\u00f6stra, centrala och s\u00f6dra Afrika) och en handfull andra borreliaarter som \u00e4r n\u00e4ra besl\u00e4ktade med denna (\u00f6vriga drabbade omr\u00e5den i v\u00e4rlden). SYMTOM och KLINISKA FYND . Lusburen \u00e5terfallsfeber Inkubationstiden \u00e4r 2-14 dagar, vanligen cirka en vecka. Sjukdomsgraden varierar.",
+                        "title": "\u00c5terfallsfeber & miyamotoiborrelia - Internetmedicin",
+                        "link": "https://www.internetmedicin.se/behandlingsoversikter/infektion/aterfallsfeber-miyamotoiborrelia/"
+                    }
+                ],
+                "explanation": null,
+                "patient": null,
+                "alert": null
+            }
+        },
+        {
+            "role": "user",
+            "content": "ig\u00e5r sov jag 7 timmar, i f\u00f6rrg\u00e5r 10 timmar, i f\u00f6r-f\u00f6rrg\u00e5r 5 timmar. Rita upp en ascii-graf \u00f6ver min s\u00f6mn",
+            "function_call": null,
+            "additional_info": {
+                "final": false,
+                "chat_type": null,
+                "settings": null,
+                "sources": null,
+                "explanation": null,
+                "patient": null,
+                "alert": null
+            }
+        }
+    ]
+}

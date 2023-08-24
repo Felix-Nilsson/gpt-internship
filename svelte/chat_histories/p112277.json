@@ -1,3 +1,40 @@
 {
-    "0": []
+    "0": [
+        {
+            "role": "user",
+            "content": "Jag har glömt, vad handlade mitt senaste besök om?",
+            "function_call": null,
+            "additional_info": {
+                "final": false,
+                "chat_type": null,
+                "settings": null,
+                "sources": null,
+                "explanation": null,
+                "patient": null,
+                "alert": null
+            }
+        },
+        {
+            "role": "assistant",
+            "content": "Ditt senaste besök handlade om att du blev biten av en hund som senare visade sig ha rabies. Du fick rabiesimmunoglobulin och rabiesvaccin enligt rekommenderade riktlinjer.",
+            "function_call": null,
+            "additional_info": {
+                "final": true,
+                "chat_type": "patient",
+                "settings": {
+                    "language_level": "normal",
+                    "chosen_tools": [
+                        "1177.se",
+                        "FASS.se",
+                        "internetmedicin.se"
+                    ],
+                    "chatbot_type": "patient"
+                },
+                "sources": "All information kommer från din journal.",
+                "explanation": "Assistenten utgår alltid från informationen som finns tillgänglig i din egen journal.",
+                "patient": "112277",
+                "alert": null
+            }
+        }
+    ]
 }

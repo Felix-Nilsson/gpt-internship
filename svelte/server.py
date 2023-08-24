@@ -183,7 +183,7 @@ async def handle_login():
                         temp_chat.append(message.get())
                     save_chats[i] = temp_chat.copy()
 
-            json.dump(save_chats, fp=f, indent=4)
+            json.dump(save_chats, fp=f, indent=4, ensure_ascii=False)
 
         # TODO 
         # if we only save on logout - use this to warn users before closing the tab

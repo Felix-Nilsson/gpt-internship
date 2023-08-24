@@ -1,0 +1,77 @@
+{
+    "0": [],
+    "1": [
+        {
+            "role": "user",
+            "content": "Vad kan du s\u00e4ga om min patient 112222?",
+            "function_call": null,
+            "additional_info": {
+                "final": false,
+                "chat_type": null,
+                "settings": null,
+                "sources": null,
+                "explanation": null,
+                "patient": null,
+                "alert": null
+            }
+        },
+        {
+            "role": "assistant",
+            "content": "Jag har inte tillr\u00e4ckligt med information om patienten 112222. Kan du ge mig mer detaljer?",
+            "function_call": null,
+            "additional_info": {
+                "final": true,
+                "chat_type": "doctor",
+                "settings": {
+                    "language_level": "normal",
+                    "chosen_tools": [
+                        "1177.se",
+                        "FASS.se",
+                        "internetmedicin.se"
+                    ],
+                    "chatbot_type": "doctor"
+                },
+                "sources": "Inga k\u00e4llor har anv\u00e4nts",
+                "explanation": "Du gav ett ID men du har inte tillg\u00e5ng till den patientens information, d\u00e4rf\u00f6r kan inte assistenten svara.",
+                "patient": "",
+                "alert": "Du har inte tillg\u00e5ng till patient 112222's journal."
+            }
+        },
+        {
+            "role": "user",
+            "content": " Vad kan du s\u00e4ga om min patient 123123?",
+            "function_call": null,
+            "additional_info": {
+                "final": false,
+                "chat_type": null,
+                "settings": null,
+                "sources": null,
+                "explanation": null,
+                "patient": null,
+                "alert": null
+            }
+        },
+        {
+            "role": "assistant",
+            "content": "Patient 123123 \u00e4r en pension\u00e4r och tidigare industriarbetare som inkom med feber, hosta och l\u00e5gt blodtryck. Diagnosen var pneumoni och patienten svarade bra p\u00e5 behandlingen med bensylpc.",
+            "function_call": null,
+            "additional_info": {
+                "final": true,
+                "chat_type": "doctor",
+                "settings": {
+                    "language_level": "normal",
+                    "chosen_tools": [
+                        "1177.se",
+                        "FASS.se",
+                        "internetmedicin.se"
+                    ],
+                    "chatbot_type": "doctor"
+                },
+                "sources": "All information kommer fr\u00e5n patient 123123s dokument.",
+                "explanation": "Du gav ett ID och har tillg\u00e5ng till patientens information.",
+                "patient": "123123",
+                "alert": null
+            }
+        }
+    ]
+}

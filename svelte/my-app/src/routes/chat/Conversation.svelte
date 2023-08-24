@@ -271,14 +271,14 @@
                     <div style="width: 33px; "></div>
                     <AIBubble>
                         {#if temp_response != ""}
-                            <Loader variant='dots' color='orange'/>    
+                            <Loader variant='dots' color='blue'/>    
                             <Space h="xs" />
                             <Center> 
                                 {temp_response}
                             </Center>
                             
                         {:else}
-                            <Loader variant='dots' color='orange'/>
+                            <Loader variant='dots' color='blue'/>
                         {/if}
                     </AIBubble>
                     <div class="chat-offset"></div>

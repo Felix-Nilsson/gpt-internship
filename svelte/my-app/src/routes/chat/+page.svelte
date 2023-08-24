@@ -5,7 +5,8 @@
     import Settings from "./Settings.svelte";
     import { onMount } from 'svelte';
     import { goto } from '$app/navigation'
-    import { Trash } from 'radix-icons-svelte';
+    import { Trash, PaperPlane } from 'radix-icons-svelte';
+    import Icon from '@iconify/svelte';
 
     // ID of the current chat
     let chat_id = 0;
@@ -180,11 +181,11 @@
                     style="width: 160px; padding: 5px; overflow: hidden; justify-content:left"
                     ripple>
                     {#if title == ''}
-                        (ny chat)
-                    {:else if title.length > 18}
-                        {String(title).slice(0, 15) + '...'}
+                        🗒️ (ny chat)
+                    {:else if title.length > 12}
+                        🗒️ {String(title).slice(0, 9) + ' ...'}
                     {:else}
-                        {title}
+                        🗒️ {title}
                     {/if}
                 </Button>
                 {:else}
@@ -195,11 +196,11 @@
                     style="width: 160px; padding: 5px; overflow: hidden; justify-content:left"
                     ripple>
                     {#if title == ''}
-                        (ny chat)
-                    {:else if title.length > 18}
-                        {String(title).slice(0, 15) + '...'}
+                        🗒️ (ny chat)
+                    {:else if title.length > 12}
+                        🗒️ {String(title).slice(0, 9) + ' ...'}
                     {:else}
-                        {title}
+                        🗒️ {title}
                     {/if}
                 </Button>
                 {/if}
@@ -219,7 +220,7 @@
             <!-- Logout button -->
             <div style="position: absolute; bottom: 40px">
                 <Button type="button" on:click={logout} color='red' ripple>
-                    Logga ut
+                    Logga ut 🙋‍♂️
                 </Button>
             </div>
         {/if}
@@ -244,7 +245,7 @@
                                 size="l"
                                 style="width: calc(100vw - 680px);box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.07); border-radius: 8px;"
                             />
-                            <Button color="teal" ripple>Skicka</Button>
+                            <Button color="teal" ripple> <PaperPlane/> </Button>
                         </Group>
                     </Center>
                 </form>

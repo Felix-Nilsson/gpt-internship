@@ -223,12 +223,6 @@
                 </Button>
             </div>
         {/if}
-        
-
-        <!-- TODO This should probably be removed at some point, as it is just for convenience when testing     -->
-        <div style="position: absolute; bottom: 5px">
-            <Button type="button" on:click={update_conversation} variant='subtle' color='cyan' size='xs' ripple>uppdatera</Button>
-        </div>
     </Stack>
 </div>
 {/if}

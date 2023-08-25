@@ -44,7 +44,7 @@ async def handle_chat():
     if request.method == 'GET':
 
         #Check if we want to continue response generation (if we are waiting for function results)
-        if all_chats[chat_id] != [] and all_chats[chat_id][-1].get().get('function_call'):
+        if all_chats != [] and all_chats[chat_id] != [] and all_chats[chat_id][-1].get().get('function_call'):
             assistant_message = internetbot.continue_chat()
 
             all_chats[chat_id].append(assistant_message)
@@ -53,7 +53,7 @@ async def handle_chat():
     # Generate response to query
     elif request.method == 'PUT':
         
-        # Information needed in the request:
+        # How the request from the frontend should look:
         request_template = {
             'query': '',            # User query
             'settings': {
@@ -79,31 +79,28 @@ async def handle_chat():
                 users = json.load(f)
                 accessible_patients = users['credentials']['doctors'][login['username']]['patients']
             
+            # Generate doctor's assistant response
             assistant_message = doctorbot.get_chat_response(messages=all_chats[chat_id], settings=settings, patients=accessible_patients)
 
         elif settings['chatbot_type'] == 'patient':
+            #Generate patient assistant response
             assistant_message = patientbot.get_chat_response(messages=all_chats[chat_id], settings=settings, patients=[login['username'][1:]])
         
         elif settings['chatbot_type'] == 'intranet':
+            #Generate intranet assistant response
             assistant_message = intranetbot.get_chat_response(messages=all_chats[chat_id], settings=settings)
 
         elif settings['chatbot_type'] == 'internet':
             
-            #Start process of getting a response
+            #Start process of getting an internet assistant response
             assistant_message = internetbot.start_chat(messages=all_chats[chat_id], settings=settings)
         
         else:
             raise Exception('Incorrect chat_type')
 
-
         # Add the new reponse and update the conversation
         all_chats[chat_id].append(assistant_message)
         last_updated = time.time()
-
-    # Reset chat
-    #elif request.method == 'DELETE':
-        #_reset_chat()
-        #TODO ? we should not need this anymore
 
     
     # Returnable conversation, need to change from Message objects to dict, to json
@@ -153,19 +150,18 @@ async def handle_login():
                 ref_bytes = ref_password.encode('utf-8')
 
                 if bcrypt.checkpw(pw_bytes, ref_bytes):
-                    # Reset chat on login for safety's sake
-                    #_reset_chat()
-                    #TODO setup?, should run from the frontend component onMount
-
+                    # Successful login
                     login["success"] = True
                     login["username"] = username
                     login["login_as"] = login_as
-            else:
-                login = {
-                    'success': False,
-                    'login_as': None,
-                    'username': None
-                }
+                    return login
+            
+        # Not successful login
+        login = {
+            'success': False,
+            'login_as': None,
+            'username': None
+        }
 
     # Logout (reset)
     elif request.method == 'DELETE':
@@ -185,10 +181,6 @@ async def handle_login():
 
             json.dump(save_chats, fp=f, indent=4, ensure_ascii=False)
 
-        # TODO 
-        # if we only save on logout - use this to warn users before closing the tab
-        # https://svelte.dev/repl/a95db12c1b46433baac2817a0963dc93?version=4.2.0
-
         _reset_chat()
         login = {
             'success': False,
@@ -206,10 +198,10 @@ async def handle_all_chats():
     if request.method == 'GET':
 
         if all_chats == []:
-            # FIRST TIME SETUP
-            #print('first time setup ... reading from file')
+            # First time setup (on login)
             username = login['username']
 
+            # Read chat history from file
             with open(f"chat_histories/{username}.json", "r", encoding='utf-8') as f:
                 json_data = f.read()
                 # Check if empty
@@ -230,38 +222,36 @@ async def handle_all_chats():
 
                 else:
                     all_chats = [[]]
+            # Set the current chat to the most recent
             chat_id = 0
 
     # CREATE NEW CHAT
     elif request.method == 'POST':
-        #print('creating new (empty) chat')
-        new_chat = []
-        all_chats.insert(0, new_chat.copy())
+        all_chats.insert(0, [])
         chat_id = 0
 
     # CHANGE CURRENT CHAT
     elif request.method == 'PUT':
         req = request.get_json()
-        #print('changing to chat with id: ' + str(req['new_id']))
         chat_id = int(req['new_id'])
 
     # DELETE SPECIFIC CHAT
     elif request.method == 'PATCH':
         req = request.get_json()
         delete_id = req['delete_id']
-        #print('deleting chat with id: ' + str(delete_id))
 
         all_chats.pop(delete_id)
 
-        if all_chats == []:
-            print('deleted the last chat ... creating a new one')
-            new_chat = []
-            all_chats.insert(0, new_chat.copy())
+        # Deleted the active chat, move current chat to the lastest
+        if delete_id == chat_id:
             chat_id = 0
 
-        elif delete_id == chat_id:
-            print('deleted active chat ... moving to the latest chat')
+        # Deleted the last chat, automatically create a new one
+        if all_chats == []:
+            all_chats.insert(0, [])
             chat_id = 0
+
+        
 
     # List of titles for the different chats
     titles = []
@@ -274,9 +264,6 @@ async def handle_all_chats():
                 titles.append('')
 
     return titles
-
-
-
 
 
 def _reset_chat():

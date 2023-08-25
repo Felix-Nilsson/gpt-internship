@@ -114,6 +114,10 @@
     }
 
     async function delete_chat(chat_index) {
+        // If we delete the current chat, move to the latest in the history
+        if (chat_index == chat_id) {
+            chat_id = 0;
+        }
         const response = await fetch(CHATS_URL, {
             method: "PATCH",
             body: JSON.stringify({'delete_id': chat_index}),
@@ -154,7 +158,12 @@
         'doctor': 'Prova att fråga om dina patienter',
         'intranet': 'Prova att fråga om information på intranätet',
         'internet': 'Prova att fråga om sjukdomar, mediciner och behandlingar'
-    }
+    };
+
+    let chat_history_variant = {
+        true: 'outline',
+        false: 'subtle'
+    };
 
 </script>
 
@@ -198,9 +207,9 @@
             <Flex gap={0} style="align: center;">
                 <Button on:click={() => change_current_chat(i)} 
                     size={40} 
-                    variant={(i == chat_id) ? 'outline' : 'subtle'}
+                    variant={chat_history_variant[(i == chat_id)]}
                     color='cyan'
-                    style="outline; width: 160px; padding: 5px; overflow: hidden; justify-content:left"
+                    style="width: 160px; padding: 5px; overflow: hidden; justify-content:left"
                     ripple>
                     {#if title == ''}
                         🗒️ (Ny chatt)

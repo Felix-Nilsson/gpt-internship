@@ -136,8 +136,7 @@
                 <!-- Language level settings -->
                 <div>
                     <Stack spacing="sm">
-                        <Text size='md' weight='semibold' color="cyan" style="line-height:1">Språknivå</Text>
-                        <Text size='sm' weight='semibold' color="cyan" style="line-height:1">(funkar inte alltid)</Text>
+                        <Text size='md' weight='semibold' color="cyan" style="line-height:1">Språknivå (WIP)</Text>
                         
 
                         <Text size='xs' weight='semibold' color="cyan" style="line-height:1.5">

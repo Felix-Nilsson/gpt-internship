@@ -149,6 +149,13 @@
         });
     }
 
+    let input_placeholders = {
+        'patient': 'Prova att fråga om din journal',
+        'doctor': 'Prova att fråga om dina patienter',
+        'intranet': 'Prova att fråga om information på intranätet',
+        'internet': 'Prova att fråga om sjukdomar, mediciner och behandlingar'
+    }
+
 </script>
 
 
@@ -233,7 +240,6 @@
 </div>
 {/if}
 
-
 <!--Input area-->
 <div class="gradient-strip-bottom">
     <Center style="padding:20px">  
@@ -245,7 +251,7 @@
                                 name="prompt"
                                 bind:value={input}
                                 variant="filled"
-                                placeholder="T.ex 'Jag har feber och ont i huvudet, vad borde jag göra?'"
+                                placeholder={input_placeholders[settings['chatbot_type']]}
                                 radius="lg"
                                 size="l"
                                 style="width: calc(100vw - 680px);box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.07); border-radius: 8px;"   

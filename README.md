@@ -69,7 +69,7 @@ Patients can access the following chatbots:
 Documents are of imaginary patients and doctors since in practice these are very sensitive and for legal reasons cannot "leave" the hospital.
 They were however made to be similar in structure to real documents, with guidance from professionals working in the field.
 
-This is application an example of **retrieval augmentented generation** or RAG, which is a general pattern of LLM applications that fetch information to use in the prompt.
+This application is an example of **retrieval augmentented generation** or RAG, which is a general pattern of LLM applications that fetch information to use in the prompt.
 
 [Link to article on RAG on Pinecone](https://www.pinecone.io/learn/retrieval-augmented-generation/)
 

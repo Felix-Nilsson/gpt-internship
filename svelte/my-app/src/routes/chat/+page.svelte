@@ -1,11 +1,13 @@
 <script>
     import { Group, Input , Button, Center, Burger, Stack, Text, Space, Divider, ActionIcon, Flex } from '@svelteuidev/core';
-    import { slide } from 'svelte/transition';
-    import Conversation from "./Conversation.svelte";
-    import Settings from "./Settings.svelte";
     import { onMount } from 'svelte';
+    import { slide } from 'svelte/transition';
     import { goto } from '$app/navigation'
     import { PaperPlane } from 'radix-icons-svelte';
+
+    import Conversation from "./Conversation.svelte";
+    import Settings from "./Settings.svelte";
+    import { preventTabClose } from "./preventTabClose";
 
     // ID of the current chat
     let chat_id = 0;
@@ -171,6 +173,10 @@
 <svelte:head>
     <title>Medicinsk AI-Hjälp</title> 
 </svelte:head>
+
+<!--Warn user about closing the tab-->
+<div use:preventTabClose={true}/>
+
 
 <!--Conversation-->
 <Conversation on:update={event_update_chats} bind:get_response={get_response} bind:get_conversation={update_conversation} show_settings={show_settings} user_type={current_credentials['login_as']}/>

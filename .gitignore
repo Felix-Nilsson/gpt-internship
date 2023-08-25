@@ -1,4 +1,4 @@
 **/__pycache__/
 svelte/client/node_modules/
 db/storage
-svelte/chat_histories/
+svelte/chat_histories/*.json

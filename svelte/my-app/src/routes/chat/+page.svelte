@@ -1,12 +1,11 @@
 <script>
-    import { Group, Title, Input , Button, Center, Burger, Stack, Text, Space, Divider, ActionIcon, Flex } from '@svelteuidev/core';
-    import { scale, slide } from 'svelte/transition';
+    import { Group, Input , Button, Center, Burger, Stack, Text, Space, Divider, ActionIcon, Flex } from '@svelteuidev/core';
+    import { slide } from 'svelte/transition';
     import Conversation from "./Conversation.svelte";
     import Settings from "./Settings.svelte";
     import { onMount } from 'svelte';
     import { goto } from '$app/navigation'
-    import { Trash, PaperPlane } from 'radix-icons-svelte';
-    import Icon from '@iconify/svelte';
+    import { PaperPlane } from 'radix-icons-svelte';
 
     // ID of the current chat
     let chat_id = 0;

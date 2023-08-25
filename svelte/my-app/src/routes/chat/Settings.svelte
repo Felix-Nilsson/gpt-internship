@@ -1,5 +1,5 @@
 <script>
-    import { Stack, Text, SimpleGrid, RadioGroup, Switch, Divider, ActionIcon, Space, Title } from '@svelteuidev/core';
+    import { Stack, Text, RadioGroup, Switch, Divider, ActionIcon, Space, Title } from '@svelteuidev/core';
     import { onMount } from 'svelte';
     import { slide, fade } from 'svelte/transition';
     import { Gear, Cross2 } from 'radix-icons-svelte';

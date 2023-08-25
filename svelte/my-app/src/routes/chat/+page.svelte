@@ -190,12 +190,11 @@
         {#if chats_titles.length != 0}
             {#each chats_titles as title, i}
             <Flex gap={0} style="align: center;">
-                {#if i == chat_id}
                 <Button on:click={() => change_current_chat(i)} 
                     size={40} 
-                    variant='outline'
+                    variant={(i == chat_id) ? 'outline' : 'subtle'}
                     color='cyan'
-                    style="width: 160px; padding: 5px; overflow: hidden; justify-content:left"
+                    style="outline; width: 160px; padding: 5px; overflow: hidden; justify-content:left"
                     ripple>
                     {#if title == ''}
                         🗒️ (Ny chatt)
@@ -205,22 +204,6 @@
                         🗒️ {title}
                     {/if}
                 </Button>
-                {:else}
-                <Button on:click={() => change_current_chat(i)} 
-                    size={40} 
-                    variant='subtle'
-                    color='cyan'
-                    style="width: 160px; padding: 5px; overflow: hidden; justify-content:left"
-                    ripple>
-                    {#if title == ''}
-                        🗒️ (Ny chatt)
-                    {:else if title.length > 12}
-                        🗒️ {String(title).slice(0, 9) + ' ...'}
-                    {:else}
-                        🗒️ {title}
-                    {/if}
-                </Button>
-                {/if}
                 
                 <ActionIcon on:click={() => delete_chat(i)} color='red' size={40}>
                     🗑️

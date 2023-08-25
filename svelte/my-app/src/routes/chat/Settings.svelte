@@ -108,7 +108,7 @@
 
         <!-- Individual settings -->
         <div style="height:calc(100vh - 180px); overflow: auto;">
-            <Stack spacing="xl">
+            <Stack spacing="sm">
                 <div>
                     <Title 
                     style="line-height:1.5;"

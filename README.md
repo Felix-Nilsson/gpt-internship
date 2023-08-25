@@ -28,7 +28,7 @@ As part of this project we were also tasked with writing a set of guidelines (in
 ⚖️ [Guidelines](img/gpt_internship_guidelines.pdf)
 
 <p align="center">
-  <img src="img/newscreenshot.png" />
+  <img src="img/demo_patient.gif" />
 </p>
 
 

@@ -12,6 +12,10 @@
 
 </script>
 
+<svelte:head>
+    <title>Medicinsk AI-Hjälp</title> 
+</svelte:head>
+
 
 <div class="center-screen">
     <Group spacing="lg" direction="column">

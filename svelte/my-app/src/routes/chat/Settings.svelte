@@ -108,7 +108,7 @@
 
         <!-- Individual settings -->
         <div style="height:calc(100vh - 180px); overflow: auto;">
-            <SimpleGrid  cols={1} spacing="xl">
+            <Stack spacing="xl">
                 <div>
                     <Title 
                     style="line-height:1.5;"
@@ -118,6 +118,7 @@
                     </Title>
                 </div>
 
+                <Divider/>
                 <!-- Chatbot choice -->
                 <div>
                     <Stack spacing="sm">
@@ -130,7 +131,7 @@
                         </Text>
                     </Stack>
                 </div>
-
+                <Divider/>
 
                 <!-- Language level settings -->
                 <div>
@@ -145,7 +146,7 @@
                     </Stack>
                 </div>
 
-
+                <Divider/>
                 <!-- Internet tool setting -->
                 <div>
                     <Stack spacing="sm">
@@ -172,7 +173,7 @@
 
                 <!-- To add more settings, add a div with whatever buttons we want -->
                 
-            </SimpleGrid>
+            </Stack>
         </div>
     </Stack>
 </div>

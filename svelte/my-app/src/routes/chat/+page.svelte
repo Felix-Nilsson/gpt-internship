@@ -152,6 +152,10 @@
 </script>
 
 
+<svelte:head>
+    <title>Medicinsk AI-Hjälp</title> 
+</svelte:head>
+
 <!--Conversation-->
 <Conversation on:update={event_update_chats} bind:get_response={get_response} bind:get_conversation={update_conversation} user_type={current_credentials['login_as']}/>
 
@@ -176,10 +180,12 @@
         <Space h={70}/>
 
         <!-- Create new chat button-->
-        <Button fullSize on:click={new_chat} disabled={!can_create_new_chat} ripple>💬 Ny Chat</Button>
+        <Button fullSize on:click={new_chat} disabled={!can_create_new_chat} ripple
+        style="overflow:hidden; width:200px;"
+        >💬 Ny chatt</Button>
         
         <!-- Chat history -->
-        <div style="height: calc(100vh - 260px); overflow: auto;">
+        <div style="height: calc(100vh - 300px); overflow: auto;">
         {#if chats_titles.length != 0}
             {#each chats_titles as title, i}
             <Flex gap={0} style="align: center;">
@@ -191,7 +197,7 @@
                     style="width: 160px; padding: 5px; overflow: hidden; justify-content:left"
                     ripple>
                     {#if title == ''}
-                        🗒️ (ny chat)
+                        🗒️ (Ny chatt)
                     {:else if title.length > 12}
                         🗒️ {String(title).slice(0, 9) + ' ...'}
                     {:else}
@@ -206,7 +212,7 @@
                     style="width: 160px; padding: 5px; overflow: hidden; justify-content:left"
                     ripple>
                     {#if title == ''}
-                        🗒️ (ny chat)
+                        🗒️ (Ny chatt)
                     {:else if title.length > 12}
                         🗒️ {String(title).slice(0, 9) + ' ...'}
                     {:else}
@@ -223,10 +229,19 @@
         {/if}
         </div>
 
+
+
         <!-- Logout button -->
         {#if current_credentials['success']}
+            <Text
+                style="line-height:1.5; position: absolute; bottom: 100px"
+                color="#c0c0c0"
+                size="md">
+                    {current_credentials.username}
+            </Text>
             <div style="position: absolute; bottom: 40px">
-                <Button type="button" on:click={logout} color='red' ripple>
+                <Button type="button" on:click={logout} color='red' ripple 
+                style="overflow:hidden;width: 200px;">
                     👋 Logga ut
                 </Button>
             </div>

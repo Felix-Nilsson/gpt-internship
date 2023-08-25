@@ -1,8 +1,4 @@
-apikey.txt
 **/__pycache__/
 svelte/client/node_modules/
-try-svelte-again/my-app/node_modules/
 db/storage
-*.parquet
-old_requirements.txt
-test_req.txt
+svelte/chat_histories/

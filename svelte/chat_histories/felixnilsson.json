@@ -1,9 +1,8 @@
 {
-    "0": [],
-    "1": [
+    "0": [
         {
             "role": "user",
-            "content": "Vad kan du s\u00e4ga om min patient 112222?",
+            "content": "Vad kan du säga om min patient 112222?",
             "function_call": null,
             "additional_info": {
                 "final": false,
@@ -17,7 +16,7 @@
         },
         {
             "role": "assistant",
-            "content": "Jag har inte tillr\u00e4ckligt med information om patienten 112222. Kan du ge mig mer detaljer?",
+            "content": "Jag har inte tillräckligt med information om patienten 112222. Kan du ge mig mer detaljer?",
             "function_call": null,
             "additional_info": {
                 "final": true,
@@ -31,15 +30,15 @@
                     ],
                     "chatbot_type": "doctor"
                 },
-                "sources": "Inga k\u00e4llor har anv\u00e4nts",
-                "explanation": "Du gav ett ID men du har inte tillg\u00e5ng till den patientens information, d\u00e4rf\u00f6r kan inte assistenten svara.",
-                "patient": "",
-                "alert": "Du har inte tillg\u00e5ng till patient 112222's journal."
+                "sources": "Inga källor har använts",
+                "explanation": "Du gav ett ID men du har inte tillgång till den patientens information, därför kan inte assistenten svara.",
+                "patient": null,
+                "alert": "Du har inte tillgång till patient 112222's journal."
             }
         },
         {
             "role": "user",
-            "content": " Vad kan du s\u00e4ga om min patient 123123?",
+            "content": " Vad kan du säga om min patient 123123?",
             "function_call": null,
             "additional_info": {
                 "final": false,
@@ -53,7 +52,7 @@
         },
         {
             "role": "assistant",
-            "content": "Patient 123123 \u00e4r en pension\u00e4r och tidigare industriarbetare som inkom med feber, hosta och l\u00e5gt blodtryck. Diagnosen var pneumoni och patienten svarade bra p\u00e5 behandlingen med bensylpc.",
+            "content": "Patient 123123 är en pensionär och tidigare industriarbetare som inkom med feber, hosta och lågt blodtryck. Diagnosen var pneumoni och patienten svarade bra på behandlingen med bensylpc.",
             "function_call": null,
             "additional_info": {
                 "final": true,
@@ -67,8 +66,44 @@
                     ],
                     "chatbot_type": "doctor"
                 },
-                "sources": "All information kommer fr\u00e5n patient 123123s dokument.",
-                "explanation": "Du gav ett ID och har tillg\u00e5ng till patientens information.",
+                "sources": "All information kommer från patient 123123s dokument.",
+                "explanation": "Du gav ett ID och har tillgång till patientens information.",
+                "patient": "123123",
+                "alert": null
+            }
+        },
+        {
+            "role": "user",
+            "content": "Vad är bensylpc?",
+            "function_call": null,
+            "additional_info": {
+                "final": false,
+                "chat_type": null,
+                "settings": null,
+                "sources": null,
+                "explanation": null,
+                "patient": null,
+                "alert": null
+            }
+        },
+        {
+            "role": "assistant",
+            "content": "Bensylpc är en förkortning för bensylpenicillin, vilket är en typ av antibiotika som används för att behandla infektioner orsakade av bakterier.",
+            "function_call": null,
+            "additional_info": {
+                "final": true,
+                "chat_type": "doctor",
+                "settings": {
+                    "language_level": "normal",
+                    "chosen_tools": [
+                        "1177.se",
+                        "FASS.se",
+                        "internetmedicin.se"
+                    ],
+                    "chatbot_type": "doctor"
+                },
+                "sources": "All information kommer från patient 123123s dokument.",
+                "explanation": "Du gav inget patient-ID med denna fråga därför använder assistenten informationen från den patient som diskuterats innan.",
                 "patient": "123123",
                 "alert": null
             }

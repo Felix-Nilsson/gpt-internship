@@ -48,7 +48,10 @@
     }
 
 </script>
-  
+
+<svelte:head>
+    <title>Logga In</title> 
+</svelte:head>
 
 <div class="center-screen">
     <Group spacing="lg" direction="column">

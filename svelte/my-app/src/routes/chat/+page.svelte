@@ -23,6 +23,7 @@
             'username': 'None'
         };
 
+    let show_settings
     let settings = {};
 
     // Backend adresses
@@ -157,7 +158,7 @@
 </svelte:head>
 
 <!--Conversation-->
-<Conversation on:update={event_update_chats} bind:get_response={get_response} bind:get_conversation={update_conversation} user_type={current_credentials['login_as']}/>
+<Conversation on:update={event_update_chats} bind:get_response={get_response} bind:get_conversation={update_conversation} show_settings={show_settings} user_type={current_credentials['login_as']}/>
 
 <!--Burger button-->
 <div class="burger-button">
@@ -278,7 +279,7 @@
 
 
 <!--Settings-->
-<Settings bind:settings={settings} bind:login_as={current_credentials['login_as']}></Settings>
+<Settings bind:show_settings={show_settings} bind:settings={settings} bind:login_as={current_credentials['login_as']}></Settings>
 
 
 <style>

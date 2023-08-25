@@ -14,6 +14,7 @@
     let element;
 
     export let user_type = '';
+    export let show_settings = false;
 
     let current_query = '';
 
@@ -192,136 +193,141 @@
 </script>
 
 <!-- CHAT -->
-<div bind:this={element} class="chat-area">
-    <Space h={100}/>
-    <Stack align="center" justify="start" spacing="lg">
-
-        <Title 
-        style="line-height:1.5;"
-        variant='gradient' 
-        gradient={{from: 'blue', to: 'red', deg: 45}}
-        order={1}>
-            Medicinsk AI-Hjälp 
-        </Title>
-
-        <!--Chat-type indicator-->
-        <Title
-        style="line-height:1.5;"
-        color="#c0c0c0"
-        order={2}>
-            {#if user_type == "patient"}
-                Patientassistent
-            {:else if user_type == "doctor"}
-                Läkarassistent
-            {/if} 
-        </Title>
-
-        <!---->
-        <Title
-        style="line-height:1.5;"
-        color="#c0c0c0"
-        order={4}>
-            Chatbot som drivs av GPT3.5-turbo
-        </Title>
-
-        <div class="chat">
-            <Divider></Divider>
-
-            <Space h={20}/>
-
-            {#if messages.length != 0}
-                {#each messages as message, i}
-
-                    <!--User bubble-->
-                    {#if (message['role'] == 'user')} 
-                        <Flex justify="right">
-                            <div class="chat-offset"></div>
-                            <UserBubble>{message['content']}</UserBubble>
-                        </Flex>
-
-                    <!--AI bubble-->
-                    {:else}
-                        {#if (message['content'] != null)}
-                        <Flex justify="left"> 
-
-                            <!--Modal button-->
-                            <Button on:click={() => modalButtonPressed(i)} variant='subtle' radius="sm" size="xs" ripple> ? </Button>
-
-                            <AIBubble>
-                                <Text
-                                    size='md'
-                                    weight='semibold'
-                                    style="line-height: 1.5;">
-                                        {#if message['additional_info']['chat_type'] == 'doctor'}
-                                        Läkarassistent:
-                                        {:else if message['additional_info']['chat_type'] == 'patient'}
-                                        Patientassistent:
-                                        {:else if message['additional_info']['chat_type'] == 'intranet'}
-                                        Intranätsassistent:
-                                        {:else if message['additional_info']['chat_type'] == 'internet'}
-                                        Internetassistent:
-                                        {/if}
-                                </Text>
-
-                                <!--Manages links in text-->
-                                {#each splitTextWithLinks(message['content']) as message_part, i}
-                                    {#if message_part['type'] == 'text'}
-                                        {message_part['content']}
-                                    {:else}
-                                        <a href={message_part['linkurl']} target="_blank" rel="noopener noreferrer">{message_part["linktext"]}</a>
-                                    {/if}
-                                {/each}
-                                    
-
-                                <!--Responsibility text-->
-                                {#if message['additional_info']['chat_type'] == 'doctor'}
-                                    <Space h="xs" />
-                                    <Center> 
-                                        <Text
-                                            size='sm'
-                                            weight='semibold'
-                                            style="line-height: 1.5;">
-                                                *OBS* Du bär alltid ansvaret mot patienten
-                                        </Text>
-                                    </Center>
-                                {/if}
-                            </AIBubble>
-                            <div class="chat-offset"></div>
-                        </Flex>
-                        {/if}
-                    {/if}
-                    <Space h="lg"/>
-                {/each}
-            {/if}
-
-            <!--Loading response-->
-            {#if loading}
-                <Flex justify="right">
-                    <div class="chat-offset"></div>
-                    <UserBubble>{temp_query}</UserBubble>
-                </Flex>
-                <Space h="lg"/>
-                <Flex justify="left">
-                    <div style="width: 33px; "></div>
-                    <AIBubble>
-                        {#if temp_response != ""}
-                            <Loader variant='dots' color='blue'/>    
-                            <Space h="xs" />
-                            <Center> 
-                                {temp_response}
-                            </Center>
-                            
+<div bind:this={element} class="chat-area" class:chat-area-expanded={!show_settings}>
+        <Space h={100}/>
+        <Stack align="center" justify="start" spacing="lg">
+    
+            <!--Website title-->
+            <Title 
+            style="line-height:1.5;"
+            variant='gradient' 
+            gradient={{from: 'blue', to: 'red', deg: 45}}
+            order={1}>
+                Medicinsk AI-Hjälp 
+            </Title>
+    
+            <!--Chat-type indicator-->
+            <Title
+            style="line-height:1.5;"
+            color="#c0c0c0"
+            order={2}>
+                {#if user_type == "patient"}
+                    Patientassistent
+                {:else if user_type == "doctor"}
+                    Läkarassistent
+                {/if} 
+            </Title>
+    
+            <!--GPT info-->
+            <Title
+            style="line-height:1.5;"
+            color="#c0c0c0"
+            order={4}>
+                Chatbot som drivs av GPT3.5-turbo
+            </Title>
+    
+            <div class="chat">
+                <Divider></Divider>
+    
+                <Space h={20}/>
+    
+                {#if messages.length != 0}
+                    {#each messages as message, i}
+    
+                        <!--User bubble-->
+                        {#if (message['role'] == 'user')} 
+                            <Flex justify="right">
+                                <div class="chat-offset"></div>
+                                <UserBubble>{message['content']}</UserBubble>
+                                <div style="width: 33px; "></div>
+                            </Flex>
+    
+                        <!--AI bubble-->
                         {:else}
-                            <Loader variant='dots' color='blue'/>
+                            {#if (message['content'] != null)}
+                            <Flex justify="left"> 
+    
+                                <!--Modal button-->
+                                <Button on:click={() => modalButtonPressed(i)} variant='subtle' radius="sm" size="xs" ripple> ? </Button>
+    
+                                <AIBubble>
+                                    <Text
+                                        size='md'
+                                        weight='semibold'
+                                        style="line-height: 1.5;">
+                                            {#if message['additional_info']['chat_type'] == 'doctor'}
+                                            Läkarassistent:
+                                            {:else if message['additional_info']['chat_type'] == 'patient'}
+                                            Patientassistent:
+                                            {:else if message['additional_info']['chat_type'] == 'intranet'}
+                                            Intranätsassistent:
+                                            {:else if message['additional_info']['chat_type'] == 'internet'}
+                                            Internetassistent:
+                                            {/if}
+                                    </Text>
+    
+                                    <!--Manages links in text-->
+                                    {#each splitTextWithLinks(message['content']) as message_part, i}
+                                        {#if message_part['type'] == 'text'}
+                                            {message_part['content']}
+                                        {:else}
+                                            <a href={message_part['linkurl']} target="_blank" rel="noopener noreferrer">{message_part["linktext"]}</a>
+                                        {/if}
+                                    {/each}
+                                        
+    
+                                    <!--Responsibility text-->
+                                    {#if message['additional_info']['chat_type'] == 'doctor'}
+                                        <Space h="xs" />
+                                        <Center> 
+                                            <Text
+                                                size='sm'
+                                                weight='semibold'
+                                                style="line-height: 1.5;">
+                                                    *OBS* Du bär alltid ansvaret mot patienten
+                                            </Text>
+                                        </Center>
+                                    {/if}
+                                </AIBubble>
+                                <div class="chat-offset"></div>
+                            </Flex>
+                            {/if}
                         {/if}
-                    </AIBubble>
-                    <div class="chat-offset"></div>
-                </Flex>
-                <Space h="lg"/>
-            {/if}
-        </div>
-    </Stack>
-    <Space h={120}/>
+                        <Space h="lg"/>
+                    {/each}
+                {/if}
+    
+                <!--Loading response-->
+                {#if loading}
+                    <Flex justify="right">
+                        <div class="chat-offset"></div>
+                        <UserBubble>{temp_query}</UserBubble>
+                        <div style="width: 33px; "></div>
+                    </Flex>
+                    <Space h="lg"/>
+                    <Flex justify="left">
+                        <div style="width: 33px; "></div>
+                        <AIBubble>
+                            {#if temp_response != ""}
+                                <Loader variant='dots' color='blue'/>    
+                                <Space h="xs" />
+                                <Center> 
+                                    {temp_response}
+                                </Center>
+                                
+                            {:else}
+                                <Loader variant='dots' color='blue'/>
+                            {/if}
+                        </AIBubble>
+                        <div class="chat-offset"></div>
+                    </Flex>
+                    <Space h="lg"/>
+                {/if}
+            </div>
+        </Stack>
+        <Space h={120}/>
+    
+    
 </div>
 
 
@@ -417,16 +423,30 @@
 
     .chat-area {
         position: absolute; 
-        left: 240px; 
+        left: 240px;
         right: 240px; 
-        top: 0px; 
-        bottom: 0px; 
+        top: 0; 
+        bottom: 0; 
+        padding-right: 0; 
+        padding-left: 0;
+        overflow: auto;
+    }
+
+    .chat-area-expanded {
+        position: absolute; 
+        left: 240px; 
+        right: 0; 
+        top: 0; 
+        bottom: 0; 
+        padding-right: 240px; 
+        padding-left: 0;
         overflow: auto;
     }
 
     .chat {
         position: relative;
-        width: 96%;
+        left: 0;
+        width: calc(100vw - 540px);
     }
 
     .chat-offset {

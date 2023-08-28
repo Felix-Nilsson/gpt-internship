@@ -22,9 +22,11 @@ Medicinsk AI-Hjälp is designed primarily with Swedish in mind.
 
 🔗 [Link to blog](https://my.ai.se/projects/287)
 
-As part of this project we were also tasked with writing a set of guidelines (in Swedish).
+### ⚖️ Guidelines
 
-⚖️ [Guidelines](img/gpt_internship_guidelines.pdf)
+As part of this project we were also tasked with writing a set of guidelines (in Swedish). [Read them here](img/gpt_internship_guidelines.pdf)
+
+### 🔍 Preview
 
 <p align="center">
   <img src="img/demo_patient.gif" />
